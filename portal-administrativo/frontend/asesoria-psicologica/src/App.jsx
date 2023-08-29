@@ -6,14 +6,15 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+import Reset from "./components/Reset";
+import ResetPass from "./pages/ResetPass";
 const Login = () => <div>Login</div>;
-const Reset = () => <div>Reset</div>;
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route path="/reset" element={<Reset />} />
-      <Route path="login" element={<Login />} />
+      <Route path="/reset-pass" element={<ResetPass />} />
     </Route>
   )
 );
