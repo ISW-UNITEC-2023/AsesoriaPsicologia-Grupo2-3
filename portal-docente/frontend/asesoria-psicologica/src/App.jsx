@@ -13,7 +13,9 @@ const Login = () => <div>Login</div>;
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route path="/login" element={<Login />} />
+      <Route path="/reset" element={<Reset />} />
+      <Route path="/forgot" element={<Reset />} />
+      <Route path="/reset-pass" element={<ResetPass />} />
     </Route>
   )
 );
