@@ -2,11 +2,20 @@ import React from "react";
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import "./Reset.css";
-
+import { Link } from "react-router-dom";
 const Reset = () => {
-  const page = "Reset";
+  const [email, setEmail] = useState("");
+  const [visible, setVisible] = useState(false);
 
-  console.log("entered contact");
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const page = "Reset";
+  const currentURL = window.location.href;
+  console.log("currentURL", currentURL);
+
+  console.log("entered RESET");
   const [mouseEnter, setMouseEnter] = useState(false);
 
   console.log("Mount");
@@ -48,32 +57,68 @@ const Reset = () => {
         console.log(error.text);
         setSuccess(false);
       };
+    setVisible((prev) => !prev);
+    console.log("Se ha enviado");
   };
 
-  const email = import.meta.env.VITE_EMAILJS_SERVICE_KEY;
-  console.log(email);
-
   return (
-    <div>
-      <div className="even-columns-contact">
-        <form action=""></form>
-        <div className="logo-container">
-          <img src="" alt="unitec logo letras" className="unitec-logo" />
-        </div>
-        <h1 className="page-title">
-          {page === "reset"
-            ? "Has olvidado tu contraseña"
-            : "Resetea tu contraseña"}
-        </h1>
-        <p className="description">
-          Ingrese la dirección de correo electrónico asociada a su cuenta del
-          portal administrativo. Le enviaremos un enlace a su correo electrónico
-          para que pueda reestaablecer su contraseña.
-        </p>
+    <section data-section="reset">
+      <div className="container">
+        <form ref={formRef} className="form-container" onSubmit={handleSubmit}>
+          <div className="logo-container">
+            <h1 className="className"></h1>
+            <img
+              src="assets/logounitecletras.png"
+              alt="unitec logo letras"
+              className="unitec-logo"
+            />
+          </div>
+          {visible === false ? (
+            <>
+              <div className="text-container">
+                <h1 className="clr-primary" data-type="heading">
+                  {currentURL !== "http://localhost:5173/reset"
+                    ? "¿Has olvidado tu contraseña?"
+                    : "Reestablezca su contraseña"}
+                </h1>
+                <p className="description clr-primary ">
+                  Ingrese la dirección de correo electrónico asociada a su
+                  cuenta del portal administrativo. Le enviaremos un enlace a su
+                  correo electrónico para que pueda reestaablecer su contraseña.
+                </p>
+              </div>
 
-        <label htmlFor=""> </label>
+              <div className="input-container">
+                <input type="email" className="email-input" />
+
+                <button
+                  type="submit"
+                  data-type="submit-button"
+                  onSubmit={handleSubmit}
+                >
+                  Send{" "}
+                </button>
+              </div>
+            </>
+          ) : (
+            <div className="text-container">
+              <h1 className="clr-primary" data-type="heading">
+                Se ha enviado un mensaje a su correo exitosamente!
+              </h1>
+            </div>
+          )}
+
+          <Link to="/">
+            <button data-type="back-to-button">
+              Regresar a página inicial
+            </button>
+          </Link>
+
+          <p></p>
+          <p></p>
+        </form>
       </div>
-    </div>
+    </section>
   );
 };
 
