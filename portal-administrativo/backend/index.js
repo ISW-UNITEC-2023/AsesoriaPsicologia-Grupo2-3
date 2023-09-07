@@ -9,7 +9,7 @@ var transporter = nodemailer.createTransport({
 });
 
 let MailGenerator = new Mailgen({
-  theme: "neopolitan",
+  theme: "default",
   product: {
     name: "UNITEC@ISW",
     link: "https://unitec.edu/",
@@ -20,19 +20,19 @@ let MailGenerator = new Mailgen({
 });
 var email = {
   body: {
-    name: "John Appleseed",
+    name: "Mercedes Paz",
     intro:
-      "You have received this email because a password reset request for your account was received.",
+      "Ha recibido este correo por que se recibió su solicitud para reestablecer su contraseña",
     action: {
-      instructions: "Click the button below to reset your password:",
+      instructions: "Haga click en el botón para reestablecer su contraseña",
       button: {
         color: "#DC4D2F",
-        text: "Reset your password",
+        text: "Reestablezca su contraseña",
         link: "https://mailgen.js/reset?s=b350163a1a010d9729feb74992c1a010",
       },
     },
     outro:
-      "If you did not request a password reset, no further action is required on your part.",
+      "Si no solicitó este cambio de contraseña, haga caso omiso a este correo.",
   },
 };
 let mail = MailGenerator.generate(email);
