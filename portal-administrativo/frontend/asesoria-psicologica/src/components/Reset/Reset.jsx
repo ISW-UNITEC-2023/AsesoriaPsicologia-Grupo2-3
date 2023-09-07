@@ -1,8 +1,10 @@
-import React from "react";
-import { useState, useRef } from "react";
-import emailjs from "@emailjs/browser";
+"use strict";
+import React, { useState } from "react";
+import nodemailer from "nodemailer";
+
 import "./Reset.css";
 import { Link } from "react-router-dom";
+
 const Reset = () => {
   const [email, setEmail] = useState("");
   const [visible, setVisible] = useState(false);
@@ -10,61 +12,36 @@ const Reset = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+  let transporter = nodemailer.createTransport({
+    host: "smtp.forwardemail.net",
+    port: 465,
+    secure: true,
+    auth: {
+      user: import.meta.env.VITE_EMAIL,
+      pass: import.meta.env.VITE_PASSWORD,
+    },
+    tls: {
+      secureProtocol: "TLSv1_method",
+    },
+  });
 
-  const page = "Reset";
+  async function sendEmail() {
+    const info = await transporter.sendMail({
+      from: import.meta.env.VITE_EMAIL,
+      to: "pmercedes@unitec.edu",
+      subject: "Place Order",
+      text: "Hola",
+    });
+    console.log("Message sent: %s", info.messageId);
+  }
+
   const currentURL = window.location.href;
   console.log("currentURL", currentURL);
-
-  console.log("entered RESET");
-  const [mouseEnter, setMouseEnter] = useState(false);
-
-  console.log("Mount");
-  const updateMouseEnter = () => {
-    setMouseEnter((prev) => !prev);
-    console.log("Mouse event updated");
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      console.log(entry);
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      } else {
-        entry.target.classList.remove("show");
-      }
-    });
-  });
-  const hiddenElements = document.querySelectorAll(".hidden");
-  hiddenElements.forEach((el) => observer.observe(el));
-
-  const formRef = useRef();
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_KEY,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_KEY,
-        formRef.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then((result) => {
-        console.log(result.text);
-        setSuccess(true);
-      }),
-      (error) => {
-        console.log(error.text);
-        setSuccess(false);
-      };
-    setVisible((prev) => !prev);
-    console.log("Se ha enviado");
-  };
 
   return (
     <section data-section="reset">
       <div className="container">
-        <form ref={formRef} className="form-container" onSubmit={handleSubmit}>
+        <form className="form-container" onSubmit={sendEmail}>
           <div className="logo-container">
             <h1 className="className"></h1>
             <img
@@ -94,7 +71,7 @@ const Reset = () => {
                 <button
                   type="submit"
                   data-type="submit-button"
-                  onSubmit={handleSubmit}
+                  onSubmit={sendEmail}
                 >
                   Send{" "}
                 </button>
@@ -121,5 +98,4 @@ const Reset = () => {
     </section>
   );
 };
-
 export default Reset;
