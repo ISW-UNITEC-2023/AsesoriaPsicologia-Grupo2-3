@@ -1,7 +1,4 @@
-"use strict";
 import React, { useState } from "react";
-import nodemailer from "nodemailer";
-
 import "./Reset.css";
 import { Link } from "react-router-dom";
 
@@ -10,30 +7,9 @@ const Reset = () => {
   const [visible, setVisible] = useState(false);
 
   const handleEmailChange = (e) => {
+    e.prevent.default();
     setEmail(e.target.value);
   };
-  let transporter = nodemailer.createTransport({
-    host: "smtp.forwardemail.net",
-    port: 465,
-    secure: true,
-    auth: {
-      user: import.meta.env.VITE_EMAIL,
-      pass: import.meta.env.VITE_PASSWORD,
-    },
-    tls: {
-      secureProtocol: "TLSv1_method",
-    },
-  });
-
-  async function sendEmail() {
-    const info = await transporter.sendMail({
-      from: import.meta.env.VITE_EMAIL,
-      to: "pmercedes@unitec.edu",
-      subject: "Place Order",
-      text: "Hola",
-    });
-    console.log("Message sent: %s", info.messageId);
-  }
 
   const currentURL = window.location.href;
   console.log("currentURL", currentURL);
@@ -41,7 +17,7 @@ const Reset = () => {
   return (
     <section data-section="reset">
       <div className="container">
-        <form className="form-container" onSubmit={sendEmail}>
+        <form className="form-container" onSubmit={handleEmailChange}>
           <div className="logo-container">
             <h1 className="className"></h1>
             <img
@@ -68,11 +44,7 @@ const Reset = () => {
               <div className="input-container">
                 <input type="email" className="email-input" />
 
-                <button
-                  type="submit"
-                  data-type="submit-button"
-                  onSubmit={sendEmail}
-                >
+                <button type="submit" data-type="submit-button">
                   Send{" "}
                 </button>
               </div>
