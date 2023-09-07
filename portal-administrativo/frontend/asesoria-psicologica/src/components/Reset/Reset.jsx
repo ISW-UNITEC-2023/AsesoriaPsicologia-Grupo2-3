@@ -1,70 +1,23 @@
-import React from "react";
-import { useState, useRef } from "react";
-import emailjs from "@emailjs/browser";
+import React, { useState } from "react";
 import "./Reset.css";
 import { Link } from "react-router-dom";
+
 const Reset = () => {
   const [email, setEmail] = useState("");
   const [visible, setVisible] = useState(false);
 
   const handleEmailChange = (e) => {
+    e.prevent.default();
     setEmail(e.target.value);
   };
 
-  const page = "Reset";
   const currentURL = window.location.href;
   console.log("currentURL", currentURL);
-
-  console.log("entered RESET");
-  const [mouseEnter, setMouseEnter] = useState(false);
-
-  console.log("Mount");
-  const updateMouseEnter = () => {
-    setMouseEnter((prev) => !prev);
-    console.log("Mouse event updated");
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      console.log(entry);
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      } else {
-        entry.target.classList.remove("show");
-      }
-    });
-  });
-  const hiddenElements = document.querySelectorAll(".hidden");
-  hiddenElements.forEach((el) => observer.observe(el));
-
-  const formRef = useRef();
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_KEY,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_KEY,
-        formRef.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then((result) => {
-        console.log(result.text);
-        setSuccess(true);
-      }),
-      (error) => {
-        console.log(error.text);
-        setSuccess(false);
-      };
-    setVisible((prev) => !prev);
-    console.log("Se ha enviado");
-  };
 
   return (
     <section data-section="reset">
       <div className="container">
-        <form ref={formRef} className="form-container" onSubmit={handleSubmit}>
+        <form className="form-container" onSubmit={handleEmailChange}>
           <div className="logo-container">
             <h1 className="className"></h1>
             <img
@@ -91,11 +44,7 @@ const Reset = () => {
               <div className="input-container">
                 <input type="email" className="email-input" />
 
-                <button
-                  type="submit"
-                  data-type="submit-button"
-                  onSubmit={handleSubmit}
-                >
+                <button type="submit" data-type="submit-button">
                   Send{" "}
                 </button>
               </div>
@@ -121,5 +70,4 @@ const Reset = () => {
     </section>
   );
 };
-
 export default Reset;
