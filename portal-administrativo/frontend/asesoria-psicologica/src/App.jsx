@@ -13,7 +13,12 @@ function App() {
         <Route exact path="/">
           <Login />
         </Route>
-        <Route exact path="/navbar"> {/*iba el reset modifique para poder visual el navbar*/}
+        <Route exact path="/navbar">
+          {" "}
+          {/*iba el reset modifique para poder visual el navbar*/}
+          <Reset />
+        </Route>
+        <Route exact path="/reset">
           <Reset />
         </Route>
         <Route exact path="/forgot">
