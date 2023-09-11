@@ -17,14 +17,14 @@ function MyNavbar() {
             </Navbar.Brand>
 
                 <Nav className="flex-column">
-                    <Nav.Link href="/sections" style={{ fontWeight: 'bold' }}>
+                    <Nav.Link href="/inicio" style={{ fontWeight: 'bold' }}>
                         <i class="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
                         Inicio
                     </Nav.Link>
 
                     <Nav.Link href="/anuncios" style={{ fontWeight: 'bold' }}>
                     <i class="bi bi-megaphone-fill" style={{marginRight: '10px'}}></i>
-                        Anuncios 
+                        Anuncios
                     </Nav.Link>
 
                     <Nav.Link href="/modulos" style={{ fontWeight: 'bold' }}>
@@ -32,14 +32,14 @@ function MyNavbar() {
                         Modulos
                     </Nav.Link>  {/*modulos son las clases y se muestran en tarjetitas*/ }
                     
-                    <Nav.Link href="/calendario" style={{ fontWeight: 'bold' }}>
+                    <Nav.Link href="/sections" style={{ fontWeight: 'bold' }}>
                         <i class="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
-                        Calendario
+                        Secciones
                     </Nav.Link>
 
-                    <Nav.Link href="/zoom" style={{ fontWeight: 'bold' }}>
+                    <Nav.Link href="/pacientes" style={{ fontWeight: 'bold' }}>
                     <i class="bi bi-calendar-event-fill" style={{marginRight: '10px'}}></i>
-                        Zoom
+                        Pacientes
                     </Nav.Link>
                 </Nav>
                 <Form className="d-flex mt-3">

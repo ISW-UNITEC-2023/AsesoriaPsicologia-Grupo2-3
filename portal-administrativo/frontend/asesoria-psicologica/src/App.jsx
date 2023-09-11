@@ -13,27 +13,6 @@ import SectionsDashBoard from "./pages/DashBoard/DashBoard"
 function App() {
   return (
     <Router>
-<<<<<<< Updated upstream
-      <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route exact path="/navbar">
-          {" "}
-          {/*iba el reset modifique para poder visual el navbar*/}
-          <Reset />
-        </Route>
-        <Route exact path="/reset">
-          <Reset />
-        </Route>
-        <Route exact path="/forgot">
-          <Reset />
-        </Route>
-        <Route exact path="/reset-pass">
-          <ResetPass />
-        </Route>
-      </Switch>
-=======
         <div style={{display:'flex', flexDirection:'row'}}>
           <Navbar/> 
           <Switch >
@@ -58,9 +37,11 @@ function App() {
             <Route exact path="/sections"> {/*iba el reset modifique para poder visual el navbar*/}
               <SectionsDashBoard />
             </Route>
+            <Route exact path="/pacientes"> {/*iba el reset modifique para poder visual el navbar*/}
+              <PacientesForm />
+            </Route>
           </Switch>
         </div>
->>>>>>> Stashed changes
     </Router>
   );
 }

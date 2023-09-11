@@ -25,7 +25,7 @@ function ModulosForm() {
 
   const loadModules = () => {
     axios
-      .get("http://localhost:3000/modulos/all")
+      .get("http://localhost:3001/modulos/all")
       .then((response) => {
         setModules(response.data);
       })
