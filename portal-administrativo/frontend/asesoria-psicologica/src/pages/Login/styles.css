@@ -1,0 +1,104 @@
+/* App component styles */
+.app {
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  height: 80vh; /* Utilize full viewport height */
+  background-color: #212a53;
+}
+
+/* Input container styles */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px auto; /* Centra horizontalmente */
+  width: 100%;
+  max-width: 400px; /* Limita el ancho máximo de las cajas de entrada y del botón */
+  color: white;
+}
+
+/* Style to align label text to the left */
+.input-container label {
+  text-align: left;
+}
+
+/* Input styles */
+input[type="text"],
+input[type="password"] {
+  height: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 10px; /* Ajusta el relleno para que sea uniforme con el botón */
+  font-size: 15px; /* Ajusta el tamaño de fuente para que sea uniforme con el botón */
+  width: 100%; /* Utiliza el ancho completo del contenedor */
+}
+
+/* Submit button styles */
+input[type="submit"] {
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  background: #c41f26; /* Red color */
+  border: 1px solid #c41f26; /* Red color */
+  color: white; /* White font color */
+  padding: 10px 0; /* Adjust padding for better alignment */
+  width: 100%; /* Utilize full width */
+  max-width: 400px; /* Limit the maximum width of the button */
+  margin: 10px auto; /* Centra horizontalmente */
+}
+
+input[type="submit"]:hover {
+  background: #9e1c21; /* Darker shade of red */
+}
+
+/* Login form styles */
+.login-form {
+  background-color: #212a53;
+  padding: 2rem;
+  width: 100%; /* Set width to 100% to match the outer div's width */
+  max-width: 400px; /* Limit the maximum width of the form */
+}
+
+/* Error message styles */
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+/* Title styles */
+.title-login {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: white;
+  text-align: center;
+}
+
+/* Links container styles */
+.links-container {
+  display: flex; /* Usar flexbox para alinear los elementos horizontalmente */
+  justify-content: space-between; /* Distribuir los elementos al máximo en el contenedor */
+  margin-top: 10px;
+}
+
+/* Individual link styles */
+.links-container a {
+  color: white;
+  font-size: 15px;
+  text-decoration: none;
+  margin-left: 2.5%;
+}
+
+.links-container a:first-child {
+  margin-right: auto; /* Empujar completamente a la izquierda */
+}
+
+.links-container a:last-child {
+  margin-left: auto; /* Empujar completamente a la derecha */
+}
+
+.links-container a:hover {
+  text-decoration: underline;
+}

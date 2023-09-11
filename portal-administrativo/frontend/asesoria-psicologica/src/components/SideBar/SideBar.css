@@ -1,0 +1,11 @@
+.SideBar-black-background {
+  background-color: black;
+  color: #ffffff; /* Cambiar el color del texto para que sea visible en fondo negro */
+  width: "80px";
+  padding: "20px";
+  font-size: "12px";
+}
+
+.nav-link-colorFont {
+  color: black;
+}

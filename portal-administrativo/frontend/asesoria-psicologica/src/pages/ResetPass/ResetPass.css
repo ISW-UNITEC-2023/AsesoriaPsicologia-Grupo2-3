@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 section[data-section="reset"] {
     margin: 7rem auto;
     max-width: 55%;
@@ -83,3 +84,90 @@ section[data-section="reset"] {
     align-items: center;
     height: 10vh; /* Esto centra verticalmente el contenido */
   }
+=======
+    section[data-section="reset"] {
+        margin: 7rem auto;
+        max-width: 55%;
+        max-height: 50%;
+        border: 5px solid red;
+        background-color: white;
+    }
+    
+    .form-container {
+        max-width: 1100px;
+        --container-padding: 8rem;
+        width: min(var(--max-width), 100% - (var(--container-padding) * 2));
+        margin-inline: auto;
+        position: relative;
+    }
+    
+    h1[data-type="heading"] {
+        text-align: center;
+        font-size: 2rem;
+        margin-top: 15px;
+
+    }
+    
+    .form-container:nth-child(1) > * {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .input-container {
+        text-align: center;
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+    
+    button[data-type="submit-button"] {
+        background-color: #c32026;
+        color: white;
+        margin-top: 23px;
+        margin-bottom: 10px;
+
+    }
+    
+    button[data-type="submit-button"]:is(:hover, :focus) {
+        background-color: #e81b1c;
+        margin-top: 23px;
+        margin-bottom: 10px;
+    }
+    
+    button[data-type="submit-button"]:is(:active) {
+        color: #9b1212;
+        font-weight: bold;
+        margin-top: 23px;
+        margin-bottom: 10px;
+    }
+    
+    button[data-type="back-to-button"] {
+        margin-top: 1rem;
+        border: none;
+        background-color: transparent;
+        text-decoration: none;
+    }
+    
+    button[data-type="back-to-button"]:is(:hover, :focus) {
+        color: #c32026;
+    }
+    
+    @media (max-width: 100.375em) {
+        .logo-container {
+        width: 68%;
+        margin: auto;
+        }
+    }
+    .center-content {
+        display: flex;
+        justify-content: center; /* Centra horizontalmente */
+        align-items: center; /* Centra verticalmente */
+        height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    }
+    .centered-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh; /* Esto centra verticalmente el contenido */
+    }
+>>>>>>> Stashed changes

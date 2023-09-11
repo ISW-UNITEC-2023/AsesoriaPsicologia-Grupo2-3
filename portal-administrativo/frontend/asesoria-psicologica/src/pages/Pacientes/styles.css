@@ -1,0 +1,51 @@
+.title-pacientes {
+  font-size: 40px;
+
+  padding: 20px;
+  color: #333;
+  font-weight: bold;
+  text-align: left;
+}
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nombre-box {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  color: #333;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nombre-box:hover {
+  background-color: #d3d3d3;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.icon-persona {
+  margin-right: 15px;
+  font-size: 30px;
+  color: #5281ce;
+}
