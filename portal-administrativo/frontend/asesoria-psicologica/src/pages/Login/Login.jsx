@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles.css";
 
 function LoginForm() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ function LoginForm() {
 
   const handleLoginSuccess = () => {
     setIsSubmitted(true);
-    history.push("/Modulos");
+    navigate("/Modulos");
     // Así se hace un refresh por el bug de los botones de sign up y sign in.
     window.location.reload();
   };

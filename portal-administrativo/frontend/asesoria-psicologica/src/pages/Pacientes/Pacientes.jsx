@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Services from "../../../utils/services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 function PacientesForm() {
+  const navigate = useNavigate();
   const [nombres, setNombres] = useState([]);
 
   async function initialList() {
@@ -42,7 +43,7 @@ function PacientesForm() {
       <ul>
         {nombres.map((nombre) => (
           <li key={nombre.email}>
-            <Link to={`/expedientes`}>
+            <Link to={'/expedientes'}>
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre">{nombre.nombre}</span>

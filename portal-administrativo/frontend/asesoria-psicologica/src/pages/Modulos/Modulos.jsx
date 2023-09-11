@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
-import { useHistory } from "react-router-dom";
 import Popup from "../../components/PopUp/PopUp";
 
 import Container from "react-bootstrap/Container";
@@ -13,8 +12,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 function ModulosForm() {
-  const history = useHistory();
-
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
   const [modules, setModules] = useState([]);

@@ -2,7 +2,6 @@
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Row from "react-bootstrap/Row";
 import React from 'react';
 
 function MyNavbar() {
