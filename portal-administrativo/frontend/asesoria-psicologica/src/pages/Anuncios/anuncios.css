@@ -53,4 +53,20 @@
   color: #555;
 }
 
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.dropdown-item {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+ .ml-align {
+  
+ }
+
 /*Estilos para el menu de opciones*/
