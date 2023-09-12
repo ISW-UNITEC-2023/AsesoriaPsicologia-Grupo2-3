@@ -23,6 +23,7 @@ export async function createSection(section) {
   };
 
   const response = await axios.request(options);
+
   return response.data;
 }
 

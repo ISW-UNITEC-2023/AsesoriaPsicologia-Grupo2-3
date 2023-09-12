@@ -24,7 +24,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, onUpdateModuleList }) => {
     };
 
     axios
-      .post("http://localhost:3000/modulos", newModule)
+      .post("http://localhost:3001/modulos", newModule)
       .then((response) => {
         console.log("Módulo creado:", response.data);
         onUpdateModuleList(); // Llama a la función para actualizar la lista de módulos

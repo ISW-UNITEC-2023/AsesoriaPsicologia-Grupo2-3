@@ -61,7 +61,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
       // Mostrar un mensaje de éxito
       alert("Sección creada exitosamente");
 
-      console.log("sectionData", sectionData);
+      //console.log("sectionData", sectionData);
     } catch (error) {
       alert("Error al crear la sección!");
     }

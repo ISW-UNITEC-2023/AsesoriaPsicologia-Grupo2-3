@@ -21,12 +21,14 @@ function SectionsPage() {
 
   return (
     <div>
-      <h1>Detalles del Curso</h1>
+      <div className="container-header">
+        <h1 className="title-modulo">Secciones</h1>
+      </div>
+
       {courseList.length > 0 ? (
         <div>
-          <h2>Información Adicional del Curso</h2>
           {courseList.map((course) => (
-            <div key={course.id} className="course-card">
+            <div key={course.courseId} className="course-card">
               <h3>Nombre del Curso: {course.CourseName}</h3>
               <p>Codigo de Clase: {courseId}</p>
               <p>UV: {course.UV}</p>
