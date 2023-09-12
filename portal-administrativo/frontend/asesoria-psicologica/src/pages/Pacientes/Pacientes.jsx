@@ -36,14 +36,14 @@ function PacientesForm() {
   }, []);
 
   return (
-    <div style={{width:"90%"}}>
+    <div style={{ width: "90%" }}>
       <div className="container-header">
         <h1 className="title-pacientes">Pacientes</h1>
       </div>
       <ul>
         {nombres.map((nombre) => (
           <li key={nombre.email}>
-            <Link to={'/expedientes'}>
+            <Link to={"/expedientes"}>
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre">{nombre.nombre}</span>

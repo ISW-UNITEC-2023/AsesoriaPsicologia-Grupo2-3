@@ -10,7 +10,7 @@ import Expedientes from "./pages/Vistas/Vistas";
 import SectionsDashBoard from "./pages/DashBoard/DashBoard";
 import SectionsPage from "./pages/Sections/Sections";
 import AnunciosPage from "./pages/AnunciosCrear/AnunciosCrear";
-
+import Anuncios from "./pages/Anuncios/anuncios";
 
 function App() {
   return (
