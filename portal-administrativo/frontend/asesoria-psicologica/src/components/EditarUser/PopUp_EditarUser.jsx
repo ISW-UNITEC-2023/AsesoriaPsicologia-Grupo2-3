@@ -12,12 +12,6 @@ const EditarUser = ({ isOpen, onClose }) => {
     transform: isOpen ? "scale(1)" : "scale(0.8)",
   };
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="popup-overlay" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
@@ -33,10 +27,10 @@ const EditarUser = ({ isOpen, onClose }) => {
               className="form-control"
               id="usuario"
               placeholder="Ingrese el ID"
-              readonly="true"
+              readOnly={true}
+              disabled={true} // Deshabilitar la caja de texto
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="nombre">Nombre Completo</label>
             <input
@@ -53,23 +47,22 @@ const EditarUser = ({ isOpen, onClose }) => {
               className="form-control"
               id="correo"
               placeholder="Ingrese el correo electrónico"
+              readOnly={true}
+              disabled={true} // Deshabilitar la caja de texto
             />
           </div>
           <div className="form-group">
             <label htmlFor="contraseña">Contraseña</label>
             <div className="password-input">
               <input
-                type={showPassword ? "text" : "password"}
+                type="password" // Cambia el tipo a "password"
                 className="form-control"
                 id="contraseña"
                 placeholder="Ingrese la contraseña"
+                readOnly={true}
+                disabled={true} // Deshabilitar la caja de texto
               />
-              <span
-                className={`password-toggle ${
-                  showPassword ? "fa fa-eye" : "fa fa-eye-slash"
-                }`}
-                onClick={togglePasswordVisibility}
-              ></span>
+              <span className="password-toggle fa fa-eye-slash"></span>
             </div>
           </div>
 
