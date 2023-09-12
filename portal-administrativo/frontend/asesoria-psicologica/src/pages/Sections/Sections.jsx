@@ -31,12 +31,18 @@ function SectionsPage() {
             <div key={course.courseId} className="course-card">
               <h3>Nombre del Curso: {course.CourseName}</h3>
               <p>Codigo de Clase: {courseId}</p>
+              <p>Id seccion: {course.SectionId}</p>
               <p>UV: {course.UV}</p>
               <p>año: {course.Year}</p>
               <p>Trimestre: {course.Quarter}</p>
               <p>Docente: {course.Teacher}</p>
               {/* Otros detalles del curso */}
+              <button type="button" class="bi bi-pencil-fill "  style={{}}>
+            </button>
+            <button type= "button" class= "bi bi-trash-fill" style={{}}>
+          </button>
             </div>
+          
           ))}
         </div>
       ) : (
