@@ -1,6 +1,6 @@
 const HTTPCodes = require("../Utils/HTTPCodes");
 
-const { getUsersCredentials, createUser, updUserAdmin, delUser, findExistingEmail} = require("../Service/users");
+const { getUsersCredentials, createUser, updUserAdmin, delUser, findExistingEmail, updUserEmail, updUserPassword} = require("../Service/users");
 const { isName, isEmail, isPassword} = require("../Utils/validator");
 const crypto = require("crypto");
 
@@ -99,9 +99,74 @@ async function updateUserAdmin(req, res) {
  }
 }
 
+async function updateUserPassword(req, res) {
+  const { id_account, password} = req.body;
+  const errorMessages = [];
+
+  try {
+    // if (!isPassword(password)) {
+    //   errorMessages.push("Password is not valid.");
+    // }
+
+    if (errorMessages.length) {
+      res.status(HTTPCodes.BAD_REQUEST).send({ error: errorMessages });
+    } else {
+      const salt = crypto.randomBytes(128).toString("base64");
+      const encryptedPassword = crypto
+        .pbkdf2Sync(password, salt, parseInt(process.env.HASH_ITERATIONS), parseInt(process.env.KEY_LENGTH), "sha256")
+        .toString("base64");
+
+      await updUserPassword({
+        id_account: id_account,
+        password: encryptedPassword,
+        salt: salt,
+      });
+
+      res.send({
+        success: true,
+        id_account,
+      });
+    }
+
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo cambiar la contraseña.",
+    });
+  }
+}
+
+async function updateUserEmail(req, res) {
+  const { id_account, email } = req.body;
+  const errorMessages = [];
+
+  try {
+    if (!isEmail(email)) {
+      errorMessages.push("Email is not valid.");
+    }
+
+    if (errorMessages.length) {
+      res.status(HTTPCodes.BAD_REQUEST).send({ error: errorMessages });
+    } else {
+      await updUserEmail(req.body);
+
+      res.send({
+        success: true,
+        id_account,
+      });
+    }
+
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo cambiar el email.",
+    });
+  }
+}
+
 module.exports = {
   getUserList,
   registerUser,
   deleteUser,
   updateUserAdmin,
+  updateUserPassword,
+  updateUserEmail,
 };

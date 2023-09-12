@@ -50,11 +50,16 @@ const updUserAdmin = async (user) => {
 }
 
 const updUserPassword = async (user) => {
-  
+  await knex("users").where("id_account", user.id_account).update({
+    password: user.password,
+    salt: user.salt,
+  });
 }
 
 const updUserEmail = async (user) => {
-
+  await knex("users").where("id_account", user.id_account).update({
+    email: user.email,
+  });
 }
 
 async function findExistingEmail(email) {
@@ -72,4 +77,6 @@ module.exports = {
   delUser,
   updUserAdmin,
   findExistingEmail,
+  updUserPassword,
+  updUserEmail,
 };
