@@ -10,22 +10,30 @@ import Expedientes from "./pages/Vistas/Vistas"
 import SectionsDashBoard from "./pages/DashBoard/DashBoard"
 import SectionsPage from "./pages/Sections/Sections";
 
+
 function App() {
   return (
     <Router>
         <div style={{display:'flex', flexDirection:'row'}}>
           <Navbar />
           <Routes>
+                      {/*AQUI INICIAN LAS RUTAS DEL NAVBAR*/}
             <Route path="/" element={<Modulos />} />
-            <Route path="/inicio" element={<Modulos />} />
-            <Route path="/reset" element={<Reset />} /> {/*iba el reset modifique para poder visual el navbar*/}
+            <Route path="/dashboard" element={<Modulos />} />
+            <Route path="/anuncios" /> 
+            <Route path="/clases" /> 
+            <Route path="/calendar"/>
+            <Route path="/cuentas" element={<PacientesForm />} /> 
+            <Route path="/historial" /> 
+                          {/*AQUI FINALIZAN LAS RUTAS DEL NAVBAR*/}
+            <Route path="/reset" element={<Reset />} /> 
             <Route path="/forgot" element={<Reset />} />
             <Route path="/reset-pass" element={<ResetPass />} />
-            <Route path="/modulos" element={<Modulos />} /> {/*iba el reset modifique para poder visual el navbar*/}
-            <Route path="/expedientes" element={<Expedientes />} /> {/*iba el reset modifique para poder visual el navbar*/}
-            <Route path="/sections" element={<SectionsDashBoard />} /> {/*iba el reset modifique para poder visual el navbar*/}
-            <Route path="/pacientes" element={<PacientesForm />} /> {/*iba el reset modifique para poder visual el navbar*/}
+            <Route path="/modulos" element={<Modulos />} /> 
+            <Route path="/expedientes" element={<Expedientes />} /> 
+            <Route path="/sections" element={<SectionsDashBoard />} /> 
             <Route path="/sections/:courseId" element={<SectionsPage />} />{" "}
+          
           </Routes>
         </div>
     </Router>
