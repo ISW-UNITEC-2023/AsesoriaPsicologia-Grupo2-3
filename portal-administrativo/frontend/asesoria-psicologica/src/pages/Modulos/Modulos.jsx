@@ -70,7 +70,7 @@ function ModulosForm() {
   };
 
   return (
-    <div style={{width:'90%'}}>
+    <div style={{ width: "90%" }}>
       <div className="container-header">
         <h1 className="title-modulo">Módulos</h1>
         <a

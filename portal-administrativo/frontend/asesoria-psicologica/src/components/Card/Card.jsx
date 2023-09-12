@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom"; // Importar Link
-import Popup from "../PopUp/PopUp";
+import Popup from "../SectionPopUp/PopUp";
 import { MDBBadge } from "mdb-react-ui-kit";
-
+import "./Card.css";
 function MyCard(props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -15,8 +15,8 @@ function MyCard(props) {
     TeacherId: "",
   });
 
-  const togglePopup = (CourseName, SectionId, CourseId) => {
-    setSelectedButtonInfo({ CourseName, SectionId, CourseId });
+  const togglePopup = (CourseName, CourseId) => {
+    setSelectedButtonInfo({ CourseName, CourseId });
     setPopupOpen(!isPopupOpen);
   };
 
@@ -29,42 +29,40 @@ function MyCard(props) {
       />
 
       <Card.Body>
-        <button
-          onClick={() =>
-            togglePopup(props.CourseName, props.SectionId, props.CourseId)
-          }
-        >
-          +
-        </button>
-
-        <Popup
-          isOpen={isPopupOpen}
-          onClose={() => togglePopup("", "", "")}
-          selectedButtonInfo={selectedButtonInfo}
-        />
-
         <Card.Title>
           {/* Usar Link para redireccionar a /sections/ con CourseId */}
-          <Link to={`/sections/${props.CourseId}`}>{props.CourseName}</Link>
+          <Link to={`/sections/${props.id}`}>{props.name}</Link>
         </Card.Title>
 
         <Card.Text>
-          <strong>SECCION:</strong> {props.SectionId}
+          <strong>Id:</strong> {props.id}
           <br />
-          <strong>Docente:</strong> {props.Teacher}
+          <strong>Description:</strong> {props.description}
           <br />
         </Card.Text>
 
         <div>
-          <Button className="position-relative">Notifications</Button>
-          <MDBBadge
-            color="danger"
-            pill
-            className="position-absolute translate-middle"
-          >
-            99+
-            <span className="visually-hidden">unread messages</span>
-          </MDBBadge>
+          <div className="tab-container">
+            <Button className="tab-button">Notifications</Button>
+            <MDBBadge color="danger" pill className="badge">
+              99+
+              <span className="visually-hidden">unread messages</span>
+            </MDBBadge>
+          </div>
+          <div className="tab-container">
+            <Button
+              className="tab-button"
+              onClick={() => togglePopup(props.name, props.id)}
+            >
+              +
+            </Button>
+          </div>
+
+          <Popup
+            isOpen={isPopupOpen}
+            onClose={() => togglePopup("", "")}
+            selectedButtonInfo={selectedButtonInfo}
+          />
         </div>
       </Card.Body>
     </Card>
