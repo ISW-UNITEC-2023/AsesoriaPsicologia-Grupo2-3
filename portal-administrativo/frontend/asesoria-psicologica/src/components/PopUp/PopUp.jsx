@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PopUp.css";
 import axios from "axios"; // Importa Axios
 
@@ -14,6 +14,14 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, onUpdateModuleList }) => {
 
   const [moduleName, setModuleName] = useState(""); // Estado para el nombre del módulo
   const [moduleDescription, setModuleDescription] = useState(""); // Estado para la descripción del módulo
+
+  useEffect(() => {
+    // Restablecer el estado cuando el componente se monta o isOpen cambia
+    if (isOpen) {
+      setModuleName("");
+      setModuleDescription("");
+    }
+  }, [isOpen]);
 
   const handleSaveModule = () => {
     console.log("Intentando crear el módulo...");

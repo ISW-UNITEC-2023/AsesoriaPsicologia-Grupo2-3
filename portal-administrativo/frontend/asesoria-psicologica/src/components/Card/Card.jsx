@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"; // Importar Link
 import Popup from "../SectionPopUp/PopUp";
 import { MDBBadge } from "mdb-react-ui-kit";
 import "./Card.css";
+
 function MyCard(props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -56,13 +57,12 @@ function MyCard(props) {
             >
               +
             </Button>
+            <Popup
+              isOpen={isPopupOpen}
+              onClose={() => togglePopup("", "")}
+              selectedButtonInfo={selectedButtonInfo}
+            />
           </div>
-
-          <Popup
-            isOpen={isPopupOpen}
-            onClose={() => togglePopup("", "")}
-            selectedButtonInfo={selectedButtonInfo}
-          />
         </div>
       </Card.Body>
     </Card>
