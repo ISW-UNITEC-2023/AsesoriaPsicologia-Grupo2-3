@@ -4,8 +4,13 @@ const {
   CreateSection: createSection,
   DeleteSection: deleteSection,
   SectionExists: sectionExi,
-  updateSection: update,
+  updateSectionCourseId: updateCourse,
+  updateQuarterSection: updateQuarter,
+  updateTeacherSection: updateTeacher,
+  updateYearSection: updateYear,
 } = require("../Service/section");
+
+const { TeacherExists: existTeacher } = require("../Service/admin");
 
 async function getSections(_, res) {
   const sections = await get();
@@ -49,7 +54,7 @@ async function EraseSection(req, res) {
   }
 }
 
-async function UpdateSection(req, res) {
+async function UpdateSectionCourseId(req, res) {
   try {
     const errorMessage = [];
 
@@ -67,7 +72,115 @@ async function UpdateSection(req, res) {
     if (errorMessage.length > 0) {
       res.status(404).send(errorMessage);
     } else {
-      await update(id, course.course_id);
+      await updateCourse(id, course.course_id);
+      res.status(200).send();
+    }
+  } catch (e) {
+    res.status(500).send("INTERNAL SERVER ERROR!!");
+  }
+}
+
+async function UpdateSectionCourseId(req, res) {
+  try {
+    const errorMessage = [];
+
+    const { id } = req.query;
+    const course = req.body;
+    const exists = await sectionExi(id);
+
+    if (!id) {
+      errorMessage.push("PARAMETER ID REQUIRED!!");
+    }
+    if (!exists) {
+      errorMessage.push("ID NOT EXISTS!!");
+    }
+
+    if (errorMessage.length > 0) {
+      res.status(404).send(errorMessage);
+    } else {
+      await updateCourse(id, course.course_id);
+      res.status(200).send();
+    }
+  } catch (e) {
+    res.status(500).send("INTERNAL SERVER ERROR!!");
+  }
+}
+
+async function UpdateSectionTeacher(req, res) {
+  try {
+    const errorMessage = [];
+
+    const { id } = req.query;
+    const teacher = req.body;
+    const exists = await existTeacher(teacher);
+    const existsId = await sectionExi(id);
+
+    if (!id) {
+      errorMessage.push("PARAMETER ID SECTION REQUIRED!!");
+    }
+    if (!exists) {
+      errorMessage.push("ID TEACHER NOT EXISTS!!");
+    }
+    if (!existsId) {
+      errorMessage.push("ID SECTION NOT EXISTS!!");
+    }
+
+    if (errorMessage.length > 0) {
+      res.status(404).send(errorMessage);
+    } else {
+      await updateTeacher(id, teacher.teacher_id);
+      res.status(200).send();
+    }
+  } catch (e) {
+    res.status(500).send("INTERNAL SERVER ERROR!!");
+  }
+}
+
+async function UpdateSectionYear(req, res) {
+  try {
+    const errorMessage = [];
+
+    const { id } = req.query;
+    const change = req.body;
+    const existsId = await sectionExi(id);
+
+    if (!id) {
+      errorMessage.push("PARAMETER ID SECTION REQUIRED!!");
+    }
+    if (!existsId) {
+      errorMessage.push("ID SECTION NOT EXISTS!!");
+    }
+
+    if (errorMessage.length > 0) {
+      res.status(404).send(errorMessage);
+    } else {
+      await updateYear(id, change.year);
+      res.status(200).send();
+    }
+  } catch (e) {
+    res.status(500).send("INTERNAL SERVER ERROR!!");
+  }
+}
+
+async function UpdateSectionQuarter(req, res) {
+  try {
+    const errorMessage = [];
+
+    const { id } = req.query;
+    const change = req.body;
+    const existsId = await sectionExi(id);
+
+    if (!id) {
+      errorMessage.push("PARAMETER ID SECTION REQUIRED!!");
+    }
+    if (!existsId) {
+      errorMessage.push("ID SECTION NOT EXISTS!!");
+    }
+
+    if (errorMessage.length > 0) {
+      res.status(404).send(errorMessage);
+    } else {
+      await updateQuarter(id, change.quarter);
       res.status(200).send();
     }
   } catch (e) {
@@ -80,5 +193,8 @@ module.exports = {
   InfoSection,
   sectionCreate,
   EraseSection,
-  UpdateSection,
+  UpdateSectionCourseId,
+  UpdateSectionTeacher,
+  UpdateSectionYear,
+  UpdateSectionQuarter,
 };

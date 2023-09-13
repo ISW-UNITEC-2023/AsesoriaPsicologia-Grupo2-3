@@ -74,9 +74,30 @@ async function SectionExists(id) {
   return SectionExist;
 }
 
-async function updateSection(id, course) {
+async function updateSectionCourseId(id, course) {
   await knex("sections").where("id", "=", id).update({
     course_id: course,
+  });
+  return;
+}
+
+async function updateTeacherSection(id, TeacherId) {
+  await knex("sections").where("id", "=", id).update({
+    teacher_id: TeacherId,
+  });
+  return;
+}
+
+async function updateYearSection(id, newYear) {
+  await knex("sections").where("id", "=", id).update({
+    year: newYear,
+  });
+  return;
+}
+
+async function updateQuarterSection(id, newQuarter) {
+  await knex("sections").where("id", "=", id).update({
+    quarter: newQuarter,
   });
   return;
 }
@@ -86,5 +107,8 @@ module.exports = {
   CreateSection,
   DeleteSection,
   SectionExists,
-  updateSection,
+  updateSectionCourseId,
+  updateQuarterSection,
+  updateTeacherSection,
+  updateYearSection,
 };
