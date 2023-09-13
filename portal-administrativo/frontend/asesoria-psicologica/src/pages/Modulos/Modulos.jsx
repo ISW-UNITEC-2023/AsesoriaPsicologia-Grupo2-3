@@ -3,9 +3,11 @@ import axios from "axios";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faTrashCan, faPen } from "@fortawesome/free-solid-svg-icons";
 
 import Popup from "../../components/PopUp/PopUp";
+import PopUpDelete from "../../components/DeletePopUp/PopUpDelete"
+import PopUpDeleted from "../../components/DeletePopUp/PopUpDeleted"
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,6 +15,8 @@ import Col from "react-bootstrap/Col";
 
 function ModulosForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
+  const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
   const [modules, setModules] = useState([]);
 
@@ -37,6 +41,25 @@ function ModulosForm() {
     setIsPopupOpen(true);
   };
 
+  const handleDeleteClick = (e, module) => { // Función para abrir la ventana emergente de confirmación
+    e.preventDefault(); // Evita que la página se recargue
+    setSelectedButtonInfo(module); // Guarda la información del módulo seleccionado
+    setIsDeletePopUpOpen(true); // Abre la ventana emergente de confirmación
+  };
+
+  const handleCancelDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
+    setIsDeletePopUpOpen(false);  // Cierra la ventana emergente cuando el usuario cancela
+  };
+
+  const handleConfirmDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
+    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
+    setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
+  };
+
+  const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
+    setIsDeletedPopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
+  };
+
   const cardElements = modules.map((module) => (
     <Col lg={4} md={6} xs={12}>
       <div className="card">
@@ -55,6 +78,16 @@ function ModulosForm() {
             >
               Entrar
             </a>
+
+            {/*Botón para abrir la ventana emergente de confirmación de editar*/}
+            <a href="#" className="btn btn-edit">
+              <FontAwesomeIcon icon={faPen} style={{ color: "#ffffff", }} />
+            </a>
+            {/*Botón para abrir la ventana emergente de confirmación de eliminar*/}
+            <a href="#" className="btn btn-delete" onClick={handleDeleteClick}>  
+              <FontAwesomeIcon icon={faTrashCan} style={{ color: "#ffffff", }} />
+            </a>
+
             <a href="#" className="btn btn-announcement">
               <FontAwesomeIcon icon={faAdd} />
             </a>
@@ -70,7 +103,7 @@ function ModulosForm() {
   };
 
   return (
-    <div style={{width:'90%'}}>
+    <div style={{ width: '90%' }}>
       <div className="container-header">
         <h1 className="title-modulo">Módulos</h1>
         <a
@@ -82,12 +115,33 @@ function ModulosForm() {
         </a>
       </div>
       <Container>{cardElements}</Container>
+
       {isPopupOpen && (
         <Popup
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
           selectedButtonInfo={selectedButtonInfo}
           onUpdateModuleList={updateModuleList} // Pasa la función de actualización al Popup
+        />
+      )}
+
+      {isDeletePopUpOpen && (
+        // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
+        <PopUpDelete
+          isOpen={isDeletePopUpOpen}
+          onConfirm={handleConfirmDeletePopup}
+          onCancel={handleCancelDeletePopup}
+          itemName={selectedButtonInfo.name}
+          pageNameMsg="modulo"
+        />
+      )}
+
+      {isDeletedPopUpOpen && (
+        // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
+        <PopUpDeleted
+          isOpen={isDeletePopUpOpen}
+          onClose={handleCloseDeletedPopup}
+          pageNameMsg="modulo"
         />
       )}
     </div>
