@@ -9,6 +9,7 @@ import PacientesForm from "./pages/Pacientes/Pacientes";
 import Expedientes from "./pages/Vistas/Vistas";
 import SectionsDashBoard from "./pages/DashBoard/DashBoard";
 import SectionsPage from "./pages/Sections/Sections";
+import AnunciosPage from "./pages/AnunciosCrear/AnunciosCrear";
 
 
 function App() {
@@ -40,7 +41,8 @@ function App() {
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Modulos />} />
+          <Route path="/" element={<AnunciosPage />} />
+          <Route path="/inicio" element={<Modulos />} />
           <Route path="/reset" element={<Reset />} />{" "}
           <Route path="/forgot" element={<Reset />} />
           <Route path="/reset-pass" element={<ResetPass />} />
@@ -48,6 +50,8 @@ function App() {
           <Route path="/expedientes" element={<Expedientes />} />{" "}
           <Route path="/sections" element={<SectionsDashBoard />} />{" "}
           <Route path="/sections/:courseId" element={<SectionsPage />} />{" "}
+           {/*iba el reset modifique para poder visual el navbar*/}
+           <Route path="/anuncios" element={<AnunciosPage />} />{" "}
         </Routes>
       </div>
     </Router>
