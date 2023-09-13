@@ -62,8 +62,29 @@ async function CreateSection(section) {
   });
 }
 
+async function DeleteSection(course_id) {
+  return knex("sections").where("id", course_id).del(); //delete from table where id=10
+}
+
+async function SectionExists(id) {
+  const SectionExist = JSON.parse(
+    JSON.stringify(await knex.select().table("sections").where("id", "=", id))
+  );
+
+  return SectionExist;
+}
+
+async function updateSection(id, course) {
+  await knex("sections").where("id", "=", id).update({
+    course_id: course,
+  });
+  return;
+}
 module.exports = {
   getSections,
   GetInfoSection,
   CreateSection,
+  DeleteSection,
+  SectionExists,
+  updateSection,
 };

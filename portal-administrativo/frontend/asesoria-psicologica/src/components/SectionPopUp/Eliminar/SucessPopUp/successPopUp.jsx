@@ -11,6 +11,11 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
     transform: isOpen ? "scale(1)" : "scale(0.8)",
   };
 
+  const handleClose = () => {
+    onClose();
+    window.location.reload(); // Recargar la página después de cerrar
+  };
+
   return (
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
@@ -18,7 +23,7 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
           <h2>Sección {sectionId} eliminada con éxito</h2>
           <button
             className="btn btn-danger"
-            onClick={onClose}
+            onClick={handleClose}
             style={{ marginRight: "10px" }}
           >
             Cerrar

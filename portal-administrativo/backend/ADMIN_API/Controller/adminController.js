@@ -16,7 +16,7 @@ const jwt = require("jsonwebtoken");
 async function deleteAdmin(req, res) {
   const id = req.body.id;
   await del(id);
-  res.send().status(200);
+  res.status(200).send();
 }
 
 async function getAdmins(_, res) {

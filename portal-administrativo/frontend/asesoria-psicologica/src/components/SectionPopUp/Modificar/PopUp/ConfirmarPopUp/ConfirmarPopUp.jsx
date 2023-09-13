@@ -27,6 +27,7 @@ const ConfirmarPopUp = ({
 
   // Función onConfirm que te lleva al PopUp de éxito
   const handleConfirm = () => {
+    console.log(sectionId);
     if (selectedOption === "teacher_id") {
       console.log(`Teacher ID seleccionado: ${selectedTeacherOption}`);
     } else if (selectedOption === "year") {

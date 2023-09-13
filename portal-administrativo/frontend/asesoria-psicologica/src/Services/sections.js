@@ -36,3 +36,18 @@ export async function getInfoSection(data) {
   const response = await axios.request(options);
   return response.data;
 }
+
+export async function deleteSection(id) {
+  const options = {
+    method: "DELETE",
+    url: "http://localhost:3001/sections/delete",
+    params: { id: id },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}

@@ -5,10 +5,8 @@ const admins = require("../Controller//adminController");
 
 //GETS
 router.get("/", admins.getAdmins);
-router.get("/teachers",admins.getTeachers);
-router.get("/students",admins.getStudents);
-
-
+router.get("/teachers", admins.getTeachers);
+router.get("/students", admins.getStudents);
 
 //UPDATE
 router.put("/update", admins.updateUser);

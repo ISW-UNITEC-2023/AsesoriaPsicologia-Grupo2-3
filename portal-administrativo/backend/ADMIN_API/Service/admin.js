@@ -26,7 +26,10 @@ async function getAdmins() {
 async function getTeachers() {
   const teacher = JSON.parse(
     JSON.stringify(
-      await knex.select("id","id_account","name").table("users").where("role", "DOCENTE")
+      await knex
+        .select("id", "id_account", "name")
+        .table("users")
+        .where("role", "DOCENTE")
     )
   );
 
@@ -75,12 +78,21 @@ async function findExistingEmail(email) {
   return email_find;
 }
 
+async function ExisteUser(id) {
+  const user = JSON.parse(
+    JSON.stringify(await knex.select().table("users").where("id", "=", id))
+  );
+  return user;
+}
+
 module.exports = {
   DeleteAdmin,
-  getAdmins: getUsers,
   registerAdmin,
   updateAdmin,
   findExistingEmail,
   getStudents,
   getTeachers,
+  getAdmins,
+  ExisteUser,
+  getUsers,
 };

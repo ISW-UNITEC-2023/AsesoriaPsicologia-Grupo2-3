@@ -1,6 +1,6 @@
 import React from "react";
 import "./ConfirmarPopUp.css";
-
+import { deleteSection } from "../../../../Services/sections";
 const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
@@ -17,8 +17,13 @@ const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
   };
 
   // Función onConfirm que te lleva al PopUp de éxito
-  const handleConfirm = () => {
-    onConfirm(); // Llamar a la función onConfirm cuando se confirma la modificación
+  const handleConfirm = async () => {
+    try {
+      await deleteSection(sectionId);
+      onConfirm();
+    } catch (error) {
+      console.error("Error deleting section:", error);
+    }
   };
 
   return (

@@ -14,9 +14,11 @@ const adminRouter = require("./Route/adminRoute");
 const sectionRouter = require("./Route/sectionRoute");
 const modulosRouter = require("./Route/modulesRoute");
 const userRouter = require("./Route/usersRoute");
+const announceRouter = require("./Route/announcesRoute");
 
 app.use("/admins", adminRouter);
 app.use("/sections", sectionRouter);
 app.use("/modulos", modulosRouter);
 app.use("/user", userRouter);
+app.use("/announces", announceRouter);
 app.listen(3001);
