@@ -84,7 +84,7 @@ function ModulosForm() {
               <FontAwesomeIcon icon={faPen} />
             </a>
             {/*Botón para abrir la ventana emergente de confirmación de eliminar*/}
-            <a className="btn btn-delete" onClick={handleDeleteClick}>  
+            <a className="btn btn-delete" onClick={(e) => handleDeleteClick(e, module)}>  
               <FontAwesomeIcon icon={faTrashCan} />
             </a>
 
@@ -131,7 +131,7 @@ function ModulosForm() {
           isOpen={true}
           onConfirm={handleConfirmDeletePopup}
           onCancel={handleCancelDeletePopup}
-          itemName={selectedButtonInfo}
+          itemName={selectedButtonInfo.name}
           pageName="modulo"
         />
       )}
