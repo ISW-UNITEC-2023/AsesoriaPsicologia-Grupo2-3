@@ -1,6 +1,6 @@
 const HTTPCodes = require("../Utils/HTTPCodes");
 
-const { getUsersCredentials, createUser, updUserAdmin, delUser, findExistingEmail, updUserEmail, updUserPassword} = require("../Service/users");
+const { getUsersCredentials, createUser, updUserAdmin, delUser, findExistingEmail, updUserEmail, updUserPassword, getUserByID} = require("../Service/users");
 const { isName, isEmail, isPassword} = require("../Utils/validator");
 const crypto = require("crypto");
 
@@ -18,8 +18,24 @@ async function getUserList(req, res) {
   }
 }
 
+async function getUser(req, res) {
+  const id_account = req.query.id_account;
+  
+    try {
+        const user = await getUserByID(id_account);
+
+        res.send({
+            user,
+          });
+    } catch (e) {
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+            error: "No se pudo obtener el usuario.",
+          });
+    }
+}
+
 async function registerUser(req, res) {
-  const { id_account, role, name, email, password } = req.body;
+  const { id_account, role, name, email, password, active } = req.body;
  
   try {
     const errorMessages = [];
@@ -55,6 +71,7 @@ async function registerUser(req, res) {
         email,
         encryptedPassword,
         salt,
+        active,
       });
       
       res.send({
@@ -164,6 +181,7 @@ async function updateUserEmail(req, res) {
 
 module.exports = {
   getUserList,
+  getUser,
   registerUser,
   deleteUser,
   updateUserAdmin,
