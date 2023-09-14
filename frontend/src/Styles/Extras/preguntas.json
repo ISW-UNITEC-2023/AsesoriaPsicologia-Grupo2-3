@@ -1,0 +1,43 @@
+[
+    {
+      "pregunta": "¿Has experimentado cambios drásticos en tu estado de ánimo en las últimas semanas?",
+      "respuestas": {
+        "resp1": "A. Sí, con frecuencia",
+        "resp2": "B. Ocasionalmente",
+        "resp3": "C. Raramente o nunca"
+      }
+    },
+    {
+      "pregunta": "¿Has notado alteraciones en tu apetito o peso corporal recientemente?",
+      "respuestas": {
+        "resp1": "A. Sí, he tenido cambios significativos",
+        "resp2": "B. Algunos cambios, pero no significativos",
+        "resp3": "C. No he notado cambios en mi apetito o peso"
+      }
+    },
+    {
+      "pregunta": "¿Has experimentado dificultades para concentrarte o tomar decisiones en tu vida cotidiana?",
+      "respuestas": {
+        "resp1": "A. Sí, con frecuencia",
+        "resp2": "B. Ocasionalmente",
+        "resp3": "C. No he tenido dificultades en este aspecto"
+      }
+    },
+    {
+      "pregunta": "¿Sientes una falta de interés o disfrute en actividades que normalmente solías disfrutar?",
+      "respuestas": {
+        "resp1": "A. Sí, he perdido interés en muchas cosas",
+        "resp2": "B. Algunas actividades me generan menos interés",
+        "resp3": "C. Sigo disfrutando de mis actividades habituales"
+      }
+    },
+    {
+      "pregunta": "¿Has experimentado cambios en tus patrones de sueño, como insomnio o dormir en exceso?",
+      "respuestas": {
+        "resp1": "A. Sí, mi sueño se ha visto significativamente afectado",
+        "resp2": "B. He tenido algunos problemas de sueño",
+        "resp3": "C. Mi patrón de sueño es relativamente estable"
+      }
+    }
+  ]
+  

@@ -1,0 +1,80 @@
+
+.page-container-vista {
+    max-width: 800px; /* Tamaño máximo del contenedor */
+    margin: 20px auto; /* Centrar horizontalmente en la página */
+    padding: 20px; /* Espacio interno alrededor del contenido */
+    background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
+    border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
+    box-shadow: 0 0 10px rgba(141, 141, 141, 0.529) ; /* Sombra (opcional) */
+    
+}
+
+.profile-container-vista {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-image-vista {
+    width: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    height: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+     /* Borde alrededor de la imagen (opcional) */
+    margin-right: 20px;
+}
+ 
+.image-container-vista {
+  position: relative;
+}
+
+/* Estilos para la imagen */
+.unitec-image-vista {
+  position:relative;
+  top: 0;
+  right: 0;
+  height: 50px;
+  /* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
+}
+
+  .profile-text-vista {
+    margin-top: 50px;
+    text-align: center;
+    font-style: Times normal;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+.columna-vista{
+  border:2px solid red;
+}
+
+.with-underline-vista {
+  text-decoration: underline;
+}
+
+.text-container-vista {
+  display: grid;
+  grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
+  gap: 10px; /* Espacio entre las columnas */
+  align-items: center; /* Centrar verticalmente */
+  
+}
+
+.fs-5-vista {
+  align-self: center; /* Alinear verticalmente el texto "Nombre:" y otros con subrayado */
+}
+
+.fs-5-alignment-vista {
+  text-align: right; /* Alinear el texto a la izquierda en los elementos fs-6 sin subrayado */
+  margin: 5; /* Eliminar el margen predeterminado de los elementos p */
+}
+
+.h3-vista{
+  margin-top: 20px;
+}
+
+.text-center-vista{
+  text-align: center;
+}
+
+
+

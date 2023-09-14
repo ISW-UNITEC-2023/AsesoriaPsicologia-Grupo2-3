@@ -1,0 +1,149 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+.bodyF {
+    background-image: url("../Images/bgLog.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    width: auto;
+    position: relative; /* Importante para el posicionamiento absoluto del pseudo-elemento */
+    animation: fadeIn 0.45s ease-in-out;
+}
+
+.bodyF::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 38, 89, 0.8);
+    z-index: 2; /* Asegura que el color esté por encima de la imagen */
+}
+
+.forgot-form {
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 500px;
+    background-color: #d9d9d9;
+    padding: 10px;
+    height: auto;
+    border-radius: 20px;
+    z-index: 2; /* Asegura que el formulario esté por encima del color */
+}
+
+.containerF {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #002659;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 5px 0;
+    box-sizing: border-box !important;
+    outline: #282c34;
+    background-color: #d9d9d9;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+}
+
+.input::placeholder {
+    color: #000;
+}
+
+/* Estilos para los campos de entrada con apariencia de rectángulos */
+.rectangle-input {
+    width: 30px; /* Ancho de cada campo de entrada */
+    height: 30px; /* Altura de cada campo de entrada */
+    text-align: center; /* Centrar el texto dentro del campo de entrada */
+    font-size: 16px; /* Tamaño de fuente del texto */
+    border: 1px solid #ccc; /* Borde del campo de entrada */
+    border-radius: 5px; /* Borde redondeado */
+    margin-right: 5px; /* Espaciado entre los campos de entrada */
+    margin-bottom: 10px;
+}
+
+.error-messageT {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+    align-self: flex-start;
+}
+
+
+.button {
+    background-color: #c6161c;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    width: 50%;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+.forgot-passwordL {
+    font-size: 16px;
+    font-weight: 600;
+    color: #002659;
+    cursor: pointer;
+    margin-top: -10px;
+    text-decoration: underline;
+    text-decoration-color: #002659;
+    text-decoration-thickness: 1px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media (max-width: 768px) {
+    .login-form {
+        position: fixed;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: 400px;
+        background-color: #d9d9d9;
+        padding: 10px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-form {
+        position: fixed;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+        width: 300px;
+        background-color: #d9d9d9;
+        padding: 10px;
+        border-radius: 20px;
+    }
+}
