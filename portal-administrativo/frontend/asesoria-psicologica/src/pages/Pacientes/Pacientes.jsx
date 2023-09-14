@@ -67,7 +67,7 @@ function PacientesForm() {
   return (
     <div style={{ width: "90%" }}>
       <div className="container-header">
-        <h1 className="title-pacientes">Pacientes</h1>
+        <h1 className="title-pacientes" style={{width:'400%'}}>Pacientes</h1>
         <button className="crear-participante-button" onClick={openCrearPopup}>
           Crear participante
         </button>
@@ -77,7 +77,7 @@ function PacientesForm() {
           <li key={nombre.email}>
             <div className="nombre-box">
               <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
-              <span className="nombre">
+              <span className="nombre" style={{width:'400%'}} >
                 <Link to={"/expedientes"}>{nombre.nombre}</Link>
               </span>
               {/* Agrega el evento onClick para abrir el popup de edición */}

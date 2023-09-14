@@ -72,25 +72,25 @@ function MyCard({props, handleReload}) {
           <br />
         </Card.Text>
 
-        <div>
-          <div className="tab-container">
+        <div style={{display:'flex'}}>
+          <div className="tab-container"  style={{display:'flex'}}>
           <button
                   type="button"
                   className="bi bi-pencil"
-                  style={{ backgroundColor: 'green', color: 'black',marginRight: "10px" }}
+                  style={{ backgroundColor: 'green', color: 'black',marginRight: "6px", width:'100%' }}
                   onClick={() => toggleModify(currentSectionId)}
-                ></button>
+          />
           <button
                   type="button"
                   className="bi bi-trash"
                   onClick={(e) => handleDeleteClick(e, props)}
-                  style={{backgroundColor: 'red', color: 'black'}}
-                ></button>
+                  style={{backgroundColor: 'red', color: 'black', width:'100%' }}
+          />
           </div>
           <div className="tab-container">
             <Button
               className="tab-button"
-              style={{marginLeft: '105px'}}
+              style={{marginLeft: '80px', width:'40%' }}
               onClick={() => togglePopup(props.name, props.id)}
             >
               +

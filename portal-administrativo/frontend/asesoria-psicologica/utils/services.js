@@ -138,7 +138,6 @@ async function updateUserEmail(id_account, email){
 export default {
   postLogin,
   getUsers,
-  getUser,
   registerUser,
   updateUser,
   deleteUser,

@@ -94,12 +94,7 @@ function SectionsPage() {
                 <p>Trimestre: {course.Quarter}</p>
                 <p>Docente: {course.Teacher}</p>
 
-                <button
-                  type="button"
-                  className="bi bi-pencil"
-                  style={{ marginRight: "10px",backgroundColor: 'green', color: 'black' }}
-                  onClick={() => toggleModify(currentSectionId)}
-                ></button>
+                
                 <ModificarPopUp
                   isOpen={isModify}
                   onClose={() => toggleModify(null)}
@@ -139,13 +134,20 @@ function SectionsPage() {
                   onClose={() => toggleModifySuccessPopup()}
                   sectionId={modifySectionId}
                 />
-
-                <button
-                  type="button"
-                  className="bi bi-trash"
-                  style={{backgroundColor: 'red', color: 'black'}}
-                  onClick={() => toggleDeleteConfirmPopup(currentSectionId)}
-                ></button>
+                <div style={{display:'flex'}}>
+                  <button
+                    type="button"
+                    className="bi bi-pencil"
+                    style={{ marginRight: "10px",backgroundColor: 'green', color: 'black' }}
+                    onClick={() => toggleModify(currentSectionId)}
+                  />
+                  <button
+                    type="button"
+                    className="bi bi-trash"
+                    style={{backgroundColor: 'red', color: 'black'}}
+                    onClick={() => toggleDeleteConfirmPopup(currentSectionId)}
+                  />
+                </div>
                 <EliminarConfirmarPopUp
                   isOpen={isDeleteConfirmPopupOpen}
                   onClose={() => toggleDeleteConfirmPopup(null)}
