@@ -1,6 +1,12 @@
 import React from "react";
 import "./ConfirmarPopUp.css";
 
+import {
+  updateTeacher,
+  updateQuarter,
+  updateYear,
+} from "../../../../../Services/sections";
+
 const ConfirmarPopUp = ({
   isOpen,
   onClose,
@@ -25,24 +31,26 @@ const ConfirmarPopUp = ({
     justifyContent: "space-between",
   };
 
-  // Función onConfirm que te lleva al PopUp de éxito
-  const handleConfirm = () => {
-    console.log(sectionId);
-    if (selectedOption === "teacher_id") {
-      console.log(`Teacher ID seleccionado: ${selectedTeacherOption}`);
-    } else if (selectedOption === "year") {
-      console.log(`Año seleccionado: ${selectedYearOption}`);
-    } else if (selectedOption === "quarter") {
-      console.log(`Trimestre seleccionado: Q${selectedQuarterOption}`);
+  const handleConfirm = async () => {
+    try {
+      if (selectedOption === "teacher_id") {
+        await updateTeacher(sectionId, selectedTeacherOption);
+      } else if (selectedOption === "year") {
+        await updateYear(sectionId, selectedYearOption);
+      } else if (selectedOption === "quarter") {
+        await updateQuarter(sectionId, selectedQuarterOption);
+      }
+      onConfirm();
+    } catch (error) {
+      console.error("Error al actualizar:", error);
     }
-    onConfirm(); // Llamar a la función onConfirm cuando se confirma la modificación
   };
 
   return (
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2>¿Está seguro que desea modificar la sección {sectionId}?</h2>{" "}
+          <h2>¿Está seguro que desea modificar la sección {sectionId}?</h2>
           <div style={buttonContainerStyle}>
             <button
               className="btn btn-danger"

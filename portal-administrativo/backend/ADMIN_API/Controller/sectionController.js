@@ -10,7 +10,7 @@ const {
   updateYearSection: updateYear,
 } = require("../Service/section");
 
-const { TeacherExists: existTeacher } = require("../Service/admin");
+const { ExisteTeacher: existTeacher } = require("../Service/admin");
 
 async function getSections(_, res) {
   const sections = await get();
@@ -112,7 +112,7 @@ async function UpdateSectionTeacher(req, res) {
 
     const { id } = req.query;
     const teacher = req.body;
-    const exists = await existTeacher(teacher);
+    const exists = await existTeacher(teacher.teacher_id);
     const existsId = await sectionExi(id);
 
     if (!id) {

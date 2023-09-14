@@ -12,8 +12,7 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
   };
 
   const handleClose = () => {
-    onClose();
-    window.location.reload(); // Recargar la página después de cerrar
+    onClose(); // Llama a la función onClose para cerrar el popup y desencadenar la actualización
   };
 
   return (

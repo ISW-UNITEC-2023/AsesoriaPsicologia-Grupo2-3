@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GetTeachers } from "../../../../../Services/admins";
 import "./ModificarPopUp.css";
 
-const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
+const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedTeacherOption, setSelectedTeacherOption] = useState([]);
   //---------------------------
@@ -72,7 +72,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
       console.log(`Trimestre seleccionado: Q${selectedQuarterOption}`);
     }
   };
-
+  const currentYear = new Date().getFullYear();
   return (
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
@@ -139,10 +139,8 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
                     key={quarter}
                     value={quarter}
                     disabled={
-                      !(
-                        new Date().getFullYear() <= new Date().getFullYear() &&
-                        quarter >= Math.floor((new Date().getMonth() + 3) / 3)
-                      )
+                      Year <= currentYear &&
+                      quarter < Math.floor((new Date().getMonth() + 3) / 3)
                     }
                   >
                     Q{quarter}

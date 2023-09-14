@@ -13,6 +13,7 @@ import "./Sections.css";
 function SectionsPage() {
   const { courseId } = useParams();
   const [courseList, setCourseList] = useState([]);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
 
   useEffect(() => {
     async function fetchCourseInfo() {
@@ -36,6 +37,15 @@ function SectionsPage() {
   const [selectedTeacherOption, setSelectedTeacherOption] = useState("");
   const [selectYearOption, setSelectedYearOption] = useState("");
 
+  const updateCourseInfo = async () => {
+    try {
+      const response = await getInfoSection(courseId);
+      setCourseList(response);
+    } catch (error) {
+      console.error("Error fetching course info:", error);
+    }
+  };
+
   const toggleModifySuccessPopup = () => {
     setModifySuccessPopupOpen(!isModifySuccessPopupOpen);
   };
@@ -57,7 +67,7 @@ function SectionsPage() {
     setSelectedQuarterOption(quarterOption);
     setSelectedTeacherOption(teacherOption);
     setSelectedYearOption(yearOption);
-    setModifyConfirmPopupOpen(!isModifyConfirmPopupOpen); // Cambia aquí
+    setModifyConfirmPopupOpen(!isModifyConfirmPopupOpen);
   };
 
   const [isDeleteConfirmPopupOpen, setDeleteConfirmPopupOpen] = useState(false);
@@ -83,14 +93,14 @@ function SectionsPage() {
         <div>
           {courseList.map((course) => {
             const currentSectionId = course.SectionId;
-            const currentYear = course.Year;
+            const Year = course.Year;
             return (
               <div key={course.courseId} className="course-card">
                 <h3>Nombre del Curso: {course.CourseName}</h3>
                 <p>Codigo de Clase: {courseId}</p>
                 <p>Id seccion: {currentSectionId}</p>
                 <p>UV: {course.UV}</p>
-                <p>año: {currentYear}</p>
+                <p>año: {Year}</p>
                 <p>Trimestre: {course.Quarter}</p>
                 <p>Docente: {course.Teacher}</p>
 
@@ -119,6 +129,7 @@ function SectionsPage() {
                     );
                   }}
                   sectionId={modifySectionId}
+                  Year={Year}
                 />
 
                 <ModificarConfirmPopUp
@@ -136,7 +147,11 @@ function SectionsPage() {
                 />
                 <ModificarSuccessPopUp
                   isOpen={isModifySuccessPopupOpen}
-                  onClose={() => toggleModifySuccessPopup()}
+                  onClose={() => {
+                    toggleModifySuccessPopup();
+                    // Actualiza la información del curso cuando se cierre el SuccessPopup
+                    updateCourseInfo();
+                  }}
                   sectionId={modifySectionId}
                 />
 
@@ -157,7 +172,11 @@ function SectionsPage() {
                 />
                 <EliminarSuccessPopUp
                   isOpen={isDeleteSuccessPopupOpen}
-                  onClose={() => toggleDeleteSuccessPopup()}
+                  onClose={() => {
+                    toggleDeleteSuccessPopup();
+                    // Actualiza la información del curso cuando se cierre el SuccessPopup
+                    updateCourseInfo();
+                  }}
                   sectionId={deleteSectionId}
                 />
               </div>

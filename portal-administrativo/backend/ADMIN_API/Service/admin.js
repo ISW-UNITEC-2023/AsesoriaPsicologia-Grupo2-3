@@ -51,7 +51,7 @@ async function DeleteAdmin(id) {
 }
 
 async function updateAdmin(id, name) {
-  await knex("users").where("id", "=", id).update({
+  await knex("users").where("id", id).update({
     name: name,
   });
   return;
@@ -71,16 +71,27 @@ async function registerAdmin(user) {
 
 async function findExistingEmail(email) {
   const email_find = JSON.parse(
-    JSON.stringify(
-      await knex.select().table("users").where("email", "=", email)
-    )
+    JSON.stringify(await knex.select().table("users").where("email", email))
   );
   return email_find;
 }
 
 async function ExisteUser(id) {
   const user = JSON.parse(
-    JSON.stringify(await knex.select().table("users").where("id", "=", id))
+    JSON.stringify(await knex.select().table("users").where("id", id))
+  );
+  return user;
+}
+
+async function ExisteTeacher(id) {
+  const user = JSON.parse(
+    JSON.stringify(
+      await knex
+        .select()
+        .table("users")
+        .where("id", id)
+        .andWhere("role", "DOCENTE")
+    )
   );
   return user;
 }
@@ -95,4 +106,5 @@ module.exports = {
   getAdmins,
   ExisteUser,
   getUsers,
+  ExisteTeacher,
 };
