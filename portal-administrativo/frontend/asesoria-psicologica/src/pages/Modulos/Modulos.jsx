@@ -43,8 +43,8 @@ function ModulosForm() {
 
   const handleDeleteClick = (e, buttonInfo) => { // Función para abrir la ventana emergente de confirmación
     e.preventDefault(); // Evita que la página se recargue
-    setSelectedButtonInfo(buttonInfo); // Guarda la información del módulo seleccionado
     setIsDeletePopUpOpen(true); // Abre la ventana emergente de confirmación
+    setSelectedButtonInfo(buttonInfo); // Guarda la información del módulo seleccionado
   };
 
   const handleCancelDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
@@ -84,7 +84,7 @@ function ModulosForm() {
               <FontAwesomeIcon icon={faPen} />
             </a>
             {/*Botón para abrir la ventana emergente de confirmación de eliminar*/}
-            <a className="btn btn-delete" onClick={(e) => handleDeleteClick(e, module)}>  
+            <a href="#" className="btn btn-delete" onClick={(e) => handleDeleteClick(e, module)}>  
               <FontAwesomeIcon icon={faTrashCan} />
             </a>
 
@@ -128,7 +128,7 @@ function ModulosForm() {
       {isDeletePopUpOpen && (
         // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
         <PopUpDelete
-          isOpen={true}
+          isOpen={isDeletePopUpOpen}
           onConfirm={handleConfirmDeletePopup}
           onCancel={handleCancelDeletePopup}
           itemName={selectedButtonInfo.name}

@@ -22,7 +22,7 @@ const PopUpDeleted = ({ isOpen, onClose, pageName }) => { // Se recibe la inform
                         <p className="textarea">{"ERROR!"}</p>
                     )}
                     <div>
-                        <button className="close-button" onClick={onClose}>
+                        <button className="confirm-button" onClick={onClose}>
                             Cerrar
                         </button>
                     </div>

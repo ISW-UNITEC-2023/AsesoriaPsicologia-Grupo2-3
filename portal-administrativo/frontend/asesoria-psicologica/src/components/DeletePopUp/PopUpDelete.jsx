@@ -16,6 +16,7 @@ const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName }) => { /
             <div className="popup" style={popupStyle}>
                 <div className="popup">
                     <div>
+                        {console.log(pageName)}
                         {pageName === "modulo" ? (
                             <p className="textarea">{`¿Está seguro que desea eliminar el modulo: "${itemName}"?`}</p>
                         ) : pageName === "seccion" ? (
