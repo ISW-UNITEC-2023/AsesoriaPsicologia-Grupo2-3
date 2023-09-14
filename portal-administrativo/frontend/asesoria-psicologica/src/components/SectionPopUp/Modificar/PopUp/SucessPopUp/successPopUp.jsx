@@ -19,7 +19,7 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
           <button
             className="btn btn-danger"
             onClick={onClose}
-            style={{ marginRight: "10px" }}
+            style={{backgroundColor: 'green', color: 'white', borderBlockColor:'green', marginRight: "10px" }}
           >
             Cerrar
           </button>

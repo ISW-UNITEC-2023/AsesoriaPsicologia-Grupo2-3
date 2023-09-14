@@ -37,7 +37,7 @@ const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
             <button
               className="btn btn-danger"
               onClick={handleConfirm}
-              style={{ marginRight: "10px" }} // Llama a handleConfirm en lugar de onClose
+              style={{backgroundColor: 'green', color: 'white', borderBlockColor:'green',marginRight: "10px" }} // Llama a handleConfirm en lugar de onClose
             >
               
               Sí, estoy seguro

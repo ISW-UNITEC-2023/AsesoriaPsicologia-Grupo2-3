@@ -156,7 +156,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
             <button
               className="btn btn-danger"
               onClick={handleConfirm}
-              style={{ marginTop:'40px',marginRight: "10px" }}
+              style={{ backgroundColor: 'green', color: 'white', borderBlockColor:'green',marginTop:'40px',marginRight: "10px" }}
               disabled={isButtonDisabled()}
             >
               Modificar

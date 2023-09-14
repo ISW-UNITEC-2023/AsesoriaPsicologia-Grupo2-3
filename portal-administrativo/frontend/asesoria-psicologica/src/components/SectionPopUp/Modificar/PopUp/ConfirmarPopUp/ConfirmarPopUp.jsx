@@ -47,7 +47,7 @@ const ConfirmarPopUp = ({
             <button
               className="btn btn-danger"
               onClick={handleConfirm}
-              style={{ margintop:'60px',marginRight: "10px" }}
+              style={{ backgroundColor: 'green', color: 'white', borderBlockColor:'green',margintop:'60px',marginRight: "10px" }}
             >
               Sí, deseo modificar sección {sectionId}
             </button>

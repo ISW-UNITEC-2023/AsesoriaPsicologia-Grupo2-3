@@ -49,6 +49,7 @@ function DashBoard() {
                 <br></br>
                 <SectionCard {...module} />
                 <br></br>
+                
               </Col>
             ))}
           </Row>

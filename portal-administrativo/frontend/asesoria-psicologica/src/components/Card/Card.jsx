@@ -6,6 +6,7 @@ import Popup from "../SectionPopUp/PopUp";
 import { MDBBadge } from "mdb-react-ui-kit";
 import "./Card.css";
 
+
 function MyCard(props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -21,6 +22,7 @@ function MyCard(props) {
     setPopupOpen(!isPopupOpen);
   };
 
+  
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img
@@ -44,15 +46,22 @@ function MyCard(props) {
 
         <div>
           <div className="tab-container">
-            <Button className="tab-button">Notifications</Button>
-            <MDBBadge color="danger" pill className="badge">
-              99+
-              <span className="visually-hidden">unread messages</span>
-            </MDBBadge>
+          <button
+                  type="button"
+                  className="bi bi-pencil"
+                  style={{ backgroundColor: 'green', color: 'black',marginRight: "10px" }}
+                  onClick={() => toggleModify(currentSectionId)}
+                ></button>
+          <button
+                  type="button"
+                  className="bi bi-trash"
+                  style={{backgroundColor: 'red', color: 'black'}}
+                ></button>
           </div>
           <div className="tab-container">
             <Button
               className="tab-button"
+              style={{marginLeft: '105px'}}
               onClick={() => togglePopup(props.name, props.id)}
             >
               +

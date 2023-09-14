@@ -96,8 +96,8 @@ function SectionsPage() {
 
                 <button
                   type="button"
-                  className="bi bi-pencil-fill"
-                  style={{ marginRight: "10px" }}
+                  className="bi bi-pencil"
+                  style={{ marginRight: "10px",backgroundColor: 'green', color: 'black' }}
                   onClick={() => toggleModify(currentSectionId)}
                 ></button>
                 <ModificarPopUp
@@ -142,8 +142,8 @@ function SectionsPage() {
 
                 <button
                   type="button"
-                  className="bi bi-trash-fill"
-                  style={{}}
+                  className="bi bi-trash"
+                  style={{backgroundColor: 'red', color: 'black'}}
                   onClick={() => toggleDeleteConfirmPopup(currentSectionId)}
                 ></button>
                 <EliminarConfirmarPopUp

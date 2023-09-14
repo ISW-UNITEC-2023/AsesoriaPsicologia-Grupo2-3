@@ -24,7 +24,7 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
           <button
             className="btn btn-danger"
             onClick={handleClose}
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px",backgroundColor: 'green', color: 'white', borderColor:'white' }}
           >
             Cerrar
           </button>
