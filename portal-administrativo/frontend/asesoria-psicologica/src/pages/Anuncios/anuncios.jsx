@@ -79,44 +79,46 @@ function Anuncios() {
           </Col>
         </Row>
       </div>
-      <ul>
-        {announces.map((announce) => (
-          <>
-              <li>
-                <div
-                  className="nombre-box"
-                  style={{
-                    display: "flex",
-                  }}
-                >
-                  <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
+      <div style={{marginTop:'3vh'}}>
+        <ul>
+          {announces.map((announce) => (
+            <>
+                <li>
+                  <div
+                    className="nombre-box"
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
 
-                <div>
-                  <span className="titulo">{announce.Title}</span>
-                  <p className="descripcion">{announce.Message}</p>
+                  <div>
+                    <span className="titulo">{announce.Title}</span>
+                    <p className="descripcion">{announce.Message}</p>
+                  </div>
+                  <div
+                    className="ml-auto"
+                    style={{ alignSelf: "flex-end", marginLeft: "auto" }}
+                  >
+                  <DropdownButton id="dropdown-item-button">
+                    
+                      <Dropdown.Item  as="button" href="/Crearanuncios" onClick={() => {
+                        handleEditClick(`${announce.Title}`, `${announce.Message}`);
+                        }}   >Editar</Dropdown.Item>
+                    
+                    <Dropdown.Item as="button"onClick={() => {
+                        handleEditClick2(`${announce.AnnounceId}`);
+                        
+                        }}  >Eliminar</Dropdown.Item>
+                  </DropdownButton>
                 </div>
-                <div
-                  className="ml-auto"
-                  style={{ alignSelf: "flex-end", marginLeft: "auto" }}
-                >
-                <DropdownButton id="dropdown-item-button">
-                  
-                    <Dropdown.Item  as="button" href="/Crearanuncios" onClick={() => {
-                      handleEditClick(`${announce.Title}`, `${announce.Message}`);
-                      }}   >Editar</Dropdown.Item>
-                  
-                  <Dropdown.Item as="button"onClick={() => {
-                      handleEditClick2(`${announce.AnnounceId}`);
-                      
-                      }}  >Eliminar</Dropdown.Item>
-                </DropdownButton>
               </div>
-            </div>
-          </li>
-          </>
-        ))}
-        
-      </ul>
+            </li>
+            </>
+          ))}
+          
+        </ul>
+      </div>
     </div>
   );
 }
