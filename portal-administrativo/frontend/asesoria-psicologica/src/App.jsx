@@ -9,6 +9,7 @@ import PacientesForm from "./pages/Pacientes/Pacientes";
 import Expedientes from "./pages/Vistas/Vistas"
 import SectionsDashBoard from "./pages/DashBoard/DashBoard"
 import SectionsPage from "./pages/Sections/Sections";
+import Dummy from "./pages/Dummy/Dummy";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/sections" element={<SectionsDashBoard />} /> {/*iba el reset modifique para poder visual el navbar*/}
             <Route path="/pacientes" element={<PacientesForm />} /> {/*iba el reset modifique para poder visual el navbar*/}
             <Route path="/sections/:courseId" element={<SectionsPage />} />{" "}
+            <Route path="/dummy" element={<Dummy />} />{" "}
           </Routes>
         </div>
     </Router>
