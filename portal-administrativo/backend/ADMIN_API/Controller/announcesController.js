@@ -3,6 +3,7 @@ const {
   GetAnnouncesForSection: getSectionAnnounce,
   GetAnnouncesForUser: getUserAnnounce,
   GetAnnouncesForSections: getAnnouncesSections,
+  GetAnnouncesForAll: getAnnouncesAll,
   GetAnnouncesForUsers: getUsersAnnounce,
   DeleteAnnounce: deleteAnnou,
   ExistAnnounce: existAnnoun,
@@ -14,6 +15,16 @@ const {
 const { SectionExists: exists } = require("../Service/section");
 
 const { ExisteUser: existUser } = require("../Service/admin");
+
+async function GetAnnounForAll(_, res) {
+  try {
+    const announces = await getAnnouncesAll();
+    console.log("asns",announces);
+    res.status(200).send(announces);
+  } catch (e) {
+    res.status(500).send("INTERNAL SERVER ERROR!");
+  }
+}
 
 async function GetAnnounForSections(_, res) {
   try {
@@ -128,6 +139,7 @@ async function UpdateAnnounceDescrip(req, res) {
 module.exports = {
   GetAnnnounceSection,
   GetAnnounForSections,
+  GetAnnounForAll,
   GetAnnounForUsers,
   GetAnnounceUser,
   CreateAnnounce,

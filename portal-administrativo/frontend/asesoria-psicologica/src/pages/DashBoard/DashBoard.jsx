@@ -8,13 +8,10 @@ import { useEffect, useState } from "react";
 import Popup from "../../components/PopUp/PopUp";
 import SectionCard from "../../components/Card/Card";
 import { loadModules } from "../../Services/course";
-import PopUpDelete from "../../components/DeletePopUp/PopUpDelete"
-import PopUpDeleted from "../../components/DeletePopUp/PopUpDeleted"
 
 function DashBoard() {
   const [displayedModules, setModules] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
 
   

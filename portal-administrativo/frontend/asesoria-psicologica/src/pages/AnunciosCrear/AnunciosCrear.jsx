@@ -9,6 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import dropdownItems from './dropdownItems.json';
 import { loadModules } from "../../Services/course";
 import {getInfoSectionMod} from "../../Services/sections";
+import { CreateAnnounce } from "../../Services/announces";
 
 
 function AnunciosCrear() {
@@ -17,6 +18,7 @@ function AnunciosCrear() {
 
   const [modules, setModules] = useState([]);
   const [secctions, setModulessec] = useState([]);
+  const [announceInfo, setAnnounceInfo] = useState({});
 
   useEffect(() => {
     updateModulesecList();
@@ -65,9 +67,17 @@ function AnunciosCrear() {
     setAcceptTerms(!acceptTerms);
   };
 
-  const handleButtonClick = (buttonName) => {
+  const handleButtonClick = async (buttonName) => {
     // Print the button name to the console
     console.log(`Button pressed: ${buttonName}`);
+    if (buttonName=="Guardar") {
+      try {
+        await CreateAnnounce(announceInfo);
+      } catch (error) {
+        console.error("Error creating Announce:", error);
+      }
+    }
+
   };
   let title = ""
   if(localStorage.getItem("Title") != null){
@@ -83,12 +93,17 @@ function AnunciosCrear() {
     <div style={{ width: "100%" }}>
       <h3 style={{ textAlign: "left" }}>Titulo del tema</h3>
 
-      <input
+      {title != "" && <input
         type="text"
         className="form-control"
         value={title}
         placeholder="Escriba el titulo"
-      />
+      />}
+      {title == "" && <input
+      type="text"
+      className="form-control"
+      placeholder="Escriba el titulo"
+      />}
 
       <div style={{ width: "100%", height: 300 }}>
         <div ref={quillRef} />
@@ -159,7 +174,7 @@ function AnunciosCrear() {
               Cancelar
             </Button>
       
-            <Button variant="success" onClick={() => handleButtonClick('Guardar')}>
+            <Button variant="success" onClick={() => handleButtonClick('Guardar', )}>
               Guardar
             </Button>
             <Button variant="info" onClick={() => handleButtonClick('Actualizar')}>

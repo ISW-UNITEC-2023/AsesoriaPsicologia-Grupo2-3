@@ -6,6 +6,7 @@ import Popup from "../SectionPopUp/PopUp";
 import { MDBBadge } from "mdb-react-ui-kit";
 import PopUpDelete from "../../components/DeletePopUp/PopUpDelete"
 import PopUpDeleted from "../../components/DeletePopUp/PopUpDeleted"
+import { deleteModule } from "../../Services/course";
 import "./Card.css";
 
 
@@ -34,9 +35,15 @@ function MyCard(props) {
     setIsDeletePopUpOpen(false);  // Cierra la ventana emergente cuando el usuario cancela
   };
 
-  const handleConfirmDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
-    setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
+  const handleConfirmDeletePopup = async (moduleId) => {
+    try {
+      await deleteModule(moduleId);
+      setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
+      setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
+  
+    } catch (error) {
+      console.error("Error deleting Module:", error);
+    }
   };
 
   const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
@@ -105,6 +112,7 @@ function MyCard(props) {
         onConfirm={handleConfirmDeletePopup}
         onCancel={handleCancelDeletePopup}
         itemName={selectedButtonInfo.name}
+        moduleId={selectedButtonInfo.id}
         pageName="modulo"
       />
     )}

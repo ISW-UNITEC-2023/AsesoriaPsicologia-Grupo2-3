@@ -8,6 +8,21 @@ const knex = require("knex")({
     database: process.env.DB_DATABASE,
   },
 });
+async function GetAnnouncesForAll() {
+  const announcements = JSON.parse(
+    JSON.stringify(
+      await knex
+        .select(
+          "announces.id as AnnounceId",
+          "announces.message as Message",
+          "announces.title as Title",
+        )
+        .table("announces")
+    )
+  );
+
+  return announcements;
+}
 
 async function GetAnnouncesForSections() {
   const announcements = JSON.parse(
@@ -137,6 +152,7 @@ module.exports = {
   GetAnnouncesForSection,
   GetAnnouncesForUser,
   GetAnnouncesForSections,
+  GetAnnouncesForAll,
   GetAnnouncesForUsers,
   DeleteAnnounce,
   ExistAnnounce,

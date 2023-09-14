@@ -15,7 +15,7 @@ import Anuncios from "./pages/Anuncios/anuncios";
 function App() {
   return (
     <Router>
-        <div style={{display:'flex', flexDirection:'row'}}>
+        <div style={{display:'flex', flexDirection:'col'}}>
           <Navbar />
           <Routes>
                       {/*AQUI INICIAN LAS RUTAS DEL NAVBAR*/}

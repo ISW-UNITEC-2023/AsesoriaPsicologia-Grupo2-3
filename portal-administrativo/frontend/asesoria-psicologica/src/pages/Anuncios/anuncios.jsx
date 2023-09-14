@@ -29,6 +29,14 @@ function Anuncios() {
     console.log("Editar anuncio");
   };
 
+  const handleCreateClick = () => {
+    localStorage.setItem("Title","");
+    localStorage.clear();
+
+    navigate("/Crearanuncios");
+    console.log("Crear anuncio");
+  };
+
   async function handleEditClick2  (id)  {
     try {
       //console.log(id);
@@ -48,6 +56,8 @@ function Anuncios() {
   }, []);
 
   const updateAnnounlist = () => {
+    localStorage.setItem("Title","");
+
     async function fetchData() {
       setAnnounces(await loadAnnounces());
     }
@@ -59,10 +69,9 @@ function Anuncios() {
       <div className="container-header">
         <h1 className="title-pacientes">Anuncios</h1>
         <a
-          href="/Crearanuncios"
           className="button-create"
           onClick={() => {
-            // Coloca aquí el enlace a la creación de anuncios
+            handleCreateClick();
             console.log("Redireccionar a la creación de anuncios");
           }}
         >

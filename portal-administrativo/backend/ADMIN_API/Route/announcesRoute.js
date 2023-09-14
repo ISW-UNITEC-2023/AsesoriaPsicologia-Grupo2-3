@@ -4,6 +4,7 @@ const router = express.Router();
 const announces = require("../Controller/announcesController");
 
 //GETS
+router.get("/all", announces.GetAnnounForAll);
 router.get("/users", announces.GetAnnounForUsers);
 router.get("/sections", announces.GetAnnounForSections);
 router.get("/users/search", announces.GetAnnounceUser);

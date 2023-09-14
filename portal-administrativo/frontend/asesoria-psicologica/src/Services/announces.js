@@ -3,7 +3,7 @@ import axios from "axios";
 export async function loadAnnounces() {
     const options = {
         method: 'GET', 
-        url: 'http://localhost:3001/announces/sections'
+        url: 'http://localhost:3001/announces/all'
     };
     
     const response = await axios.request(options);
@@ -27,16 +27,16 @@ export async function DeleteAnnounces(id_announces) {
       
 }
 
-export async function CreateAnnounces(data) {
+export async function CreateAnnounce(info) {
  
   const options = {
     method: 'POST',
     url: 'http://localhost:3001/announces/create',
     data: {
-      message: data.message,
-      title: data.title,
-      section_id: data.section_id,
-      user_id: data.user_id,
+      message: info.message,
+      title: info.title,
+      section_id: info.section_id,
+      user_id: info.user_id,
     }
   };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName }) => { // Se recibe la información del módulo o seccion seleccionado y la función de confirmación
+const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName, moduleId }) => { // Se recibe la información del módulo o seccion seleccionado y la función de confirmación
     const overlayStyle = {
         opacity: isOpen ? 1 : 0,
         pointerEvents: isOpen ? "auto" : "none",
@@ -16,7 +16,7 @@ const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName }) => { /
             <div className="popup" style={popupStyle}>
                 <div className="popup">
                     <div>
-                        {console.log(pageName)}
+                        {console.log(moduleId)}
                         {pageName === "modulo" ? (
                             <p className="textarea">{`¿Está seguro que desea eliminar el modulo: "${itemName}"?`}</p>
                         ) : pageName === "seccion" ? (
@@ -27,7 +27,7 @@ const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName }) => { /
                     </div>
                     <br></br>
                     <div>
-                        <button className="confirm-button" onClick={onConfirm}>
+                        <button className="confirm-button" onClick={onConfirm(moduleId)}>
                             Eliminar
                         </button>
                         
