@@ -14,6 +14,8 @@ function AnunciosCrear() {
   const { quill, quillRef } = useQuill();
   const [value, setValue] = useState();
 
+ 
+
   React.useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
@@ -46,6 +48,8 @@ function AnunciosCrear() {
     console.log(`Button pressed: ${buttonName}`);
   };
 
+
+
   return (
     <div style={{ width: "100%" }}>
       <h3 style={{ textAlign: "left" }}>Titulo del tema</h3>
@@ -65,7 +69,7 @@ function AnunciosCrear() {
       <Row>
         <Col md={6}>
           <div className="menu-container">
-            <DropdownButton id="ID" title="Publicar en">
+            <DropdownButton id="ID" title="Publicar en"> 
               {dropdownItems.map((item, index) => (
                 <Dropdown.Item key={index} as="button" onClick={() => handleItemSelect(item.action)}>
                   {item.text} {item.action}

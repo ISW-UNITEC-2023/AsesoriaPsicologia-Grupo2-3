@@ -19,9 +19,9 @@ function App() {
           <Navbar />
           <Routes>
                       {/*AQUI INICIAN LAS RUTAS DEL NAVBAR*/}
-            <Route path="/" element={<SectionsDashBoard />} />
+            <Route path="/" element={<AnunciosPage />} />
             <Route path="/dashboard" element={<SectionsDashBoard />} />
-            <Route path="/anuncios" /> 
+            <Route path="/anuncios" element={<AnunciosPage />} />{" "}
             <Route path="/clases" element={<SectionsDashBoard />} /> 
             <Route path="/calendar"/>
             <Route path="/cuentas" element={<PacientesForm />} /> 
@@ -37,7 +37,7 @@ function App() {
           {/*iba el reset modifique para poder visual el navbar*/}
           <Route path="/sections/:courseId" element={<SectionsPage />} />{" "}
            {/*iba el reset modifique para poder visual el navbar*/}
-           <Route path="/anuncios" element={<AnunciosPage />} />{" "}
+           
           </Routes>
         </div>
     </Router>
