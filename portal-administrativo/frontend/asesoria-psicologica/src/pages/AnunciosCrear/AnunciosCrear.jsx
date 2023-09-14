@@ -18,7 +18,8 @@ function AnunciosCrear() {
 
   const [modules, setModules] = useState([]);
   const [secctions, setModulessec] = useState([]);
-  const [announceInfo, setAnnounceInfo] = useState({});
+  const [messageInfo, setMessageInfo] = useState({});
+  const [titleInfo, setTitleInfo] = useState({});
 
   useEffect(() => {
     updateModulesecList();
@@ -43,8 +44,8 @@ function AnunciosCrear() {
   React.useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
-        console.log(quillRef.current.firstChild.innerHTML);
-        setValue(quillRef.current.firstChild.innerHTML);
+        console.log(quill.getText(0,400));
+        setMessageInfo(quill.getText(0,400));
       });
     }
   }, [quill]);
@@ -67,7 +68,7 @@ function AnunciosCrear() {
     setAcceptTerms(!acceptTerms);
   };
 
-  const handleButtonClick = async (buttonName) => {
+  const handleButtonClick = async (buttonName, announceInfo) => {
     // Print the button name to the console
     console.log(`Button pressed: ${buttonName}`);
     if (buttonName=="Guardar") {
@@ -94,15 +95,17 @@ function AnunciosCrear() {
       <h3 style={{ textAlign: "left" }}>Titulo del tema</h3>
 
       {title != "" && <input
+        id="myTitle"
         type="text"
         className="form-control"
         value={title}
         placeholder="Escriba el titulo"
       />}
       {title == "" && <input
-      type="text"
-      className="form-control"
-      placeholder="Escriba el titulo"
+        id="myTitle"
+        type="text"
+        className="form-control"
+        placeholder="Escriba el titulo"
       />}
 
       <div style={{ width: "100%", height: 300 }}>
@@ -174,7 +177,12 @@ function AnunciosCrear() {
               Cancelar
             </Button>
       
-            <Button variant="success" onClick={() => handleButtonClick('Guardar', )}>
+            <Button variant="success" onClick={() => handleButtonClick('Guardar', {
+              title:document.getElementById('myTitle').value,
+              message:messageInfo,
+              section_id:23,
+              user_id:null
+            })}>
               Guardar
             </Button>
             <Button variant="info" onClick={() => handleButtonClick('Actualizar')}>
