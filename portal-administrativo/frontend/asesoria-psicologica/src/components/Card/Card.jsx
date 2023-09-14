@@ -10,7 +10,7 @@ import { deleteModule } from "../../Services/course";
 import "./Card.css";
 
 
-function MyCard(props) {
+function MyCard({props, handleReload}) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
   const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado
@@ -40,7 +40,6 @@ function MyCard(props) {
       await deleteModule(moduleId);
       setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
       setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
-  
     } catch (error) {
       console.error("Error deleting Module:", error);
     }
@@ -48,6 +47,7 @@ function MyCard(props) {
 
   const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
     setIsDeletedPopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
+    handleReload();
   };
   
   return (

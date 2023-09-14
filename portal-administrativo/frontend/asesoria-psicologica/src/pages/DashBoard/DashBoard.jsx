@@ -14,8 +14,6 @@ function DashBoard() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
 
-  
-
   useEffect(() => {
     updateModuleList();
   }, []);
@@ -50,7 +48,7 @@ function DashBoard() {
             {displayedModules.map((module) => (
               <Col lg>
                 <br></br>
-                <SectionCard {...module} />
+                <SectionCard props={module} handleReload={() => setIsPopupOpen(false)} />
                 <br></br>
                 
               </Col>

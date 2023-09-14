@@ -180,7 +180,7 @@ function AnunciosCrear() {
             <Button variant="success" onClick={() => handleButtonClick('Guardar', {
               title:document.getElementById('myTitle').value,
               message:messageInfo,
-              section_id:23,
+              section_id:20,
               user_id:null
             })}>
               Guardar

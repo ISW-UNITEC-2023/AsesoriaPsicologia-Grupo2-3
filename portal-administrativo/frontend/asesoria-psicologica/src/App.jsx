@@ -19,7 +19,7 @@ function App() {
           <Navbar />
           <Routes>
                       {/*AQUI INICIAN LAS RUTAS DEL NAVBAR*/}
-            <Route path="/" element={<AnunciosPage />} />
+            <Route path="/" element={<SectionsDashBoard />} />
             <Route path="/dashboard" element={<SectionsDashBoard />} />
             <Route path="/anuncios" element={<Anuncios />} />{" "}
             <Route path="/Crearanuncios" element={<AnunciosPage />} />{" "}
