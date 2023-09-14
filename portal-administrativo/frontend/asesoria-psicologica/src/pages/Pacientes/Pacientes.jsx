@@ -23,6 +23,7 @@ function PacientesForm() {
       return arregloMandar.push({
         nombre: usuario.name,
         email: usuario.email,
+        id_account: usuario.id_account,
       });
     });
 
@@ -49,6 +50,11 @@ function PacientesForm() {
 
   // Función para abrir el popup de edición cuando se hace clic en "Editar"
   const openEditarPopup = (user) => {
+    // Almacena las credenciales del usuario seleccionado en el localStorage
+    localStorage.setItem("selectedUserId", user.id_account);
+    localStorage.setItem("selectedUserName", user.nombre);
+    localStorage.setItem("selectedUserEmail", user.email);
+
     setSelectedUser(user); // Almacena el usuario seleccionado para la edición
     setShowEditarPopup(true);
   };

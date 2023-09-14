@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./PopUp_EditarUser.css";
 import "font-awesome/css/font-awesome.css";
-import Services from '../../../utils/services';
+import Services from "../../../utils/services";
 
-const EditarUser = ({ isOpen, onClose }) => {
+const EditarUser = ({ isOpen, onClose, user }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -14,19 +14,11 @@ const EditarUser = ({ isOpen, onClose }) => {
   };
 
   const [credentials, setCredentials] = useState({
-    id_account: localStorage.getItem("id_account"),
-    role: localStorage.getItem("role"),
-    active: localStorage.getItem("active"),
-  })
+    id_account: user.id_account || "", // Utiliza user.id_accout como valor por defecto
+    role: user.role || "", // Utiliza user.role como valor por defecto
+    active: user.active || "", // Utiliza user.active como valor por defecto
+  });
 
-  const borrarStorage = () => {
-    localStorage.removeItem("id_account");
-    localStorage.removeItem("name");
-    localStorage.removeItem("email");
-    localStorage.removeItem("active");
-    localStorage.removeItem("role");
-  };
-  
   return (
     <div className="popup-overlay" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
@@ -41,10 +33,10 @@ const EditarUser = ({ isOpen, onClose }) => {
               type="text"
               className="form-control"
               id="usuario"
-              placeholder={localStorage.getItem("id_account")}
-              value={localStorage.getItem("id_account")}
+              placeholder={credentials.id_account}
+              value={credentials.id_account}
               readOnly={true}
-              disabled={true} // Deshabilitar la caja de texto
+              disabled={true}
             />
           </div>
           <div className="form-group">
@@ -53,18 +45,10 @@ const EditarUser = ({ isOpen, onClose }) => {
               type="text"
               className="form-control"
               id="nombre"
-              placeholder={localStorage.getItem("name")}
-              value={localStorage.getItem("name")}
-              // onChange={(event) => {
-              //   setCredentials({
-              //     id_account: credentials.id_account,
-              //     role: credentials.role,
-              //     name: event.target.value,
-              //     active: credentials.active,
-              //   })
-              // }}
+              placeholder={user.nombre}
+              value={user.nombre}
               readOnly={true}
-              disabled={true} // Deshabilitar la caja de texto
+              disabled={true}
             />
           </div>
           <div className="form-group">
@@ -73,46 +57,35 @@ const EditarUser = ({ isOpen, onClose }) => {
               type="text"
               className="form-control"
               id="correo"
-              placeholder={localStorage.getItem("email")}
-              value={localStorage.getItem("email")}
+              placeholder={user.email}
+              value={user.email}
               readOnly={true}
-              disabled={true} // Deshabilitar la caja de texto
+              disabled={true}
             />
           </div>
           <div className="form-group">
             <label htmlFor="contraseña">Contraseña</label>
             <div className="password-input">
               <input
-                type="password" // Cambia el tipo a "password"
+                type="password"
                 className="form-control"
                 id="contraseña"
                 placeholder=""
                 readOnly={true}
-                disabled={true} // Deshabilitar la caja de texto
+                disabled={true}
               />
               <span className="password-toggle fa fa-eye-slash"></span>
             </div>
           </div>
-
           <div className="form-group">
             <label htmlFor="Rol">Estado</label>
-            <select className="form-control" id="estado" defaultValue=""
-            onChange={(event) => {
-              let valor = -1;
-              if(event.target.value === "opcion1"){
-                valor = 1;
-              }else if(event.target.value === "opcion2"){
-                valor = 0;
-              }
-
-              setCredentials({
-                id_account: credentials.id_account,
-                role: credentials.role,
-                active: valor,
-              })
-            }}>
+            <select
+              className="form-control"
+              id="estado"
+              defaultValue={credentials.active} // Establece el valor predeterminado
+            >
               <option value="" disabled>
-              {localStorage.getItem("active")}
+                {user.active}
               </option>
               <option value="opcion1">Activo</option>
               <option value="opcion2">Inactivo</option>
@@ -120,27 +93,13 @@ const EditarUser = ({ isOpen, onClose }) => {
           </div>
           <div className="form-group">
             <label htmlFor="Rol">Rol</label>
-            <select className="form-control" id="rol" defaultValue=""
-             onChange={(event) => {
-              let valor = "";
-              if(event.target.value === "opcion1"){
-                valor = "ADMIN";
-              }else if(event.target.value === "opcion2"){
-                valor = "DOCENTE";
-              }else if(event.target.value === "opcion3"){
-                valor = "ESTUDIANTE"
-              }else if(event.target.value === "opcion4"){
-                valor = "PACIENTE"
-              }
-
-              setCredentials({
-                id_account: credentials.id_account,
-                role: valor,
-                active: credentials.active,
-              })
-            }}>
+            <select
+              className="form-control"
+              id="rol"
+              defaultValue={credentials.role} // Establece el valor predeterminado
+            >
               <option value="" disabled>
-              {localStorage.getItem("role")}
+                {user.role}
               </option>
               <option value="opcion1">Administrador</option>
               <option value="opcion2">Docente</option>
@@ -152,29 +111,33 @@ const EditarUser = ({ isOpen, onClose }) => {
         <div className="buttons">
           <button
             className="btn btn-danger"
-            onClick={ () =>{
+            onClick={() => {
               onClose();
               borrarStorage();
-              
             }}
             style={{ marginRight: "10px" }}
           >
             Cancelar
           </button>
-          <button className="btn btn-success"
-          onClick={async () => {
-            await Services.updateUser(credentials.id_account, credentials.role, credentials.active);
+          <button
+            className="btn btn-success"
+            onClick={async () => {
+              await Services.updateUser(
+                credentials.id_account,
+                credentials.role,
+                credentials.active
+              );
 
-            if(credentials.role === "" || credentials.active === null){
-              //aqui pop up si dejo vacio algun campo
-              console.log("No puede dejar ningun campo vacio.")
-            }else{
-              borrarStorage();
-              //aqui va el popup con mensaje de modificacion exitosa
-              console.log("El usuario se modifico exitosamente")
-            }
-            
-          }}>Guardar</button>
+              if (credentials.role === "" || credentials.active === null) {
+                console.log("No puede dejar ningun campo vacio.");
+              } else {
+                borrarStorage();
+                console.log("El usuario se modifico exitosamente");
+              }
+            }}
+          >
+            Guardar
+          </button>
         </div>
       </div>
     </div>
