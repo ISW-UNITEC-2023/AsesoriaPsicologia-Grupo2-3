@@ -7,14 +7,14 @@ import Modulos from "./pages/Modulos/Modulos";
 import Navbar from "./components/Navbar/Navbar"
 import PacientesForm from "./pages/Pacientes/Pacientes";
 import Expedientes from "./pages/Vistas/Vistas"
-import SectionsDashBoard from "./pages/DashBoard/DashBoard"
+import SectionsDashBoard from "./pages/DashBoard/DashBoard" 
 import SectionsPage from "./pages/Sections/Sections";
 
 
 function App() {
   return (
     <Router>
-        <div style={{display:'flex', flexDirection:'row'}}>
+        <div style={{display:'flex', flexDirection:'row'}}>  
           <Navbar />
           <Routes>
                       {/*AQUI INICIAN LAS RUTAS DEL NAVBAR*/}
