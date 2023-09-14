@@ -36,7 +36,7 @@ function App() {
             <Route path="/sections" element={<SectionsDashBoard />} /> 
             <Route path="/pacientes" element={<PacientesForm />} />{" "}
           {/*iba el reset modifique para poder visual el navbar*/}
-          <Route path="/sections/:courseId" element={<SectionsPage />} />{" "}
+            <Route path="/sections/:courseId" element={<SectionsPage />} />{" "}
            {/*iba el reset modifique para poder visual el navbar*/}
            
           </Routes>
