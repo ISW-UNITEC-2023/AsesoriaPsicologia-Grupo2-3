@@ -16,7 +16,7 @@ async function GetAnnouncesForSections() {
         .select(
           "announces.id as AnnounceId",
           "announces.message as Message",
-          "announces.title as Title"
+          "announces.title as Title",
         )
         .table("announces")
         .innerJoin("announces_d", "announces.id", "announces_d.announce_id")
@@ -115,10 +115,13 @@ async function ExistAnnounce(id) {
 }
 
 
-async function updateTitle(id, newtitle) {
-  await knex("announces").where("id", "=", id).update({
-    title: newtitle,
-  });
+async function updateTitle(id_announces, newtitle) {
+   await knex('announces')
+    .where({ id: id_announces })
+    .update({ 
+      title: newtitle 
+    }, ['id', 'title'])
+   
   return;
 }
 

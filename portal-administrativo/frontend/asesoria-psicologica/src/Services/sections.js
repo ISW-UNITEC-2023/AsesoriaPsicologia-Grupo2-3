@@ -30,10 +30,22 @@ export async function createSection(section) {
 export async function getInfoSection(data) {
   const options = {
     method: "GET",
-    url: "http://localhost:3001/sections/search/",
+    url: "http://localhost:3001/sections/search",
     params: { course_id: data },
   };
   const response = await axios.request(options);
+  return response.data;
+}
+
+
+export async function getInfoSectionMod() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:3001/sections/search2",
+  };
+
+  const response = await axios.request(options);
+  console.log(response.data);
   return response.data;
 }
 

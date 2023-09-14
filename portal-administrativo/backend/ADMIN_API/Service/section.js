@@ -53,6 +53,25 @@ async function GetInfoSection(course_id) {
   return infoSection;
 }
 
+async function GetInfoSectionMon(course_id) {
+  const infoSection = JSON.parse(
+    JSON.stringify(
+      await knex
+        .select(
+          "sections.id as SectionId",
+          "course.name as CourseName",
+          "course.uv as UV",
+          "sections.year as Year",
+          "sections.quarter as Quarter"
+        )
+        .table("sections")
+        .innerJoin("course", "course.id", "sections.course_id")
+    )
+  );
+  //console.log(infoSection);
+  return infoSection;
+}
+
 async function CreateSection(section) {
   return knex("sections").insert({
     course_id: section.course_id,
@@ -104,6 +123,7 @@ async function updateQuarterSection(id, newQuarter) {
 module.exports = {
   getSections,
   GetInfoSection,
+  GetInfoSectionMon,
   CreateSection,
   DeleteSection,
   SectionExists,
@@ -111,4 +131,5 @@ module.exports = {
   updateQuarterSection,
   updateTeacherSection,
   updateYearSection,
+
 };

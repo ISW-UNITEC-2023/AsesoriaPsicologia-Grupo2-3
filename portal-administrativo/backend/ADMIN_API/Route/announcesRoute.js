@@ -11,7 +11,7 @@ router.get("/sections/search", announces.GetAnnnounceSection);
 
 //UPDATE
 router.put("/update/title", announces.UpdateAnnounceTitle);
-router.put("/update/title", announces.UpdateAnnounceDescrip);
+router.put("/update/Descrip", announces.UpdateAnnounceDescrip);
 
 //DELETE
 router.delete("/delete", announces.DeleteAnnounce);

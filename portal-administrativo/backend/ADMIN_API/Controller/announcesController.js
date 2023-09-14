@@ -18,6 +18,7 @@ const { ExisteUser: existUser } = require("../Service/admin");
 async function GetAnnounForSections(_, res) {
   try {
     const announces = await getAnnouncesSections();
+    console.log("asns",announces);
     res.status(200).send(announces);
   } catch (e) {
     res.status(500).send("INTERNAL SERVER ERROR!");
@@ -99,11 +100,15 @@ async function DeleteAnnounce(req, res) {
 async function UpdateAnnounceTitle(req, res) {
   try {
     const { id } = req.query;
-    const announce = req.body;
+    const {title_new} = req.body;
 
-    await title(id, announce.title);
+    console.log("title_new",title_new);
+    console.log("id",id);
+    
+    await title(id, title_new);
     res.status(200).send();
   } catch (exception) {
+    console.log(exception);
     res.status(500).send("INTERNAL SERVER ERROR");
   }
 }
@@ -111,9 +116,9 @@ async function UpdateAnnounceTitle(req, res) {
 async function UpdateAnnounceDescrip(req, res) {
   try {
     const { id } = req.query;
-    const announce = req.body;
+    const {description_new} = req.body;
 
-    await descrip(id, announce.message);
+    await descrip(id, description_new);
     res.status(200).send();
   } catch (exception) {
     res.status(500).send("INTERNAL SERVER ERROR");

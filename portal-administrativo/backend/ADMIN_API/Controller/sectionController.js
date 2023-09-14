@@ -1,6 +1,7 @@
 const {
   getSections: get,
   GetInfoSection: infoSection,
+  GetInfoSectionMon: infoSectionMon,
   CreateSection: createSection,
   DeleteSection: deleteSection,
   SectionExists: sectionExi,
@@ -22,6 +23,19 @@ async function InfoSection(req, res) {
   const section = await infoSection(course_id);
   res.send(section);
 }
+
+async function InfoSeccMod(req, res) {
+  try {
+    const section = await infoSectionMon();
+   
+    res.send(section);
+  } catch (error) {
+    res.send(error);
+    console.log(error);
+  }
+  
+}
+
 
 async function sectionCreate(req, res) {
   const section = req.body;
@@ -197,4 +211,5 @@ module.exports = {
   UpdateSectionTeacher,
   UpdateSectionYear,
   UpdateSectionQuarter,
+  InfoSeccMod,
 };

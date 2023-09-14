@@ -21,7 +21,8 @@ function App() {
                       {/*AQUI INICIAN LAS RUTAS DEL NAVBAR*/}
             <Route path="/" element={<AnunciosPage />} />
             <Route path="/dashboard" element={<SectionsDashBoard />} />
-            <Route path="/anuncios" element={<AnunciosPage />} />{" "}
+            <Route path="/anuncios" element={<Anuncios />} />{" "}
+            <Route path="/Crearanuncios" element={<AnunciosPage />} />{" "}
             <Route path="/clases" element={<SectionsDashBoard />} /> 
             <Route path="/calendar"/>
             <Route path="/cuentas" element={<PacientesForm />} /> 

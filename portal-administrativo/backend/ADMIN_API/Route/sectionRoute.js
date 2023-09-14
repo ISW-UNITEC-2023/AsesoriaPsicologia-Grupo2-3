@@ -6,6 +6,7 @@ const sections = require("../Controller/sectionController");
 //gets
 router.get("/", sections.getSections);
 router.get("/search", sections.InfoSection);
+router.get("/search2", sections.InfoSeccMod);
 
 //updates
 router.put("/update/courseId", sections.UpdateSectionCourseId);

@@ -31,7 +31,37 @@ async function getUsers() {
   }
 }
 
+async function getModulesAll() {
+  const options = {
+    method: 'GET',
+    url: 'http://localhost:3001/modulos/all',
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
+
+
+async function getSeccionbyModu() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:3001/user/list",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+
 export default {
   postLogin,
   getUsers,
+  getModulesAll,
 };
