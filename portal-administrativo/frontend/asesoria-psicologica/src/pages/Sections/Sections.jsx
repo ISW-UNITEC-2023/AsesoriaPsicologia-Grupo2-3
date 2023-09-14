@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getInfoSection } from "../../Services/sections";
-
 import EliminarConfirmarPopUp from "../../components/SectionPopUp/Eliminar/ConfirmarPopUp/ConfirmarPopUp";
 import EliminarSuccessPopUp from "../../components/SectionPopUp/Eliminar/SucessPopUp/successPopUp";
 
@@ -10,10 +9,15 @@ import ModificarSuccessPopUp from "../../components/SectionPopUp/Modificar/PopUp
 import ModificarPopUp from "../../components/SectionPopUp/Modificar/PopUp/ModificarPopUp/ModificarPopUp";
 import "./Sections.css";
 
+import {
+  updateTeacher,
+  updateQuarter,
+  updateYear,
+} from "../../Services/sections";
+
 function SectionsPage() {
   const { courseId } = useParams();
   const [courseList, setCourseList] = useState([]);
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
 
   useEffect(() => {
     async function fetchCourseInfo() {
@@ -32,10 +36,13 @@ function SectionsPage() {
   const [isModifySuccessPopupOpen, setModifySuccessPopupOpen] = useState(false);
   const [isModify, setModify] = useState(false);
   const [modifySectionId, setModifySectionId] = useState(null);
+
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedQuarterOption, setSelectedQuarterOption] = useState("");
   const [selectedTeacherOption, setSelectedTeacherOption] = useState("");
   const [selectYearOption, setSelectedYearOption] = useState("");
+
+  const [isModifyConfirmed, setIsModifyConfirmed] = useState(false);
 
   const updateCourseInfo = async () => {
     try {
@@ -81,6 +88,21 @@ function SectionsPage() {
   const toggleDeleteConfirmPopup = (sectionId) => {
     setDeleteSectionId(sectionId);
     setDeleteConfirmPopupOpen(!isDeleteConfirmPopupOpen);
+  };
+
+  const handleConfirm = async () => {
+    try {
+      if (selectedOption === "teacher_id") {
+        await updateTeacher(modifySectionId, selectedTeacherOption);
+      } else if (selectedOption === "year") {
+        await updateYear(modifySectionId, selectYearOption);
+      } else if (selectedOption === "quarter") {
+        await updateQuarter(modifySectionId, selectedQuarterOption);
+      }
+      setIsModifyConfirmed(true); // Indica que se ha confirmado la modificación
+    } catch (error) {
+      console.error("Error al actualizar:", error);
+    }
   };
 
   return (
@@ -136,21 +158,21 @@ function SectionsPage() {
                   isOpen={isModifyConfirmPopupOpen}
                   onClose={() => toggleModifyConfirmPopup(null)}
                   onConfirm={() => {
+                    handleConfirm(); // Llama a handleConfirm aquí
                     toggleModifyConfirmPopup(null);
                     toggleModifySuccessPopup();
                   }}
-                  selectedOption={selectedOption}
                   sectionId={modifySectionId}
-                  selectedQuarterOption={selectedQuarterOption}
-                  selectedTeacherOption={selectedTeacherOption}
-                  selectedYearOption={selectYearOption}
                 />
+
                 <ModificarSuccessPopUp
                   isOpen={isModifySuccessPopupOpen}
                   onClose={() => {
                     toggleModifySuccessPopup();
                     // Actualiza la información del curso cuando se cierre el SuccessPopup
-                    updateCourseInfo();
+                    if (isModifyConfirmed) {
+                      updateCourseInfo();
+                    }
                   }}
                   sectionId={modifySectionId}
                 />
