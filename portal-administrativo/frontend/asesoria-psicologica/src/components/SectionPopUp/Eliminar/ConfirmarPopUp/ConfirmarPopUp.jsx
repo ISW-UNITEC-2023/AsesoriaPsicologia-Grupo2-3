@@ -30,6 +30,7 @@ const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
+        
           <h2>¿Está seguro que desea eliminar la sección {sectionId}?</h2>{" "}
           {/* Usa sectionId en el mensaje */}
           <div style={buttonContainerStyle}>
@@ -38,7 +39,8 @@ const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
               onClick={handleConfirm}
               style={{ marginRight: "10px" }} // Llama a handleConfirm en lugar de onClose
             >
-              Sí, deseo eliminar la sección
+              
+              Sí, estoy seguro
             </button>
             <button className="btn btn-danger" onClick={onClose}>
               Cancelar

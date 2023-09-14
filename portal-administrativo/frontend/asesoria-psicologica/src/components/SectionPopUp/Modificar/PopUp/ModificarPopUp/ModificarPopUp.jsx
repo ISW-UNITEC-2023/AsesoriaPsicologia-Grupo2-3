@@ -77,14 +77,14 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2>¿Está seguro que desea modificar la sección {sectionId}?</h2>
+          <h2 style={{marginBottom:'50px'}}>¿Está seguro que desea modificar la sección {sectionId}?</h2>
           <div>
             <label htmlFor="selectOption">Seleccione una opción:</label>
             <select
               id="selectOption"
               value={selectedOption}
               onChange={(e) => setSelectedOption(e.target.value)}
-            >
+              style={{ marginBottom:'20px' }}>
               <option value="">Seleccione una opción</option>
               <option value="teacher_id">Teacher ID</option>
               <option value="year">Year</option>
@@ -156,12 +156,13 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
             <button
               className="btn btn-danger"
               onClick={handleConfirm}
-              style={{ marginRight: "10px" }}
+              style={{ marginTop:'40px',marginRight: "10px" }}
               disabled={isButtonDisabled()}
             >
               Modificar
             </button>
-            <button className="btn btn-danger" onClick={onClose}>
+            <button className="btn btn-danger" onClick={onClose}
+            style={{ marginTop:'40px',marginRight: "10px" }}>
               Cancelar
             </button>
           </div>

@@ -15,7 +15,7 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2>Sección {sectionId} modificada con éxito</h2>
+          <h2  style={{ marginBottom:'20px' }}>Sección {sectionId} modificada con éxito</h2>
           <button
             className="btn btn-danger"
             onClick={onClose}

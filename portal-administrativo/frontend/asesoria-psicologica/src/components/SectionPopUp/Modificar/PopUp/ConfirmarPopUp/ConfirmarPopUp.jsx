@@ -42,14 +42,14 @@ const ConfirmarPopUp = ({
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2>¿Está seguro que desea modificar la sección {sectionId}?</h2>{" "}
+          <h2  style={{ marginBottom:'20px' }}>¿Está seguro que desea modificar la sección {sectionId}?</h2>{" "}
           <div style={buttonContainerStyle}>
             <button
               className="btn btn-danger"
               onClick={handleConfirm}
-              style={{ marginRight: "10px" }}
+              style={{ margintop:'60px',marginRight: "10px" }}
             >
-              Sí, deseo modificar la sección {sectionId}
+              Sí, deseo modificar sección {sectionId}
             </button>
             <button className="btn btn-danger" onClick={onClose}>
               Cancelar
