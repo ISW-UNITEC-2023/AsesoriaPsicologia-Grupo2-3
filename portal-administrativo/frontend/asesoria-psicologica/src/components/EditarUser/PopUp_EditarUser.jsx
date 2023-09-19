@@ -33,8 +33,8 @@ const EditarUser = ({ isOpen, onClose, user }) => {
               type="text"
               className="form-control"
               id="usuario"
-              placeholder={credentials.id_account}
-              value={credentials.id_account}
+              placeholder={user.id_account}
+              value={user.id_account}
               readOnly={true}
               disabled={true}
             />
@@ -84,11 +84,11 @@ const EditarUser = ({ isOpen, onClose, user }) => {
               id="estado"
               defaultValue={credentials.active} // Establece el valor predeterminado
             >
-              <option value="" disabled>
+              <option value="">
                 {user.active}
               </option>
-              <option value="opcion1">Activo</option>
-              <option value="opcion2">Inactivo</option>
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
             </select>
           </div>
           <div className="form-group">
@@ -98,13 +98,13 @@ const EditarUser = ({ isOpen, onClose, user }) => {
               id="rol"
               defaultValue={credentials.role} // Establece el valor predeterminado
             >
-              <option value="" disabled>
+              <option value="">
                 {user.role}
               </option>
-              <option value="opcion1">Administrador</option>
-              <option value="opcion2">Docente</option>
-              <option value="opcion3">Estudiante</option>
-              <option value="opcion4">Paciente</option>
+              <option value="ADMIN">Administrador</option>
+              <option value="DOCENTE">Docente</option>
+              <option value="ESTUDIANTE">Estudiante</option>
+              <option value="PACIENTE">Paciente</option>
             </select>
           </div>
         </div>
@@ -122,17 +122,20 @@ const EditarUser = ({ isOpen, onClose, user }) => {
           <button
             className="btn btn-success"
             onClick={async () => {
+              console.log(document.getElementById("estado").value)
+              console.log(document.getElementById("rol").value)
               await Services.updateUser(
-                credentials.id_account,
-                credentials.role,
-                credentials.active
+                user.id_account,
+                document.getElementById("rol").value,
+                document.getElementById("estado").value
               );
 
-              if (credentials.role === "" || credentials.active === null) {
+              if (document.getElementById("rol").value === "" || document.getElementById("estado").value === null) {
                 console.log("No puede dejar ningun campo vacio.");
               } else {
-                borrarStorage();
+                localStorage.clear();
                 console.log("El usuario se modifico exitosamente");
+                onClose();
               }
             }}
           >

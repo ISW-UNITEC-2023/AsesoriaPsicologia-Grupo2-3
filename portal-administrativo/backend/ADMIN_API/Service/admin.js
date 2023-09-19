@@ -59,7 +59,7 @@ async function updateAdmin(id, name) {
 
 async function registerAdmin(user) {
   return knex("users").insert({
-    human_talent: user.human_talent,
+    id_account: user.human_talent,
     role: user.role,
     name: user.name,
     email: user.email,

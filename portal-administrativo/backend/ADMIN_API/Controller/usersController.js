@@ -64,7 +64,7 @@ async function registerUser(req, res) {
         .pbkdf2Sync(password, salt, parseInt(process.env.HASH_ITERATIONS), parseInt(process.env.KEY_LENGTH), "sha256")
         .toString("base64");
       
-      const [newUserId] = await createUser({
+      const newUserId = createUser({
         id_account,
         role,
         name,
@@ -104,7 +104,7 @@ async function deleteUser(req, res) {
 
 async function updateUserAdmin(req, res) {
   try {
-    await updUserAdmin(req.body);
+    updUserAdmin(req.body);
 
     res.send({
      success: true,
