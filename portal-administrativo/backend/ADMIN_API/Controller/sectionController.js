@@ -11,7 +11,13 @@ const {
   updateYearSection: updateYear,
 } = require("../Service/section");
 
-const { TeacherExists: existTeacher } = require("../Service/admin");
+const { ExisteTeacher: existTeacher } = require("../Service/admin");
+
+const {
+  ExistSectionAnnounce: existAnnounceForSection,
+  DeleteAnnounce: deleteAnnounce,
+  DeleteAnnounce_d: deleteAnnounce_d,
+} = require("../Service/announces");
 
 async function getSections(_, res) {
   const sections = await get();
@@ -50,6 +56,8 @@ async function EraseSection(req, res) {
     const { id } = req.query;
     const exists = await sectionExi(id);
 
+    const existAnnounce = await existAnnounceForSection(exists[0].id);
+
     if (!id) {
       errorMessage.push("PARAMETER ID REQUIRED!!");
     }
@@ -60,10 +68,17 @@ async function EraseSection(req, res) {
     if (errorMessage.length > 0) {
       res.status(404).send(errorMessage);
     } else {
+      if (existAnnounce) {
+        for (i = 0; i < existAnnounce.length; i++) {
+          await deleteAnnounce_d(existAnnounce[i].announce_id);
+          await deleteAnnounce(existAnnounce[i].announce_id);
+        }
+      }
       await deleteSection(id);
       res.status(200).send();
     }
   } catch (e) {
+    console.error("Error:", e);
     res.status(500).send("INTERNAL SERVER ERROR!!");
   }
 }
@@ -126,7 +141,7 @@ async function UpdateSectionTeacher(req, res) {
 
     const { id } = req.query;
     const teacher = req.body;
-    const exists = await existTeacher(teacher);
+    const exists = await existTeacher(teacher.teacher_id);
     const existsId = await sectionExi(id);
 
     if (!id) {

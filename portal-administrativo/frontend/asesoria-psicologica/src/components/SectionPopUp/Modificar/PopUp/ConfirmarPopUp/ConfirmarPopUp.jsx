@@ -1,16 +1,7 @@
 import React from "react";
 import "./ConfirmarPopUp.css";
 
-const ConfirmarPopUp = ({
-  isOpen,
-  onClose,
-  onConfirm,
-  sectionId,
-  selectedOption,
-  selectedQuarterOption,
-  selectedTeacherOption,
-  selectedYearOption,
-}) => {
+const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -25,29 +16,19 @@ const ConfirmarPopUp = ({
     justifyContent: "space-between",
   };
 
-  // Función onConfirm que te lleva al PopUp de éxito
-  const handleConfirm = () => {
-    console.log(sectionId);
-    if (selectedOption === "teacher_id") {
-      console.log(`Teacher ID seleccionado: ${selectedTeacherOption}`);
-    } else if (selectedOption === "year") {
-      console.log(`Año seleccionado: ${selectedYearOption}`);
-    } else if (selectedOption === "quarter") {
-      console.log(`Trimestre seleccionado: Q${selectedQuarterOption}`);
-    }
-    onConfirm(); // Llamar a la función onConfirm cuando se confirma la modificación
-  };
-
   return (
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2  style={{ marginBottom:'20px' }}>¿Está seguro que desea modificar la sección {sectionId}?</h2>{" "}
+          <h2>¿Está seguro que desea modificar la sección {sectionId}?</h2>
           <div style={buttonContainerStyle}>
             <button
               className="btn btn-danger"
-              onClick={handleConfirm}
-              style={{ backgroundColor: 'green', color: 'white', borderBlockColor:'green',margintop:'60px',marginRight: "10px" }}
+              onClick={() => {
+                // Aquí llamamos a la función onConfirm para ejecutar handleConfirm en SectionsPage
+                onConfirm();
+              }}
+              style={{ marginRight: "10px" }}
             >
               Sí, deseo modificar sección {sectionId}
             </button>
@@ -61,4 +42,4 @@ const ConfirmarPopUp = ({
   );
 };
 
-export default ConfirmarPopUp;
+export default ModificarConfirmPopUp;

@@ -129,6 +129,15 @@ async function ExistAnnounce(id) {
   return announce;
 }
 
+async function ExistSectionAnnounce(id) {
+  const announce = JSON.parse(
+    JSON.stringify(
+      await knex.select().table("announces_d").where("section_id", id)
+    )
+  );
+
+  return announce;
+}
 
 async function updateTitle(id_announces, newtitle) {
    await knex('announces')
@@ -158,5 +167,6 @@ module.exports = {
   ExistAnnounce,
   DeleteAnnounce_d,
   updateDescrip,
-  updateTitle
+  updateTitle,
+  ExistSectionAnnounce,
 };
