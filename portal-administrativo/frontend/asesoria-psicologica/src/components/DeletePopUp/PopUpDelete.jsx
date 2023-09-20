@@ -27,7 +27,7 @@ const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName, moduleId
                     </div>
                     <br></br>
                     <div>
-                        <button className="confirm-button" onClick={onConfirm(moduleId)}>
+                        <button className="confirm-button" onClick={(e) => onConfirm(moduleId)}>
                             Eliminar
                         </button>
                         

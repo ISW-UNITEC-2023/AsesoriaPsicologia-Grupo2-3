@@ -63,3 +63,52 @@ export async function deleteSection(id) {
     return { message: e.response.data.error };
   }
 }
+
+//Modificar
+export async function updateTeacher(id, teacher_id) {
+  const options = {
+    method: "PUT",
+    url: "http://localhost:3001/sections/update/teacher/",
+    params: { id: id },
+    data: { teacher_id: teacher_id },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+export async function updateYear(id, year) {
+  const options = {
+    method: "PUT",
+    url: "http://localhost:3001/sections/update/year/",
+    params: { id: id },
+    data: { year: year },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+export async function updateQuarter(id, quarter) {
+  const options = {
+    method: "PUT",
+    url: "http://localhost:3001/sections/update/quarter/",
+    params: { id: id },
+    data: { quarter: quarter },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}

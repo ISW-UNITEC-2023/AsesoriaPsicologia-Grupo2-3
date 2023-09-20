@@ -81,41 +81,41 @@ async function CreateSection(section) {
   });
 }
 
-async function DeleteSection(course_id) {
-  return knex("sections").where("id", course_id).del(); //delete from table where id=10
+async function DeleteSection(id) {
+  return knex("sections").where("id", id).del(); //delete from table where id=10
 }
 
 async function SectionExists(id) {
   const SectionExist = JSON.parse(
-    JSON.stringify(await knex.select().table("sections").where("id", "=", id))
+    JSON.stringify(await knex.select().table("sections").where("id", id))
   );
 
   return SectionExist;
 }
 
 async function updateSectionCourseId(id, course) {
-  await knex("sections").where("id", "=", id).update({
+  await knex("sections").where("id", id).update({
     course_id: course,
   });
   return;
 }
 
 async function updateTeacherSection(id, TeacherId) {
-  await knex("sections").where("id", "=", id).update({
+  await knex("sections").where("id", id).update({
     teacher_id: TeacherId,
   });
   return;
 }
 
 async function updateYearSection(id, newYear) {
-  await knex("sections").where("id", "=", id).update({
+  await knex("sections").where("id", id).update({
     year: newYear,
   });
   return;
 }
 
 async function updateQuarterSection(id, newQuarter) {
-  await knex("sections").where("id", "=", id).update({
+  await knex("sections").where("id", id).update({
     quarter: newQuarter,
   });
   return;
