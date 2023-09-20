@@ -12,6 +12,7 @@ import { loadModules } from "../../Services/course";
 function DashBoard() {
   const [displayedModules, setModules] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [state, setState] = useState(false);
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
 
   useEffect(() => {
@@ -48,7 +49,7 @@ function DashBoard() {
             {displayedModules.map((module) => (
               <Col lg>
                 <br></br>
-                <SectionCard props={module} handleReload={() => setIsPopupOpen(false)} />
+                <SectionCard props={module} handleReload={() => setState(true)} />
                 <br></br>
                 
               </Col>
