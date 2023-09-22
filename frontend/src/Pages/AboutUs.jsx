@@ -1,4 +1,3 @@
-import React from "react";
 import NavigationBar from "../Components/NavigationBar.jsx";
 import "../Styles/CSS/AboutUsStyle.css";
 

@@ -1,5 +1,5 @@
 import NavigationBar from "../Components/NavigationBar.jsx";
-import React, {useRef, useState} from "react";
+import {useRef, useState} from "react";
 import {toast} from "react-toastify";
 import "../Styles/CSS/ForgotStyle.css";
 import ForgotLayout from "../Layout/ForgotLayout";

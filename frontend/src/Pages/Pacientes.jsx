@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../Styles/CSS/Pacientes.css";
-import { useNavigate, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import Services from "../Utilities/login-services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 function PacientesForm() {
-  const navigate = useNavigate();
   const [nombres, setNombres] = useState([]);
 
   async function initialList() {

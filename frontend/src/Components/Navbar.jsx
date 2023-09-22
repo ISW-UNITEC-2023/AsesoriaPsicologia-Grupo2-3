@@ -2,7 +2,6 @@
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import React from 'react';
 
 function MyNavbar() {
 
@@ -17,27 +16,27 @@ function MyNavbar() {
 
                 <Nav className="flex-column">
                     <Nav.Link href="/Dashboard" style={{ fontWeight: 'bold' }}>
-                        <i class="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
+                        <i className="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
                         Inicio
                     </Nav.Link>
 
                     <Nav.Link href="/Anuncios" style={{ fontWeight: 'bold' }}>
-                    <i class="bi bi-megaphone-fill" style={{marginRight: '10px'}}></i>
+                    <i className="bi bi-megaphone-fill" style={{marginRight: '10px'}}></i>
                         Anuncios
                     </Nav.Link>
 
                     <Nav.Link href="/Modulos" style={{ fontWeight: 'bold' }}>
-                    <i class="bi bi-journals" style={{marginRight: '10px'}}></i>
+                    <i className="bi bi-journals" style={{marginRight: '10px'}}></i>
                         Modulos
                     </Nav.Link>  {/*modulos son las clases y se muestran en tarjetitas*/ }
                     
                     <Nav.Link href="/Secciones" style={{ fontWeight: 'bold' }}>
-                        <i class="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
+                        <i className="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
                         Secciones
                     </Nav.Link>
 
                     <Nav.Link href="/Pacientes" style={{ fontWeight: 'bold' }}>
-                    <i class="bi bi-calendar-event-fill" style={{marginRight: '10px'}}></i>
+                    <i className="bi bi-calendar-event-fill" style={{marginRight: '10px'}}></i>
                         Pacientes
                     </Nav.Link>
                 </Nav>
@@ -50,8 +49,5 @@ function MyNavbar() {
           
         </div>
     );
-    
-    
-    };
-
+    }
 export default MyNavbar;

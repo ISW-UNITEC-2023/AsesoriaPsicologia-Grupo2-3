@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../Styles/CSS/PopUp.css";
 import axios from "axios"; // Importa Axios
 
-const Popup = ({ isOpen, onClose, selectedButtonInfo, onUpdateModuleList }) => {
+const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",

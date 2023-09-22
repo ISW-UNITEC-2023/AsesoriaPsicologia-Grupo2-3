@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './Styles/CSS/App.css';
 
@@ -12,7 +11,7 @@ import Pacientes from './Pages/Pacientes'
 import Sections from './Pages/Sections'
 import Vistas from './Pages/Vistas'
 import Wizard from './Pages/Wizard'
-import NavBar from './Components/Navbar'
+// import NavBar from './Components/Navbar'
 
 function App() {
   return (

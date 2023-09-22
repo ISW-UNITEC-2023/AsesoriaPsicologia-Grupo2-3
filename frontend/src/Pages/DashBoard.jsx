@@ -24,7 +24,7 @@ function DashBoard() {
       <div style={{}}>
         <h1>TABLERO</h1>
         <Row>
-          {displayedSections.map((section) => (
+          {displayedSections.map((section, index) => (
             <Col lg>
               <br></br>
               <SectionCard {...section} />
