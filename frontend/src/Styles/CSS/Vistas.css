@@ -1,5 +1,5 @@
 
-.page-container-vista {
+.page-container {
     max-width: 800px; /* Tamaño máximo del contenedor */
     margin: 20px auto; /* Centrar horizontalmente en la página */
     padding: 20px; /* Espacio interno alrededor del contenido */
@@ -9,12 +9,12 @@
     
 }
 
-.profile-container-vista {
+.profile-container {
     display: flex;
     align-items: center;
   }
   
-  .profile-image-vista {
+  .profile-image {
     width: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
     height: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
     border-radius: 50%; /* Hace que la imagen sea circular */
@@ -22,12 +22,12 @@
     margin-right: 20px;
 }
  
-.image-container-vista {
+.image-container {
   position: relative;
 }
 
 /* Estilos para la imagen */
-.unitec-image-vista {
+.unitec-image {
   position:relative;
   top: 0;
   right: 0;
@@ -35,7 +35,7 @@
   /* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
 }
 
-  .profile-text-vista {
+  .profile-text {
     margin-top: 50px;
     text-align: center;
     font-style: Times normal;
@@ -43,15 +43,15 @@
     font-weight: bold;
   }
 
-.columna-vista{
+.columna{
   border:2px solid red;
 }
 
-.with-underline-vista {
+.with-underline {
   text-decoration: underline;
 }
 
-.text-container-vista {
+.text-container {
   display: grid;
   grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
   gap: 10px; /* Espacio entre las columnas */
@@ -59,20 +59,20 @@
   
 }
 
-.fs-5-vista {
+.fs-5 {
   align-self: center; /* Alinear verticalmente el texto "Nombre:" y otros con subrayado */
 }
 
-.fs-5-alignment-vista {
+.fs-5-alignment {
   text-align: right; /* Alinear el texto a la izquierda en los elementos fs-6 sin subrayado */
   margin: 5; /* Eliminar el margen predeterminado de los elementos p */
 }
 
-.h3-vista{
+.h3{
   margin-top: 20px;
 }
 
-.text-center-vista{
+.text-center{
   text-align: center;
 }
 

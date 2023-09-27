@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import "../Styles/CSS/LoginStyle.css";
 import NavigationBar from "../Components/NavigationBar.jsx";
 import fraseData from "../Styles/Extras/frases.json";
@@ -8,7 +8,7 @@ import validator from '../Utilities/validator.js';
 import Services from '../Utilities/login-services.js';
 
 function Login(props) {
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [ setIsSubmitted] = useState(false);
     const navigate = useNavigate();
 
     const handleForgotPasswordClick = () => {
@@ -102,7 +102,7 @@ function Login(props) {
         //console.log("form is valid");
         const responese = await Services.postLogin(form.email, form.password);
         ////console.log(responese.id)
-        if(!!responese.message) {
+        if(!responese.message) {
         setform({
             email:"",
             password:""

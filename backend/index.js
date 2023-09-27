@@ -13,13 +13,16 @@ const sectionRouter = require("./Route/section-routes");
 const modulosRouter = require("./Route/modules-routes");
 const userRouter = require("./Route/users-routes");
 const mailRouter = require("./Route/mail-routes");
+const anunciosRouter = require("./Route/announce-routes");
 
 app.use("/admins", adminRouter);
 app.use("/sections", sectionRouter);
 app.use("/modulos", modulosRouter);
 app.use("/user", userRouter);
 app.use("/mail", mailRouter);
+app.use("/anuncios",anunciosRouter);
 
-app.listen(3001 , () => {
+const PORT = process.env.PORT || 8000;
+app.listen(PORT , () => {
   console.log("Server started!");
 });

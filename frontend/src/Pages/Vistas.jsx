@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/tempprofile.png";
-import logoUnitec from '../Styles/Images/unitec-logo.png'
+import logoUnitec from "../Styles/Images/logo-unitec.png";
 
 function Vistas() {
   return (
@@ -11,7 +11,7 @@ function Vistas() {
           <Col md={3}>
             <img
               src={tempImage} /* Agrega la ruta de la imagen aquí */
-              alt=""
+              alt="Perfil del paciente"
               className="profile-image"
             />
           </Col>
@@ -29,7 +29,7 @@ function Vistas() {
           >
             <img
               src={logoUnitec} /* Agrega la ruta de la imagen aquí */
-              alt=""
+              alt="Logo Unitex"
               className="unitec-image"
             />
           </Col>

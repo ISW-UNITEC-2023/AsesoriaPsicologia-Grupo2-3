@@ -1,0 +1,19 @@
+.tab-container {
+  display: inline-block;
+  margin-right: 10px; /* Espacio entre las pestañas */
+}
+
+.tab-button {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  /* Color de fondo */
+  cursor: pointer;
+  /* Otros estilos según tu preferencia */
+}
+
+.badge {
+  position: relative;
+  top: -5px; /* Ajusta la posición vertical de la insignia */
+  left: -10px; /* Ajusta la posición horizontal de la insignia */
+}

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function GetTeachers() {
+async function GetTeachers() {
   const host = "http://localhost:3001";
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "http://localhost:3001";
   const options = {
@@ -12,3 +12,7 @@ export async function GetTeachers() {
   //console.log("GetProducts response data"+response.data);
   return response.data;
 }
+
+module.exports = {
+  GetTeachers,
+};
