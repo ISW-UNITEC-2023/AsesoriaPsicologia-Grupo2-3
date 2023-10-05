@@ -3,7 +3,7 @@ import axios from "axios";
 export async function loadAnnounces() {
     const options = {
         method: 'GET', 
-        url: 'http://localhost:3001/announces/all'
+        url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announces/all'
     };
     
     const response = await axios.request(options);
@@ -14,7 +14,7 @@ export async function loadAnnounces() {
 export async function DeleteAnnounces(id_announces) {
     const options = {
         method: 'DELETE',
-        url: 'http://localhost:3001/announces/delete',
+        url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announces/delete',
         params: {id: id_announces},
         
       };
@@ -31,7 +31,7 @@ export async function CreateAnnounce(info) {
  
   const options = {
     method: 'POST',
-    url: 'http://localhost:3001/announces/create',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announces/create',
     data: {
       message: info.message,
       title: info.title,
@@ -51,7 +51,7 @@ export async function UpdateAnnouncesTitle(data) {
  
   const options = {
     method: 'PUT',
-    url: 'http://localhost:3001/announces/update/title',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announces/update/title',
     params: {id: data.id},
     data: {title_new: data.title}
   };
@@ -67,7 +67,7 @@ export async function UpdateAnnouncesDecription(data) {
  
   const options = {
     method: 'PUT',
-    url: 'http://localhost:3001/announces/update/Descrip',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announces/update/Descrip',
     params: {id: data.id},
     data: {description_new: data.description}
   };

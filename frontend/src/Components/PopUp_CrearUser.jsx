@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/CSS/PopUp_CrearUser.css";
-import "font-awesome/css/font-awesome.css";
+// import "font-awesome/css/font-awesome.css";
 import Services from "../Utilities/login-services";
 import PropTypes from "prop-types";
 

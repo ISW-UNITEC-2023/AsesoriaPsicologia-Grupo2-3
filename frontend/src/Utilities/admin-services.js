@@ -1,8 +1,8 @@
 import axios from "axios";
 
 async function GetTeachers() {
-  const host = "http://localhost:3001";
-  // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "http://localhost:3001";
+  const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   const options = {
     method: "GET",
     url: `${host}/admins/teachers`,
@@ -13,6 +13,6 @@ async function GetTeachers() {
   return response.data;
 }
 
-module.exports = {
+export default {
   GetTeachers,
-};
+}

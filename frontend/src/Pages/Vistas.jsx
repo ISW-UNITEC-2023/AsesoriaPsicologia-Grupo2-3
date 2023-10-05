@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/tempprofile.png";
-import logoUnitec from "../Styles/Images/logo-unitec.png";
+import logoUnitec from "../Styles/Images/unitec-logo.png";
 
 function Vistas() {
   return (

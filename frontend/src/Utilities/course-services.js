@@ -3,7 +3,7 @@ import axios from "axios";
 export async function loadModules() {
   const options = {
     method: "GET",
-    url: "http://localhost:3001/modulos/all",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos/all",
   };
   const response = await axios.request(options);
   return response.data;
@@ -12,7 +12,7 @@ export async function loadModules() {
 export async function deleteModule(id) {
   const options = {
     method: "DELETE",
-    url: "http://localhost:3001/modulos",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos",
     data: { id: id },
   };
 

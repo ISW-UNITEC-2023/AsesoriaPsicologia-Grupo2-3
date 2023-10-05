@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/CSS/PopUp_EditarUser.css";
-import "font-awesome/css/font-awesome.css";
+// import "font-awesome/css/font-awesome.css";
 import Services from "../Utilities/login-services.js";
 
 const EditarUser = ({ isOpen, onClose, user }) => {

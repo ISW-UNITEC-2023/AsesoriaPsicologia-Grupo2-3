@@ -8,7 +8,6 @@ import validator from '../Utilities/validator.js';
 import Services from '../Utilities/login-services.js';
 
 function Login(props) {
-    const [ setIsSubmitted] = useState(false);
     const navigate = useNavigate();
 
     const handleForgotPasswordClick = () => {
@@ -32,9 +31,7 @@ function Login(props) {
     }
 
     //Ejecutar fetch de frases
-    useEffect(() => {
-        getFrases().then(r => r);
-    }, [])
+    getFrases().then(r => r);
 
     //Función para obtener una frase aleatoria y rotarla
     const getFrase = () => {
@@ -63,7 +60,6 @@ function Login(props) {
     //Backend de Login
     const handleLoginSuccess = (e) => {
         e.preventDefault();
-        setIsSubmitted(true);
         navigate('/Dashboard');
     }
 
@@ -80,58 +76,54 @@ function Login(props) {
     });
       
     const handleSubmit = async (event) => {
-    event.preventDefault();
-    //console.log(form.email)
-    if (!validator.isEmail(form.email)) {
-        setErrors({
-        ...errors,
-        email: "Email is invalid",
-        });
-    } else {
-        //console.log("email good");
-    }
+        event.preventDefault();
+        //console.log(form.email)
+        if (!validator.isEmail(form.email)) {
+            setErrors({
+            ...errors,
+            email: "Email is invalid",
+            });
+        } else {
+            //console.log("email good");
+        }
 
-    if (!validator.isPassword(form.password)) {
-        setErrors({
-        ...errors,
-        password: "Password is invalid",
-        });
-    }
-    
-    if (!errors.email && !errors.password) {
-        //console.log("form is valid");
-        const responese = await Services.postLogin(form.email, form.password);
-        ////console.log(responese.id)
-        if(!responese.message) {
-        setform({
-            email:"",
-            password:""
-        })
-            // console.log(responese.message.length)
-            if(responese.message.length == 2)
-            {
+        if (!validator.isPassword(form.password)) {
             setErrors({
-                email:"",
-                password:"", 
-                general: "Email and Password are invalid"}
-            )
+            ...errors,
+            password: "Password is invalid",
+            });
+        }
+        
+        if (!errors.email && !errors.password) {
+            const response = await Services.postLogin(form.email, form.password);
+            if(response.message !== undefined) {
+                setform({
+                    email:"",
+                    password:""
+                })
+                if(response.message.length == 2){
+                    setErrors({
+                        email:"",
+                        password:"", 
+                        general: "Email and Password are invalid"}
+                    )
+                }else{
+                    setErrors({
+                        email:"",
+                        password:"", 
+                        general: response.message}
+                    )
+                }
             }else{
-            setErrors({
-                email:"",
-                password:"", 
-                general: responese.message}
-            )
+                localStorage.setItem("accesstoken", response.accessToken)
+                localStorage.setItem("refreshToken", response.refreshToken)
+                try {
+                    handleLoginSuccess(event);
+                } catch (error) {
+                    console.log(error)
+                }
             }
-        }else{
-        localStorage.setItem("accesstoken", responese.accessToken)
-        localStorage.setItem("refreshToken", responese.refreshToken)
-        try {
-            handleLoginSuccess();
-        } catch (error) {
-            //console.log(error)
         }
-        }
-    }
     };
 
     return (

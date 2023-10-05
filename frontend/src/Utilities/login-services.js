@@ -3,7 +3,7 @@ import axios from "axios";
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "http://localhost:3001/user/login",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/login",
     data: { email: email, password: password },
   };
 
@@ -20,7 +20,7 @@ async function postLogin(email, password) {
 async function getUsers() {
   const options = {
     method: "GET",
-    url: "http://localhost:3001/user/list",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/list",
   };
 
   try {
@@ -34,7 +34,7 @@ async function getUsers() {
 async function getModulesAll() {
   const options = {
     method: 'GET',
-    url: 'http://localhost:3001/modulos/all',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos/all',
   };
   
   axios.request(options).then(function (response) {
@@ -48,7 +48,7 @@ async function getModulesAll() {
 async function getSeccionbyModu() {
   const options = {
     method: "GET",
-    url: "http://localhost:3001/user/list",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/list",
   };
 
   try {
@@ -62,7 +62,7 @@ async function getSeccionbyModu() {
 async function registerUser(id_account, role, name, email, password, active){
   const options = {
     method: 'POST',
-    url: 'http://localhost:3001/user/register',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/register',
     data: {id_account, role, name, email, password, active}
   };
 
@@ -77,7 +77,7 @@ async function registerUser(id_account, role, name, email, password, active){
 async function updateUser(id_account, role, active){
   const options = {
     method: 'PUT',
-    url: 'http://localhost:3001/user/update',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/update',
     data: {id_account, role, active}
   };
 
@@ -92,7 +92,7 @@ async function updateUser(id_account, role, active){
 async function deleteUser(id_account){
   const options = {
     method: 'DELETE',
-    url: 'http://localhost:3001/user/delete',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/delete',
     data: {id_account}
   };
 
@@ -107,7 +107,7 @@ async function deleteUser(id_account){
 async function updateUserPassword(id_account, password){
   const options = {
     method: 'PUT',
-    url: 'http://localhost:3001/user/updatePassword',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updatePassword',
     data: {id_account, password}
   };
 
@@ -122,7 +122,7 @@ async function updateUserPassword(id_account, password){
 async function updateUserEmail(id_account, email){
   const options = {
     method: 'PUT',
-    url: 'http://localhost:3001/user/updateEmail',
+    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updateEmail',
     data: {id_account, email}
   };
 
@@ -134,7 +134,6 @@ async function updateUserEmail(id_account, email){
   }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   postLogin,
   getUsers,
