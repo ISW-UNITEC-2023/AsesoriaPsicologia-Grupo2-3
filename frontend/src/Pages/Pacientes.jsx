@@ -80,7 +80,7 @@ function PacientesForm() {
             <div className="nombre-box">
               <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
               <span className="nombre" style={{ width: "400%" }}>
-                <Link to={"/Vistas"}>{nombre.nombre}</Link>
+                <Link to={"/Expedientes"}>{nombre.nombre}</Link>
               </span>
               {/* Agrega el evento onClick para abrir el popup de edición */}
               <button

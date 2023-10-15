@@ -26,7 +26,7 @@ function App() {
           element={<ForgotPassword {...forgotData} />}
         />
         <Route path="/Modulos" element={<Modulos />} />
-        {<Route path="/Vistas" element={<Vistas />} />}
+        {<Route path="/Expedientes" element={<Vistas />} />}
         <Route path="/Secciones" element={<Sections />} />
         <Route path="/Pacientes" element={<Pacientes />} />
         <Route path="/Secciones/:courseId" element={<Sections />} />
