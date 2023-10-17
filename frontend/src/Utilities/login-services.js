@@ -3,18 +3,11 @@ import axios from "axios";
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/login",
-    data: { email: email, password: password },
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/admins/login",
+    data: { email, password },
   };
-
-  try {
-    const response = await axios.request(options);
-    return response.data;
-  } catch (e) {
-    return {
-      message: e.response.data.error,
-    };
-  }
+  const response = await axios.request(options)
+  return response.data;
 }
 
 async function getUsers() {
