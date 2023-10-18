@@ -11,31 +11,28 @@ import Pacientes from "./Pages/Pacientes";
 import Sections from "./Pages/Sections";
 import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
-// import NavBar from './Components/Navbar'
+import Anuncios from "./Pages/Anuncios";
+import AnunciosCrear from "./Pages/AnunciosCrear";
 
 function App() {
   return (
     <Router>
-      {/* <div style={{display:'flex', flexDirection:'row'}}> */}
-      {/* <NavBar/> */}
       <Routes>
         <Route path="/" element={<LandingPage {...homedata} />} />
         <Route path="/Inicio" element={<LandingPage {...homedata} />} />
-        <Route
-          path="/ResetPassword"
-          element={<ForgotPassword {...forgotData} />}
-        />
+        <Route path="/ResetPassword" element={<ForgotPassword {...forgotData} />}/>
+        <Route path="/Anuncios" element={<Anuncios />} />
         <Route path="/Modulos" element={<Modulos />} />
-        {<Route path="/Expedientes" element={<Vistas />} />}
+        <Route path="/Expedientes" element={<Vistas />} />
         <Route path="/Secciones" element={<Sections />} />
         <Route path="/Pacientes" element={<Pacientes />} />
         <Route path="/Secciones/:courseId" element={<Sections />} />
         <Route path="/InicioSesion" element={<Login {...loginData} />} />
         <Route path="/Dashboard" element={<DashBoard />} />
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Questionario" element={<Wizard {...wizardData} />} />
+        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route path="/Crearanuncios" element={<AnunciosCrear />} />
       </Routes>
-      {/* </div> */}
     </Router>
   );
 }

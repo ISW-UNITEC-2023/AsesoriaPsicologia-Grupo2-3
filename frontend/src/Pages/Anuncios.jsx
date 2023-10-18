@@ -7,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import {loadAnnounces ,DeleteAnnounces} from "../Utilities/announces-services"
+import NavigationB from "../Components/Navbar"
 
 function ComboBox() {
   return <select className="custom-combobox">{}</select>;
@@ -65,68 +66,66 @@ function Anuncios() {
   };
 
   return (
-    <div style={{ width: "90%" }}>
-      <div className="container-header">
-        <h1 className="title-pacientes">Anuncios</h1>
-        <a
-          className="button-create"
-          onClick={() => {
-            handleCreateClick();
-            console.log("Redireccionar a la creación de anuncios");
-          }}
-        >
-          + Anuncios
-        </a>
-      </div>
-      <div className="container-controls">
-        <Row>
-          <Col md={4} lg={5}>
-            <ComboBox />
-          </Col>
-          <Col md={4} lg={7}>
-            <SearchBar />
-          </Col>
-        </Row>
-      </div>
-      <div style={{marginTop:'3vh'}}>
-        <ul>
-          {announces.map((announce) => (
-            <>
-                <li>
-                  <div
-                    className="nombre-box"
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
+    <div className="anuncios-container">
+      <NavigationB/>
+      <div className="anuncios-container-box">
+        <div className="anuncios-container-header">
+          <h1 className="anuncios-title-pacientes">Anuncios</h1>
+          <a
+            className="anuncios-button-create"
+            onClick={() => {handleCreateClick();}}
+          >
+            + Anuncios
+          </a>
+        </div>
+        <div className="anuncios-container-controls">
+          <Row>
+            <Col md={4} lg={5}>
+              <ComboBox />
+            </Col>
+            <Col md={4} lg={7}>
+              <SearchBar />
+            </Col>
+          </Row>
+        </div>
+        <div style={{marginTop:'3vh'}}>
+          <ul>
+            {announces.map((announce) => (
+              <>
+                  <li>
+                    <div
+                      className="nombre-box"
+                      style={{
+                        display: "flex",
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
 
-                  <div>
-                    <span className="titulo">{announce.Title}</span>
-                    <p className="descripcion">{announce.Message}</p>
+                    <div>
+                      <span className="anuncio-titulo">{announce.Title}</span>
+                      <p className="anuncio-descripcion">{announce.Message}</p>
+                    </div>
+                    <div
+                      className="ml-auto"
+                      style={{ alignSelf: "flex-end", marginLeft: "auto" }}
+                    >
+                    <DropdownButton id="anuncios-dropdown-item-button">
+                        <Dropdown.Item  as="button" href="/Crearanuncios" onClick={() => {
+                          handleEditClick(`${announce.Title}`, `${announce.Message}`);
+                          }}   >Editar</Dropdown.Item>
+                      
+                      <Dropdown.Item as="button"onClick={() => {
+                          handleEditClick2(`${announce.AnnounceId}`);
+                          
+                          }}  >Eliminar</Dropdown.Item>
+                    </DropdownButton>
                   </div>
-                  <div
-                    className="ml-auto"
-                    style={{ alignSelf: "flex-end", marginLeft: "auto" }}
-                  >
-                  <DropdownButton id="dropdown-item-button">
-                    
-                      <Dropdown.Item  as="button" href="/Crearanuncios" onClick={() => {
-                        handleEditClick(`${announce.Title}`, `${announce.Message}`);
-                        }}   >Editar</Dropdown.Item>
-                    
-                    <Dropdown.Item as="button"onClick={() => {
-                        handleEditClick2(`${announce.AnnounceId}`);
-                        
-                        }}  >Eliminar</Dropdown.Item>
-                  </DropdownButton>
                 </div>
-              </div>
-            </li>
-            </>
-          ))}
-          
-        </ul>
+              </li>
+              </>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

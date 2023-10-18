@@ -1,6 +1,36 @@
 /* styles.css */
-.container-black-background {
-    background-color: black;
-    color: white; /* Cambiar el color del texto para que sea visible en fondo negro */
-  }
-  
+.dashboard-container{
+  display:flex;
+  flex-direction: row;
+  background-color: rgb(255,255,255);
+}
+
+.dashboard-box{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top:10px;
+}
+
+.dashboard-body{
+  display: flex;
+  flex-direction: column;
+  padding-left: 3%;
+  background-color: rgb(255,255,255);
+}
+
+.dashboard-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(255,255,255);
+  border-bottom: 1px solid #e3e3e3;
+  margin-left: 3%;
+}
+
+.section-card-container{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
