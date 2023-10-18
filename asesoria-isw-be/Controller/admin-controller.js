@@ -148,9 +148,9 @@ async function loginUser(req, res) {
       errorMessage.push("Email does not exist");
     }
     if (errorMessage.length) {
-      console.log(errorMessage)
+      console.log(errorMessage);
       res.send({
-        errorMessage
+        errorMessage,
       });
     } else {
       const email_now = email_exists[0];
@@ -179,13 +179,20 @@ async function loginUser(req, res) {
             expiresIn: "30d",
           }
         );
+        res.cookie("email", email, {
+          maxAge: 1000000, // La cookie expirará en 1 día
+          httpOnly: true, // La cookie solo es accesible desde el servidor
+          secure: true, // La cookie solo se envía a través de conexiones seguras (HTTPS)
+          sameSite: "lax", // Restringe el envío de cookies a solicitudes de terceros
+          signed: true, // Habilita la firma de la cookie
+        });
 
         res.send({
           accessToken,
           refreshToken,
         });
       } else {
-        res.send({errorMessage:["Invalid password"]});
+        res.send({ errorMessage: ["Invalid password"] });
       }
     }
   } catch (e) {
