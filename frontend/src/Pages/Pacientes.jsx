@@ -20,11 +20,13 @@ function PacientesForm() {
     const arregloMandar = [];
 
     arregloUsuarios.credentials.usersCredentials.map((usuario) => {
-      return arregloMandar.push({
-        nombre: usuario.name,
-        email: usuario.email,
-        id_account: usuario.id_account,
-      });
+      if(usuario.role === "PACIENTE"){
+        return arregloMandar.push({
+          nombre: usuario.name,
+          email: usuario.email,
+          id_account: usuario.id_account,
+        });
+      }
     });
 
     setNombres(arregloMandar);
