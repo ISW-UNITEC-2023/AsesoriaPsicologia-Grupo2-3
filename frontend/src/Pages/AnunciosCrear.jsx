@@ -11,7 +11,6 @@ import { loadModules } from "../Utilities/course-services";
 import {getInfoSectionMod} from "../Utilities/section-services";
 import { CreateAnnounce } from "../Utilities/announces-services";
 
-
 function AnunciosCrear() {
   const { quill, quillRef } = useQuill();
   const [value, setValue] = useState();
@@ -41,7 +40,7 @@ function AnunciosCrear() {
   };
 
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
         console.log(quill.getText(0,400));

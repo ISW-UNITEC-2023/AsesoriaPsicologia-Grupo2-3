@@ -1,52 +1,44 @@
+import logo_icono from "../Styles/Images/logo-icono.png"
+import "../Styles/CSS/Navbar.css"
+import { Link } from "react-router-dom";
 
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+//images
+import pacienteIcon from "../Styles/Images/paciente-icon.png"
+import moduleIcon from "../Styles/Images/curso-icon.png"
+import anuncioIcon from "../Styles/Images/anuncios-icon.png"
+import tableroIcon from "../Styles/Images/tablero-icon.png"
+import calendarioIcon from "../Styles/Images/calendario-icon.png"
+import backIcon from "../Styles/Images/back-icon-nb.png"
 
 function MyNavbar() {
-
     return (
-        <div style={{minHeight: '125vh' , backgroundColor: 'transparent'}}>
-            {/* Navbar */}
-            <nav style={{ flex: '0 0 150px', backgroundColor: '#f5f5f5', minHeight: '100%', textAlign: 'left' }}>
-            <Navbar.Brand href="#" style={{ paddingLeft: '20px', fontWeight: 'bold', fontSize: '24px', 
-            marginTop: '30px' }}>
-            UNITEC
-            </Navbar.Brand>
-
-                <Nav className="flex-column">
-                    <Nav.Link href="/Dashboard" style={{ fontWeight: 'bold' }}>
-                        <i className="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
-                        Inicio
-                    </Nav.Link>
-
-                    <Nav.Link href="/Anuncios" style={{ fontWeight: 'bold' }}>
-                    <i className="bi bi-megaphone-fill" style={{marginRight: '10px'}}></i>
-                        Anuncios
-                    </Nav.Link>
-
-                    <Nav.Link href="/Modulos" style={{ fontWeight: 'bold' }}>
-                    <i className="bi bi-journals" style={{marginRight: '10px'}}></i>
-                        Modulos
-                    </Nav.Link>  {/*modulos son las clases y se muestran en tarjetitas*/ }
-                    
-                    <Nav.Link href="/Secciones" style={{ fontWeight: 'bold' }}>
-                        <i className="bi bi-house-door-fill" style={{marginRight: '10px'}}></i>
-                        Secciones
-                    </Nav.Link>
-
-                    <Nav.Link href="/Pacientes" style={{ fontWeight: 'bold' }}>
-                    <i className="bi bi-calendar-event-fill" style={{marginRight: '10px'}}></i>
-                        Pacientes
-                    </Nav.Link>
-                </Nav>
-                <Form className="d-flex mt-3">
-                    {/*<Button variant="outline-success">Search</Button>*/}
-                </Form>
-            </nav>
-    
-            {/* Contenido de la página */}
-          
+        <div className="body-navbar-plataforma">
+            <img
+                src={logo_icono}
+                className="unitec-icon-logo"
+                alt="React Bootstrap logo"
+            />
+            <Link to="/Dashboard" className="link-navbar-plataforma">
+                <img src={tableroIcon} className="navbar-plataforma-icon" alt=""/>
+                Tablero
+            </Link>
+            <Link to ="/Anuncios" className="link-navbar-plataforma">
+                <img src={anuncioIcon} className="navbar-plataforma-icon" alt=""/>
+                Anuncios
+            </Link>
+            <Link to="/Modulos" className="link-navbar-plataforma">
+                <img src={moduleIcon} className="navbar-plataforma-icon" alt=""/>
+                Módulos
+            </Link>
+            <Link to="/Calendario" className="link-navbar-plataforma">
+                <img src={calendarioIcon} className="navbar-plataforma-icon" alt=""/>
+                Calendario
+            </Link>
+            <Link to="/Pacientes" className="link-navbar-plataforma">
+                <img src={pacienteIcon} className="navbar-plataforma-icon" alt=""/>
+                Pacientes
+            </Link>
+            <img src={backIcon} alt="" className="back-navbar-icon"/>
         </div>
     );
     }

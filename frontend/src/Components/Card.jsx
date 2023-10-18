@@ -7,7 +7,6 @@ import PopUpDelete from "../Components/PopUpDelete.jsx"
 import PopUpDeleted from "../Components/PopUpDeleted.jsx"
 import { deleteModule } from "../Utilities/course-services.js";
 import "../Styles/CSS/Card.css";
-import PropTypes from "prop-types";
 
 function MyCard({props, handleReload}) {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -56,6 +55,7 @@ function MyCard({props, handleReload}) {
         variant="top"
         src="https://img.freepik.com/free-vector/flat-back-school-background-with-school-supplies_23-2149452368.jpg"
         alt="School Supplies"
+        style={{width: "16.5rem"}}
       />
 
       <Card.Body>
@@ -71,19 +71,17 @@ function MyCard({props, handleReload}) {
           <br />
         </Card.Text>
 
-        <div style={{display:'flex'}}>
+        <div>
           <div className="tab-container"  style={{display:'flex'}}>
           <button
-                  type="button"
-                  className="bi bi-pencil"
-                  style={{ backgroundColor: 'green', color: 'black',marginRight: "6px", width:'100%' }}
-                  onClick={() => toggleModify(currentSectionId)}
+            type="button"
+            className="bi bi-pencil"
+            onClick={() => toggleModify(currentSectionId)}
           />
           <button
-                  type="button"
-                  className="bi bi-trash"
-                  onClick={(e) => handleDeleteClick(e, props)}
-                  style={{backgroundColor: 'red', color: 'black', width:'100%' }}
+            type="button"
+            className="bi bi-trash"
+            onClick={(e) => handleDeleteClick(e, props)}
           />
           </div>
           <div className="tab-container">
@@ -130,11 +128,3 @@ function MyCard({props, handleReload}) {
 }
 
 export default MyCard;
-
-MyCard.propTypes = {
-  props: PropTypes.object,
-  handleReload: PropTypes.func,
-  id: PropTypes.number,
-  name: PropTypes.string,
-  description: PropTypes.string,
-};
