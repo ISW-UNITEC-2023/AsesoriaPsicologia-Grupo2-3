@@ -7,7 +7,7 @@ export async function loadAnnounces() {
     };
     
     const response = await axios.request(options);
-    //console.log(response.data);
+    // console.log(response.data);
     return response.data;
 }
 

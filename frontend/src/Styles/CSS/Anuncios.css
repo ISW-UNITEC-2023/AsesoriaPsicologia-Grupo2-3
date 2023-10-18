@@ -2,27 +2,24 @@
   display:flex;
   flex-direction: row;
   background-color: rgb(255,255,255);
+  width:100%;
 }
 
 .anuncios-container-box{
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding-top:10px;
-}
-
-.anuncios-container-header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #000;
+  background-color: rgb(255,255,255);
 }
 
 .anuncios-container-controls {
-  padding-left: 10px;
-  padding-right: 10px;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  height: 9vh;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
   
 .anuncios-column {
@@ -37,19 +34,53 @@
   padding: 10px;
   margin-bottom: 10px;
 }
-  
 
-/*Viñetas de la lista*/
+.anuncio-item-box{
+  border: 1px solid #ccc;
+  display:flex;
+  flex-direction: row;
+}
 
-.anuncio-ul {
-  list-style-type: none;
-  padding: 0;
-} 
+.anuncio-item-2{
+  width:75%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.anuncio-item-3{
+  width:15%;
+  text-align: end;
+  padding-right: 25px;
+}
+
+.anuncios-group-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5%;
+}
+
+.announce-edit-button{
+  border: 1px solid #5281ce;
+  border-radius: 8px;
+  background: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .anuncio-icon-persona {
-  margin-right: 15px;
-  margin-left: 15px;
-  font-size: 30px;
+  font-size: 40px;
+  width:10%;
+  color: #5281ce;
+  align-self: center;
+}
+
+.anuncio-icon-button {
+  font-size: 15px;
   color: #5281ce;
 }
   
@@ -61,6 +92,21 @@
 .anuncio-descripcion {
   font-size: 14px;
   color: #555;
+}
+
+.anuncio-div-span{
+  display: flex;
+  flex-direction: column;
+}
+
+.anuncio-div-span a{
+  font-size:14px;
+  color: #6b6b6b;
+}
+
+.anuncio-div-span span{
+  font-size: 14px;
+  font-weight:600;
 }
 
 .anuncio-dropdown-menu {
@@ -75,8 +121,16 @@
   padding: 5px 10px;
   cursor: pointer;
 }
- .ml-align {
-  
- }
 
-/*Estilos para el menu de opciones*/
+.anuncios-show-box{
+  height:90vh;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  background-color: rgb(255,255,255);
+  overflow-y: auto;
+}
+
+.custom-searchbar{
+  width:30%;
+}
