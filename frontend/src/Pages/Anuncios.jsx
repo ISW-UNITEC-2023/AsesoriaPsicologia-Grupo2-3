@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Anuncios.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle, faPencil, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import {loadAnnounces ,DeleteAnnounces} from "../Utilities/announces-services"
-
-function ComboBox() {
-  return <select className="custom-combobox">{}</select>;
-}
+import {
+  loadAnnounces,
+  DeleteAnnounces,
+} from "../Utilities/announces-services";
+import NavigationB from "../Components/Navbar";
+import { Modal } from "react-bootstrap";
+import AnunciosCrear from "./AnunciosCrear";
 
 function SearchBar() {
   return (
@@ -30,14 +32,14 @@ function Anuncios() {
   };
 
   const handleCreateClick = () => {
-    localStorage.setItem("Title","");
+    localStorage.setItem("Title", "");
     localStorage.clear();
 
     navigate("/Crearanuncios");
     console.log("Crear anuncio");
   };
 
-  async function handleEditClick2  (id)  {
+  async function handleEditClick2(id) {
     try {
       //console.log(id);
       await DeleteAnnounces(id);
@@ -45,88 +47,62 @@ function Anuncios() {
     } catch (error) {
       console.log(error);
     }
-    
-  };
+  }
 
   const [announces, setAnnounces] = useState([]);
 
   useEffect(() => {
     updateAnnounlist();
-    
   }, []);
 
   const updateAnnounlist = () => {
-    localStorage.setItem("Title","");
-
+    localStorage.setItem("Title", "");
     async function fetchData() {
       setAnnounces(await loadAnnounces());
     }
     fetchData();
   };
 
-  return (
-    <div style={{ width: "90%" }}>
-      <div className="container-header">
-        <h1 className="title-pacientes">Anuncios</h1>
-        <a
-          className="button-create"
-          onClick={() => {
-            handleCreateClick();
-            console.log("Redireccionar a la creación de anuncios");
-          }}
-        >
-          + Anuncios
-        </a>
-      </div>
-      <div className="container-controls">
-        <Row>
-          <Col md={4} lg={5}>
-            <ComboBox />
-          </Col>
-          <Col md={4} lg={7}>
-            <SearchBar />
-          </Col>
-        </Row>
-      </div>
-      <div style={{marginTop:'3vh'}}>
-        <ul>
-          {announces.map((announce) => (
-            <>
-                <li>
-                  <div
-                    className="nombre-box"
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
+  const formatDate = (announceDate) => {
+    var date = new Date(announceDate);
+    var options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    var formattedDate = date.toLocaleString('es-ES', options);
+    return formattedDate;
+  }
 
-                  <div>
-                    <span className="titulo">{announce.Title}</span>
-                    <p className="descripcion">{announce.Message}</p>
+  return (
+    <div className="anuncios-container">
+      <NavigationB />
+      <div className="anuncios-container-box">
+        <div className="anuncios-container-controls">
+          <SearchBar />
+        </div>
+        <div className="anuncios-show-box">
+          {announces.map((announce) => (
+              
+              <div className="anuncio-item-box">
+                <FontAwesomeIcon icon={faUserCircle} className="anuncio-icon-persona" />
+                <div className="anuncio-item-2">
+                  <span className="anuncio-titulo">{announce.Title}</span>
+                  <p className="anuncio-descripcion">{announce.Message}</p>
+                </div>
+                <div className="anuncio-item-3">
+                  <div className="anuncios-group-button">
+                    <button className="announce-edit-button">
+                      <FontAwesomeIcon icon={faPencil} className="anuncio-icon-button" />
+                    </button>
+                    <button className="announce-edit-button">
+                      <FontAwesomeIcon icon={faTrashCan} className="anuncio-icon-button" />
+                    </button>
                   </div>
-                  <div
-                    className="ml-auto"
-                    style={{ alignSelf: "flex-end", marginLeft: "auto" }}
-                  >
-                  <DropdownButton id="dropdown-item-button">
-                    
-                      <Dropdown.Item  as="button" href="/Crearanuncios" onClick={() => {
-                        handleEditClick(`${announce.Title}`, `${announce.Message}`);
-                        }}   >Editar</Dropdown.Item>
-                    
-                    <Dropdown.Item as="button"onClick={() => {
-                        handleEditClick2(`${announce.AnnounceId}`);
-                        
-                        }}  >Eliminar</Dropdown.Item>
-                  </DropdownButton>
+                  <div className="anuncio-div-span">
+                    <span>Publicado el:</span>
+                    <a>{formatDate(announce.Date)}</a>
+                  </div>
                 </div>
               </div>
-            </li>
-            </>
           ))}
-          
-        </ul>
+        </div>
       </div>
     </div>
   );

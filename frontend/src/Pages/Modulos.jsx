@@ -8,7 +8,6 @@ import { faAdd, faTrashCan, faPen } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../Components/PopUp";
 import PopUpDelete from "../Components/PopUpDelete"
 import PopUpDeleted from "../Components/PopUpDeleted"
-
 import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

@@ -4,7 +4,6 @@ import NavigationBar from "../Components/NavigationBar.jsx";
 import fraseData from "../Styles/Extras/frases.json";
 import {useNavigate} from "react-router-dom";
 import LoginLayout from "../Layout/LoginLayout.jsx";
-import validator from '../Utilities/validator.js';
 import Services from '../Utilities/login-services.js';
 
 function Login(props) {
@@ -63,12 +62,7 @@ function Login(props) {
         navigate('/Dashboard');
     }
 
-    const [errors, setErrors] = useState({
-        email: "",
-        password: "",
-        general:"",
-    });
-    
+    const [errors, setErrors] = useState({ general: "", });
     
     const [form, setform] = useState({
         email:"",
@@ -77,51 +71,18 @@ function Login(props) {
       
     const handleSubmit = async (event) => {
         event.preventDefault();
-        //console.log(form.email)
-        if (!validator.isEmail(form.email)) {
+        const response = await Services.postLogin(form.email, form.password);
+        if(response.errorMessage !== undefined) {
             setErrors({
-            ...errors,
-            email: "Email is invalid",
-            });
-        } else {
-            //console.log("email good");
-        }
-
-        if (!validator.isPassword(form.password)) {
-            setErrors({
-            ...errors,
-            password: "Password is invalid",
-            });
-        }
-        
-        if (!errors.email && !errors.password) {
-            const response = await Services.postLogin(form.email, form.password);
-            if(response.message !== undefined) {
-                setform({
-                    email:"",
-                    password:""
-                })
-                if(response.message.length == 2){
-                    setErrors({
-                        email:"",
-                        password:"", 
-                        general: "Email and Password are invalid"}
-                    )
-                }else{
-                    setErrors({
-                        email:"",
-                        password:"", 
-                        general: response.message}
-                    )
-                }
-            }else{
-                localStorage.setItem("accesstoken", response.accessToken)
-                localStorage.setItem("refreshToken", response.refreshToken)
-                try {
-                    handleLoginSuccess(event);
-                } catch (error) {
-                    console.log(error)
-                }
+                general: response.errorMessage[0]
+            })
+        }else{
+            localStorage.setItem("accesstoken", response.accessToken)
+            localStorage.setItem("refreshToken", response.refreshToken)
+            try {
+                handleLoginSuccess(event);
+            } catch (error) {
+                console.log(error)
             }
         }
     };
@@ -148,7 +109,6 @@ function Login(props) {
                                 placeholder="Correo Electronico"
                                 onChange={(e) => {
                                   setform({ ...form, email: e.target.value });
-                                    console.log(e.target.value)
                                 }}
                                 required
                             />
@@ -163,9 +123,11 @@ function Login(props) {
                                 }}
                                 required
                             />
+                            {errors.general !== "" &&
                             <label className="error">
                                 {errors.general}
                             </label>
+                            }
                             <button className="button" type="submit">
                                 Inicia sesión
                             </button>
