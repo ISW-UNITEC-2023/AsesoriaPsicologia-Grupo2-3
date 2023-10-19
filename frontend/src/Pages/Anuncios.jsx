@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Anuncios.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle, faPencil, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle, faPencil, faTrashCan,faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -16,7 +16,10 @@ import AnunciosCrear from "./AnunciosCrear";
 
 function SearchBar() {
   return (
-    <input type="text" placeholder="Buscar..." className="custom-searchbar" />
+    <div className="custom-searchbar">
+      <FontAwesomeIcon icon={faMagnifyingGlass} className="anuncio-icon-button"/>
+      <input type="text" placeholder="Buscar ..." className="input-search-box"/>
+    </div>
   );
 }
 

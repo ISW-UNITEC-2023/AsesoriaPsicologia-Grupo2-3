@@ -9,12 +9,11 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: rgb(255,255,255);
 }
 
 .anuncios-container-controls {
-  height: 9vh;
+  height: 9.8vh;
   border: 1px solid #ccc;
   display: flex;
   flex-direction: row;
@@ -27,18 +26,13 @@
   margin: 10px;
   text-align: center;
 }
-  
-  /* Ajusta los estilos según tus preferencias */
-.anuncios-column select, input, button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
 
 .anuncio-item-box{
   border: 1px solid #ccc;
   display:flex;
   flex-direction: row;
+  align-items: center;
+  height: 350px;
 }
 
 .anuncio-item-2{
@@ -59,6 +53,7 @@
   flex-direction: row;
   justify-content: flex-end;
   gap: 5%;
+  margin-bottom: 10px;
 }
 
 .announce-edit-button{
@@ -70,6 +65,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor:pointer;
 }
 
 .anuncio-icon-persona {
@@ -133,4 +129,13 @@
 
 .custom-searchbar{
   width:30%;
+  border: 1px solid #5281ce;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.input-search-box{
+  border:none;
+  padding-left: 8px;
+  outline: none;
 }

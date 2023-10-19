@@ -17,3 +17,13 @@
   top: -5px; /* Ajusta la posición vertical de la insignia */
   left: -10px; /* Ajusta la posición horizontal de la insignia */
 }
+
+.card-image-module{
+  align-self: center;
+  width: 100%;
+}
+
+.card-title-module{
+  text-decoration: none;
+  color:black;
+}

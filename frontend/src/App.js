@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./Styles/CSS/App.css";
 
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
@@ -26,7 +25,6 @@ function App() {
         <Route path="/Expedientes" element={<Vistas />} />
         <Route path="/Secciones" element={<Sections />} />
         <Route path="/Pacientes" element={<Pacientes />} />
-        <Route path="/Secciones/:courseId" element={<Sections />} />
         <Route path="/InicioSesion" element={<Login {...loginData} />} />
         <Route path="/Dashboard" element={<DashBoard />} />
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />

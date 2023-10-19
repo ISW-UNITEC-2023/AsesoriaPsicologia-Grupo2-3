@@ -31,7 +31,7 @@ export async function getInfoSection(data) {
   const options = {
     method: "GET",
     url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/search",
-    params: { course_id: data },
+    data: { course_id: data },
   };
   const response = await axios.request(options);
   return response.data;

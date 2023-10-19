@@ -16,13 +16,16 @@ import {
 } from "../Utilities/section-services";
 
 function SectionsPage() {
-  const { courseId } = useParams();
   const [courseList, setCourseList] = useState([]);
+  const [courseId, setCourseId] = useState(null)
 
   useEffect(() => {
     async function fetchCourseInfo() {
       try {
-        const response = await getInfoSection(courseId);
+        const urlParams = new URLSearchParams(window.location.search);
+        let parametro = urlParams.get('course_id');
+        parametro = parseInt(parametro)
+        const response = await getInfoSection(parametro);
         setCourseList(response);
       } catch (error) {
         console.error("Error fetching course info:", error);

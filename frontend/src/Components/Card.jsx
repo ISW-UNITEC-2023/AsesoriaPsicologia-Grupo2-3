@@ -3,17 +3,17 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom"; // Importar Link
 import Popup from "./PopUp.jsx";
-import PopUpDelete from "../Components/PopUpDelete.jsx"
-import PopUpDeleted from "../Components/PopUpDeleted.jsx"
+import PopUpDelete from "../Components/PopUpDelete.jsx";
+import PopUpDeleted from "../Components/PopUpDeleted.jsx";
 import { deleteModule } from "../Utilities/course-services.js";
 import "../Styles/CSS/Card.css";
 
-function MyCard({props, handleReload}) {
+function MyCard({ props, handleReload }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
   const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({
-    CourseName: "", 
+    CourseName: "",
     SectionId: "",
     CourseId: "",
     TeacherId: "",
@@ -24,13 +24,15 @@ function MyCard({props, handleReload}) {
     setPopupOpen(!isPopupOpen);
   };
 
-  const handleDeleteClick = (e, buttonInfo) => { // Función para abrir la ventana emergente de confirmación
+  const handleDeleteClick = (e, buttonInfo) => {
+    // Función para abrir la ventana emergente de confirmación
     setIsDeletePopUpOpen(true); // Abre la ventana emergente de confirmación
     setSelectedButtonInfo(buttonInfo); // Guarda la información del módulo seleccionado
   };
 
-  const handleCancelDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false);  // Cierra la ventana emergente cuando el usuario cancela
+  const handleCancelDeletePopup = () => {
+    // Función para cerrar la ventana emergente de confirmación
+    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
   };
 
   const handleConfirmDeletePopup = async (moduleId) => {
@@ -43,86 +45,82 @@ function MyCard({props, handleReload}) {
     }
   };
 
-  const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
+  const handleCloseDeletedPopup = () => {
+    // Función para cerrar la ventana emergente de confirmación
     setIsDeletedPopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
     handleReload();
   };
-  
+
   return (
     <div>
-    <Card style={{ width: "18rem" }}>
-      <Card.Img
-        variant="top"
-        src="https://img.freepik.com/free-vector/flat-back-school-background-with-school-supplies_23-2149452368.jpg"
-        alt="School Supplies"
-        style={{width: "16.5rem"}}
-      />
-
-      <Card.Body>
-        <Card.Title>
-          {/* Usar Link para redireccionar a /sections/ con CourseId */}
-          <Link to={`/Secciones/${props.id}`}>{props.name}</Link>
-        </Card.Title>
-
-        <Card.Text>
-          <strong>Id:</strong> {props.id}
-          <br />
-          <strong>Description:</strong> {props.description}
-          <br />
-        </Card.Text>
-
-        <div>
-          <div className="tab-container"  style={{display:'flex'}}>
-          <button
-            type="button"
-            className="bi bi-pencil"
-            onClick={() => toggleModify(currentSectionId)}
-          />
-          <button
-            type="button"
-            className="bi bi-trash"
-            onClick={(e) => handleDeleteClick(e, props)}
-          />
+      <Card className="card-module">
+        <Card.Img
+          variant="top"
+          className="card-image-module"
+          src="https://img.freepik.com/free-vector/flat-back-school-background-with-school-supplies_23-2149452368.jpg"
+          alt="School Supplies"
+        />
+        <Card.Body>
+          <Card.Title>
+            <Link className="card-title-module" to={`/Secciones?course_id=${props.id}`}>{props.name}</Link>
+          </Card.Title>
+          <Card.Text>
+            <strong>Id:</strong> {props.id}
+            <br />
+            <strong>Description:</strong> {props.description}
+            <br />
+          </Card.Text>
+          <div>
+            <div className="tab-container" style={{ display: "flex" }}>
+              <button
+                type="button"
+                className="bi bi-pencil"
+                onClick={() => toggleModify(currentSectionId)}
+              />
+              <button
+                type="button"
+                className="bi bi-trash"
+                onClick={(e) => handleDeleteClick(e, props)}
+              />
+            </div>
+            {/* <div className="tab-container">
+              <Button
+                className="tab-button"
+                style={{ marginLeft: "80px", width: "40%" }}
+                onClick={() => togglePopup(props.name, props.id)}
+              >
+                +
+              </Button>
+              <Popup
+                isOpen={isPopupOpen}
+                onClose={() => togglePopup("", "")}
+                selectedButtonInfo={selectedButtonInfo}
+              />
+            </div> */}
           </div>
-          <div className="tab-container">
-            <Button
-              className="tab-button"
-              style={{marginLeft: '80px', width:'40%' }}
-              onClick={() => togglePopup(props.name, props.id)}
-            >
-              +
-            </Button>
-            <Popup
-              isOpen={isPopupOpen}
-              onClose={() => togglePopup("", "")}
-              selectedButtonInfo={selectedButtonInfo}
-            />
-          </div>
-        </div>
-      </Card.Body>
-    </Card>
+        </Card.Body>
+      </Card>
 
-    {isDeletePopUpOpen && (
-      // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
-      <PopUpDelete
-        isOpen={isDeletePopUpOpen}
-        onConfirm={handleConfirmDeletePopup}
-        onCancel={handleCancelDeletePopup}
-        itemName={selectedButtonInfo.name}
-        moduleId={selectedButtonInfo.id}
-        pageName="modulo"
-      />
-    )}
+      {isDeletePopUpOpen && (
+        // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
+        <PopUpDelete
+          isOpen={isDeletePopUpOpen}
+          onConfirm={handleConfirmDeletePopup}
+          onCancel={handleCancelDeletePopup}
+          itemName={selectedButtonInfo.name}
+          moduleId={selectedButtonInfo.id}
+          pageName="modulo"
+        />
+      )}
 
-    {isDeletedPopUpOpen && (
-      // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
-      <PopUpDeleted
-        isOpen={isDeletedPopUpOpen}
-        onClose={handleCloseDeletedPopup}
-        pageName="modulo"
-      />
-    )}
-
+      {isDeletedPopUpOpen && (
+        // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
+        <PopUpDeleted
+          isOpen={isDeletedPopUpOpen}
+          onClose={handleCloseDeletedPopup}
+          pageName="modulo"
+        />
+      )}
     </div>
   );
 }
