@@ -26,6 +26,7 @@ async function getSections(_, res) {
 
 async function InfoSection(req, res) {
   const { course_id } = req.query;
+  console.log(course_id)
   const section = await infoSection(course_id);
   res.send(section);
 }

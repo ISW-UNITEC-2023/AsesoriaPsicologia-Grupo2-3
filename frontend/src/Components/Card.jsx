@@ -1,11 +1,12 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom"; // Importar Link
 import Popup from "./PopUp.jsx";
 import PopUpDelete from "../Components/PopUpDelete.jsx";
 import PopUpDeleted from "../Components/PopUpDeleted.jsx";
 import { deleteModule } from "../Utilities/course-services.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../Styles/CSS/Card.css";
 
 function MyCard({ props, handleReload }) {
@@ -53,7 +54,7 @@ function MyCard({ props, handleReload }) {
 
   return (
     <div>
-      <Card className="card-module">
+      <Card className="modulo-card">
         <Card.Img
           variant="top"
           className="card-image-module"
@@ -76,12 +77,16 @@ function MyCard({ props, handleReload }) {
                 type="button"
                 className="bi bi-pencil"
                 onClick={() => toggleModify(currentSectionId)}
-              />
+              >
+                <FontAwesomeIcon icon={faPencil} />
+              </button>
               <button
                 type="button"
                 className="bi bi-trash"
                 onClick={(e) => handleDeleteClick(e, props)}
-              />
+              >
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
             </div>
             {/* <div className="tab-container">
               <Button

@@ -27,13 +27,14 @@ export async function createSection(section) {
   return response.data;
 }
 
-export async function getInfoSection(data) {
+export async function getInfoSection(id) {
   const options = {
     method: "GET",
     url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/search",
-    data: { course_id: data },
+    params: { course_id: id },
   };
   const response = await axios.request(options);
+  console.log(response.data);
   return response.data;
 }
 

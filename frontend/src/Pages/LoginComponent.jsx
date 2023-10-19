@@ -79,6 +79,8 @@ function Login(props) {
         }else{
             localStorage.setItem("accesstoken", response.accessToken)
             localStorage.setItem("refreshToken", response.refreshToken)
+            localStorage.setItem("name_user", response.name)
+            localStorage.setItem("email_user", form.email)
             try {
                 handleLoginSuccess(event);
             } catch (error) {

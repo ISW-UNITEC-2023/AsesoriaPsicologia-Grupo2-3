@@ -25,13 +25,14 @@ function SectionsPage() {
         const urlParams = new URLSearchParams(window.location.search);
         let parametro = urlParams.get('course_id');
         parametro = parseInt(parametro)
+        console.log(parametro)
         const response = await getInfoSection(parametro);
+        console.log(response)
         setCourseList(response);
       } catch (error) {
         console.error("Error fetching course info:", error);
       }
     }
-
     fetchCourseInfo();
   }, [courseId]);
 

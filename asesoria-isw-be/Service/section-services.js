@@ -32,25 +32,27 @@ async function getSections() {
   return sections;
 }
 async function GetInfoSection(course_id) {
-  const infoSection = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select(
-          "sections.id as SectionId",
-          "course.name as CourseName",
-          "users.name as Teacher",
-          "course.uv as UV",
-          "sections.year as Year",
-          "sections.quarter as Quarter"
-        )
-        .table("sections")
-        .innerJoin("users", "users.id", "sections.teacher_id")
-        .innerJoin("course", "course.id", "sections.course_id")
-        .where("course.id", course_id)
-    )
-  );
+  try {
+    const infoSection = await knex
+      .select(
+        "sections.id as SectionId",
+        "course.name as CourseName",
+        "users.name as Teacher",
+        "course.uv as UV",
+        "sections.year as Year",
+        "sections.quarter as Quarter"
+      )
+      .from("sections")
+      .innerJoin("users", "users.id", "sections.teacher_id")
+      .innerJoin("course", "course.id", "sections.course_id")
+      .where("course.id", course_id);
 
-  return infoSection;
+    return infoSection;
+  } catch (error) {
+    // Handle the error here, e.g., log it or throw a custom error
+    console.error(error);
+    throw new Error("Error fetching section information");
+  }
 }
 
 async function GetInfoSectionMon(course_id) {

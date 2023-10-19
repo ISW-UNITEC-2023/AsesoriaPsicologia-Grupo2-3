@@ -2,14 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 6.5%;
+    width: 90px;
     height: 100vh;
-    background-color: rgb(0, 144, 178);
-}
-
-.unitec-icon-logo{
-    width: 70%;
-    margin-top: 15px;
+    background-color: rgb(8, 119, 209);
 }
 
 .link-navbar-plataforma{
@@ -30,8 +25,8 @@
 }
 
 .navbar-plataforma-icon{
-    width: 30px;
-    fill:white;
+    font-size: 28px;
+    margin-bottom: 4px;
 }
 
 .back-navbar-icon{
@@ -47,3 +42,57 @@
     --nb-font-family-neuemontreal-medium: "NeueMontreal-Medium", Helvetica;
   }
   
+
+.nb-custom-dropdown {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.nb-dropdown-header {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    background: none;
+    font-size: 15px;
+    font-family: var(--nb-font-family-neuemontreal-medium);
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+.nb-navbar-user-icon{
+    font-size:30px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    color:white;
+}
+
+.nb-drop-arrow{
+    width: 10px;
+    margin-left:5px;
+    color:white;
+}
+
+.nb-dropdown-icon{
+    font-size: 15px;
+    color:white;
+    margin-right: 5px;
+}
+
+.nb-dropdown-items {
+    background: none;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.nb-dropdown-item {
+    cursor: pointer;
+    border:none;
+    background: none;
+    color: #ffffff;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.nb-dropdown-item:hover {
+    color: #e7e7e7;
+}

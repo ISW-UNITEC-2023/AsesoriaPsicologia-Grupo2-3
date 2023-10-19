@@ -28,7 +28,7 @@ function DashBoard() {
       <NavigationB/>
       <div className="dashboard-box">
         <div className="dashboard-header">
-          <h1 className="dashboard-titulo">Todos los Módulos</h1>
+          <h1 className="dashboard-titulo">Bienvenido {localStorage.getItem("name_user")}!</h1>
           <a
             href="#"
             className="button-create"
@@ -45,7 +45,7 @@ function DashBoard() {
         </div>
         <div className="dashboard-body">
           <div style={{}}>
-            <h1>TABLERO</h1>
+            <h1>Todos los Módulos</h1>
             <div className="section-card-container">
               {displayedModules.map((module) => (
                   <SectionCard 
