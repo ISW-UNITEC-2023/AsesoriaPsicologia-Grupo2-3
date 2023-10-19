@@ -15,8 +15,9 @@ export async function DeleteAnnounces(id_announces) {
     const options = {
         method: 'DELETE',
         url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/delete',
-        params: {id: id_announces},
-        
+        params: {
+          id: id_announces
+        },
       };
       //console.log("id_announces",id_announces);
       axios.request(options).then(function (response) {
