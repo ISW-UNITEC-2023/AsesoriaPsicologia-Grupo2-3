@@ -4,11 +4,12 @@ const router = express.Router();
 const userController = require("../Controller/users-controller");
 
 //get
-router.get("/", userController.getUser)
-router.get("/list", userController.getUserList)
-router.get("/admins", userController.getAdmins);
-router.get("/teachers",userController.getTeachers);
-router.get("/students",userController.getStudents);
+router.get("/", userController.getUser);
+router.get("/list", userController.getUserList);
+router.get("/admins", userController.getAdminsList);
+router.get("/teachers",userController.getTeachersList);
+router.get("/students",userController.getStudentsList);
+router.get("/patients",userController.getPatientsList);
 
 //post
 router.post("/register", userController.registerUser)

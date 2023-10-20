@@ -130,7 +130,7 @@ async function updateUserEmail(id_account, email){
 async function getAdmins() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/admins",
+    url: "http://localhost:8000/user/admins",
   };
 
   try {
@@ -144,7 +144,7 @@ async function getAdmins() {
 async function getTeachers() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/teachers",
+    url: "http://localhost:8000/user/teachers",
   };
 
   try {
@@ -158,7 +158,21 @@ async function getTeachers() {
 async function getStudents() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/students",
+    url: "http://localhost:8000/user/students",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+async function getPatients(){
+  const options = {
+    method: 'GET', 
+    url: 'http://localhost:8000/user/patients'
   };
 
   try {
@@ -180,4 +194,5 @@ export default {
   getAdmins,
   getTeachers,
   getStudents,
+  getPatients,
 };
