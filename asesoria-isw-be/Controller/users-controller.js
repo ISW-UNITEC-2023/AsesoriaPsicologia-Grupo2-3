@@ -182,6 +182,21 @@ async function updateUserEmail(req, res) {
   }
 }
 
+async function getAdmins(_, res) {
+  const users = await get();
+  res.send(users);
+}
+
+async function getTeachers(_, res) {
+  const teachers = await teacher();
+  res.send(teachers);
+}
+
+async function getStudents(_, res) {
+  const students = await student();
+  res.send(students);
+}
+
 module.exports = {
   getUserList,
   getUser,
@@ -190,4 +205,7 @@ module.exports = {
   updateUserAdmin,
   updateUserPassword,
   updateUserEmail,
+  getAdmins,
+  getTeachers,
+  getStudents,
 };

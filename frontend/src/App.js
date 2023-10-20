@@ -13,6 +13,7 @@ import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
+import ProfilesPage from "./Pages/Profiles";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Crearanuncios" element={<AnunciosCrear />} />
+        <Route path="/Profiles" element={<ProfilesPage/>} />
       </Routes>
     </Router>
   );

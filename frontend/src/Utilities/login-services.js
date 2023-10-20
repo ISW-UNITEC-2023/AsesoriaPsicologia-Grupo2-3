@@ -127,6 +127,48 @@ async function updateUserEmail(id_account, email){
   }
 }
 
+async function getAdmins() {
+  const options = {
+    method: "GET",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/admins",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+async function getTeachers() {
+  const options = {
+    method: "GET",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/teachers",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+async function getStudents() {
+  const options = {
+    method: "GET",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/students",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
 export default {
   postLogin,
   getUsers,
@@ -135,4 +177,7 @@ export default {
   deleteUser,
   updateUserPassword,
   updateUserEmail,
+  getAdmins,
+  getTeachers,
+  getStudents,
 };
