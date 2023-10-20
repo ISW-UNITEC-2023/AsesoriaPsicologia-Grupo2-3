@@ -194,6 +194,7 @@ async function loginUser(req, res) {
       } else {
         res.send({ errorMessage: ["Invalid password"] });
       }
+      console.log(req.signedCookies);
     }
   } catch (e) {
     console.log(e);

@@ -3,10 +3,11 @@ import axios from "axios";
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/admins/login",
+    url: "http://localhost:8000/admins/login",
     data: { email, password },
+    withCredentials: true, // Esto es para que axios envíe las cookies
   };
-  const response = await axios.request(options)
+  const response = await axios.request(options);
   return response.data;
 }
 
@@ -26,17 +27,19 @@ async function getUsers() {
 
 async function getModulesAll() {
   const options = {
-    method: 'GET',
-    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos/all',
+    method: "GET",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos/all",
   };
-  
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
-}
 
+  axios
+    .request(options)
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
 
 async function getSeccionbyModu() {
   const options = {
@@ -52,11 +55,11 @@ async function getSeccionbyModu() {
   }
 }
 
-async function registerUser(id_account, role, name, email, password, active){
+async function registerUser(id_account, role, name, email, password, active) {
   const options = {
-    method: 'POST',
-    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/register',
-    data: {id_account, role, name, email, password, active}
+    method: "POST",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/register",
+    data: { id_account, role, name, email, password, active },
   };
 
   try {
@@ -67,11 +70,11 @@ async function registerUser(id_account, role, name, email, password, active){
   }
 }
 
-async function updateUser(id_account, role, active){
+async function updateUser(id_account, role, active) {
   const options = {
-    method: 'PUT',
-    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/update',
-    data: {id_account, role, active}
+    method: "PUT",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/update",
+    data: { id_account, role, active },
   };
 
   try {
@@ -82,11 +85,11 @@ async function updateUser(id_account, role, active){
   }
 }
 
-async function deleteUser(id_account){
+async function deleteUser(id_account) {
   const options = {
-    method: 'DELETE',
-    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/delete',
-    data: {id_account}
+    method: "DELETE",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/delete",
+    data: { id_account },
   };
 
   try {
@@ -97,11 +100,11 @@ async function deleteUser(id_account){
   }
 }
 
-async function updateUserPassword(id_account, password){
+async function updateUserPassword(id_account, password) {
   const options = {
-    method: 'PUT',
-    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updatePassword',
-    data: {id_account, password}
+    method: "PUT",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updatePassword",
+    data: { id_account, password },
   };
 
   try {
@@ -112,11 +115,11 @@ async function updateUserPassword(id_account, password){
   }
 }
 
-async function updateUserEmail(id_account, email){
+async function updateUserEmail(id_account, email) {
   const options = {
-    method: 'PUT',
-    url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updateEmail',
-    data: {id_account, email}
+    method: "PUT",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updateEmail",
+    data: { id_account, email },
   };
 
   try {
@@ -124,6 +127,36 @@ async function updateUserEmail(id_account, email){
     return response.data;
   } catch (e) {
     return { message: e.response.data.error };
+  }
+}
+
+export async function getCookies() {
+  try {
+    const options = {
+      method: "GET",
+      url: "http://localhost:8000/admins/getCookies",
+      withCredentials: true,
+    };
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener cookies:", error);
+    return null; // O maneja el error de otra manera
+  }
+}
+
+export async function deleteCookies() {
+  try {
+    const options = {
+      method: "GET",
+      url: "http://localhost:8000/admins/deletecookie",
+      withCredentials: true,
+    };
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener cookies:", error);
+    return null;
   }
 }
 

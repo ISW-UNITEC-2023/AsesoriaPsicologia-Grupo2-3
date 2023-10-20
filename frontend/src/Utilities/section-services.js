@@ -21,9 +21,7 @@ export async function createSection(section) {
     url: `${host}/sections/create`,
     data: section,
   };
-
   const response = await axios.request(options);
-
   return response.data;
 }
 
@@ -36,7 +34,6 @@ export async function getInfoSection(data) {
   const response = await axios.request(options);
   return response.data;
 }
-
 
 export async function getInfoSectionMod() {
   const options = {

@@ -14,7 +14,7 @@ const allowedOrigins = ["Access-Control-Allow-Origin", "http://localhost:3000"];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log(origin);
+    //console.log(origin);
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
       console.log("allowed");
@@ -23,6 +23,7 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
