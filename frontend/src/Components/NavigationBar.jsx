@@ -10,7 +10,7 @@ function NavigationBar(props) {
     }
 
     const handleComienzaYaClick = () => {
-        navigate('/Questionario');
+        navigate('/Cuestionario');
     }
 
     return (
@@ -19,7 +19,6 @@ function NavigationBar(props) {
             <div className='elements-navbar'>
                 <Link className="link-navbar" to="/Inicio">Inicio</Link>
                 <Link className="link-navbar" to="/SobreNosotros">Sobre Nosotros</Link>
-                <Link className="link-navbar" to="/Contactanos">Contacto</Link>
                 <button className="iniciar-sesion-navbar" onClick={handleIniciarSesionClick}>Iniciar Sesión</button>
                 <button className="comienza-ya-navbar" onClick={handleComienzaYaClick}>Comienza Ya</button>
             </div>
