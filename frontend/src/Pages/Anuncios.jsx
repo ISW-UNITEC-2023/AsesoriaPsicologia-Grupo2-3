@@ -16,6 +16,7 @@ import {
   DeleteAnnounces,
 } from "../Utilities/announces-services";
 import NavigationB from "../Components/Navbar";
+import CrearAnuncio from "../Pages/AnunciosCrear"
 
 function SearchBar() {
   return (
@@ -77,12 +78,36 @@ function Anuncios() {
     estado: false,
     id: ""
   });
-  const abrirModal = (id_anuncio) => {
-    let estadoModal = modalEliminar.estado
-    setModalEliminar({
-      estado: !estadoModal, 
-      id: id_anuncio
-    });
+
+  const [modalEditar, setModalEditar] = useState({
+    abierto: false
+  })
+
+  const [modalCrear, setModalCrear] = useState({
+    abierto: false
+  })
+
+  const abrirModal = (id_anuncio, tipo) => {
+    let estadoModal = false
+    if (tipo === "delete"){
+      estadoModal = modalEliminar.estado
+      setModalEliminar({
+        estado: !estadoModal, 
+        id: id_anuncio
+      });
+    }
+    else if (tipo === "create"){
+      estadoModal = modalCrear.abierto
+      setModalCrear({
+        abierto: !estadoModal
+      })
+    }
+    else if (tipo === "update"){
+      estadoModal = modalEditar.abierto
+      setModalEditar({
+        abierto: !estadoModal
+      })
+    }
   }
 
   async function eliminarAnuncio(sel) {
@@ -107,8 +132,6 @@ function Anuncios() {
     }
   }  
 
-  // Jafet Zavala Arquitectura 12 boletos
-
   return (
     <div className="anuncios-container">
       <NavigationB />
@@ -121,10 +144,13 @@ function Anuncios() {
           </span>
         </div>
       </Modal>
+      <Modal isOpen={modalCrear.abierto} style={{position: "absolute", top:"50%", left: "50%", transform: "translate(-50%, -50%)", width: "90%"}} backdrop={true} keyboard={true}>
+        <CrearAnuncio/>
+      </Modal>
       <div className="anuncios-container-box">
         <div className="anuncios-container-controls">
           <SearchBar />
-          <button className="anuncios-crear-button" onClick={handleCreateClick}>
+          <button className="anuncios-crear-button" onClick={()=>{abrirModal(0, "create")}}>
             <FontAwesomeIcon icon={faSquarePlus} className="anuncios-crear-icon" />
           </button>
         </div>
@@ -147,7 +173,7 @@ function Anuncios() {
                       className="anuncio-icon-button"
                     />
                   </button>
-                  <button className="announce-edit-button" onClick={()=>{abrirModal(announce.AnnounceId)}}>
+                  <button className="announce-edit-button" onClick={()=>{abrirModal(announce.AnnounceId, "delete")}}>
                     <FontAwesomeIcon
                       icon={faTrashCan}
                       className="anuncio-icon-button"

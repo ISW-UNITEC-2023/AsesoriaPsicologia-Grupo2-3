@@ -4,7 +4,7 @@ import { useState } from "react";
 
 //images
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle,faChevronDown, faChevronUp, faRightFromBracket, faUserGroup, faCalendarDays, faBook, faBullhorn, faGaugeHigh } from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle,faChevronDown, faChevronUp, faRightFromBracket, faUserGroup, faCalendarDays, faVideo, faBullhorn, faGaugeHigh } from "@fortawesome/free-solid-svg-icons";
 import backIcon from "../Styles/Images/back-icon-nb.png"
 
 function MyNavbar() {
@@ -53,8 +53,8 @@ function MyNavbar() {
                 Anuncios
             </Link>
             <Link to="/Modulos" className="link-navbar-plataforma">
-                <FontAwesomeIcon icon={faBook} className="navbar-plataforma-icon"/>
-                Módulos
+                <FontAwesomeIcon icon={faVideo} className="navbar-plataforma-icon"/>
+                Zoom
             </Link>
             <Link to="/Calendario" className="link-navbar-plataforma">
                 <FontAwesomeIcon icon={faCalendarDays} className="navbar-plataforma-icon"/>
