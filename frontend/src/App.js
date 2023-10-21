@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
@@ -11,7 +11,6 @@ import Sections from "./Pages/Sections";
 import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
-import AnunciosCrear from "./Pages/AnunciosCrear";
 
 function App() {
   return (
@@ -29,7 +28,6 @@ function App() {
         <Route path="/Dashboard" element={<DashBoard />} />
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
-        <Route path="/Crearanuncios" element={<AnunciosCrear />} />
       </Routes>
     </Router>
   );
