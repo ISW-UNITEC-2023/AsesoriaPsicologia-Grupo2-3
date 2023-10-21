@@ -11,18 +11,18 @@ const knex = require("knex")({
 
 const getUsersCredentials = async () => {
   let usersCredentials = await knex
-    .select("name", "email", "id_account", "role", "active")
+    .select("name","email","id_account","role","active")
     .from("users");
   usersCredentials = JSON.stringify(usersCredentials);
 
-  let patientsCredentials = await knex
-    .select("name", "email", "identification", "role", "active")
-    .from("patients");
-  patientsCredentials = JSON.stringify(patientsCredentials);
+  // let patientsCredentials = await knex
+  //   .select("name", "email", "identification", "role", "active")
+  //   .from("patients");
+  // patientsCredentials = JSON.stringify(patientsCredentials);
 
   return {
     usersCredentials: JSON.parse(usersCredentials),
-    patientsCredentials: JSON.parse(patientsCredentials),
+    //patientsCredentials: JSON.parse(patientsCredentials),
   };
 };
 
@@ -79,6 +79,57 @@ async function findExistingEmail(email) {
   return email_find;
 }
 
+async function getAdmins() {
+  const admins = JSON.parse(
+    JSON.stringify(await knex
+      .select("id", "id_account", "name", "active")
+      .table("users")
+      .where("role", "ADMIN")
+    )
+  );
+
+  return admins;
+}
+
+async function getTeachers() {
+  const teacher = JSON.parse(
+    JSON.stringify(
+      await knex
+        .select("id", "id_account", "name", "active")
+        .table("users")
+        .where("role", "DOCENTE")
+    )
+  );
+
+  return teacher;
+}
+
+async function getStudents() {
+  const student = JSON.parse(
+    JSON.stringify(
+      await knex
+      .select("id", "id_account", "name", "active")
+      .table("users")
+      .where("role", "ESTUDIANTE")
+    )
+  );
+
+  return student;
+}
+
+async function getPatients() {
+  const patient = JSON.parse(
+    JSON.stringify(
+      await knex
+      .select("id", "id_account", "name", "active")
+      .table("users")
+      .where("role", "PACIENTE")
+    )
+  );
+
+  return patient;
+}
+
 module.exports = {
   getUsersCredentials,
   getUserByID,
@@ -88,4 +139,8 @@ module.exports = {
   findExistingEmail,
   updUserPassword,
   updUserEmail,
+  getAdmins,
+  getTeachers,
+  getStudents,
+  getPatients,
 };

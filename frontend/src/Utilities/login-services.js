@@ -159,6 +159,61 @@ export async function deleteCookies() {
     return null;
   }
 }
+async function getAdmins() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/user/admins",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+async function getTeachers() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/user/teachers",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+async function getStudents() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/user/students",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+async function getPatients() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/user/patients",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
 
 export default {
   postLogin,
@@ -168,4 +223,8 @@ export default {
   deleteUser,
   updateUserPassword,
   updateUserEmail,
+  getAdmins,
+  getTeachers,
+  getStudents,
+  getPatients,
 };
