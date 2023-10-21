@@ -64,13 +64,9 @@ async function sendEmail(body) {
 
 async function sendEmailMultiple(name, email, subject, message, recipients) {
   const contentHTML = `
-      <h1>User Information</h1>
-      <ul>
-          <li>name: ${name}</li>
-          <li>Email: ${email}</li>
-      </ul>
-      <p>${message}</p>
-    `;
+  <h1>Correo del remitente: ${email}</h1>
+  <p>Estimado ${name}, se le escribe con el siguiente objetivo: ${subject} para informarle lo siguiente: ${message}</p>
+`;
 
   const transporter = nodemailer.createTransport({
     service: "Gmail",

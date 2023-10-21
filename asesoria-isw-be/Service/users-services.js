@@ -11,7 +11,7 @@ const knex = require("knex")({
 
 const getUsersCredentials = async () => {
   let usersCredentials = await knex
-    .select("name","email","id_account","role","active")
+    .select("name", "email", "id_account", "role", "active")
     .from("users");
   usersCredentials = JSON.stringify(usersCredentials);
 
@@ -81,10 +81,11 @@ async function findExistingEmail(email) {
 
 async function getAdmins() {
   const admins = JSON.parse(
-    JSON.stringify(await knex
-      .select("id", "id_account", "name", "active")
-      .table("users")
-      .where("role", "ADMIN")
+    JSON.stringify(
+      await knex
+        .select("id", "id_account", "name", "email", "active")
+        .table("users")
+        .where("role", "ADMIN")
     )
   );
 
@@ -95,7 +96,7 @@ async function getTeachers() {
   const teacher = JSON.parse(
     JSON.stringify(
       await knex
-        .select("id", "id_account", "name", "active")
+        .select("id", "id_account", "name", "email", "active")
         .table("users")
         .where("role", "DOCENTE")
     )
@@ -108,9 +109,9 @@ async function getStudents() {
   const student = JSON.parse(
     JSON.stringify(
       await knex
-      .select("id", "id_account", "name", "active")
-      .table("users")
-      .where("role", "ESTUDIANTE")
+        .select("id", "id_account", "name", "email", "active")
+        .table("users")
+        .where("role", "ESTUDIANTE")
     )
   );
 
@@ -121,9 +122,9 @@ async function getPatients() {
   const patient = JSON.parse(
     JSON.stringify(
       await knex
-      .select("id", "id_account", "name", "active")
-      .table("users")
-      .where("role", "PACIENTE")
+        .select("id", "id_account", "name", "email", "active")
+        .table("users")
+        .where("role", "PACIENTE")
     )
   );
 
