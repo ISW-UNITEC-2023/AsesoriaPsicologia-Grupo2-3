@@ -29,7 +29,6 @@ export async function DeleteAnnounces(id_announces) {
 }
 
 export async function CreateAnnounce(info) {
- 
   const options = {
     method: 'POST',
     url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/create',

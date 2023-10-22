@@ -80,7 +80,8 @@ function Login(props) {
             localStorage.setItem("accesstoken", response.accessToken)
             localStorage.setItem("refreshToken", response.refreshToken)
             localStorage.setItem("name_user", response.name)
-            localStorage.setItem("email_user", form.email)
+            localStorage.setItem("email_user", form.email) 
+            localStorage.setItem("user_id", response.id)
             try {
                 handleLoginSuccess(event);
             } catch (error) {

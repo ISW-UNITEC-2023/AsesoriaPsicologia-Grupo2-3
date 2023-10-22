@@ -9,7 +9,6 @@ export async function GetSections() {
   };
 
   const response = await axios.request(options);
-  //console.log("GetProducts response data"+response.data);
   return response.data;
 }
 

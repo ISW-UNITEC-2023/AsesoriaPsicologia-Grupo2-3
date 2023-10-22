@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, ModalTitle } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/CSS/Anuncios.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +15,6 @@ import {
   loadAnnounces,
 } from "../Utilities/announces-services";
 import NavigationB from "../Components/Navbar";
-import AnuncioModal from "../Components/AnuncioModal";
 import ModalAnuncios from "../Components/ModalAnuncios";
 
 function SearchBar() {
@@ -35,6 +34,14 @@ function SearchBar() {
 }
 
 function Anuncios() {
+  const modalStyle = {
+    position: "absolute",
+    top: "35%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+    width: "90%",
+  };
+
   const [announces, setAnnounces] = useState([]);
 
   useEffect(() => {
@@ -57,37 +64,38 @@ function Anuncios() {
     return formattedDate;
   };
 
-  const [modalEliminar, setModalEliminar] = useState({
-    estado: false,
-    id: "",
+  const [estadoModals, setEstadoModals] = useState({
+    id: null,
+    eliminar: false,
+    editar: false,
+    crear: false,
+    title: "",
+    message: "",
+    mode: ""
   });
 
-  const [modalEditar, setModalEditar] = useState({
-    abierto: false,
-  });
-
-  const [modalCrear, setModalCrear] = useState({
-    abierto: false,
-  });
-
-  const abrirModal = (id_anuncio, tipo) => {
+  const abrirModal = (id_anuncio, title, message, tipo) => {
     let estadoModal = false;
     if (tipo === "delete") {
-      estadoModal = modalEliminar.estado;
-      setModalEliminar({
-        estado: !estadoModal,
+      estadoModal = estadoModals.eliminar;
+      setEstadoModals({
+        eliminar: !estadoModal,
         id: id_anuncio,
       });
     } else if (tipo === "create") {
-      estadoModal = modalCrear.abierto;
-      setModalCrear({
-        abierto: !estadoModal,
+      estadoModal = estadoModals.crear;
+      setEstadoModals({
+        crear: !estadoModal,
+        mode: "create"
       });
-      console.log(modalCrear.abierto)
     } else if (tipo === "update") {
-      estadoModal = modalEditar.abierto;
-      setModalEditar({
-        abierto: !estadoModal,
+      estadoModal = estadoModals.editar;
+      setEstadoModals({
+        editar: !estadoModal,
+        mode: "update",
+        id: id_anuncio,
+        title: title,
+        message: message
       });
     }
   };
@@ -95,25 +103,25 @@ function Anuncios() {
   async function eliminarAnuncio(sel) {
     if (sel === "si") {
       try {
-        await DeleteAnnounces(modalEliminar.id);
+        await DeleteAnnounces(estadoModals.id);
         const updatedAnnounces = await loadAnnounces();
         updatedAnnounces.splice(
           updatedAnnounces.findIndex(
-            (announce) => announce.AnnounceId === modalEliminar.id
+            (announce) => announce.AnnounceId === estadoModals.id
           ),
           1
         );
         setAnnounces(updatedAnnounces); // Update state with updated list
-        setModalEliminar({
-          estado: false,
+        setEstadoModals({
+          eliminar: false,
           id: "",
         });
       } catch (error) {
         console.log(error);
       }
     } else {
-      setModalEliminar({
-        estado: false,
+      setEstadoModals({
+        eliminar: false,
         id: "",
       });
     }
@@ -122,58 +130,37 @@ function Anuncios() {
   return (
     <div className="anuncios-container">
       <NavigationB />
-      <Modal
-        isOpen={modalEliminar.estado}
-        style={{
-          position: "absolute",
-          top: "10%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "90%",
-        }}
-        backdrop={true}
-        keyboard={true}
-      >
-        <div>
-          <span>
-            Seguro que deseas eliminar este anuncio? <br />
-            <button
-              onClick={() => {
-                eliminarAnuncio("si");
-              }}
-            >
-              Si
-            </button>
-            <button
-              onClick={() => {
-                eliminarAnuncio("no");
-              }}
-            >
-              No
-            </button>
-          </span>
-        </div>
+      <Modal isOpen={estadoModals.eliminar} style={modalStyle} backdrop={true} keyboard={true} >
+        <ModalHeader closeButton>
+          <h3>Eliminar Anuncio</h3>
+        </ModalHeader>
+        <ModalBody>
+          <p>¿Está seguro que desea eliminar el anuncio?</p>
+        </ModalBody>
+        <ModalFooter>
+          <button className="btn btn-danger" onClick={() => {eliminarAnuncio("si")}}>
+            Sí
+          </button>
+          <button className="btn btn-secondary" onClick={() => eliminarAnuncio("no")}>
+            No
+          </button>
+        </ModalFooter>
       </Modal>
-      <Modal isOpen={modalCrear.abierto}
-        style={{
-          position: "absolute",
-          top: "10%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "90%",
-        }}
-        backdrop={true}
-        keyboard={true}>
-        <div>
-          <span>
-            modalCrear
-          </span>
-        </div>
+      <Modal isOpen={estadoModals.crear} style={modalStyle} backdrop={true} keyboard={true}>
+        <ModalAnuncios {...estadoModals}/>
+      </Modal>
+      <Modal isOpen={estadoModals.editar} style={modalStyle} backdrop={true} keyboard={true} >
+        <ModalAnuncios {...estadoModals} />
       </Modal>
       <div className="anuncios-container-box">
         <div className="anuncios-container-controls">
           <SearchBar />
-          <button className="anuncios-crear-button" onClick={()=>{abrirModal(0, "create")}}>
+          <button
+            className="anuncios-crear-button"
+            onClick={() => {
+              abrirModal(0, "", "", "create");
+            }}
+          >
             <FontAwesomeIcon
               icon={faSquarePlus}
               className="anuncios-crear-icon"
@@ -202,7 +189,7 @@ function Anuncios() {
                   <button
                     className="announce-edit-button"
                     onClick={() => {
-                      abrirModal(announce.AnnounceId, "delete");
+                      abrirModal(announce.AnnounceId, "", "", "delete");
                     }}
                   >
                     <FontAwesomeIcon
