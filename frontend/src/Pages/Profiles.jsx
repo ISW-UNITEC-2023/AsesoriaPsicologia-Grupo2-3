@@ -6,11 +6,14 @@ import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 
 import EmailPopUP from "../Components/emailPopUp";
-
+import ProfilePopUp from "../Components/profilePopUp";
 function ProfilesPage() {
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPopupOpenProfile, setIsPopupOpenProfile] = useState(false);
 
+  const [id_accountID, setId_account] = useState(null);
+  const [activeID, setActive] = useState(null);
   const [nameId, setNameId] = useState(null);
   const [emailId, setEmailId] = useState(null);
 
@@ -22,6 +25,14 @@ function ProfilesPage() {
     setEmailId(email);
     setNameId(name);
     setIsPopupOpen(true);
+  };
+
+  const viewProfile = (name, email, active, id_account) => {
+    setEmailId(email);
+    setNameId(name);
+    setActive(active);
+    setId_account(id_account);
+    setIsPopupOpenProfile(true);
   };
 
   const [admins, setAdmins] = useState([]);
@@ -87,10 +98,13 @@ function ProfilesPage() {
 
   useEffect(() => {
     initialLists();
-  }, [nameId, emailId]);
+  }, [nameId, emailId, activeID, id_accountID]);
 
   const closePopup = () => {
     setIsPopupOpen(false);
+  };
+  const closePopupProfile = () => {
+    setIsPopupOpenProfile(false);
   };
 
   return (
@@ -139,10 +153,41 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{admin.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        admin.name,
+                        admin.email,
+                        admin.active,
+                        admin.id_account
+                      )
+                    }
+                  >
+                    {admin.name}
+                  </a>
+                  {emailId === admin.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={admin.id_account}
+                      name={admin.name}
+                      email={admin.email}
+                      active={admin.active}
+                    />
+                  )}
                 </span>
 
-                <button onClick={() => toggleModify(admin.name, admin.email)}>
+                <button
+                  onClick={() =>
+                    toggleModify(
+                      admin.name,
+                      admin.email,
+                      admin.active,
+                      admin.id_account
+                    )
+                  }
+                >
                   Enviar Correo
                 </button>
 
@@ -162,7 +207,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{admin.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        admin.name,
+                        admin.email,
+                        admin.active,
+                        admin.id_account
+                      )
+                    }
+                  >
+                    {admin.name}
+                  </a>
+                  {emailId === admin.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={admin.id_account}
+                      name={admin.name}
+                      email={admin.email}
+                      active={admin.active}
+                    />
+                  )}
                 </span>
 
                 <button onClick={() => toggleModify(admin.name, admin.email)}>
@@ -185,7 +252,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{admin.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        admin.name,
+                        admin.email,
+                        admin.active,
+                        admin.id_account
+                      )
+                    }
+                  >
+                    {admin.name}
+                  </a>
+                  {emailId === admin.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={admin.id_account}
+                      name={admin.name}
+                      email={admin.email}
+                      active={admin.active}
+                    />
+                  )}
                 </span>
 
                 <button onClick={() => toggleModify(admin.name, admin.email)}>
@@ -229,7 +318,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{teacher.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        teacher.name,
+                        teacher.email,
+                        teacher.active,
+                        teacher.id_account
+                      )
+                    }
+                  >
+                    {teacher.name}
+                  </a>
+                  {emailId === teacher.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={teacher.id_account}
+                      name={teacher.name}
+                      email={teacher.email}
+                      active={teacher.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -254,7 +365,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{teacher.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        teacher.name,
+                        teacher.email,
+                        teacher.active,
+                        teacher.id_account
+                      )
+                    }
+                  >
+                    {teacher.name}
+                  </a>
+                  {emailId === teacher.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={teacher.id_account}
+                      name={teacher.name}
+                      email={teacher.email}
+                      active={teacher.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -279,7 +412,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{teacher.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        teacher.name,
+                        teacher.email,
+                        teacher.active,
+                        teacher.id_account
+                      )
+                    }
+                  >
+                    {teacher.name}
+                  </a>
+                  {emailId === teacher.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={teacher.id_account}
+                      name={teacher.name}
+                      email={teacher.email}
+                      active={teacher.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -324,7 +479,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{student.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        student.name,
+                        student.email,
+                        student.active,
+                        student.id_account
+                      )
+                    }
+                  >
+                    {student.name}
+                  </a>
+                  {emailId === student.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={student.id_account}
+                      name={student.name}
+                      email={student.email}
+                      active={student.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -348,7 +525,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{student.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        student.name,
+                        student.email,
+                        student.active,
+                        student.id_account
+                      )
+                    }
+                  >
+                    {student.name}
+                  </a>
+                  {emailId === student.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={student.id_account}
+                      name={student.name}
+                      email={student.email}
+                      active={student.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -372,7 +571,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{student.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        student.name,
+                        student.email,
+                        student.active,
+                        student.id_account
+                      )
+                    }
+                  >
+                    {student.name}
+                  </a>
+                  {emailId === student.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={student.id_account}
+                      name={student.name}
+                      email={student.email}
+                      active={student.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -417,7 +638,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{patient.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        patient.name,
+                        patient.email,
+                        patient.active,
+                        patient.id_account
+                      )
+                    }
+                  >
+                    {patient.name}
+                  </a>
+                  {emailId === patient.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={patient.id_account}
+                      name={patient.name}
+                      email={patient.email}
+                      active={patient.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -441,7 +684,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{patient.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        patient.name,
+                        patient.email,
+                        patient.active,
+                        patient.id_account
+                      )
+                    }
+                  >
+                    {patient.name}
+                  </a>
+                  {emailId === patient.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={patient.id_account}
+                      name={patient.name}
+                      email={patient.email}
+                      active={patient.active}
+                    />
+                  )}
                 </span>
 
                 <button
@@ -465,7 +730,29 @@ function ProfilesPage() {
               <div className="nombre-box">
                 <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
                 <span className="nombre" style={{ width: "400%" }}>
-                  <Link to={"/a"}>{patient.name}</Link>
+                  <a
+                    href="#"
+                    onClick={() =>
+                      viewProfile(
+                        patient.name,
+                        patient.email,
+                        patient.active,
+                        patient.id_account
+                      )
+                    }
+                  >
+                    {patient.name}
+                  </a>
+                  {emailId === patient.email && (
+                    <ProfilePopUp
+                      isOpen={isPopupOpenProfile}
+                      onClose={closePopupProfile}
+                      id_account={patient.id_account}
+                      name={patient.name}
+                      email={patient.email}
+                      active={patient.active}
+                    />
+                  )}
                 </span>
 
                 <button
