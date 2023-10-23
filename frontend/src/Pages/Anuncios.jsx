@@ -16,6 +16,7 @@ import {
 } from "../Utilities/announces-services";
 import NavigationB from "../Components/Navbar";
 import ModalAnuncios from "../Components/ModalAnuncios";
+import { GetSections } from "../Utilities/section-services";
 
 function SearchBar() {
   return (
@@ -51,6 +52,20 @@ function Anuncios() {
     updateAnnounlist();
   }, []);
 
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+    async function getSections() {
+      try {
+        const response = await GetSections();
+        setSections(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getSections();
+  }, []);
+
   const formatDate = (announceDate) => {
     var date = new Date(announceDate);
     var options = {
@@ -71,7 +86,9 @@ function Anuncios() {
     crear: false,
     title: "",
     message: "",
-    mode: ""
+    mode: "",
+    sections: [],
+    section_id: 0,
   });
 
   const abrirModal = (id_anuncio, title, message, tipo) => {
@@ -86,7 +103,10 @@ function Anuncios() {
       estadoModal = estadoModals.crear;
       setEstadoModals({
         crear: !estadoModal,
-        mode: "create"
+        mode: "create",
+        title: "",
+        message: "",
+        sections: sections,
       });
     } else if (tipo === "update") {
       estadoModal = estadoModals.editar;
@@ -95,7 +115,8 @@ function Anuncios() {
         mode: "update",
         id: id_anuncio,
         title: title,
-        message: message
+        message: message,
+        sections: sections,
       });
     }
   };
@@ -184,6 +205,9 @@ function Anuncios() {
                     <FontAwesomeIcon
                       icon={faPencil}
                       className="anuncio-icon-button"
+                      onClick={() => {
+                        abrirModal(announce.AnnounceId, announce.Title, announce.Message, "update");
+                      }}
                     />
                   </button>
                   <button
