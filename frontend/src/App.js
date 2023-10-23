@@ -13,6 +13,8 @@ import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
+import VistasPDF from "./Pages/DocuPDF";
+import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
         <Route path="/Anuncios" element={<Anuncios />} />
         <Route path="/Modulos" element={<Modulos />} />
         <Route path="/Expedientes" element={<Vistas />} />
+        <Route path="/ExpedientesPDF" element={<PDFViewer style={{width: "100%", height: "90vh"}}><VistasPDF /></PDFViewer>} />
         <Route path="/Secciones" element={<Sections />} />
         <Route path="/Pacientes" element={<Pacientes />} />
         <Route path="/Secciones/:courseId" element={<Sections />} />
