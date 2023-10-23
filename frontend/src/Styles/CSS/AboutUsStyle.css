@@ -22,7 +22,7 @@
   border-right: none;
 }
 
-.blue-footer {
+.pie {
   background-color: #002659;
   color: #fff;
   text-align: center;
@@ -44,7 +44,7 @@
     border-right: none;
   }
 
-  .blue-footer {
+  .pie {
     top: 100%;
   }
 }

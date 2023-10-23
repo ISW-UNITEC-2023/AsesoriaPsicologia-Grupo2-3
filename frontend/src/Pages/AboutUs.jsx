@@ -11,7 +11,7 @@ function AboutUs(props) {
         <NavigationBar {...props} />
       </div>
       <div className="ImagenPrincipal">
-        <img src={imgAbout} alt="Banner" width={1680} />
+        <img src={imgAbout} alt="Banner" width={1513} />
       </div>
 
       <div className="about-us-columns">
@@ -54,7 +54,7 @@ function AboutUs(props) {
           </p>
         </div>
       </div>
-      <footer className="blue-footer"></footer>
+      <footer className="pie"></footer>
     </div>
   );
 }
