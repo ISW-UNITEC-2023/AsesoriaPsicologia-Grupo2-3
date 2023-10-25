@@ -9,6 +9,7 @@ import LandingPage from "./Pages/LandingPage";
 import Modulos from "./Pages/Modulos";
 import Pacientes from "./Pages/Pacientes";
 import Sections from "./Pages/Sections";
+import Sesiones from "./Pages/Sesiones";
 import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/Expedientes" element={<Vistas />} />
         <Route path="/ExpedientesPDF" element={<PDFViewer style={{width: "100%", height: "90vh"}}><VistasPDF /></PDFViewer>} />
         <Route path="/Secciones" element={<Sections />} />
+        <Route path="/Sesiones" element={<Sesiones />} />
         <Route path="/Pacientes" element={<Pacientes />} />
         <Route path="/Secciones/:courseId" element={<Sections />} />
         <Route path="/InicioSesion" element={<Login {...loginData} />} />

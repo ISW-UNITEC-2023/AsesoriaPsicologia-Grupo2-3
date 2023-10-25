@@ -14,10 +14,7 @@ import {
   updateQuarter,
   updateYear,
 } from "../Utilities/section-services";
-import ListGroup from 'react-bootstrap/ListGroup';
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import VistasPDF from "./DocuPDF";
-import Button from 'react-bootstrap/Button';
+
 
 function SectionsPage() {
   const { courseId } = useParams();
@@ -212,54 +209,7 @@ function SectionsPage() {
           })}
         </div>
       ) : (
-        //<p>Cargando información del curso...</p>
-      <>
-            <ListGroup defaultActiveKey="#link1">
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 1
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 2
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 3
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 4
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 5
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 6
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 7
-                </ListGroup.Item>
-              </div>
-              <div>
-                <ListGroup.Item action href="/Expedientes">
-                  SESION 8
-                </ListGroup.Item>
-              </div>
-            </ListGroup><div>
-                <PDFDownloadLink document={<VistasPDF/>} fileName="expediente.pdf">
-                <Button>Descargar Expediente PDF</Button>
-                </PDFDownloadLink>
-            </div></>
+        <p>Cargando información del curso...</p>
       )}
     </div>
 
