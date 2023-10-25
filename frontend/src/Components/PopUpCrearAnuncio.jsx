@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Dropdown, Form } from "react-bootstrap";
 import "../Styles/CSS/PopUpEditarAnuncio.css";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import { CreateAnnounce } from "../Utilities/announces-services";
 import { GetSections } from "../Utilities/section-services";
 
@@ -91,7 +93,11 @@ const PopUpCrearAnuncio = ({ show, onHide }) => {
         </div>
       </Modal.Body>
       <Modal.Footer className="justify-content-start">
-        <Button variant="danger" onClick={handleClose}>
+        <Button
+          variant="danger"
+          style={{ backgroundColor: "#c6161c", border: "none" }}
+          onClick={handleClose}
+        >
           Cancelar
         </Button>
         <Dropdown>

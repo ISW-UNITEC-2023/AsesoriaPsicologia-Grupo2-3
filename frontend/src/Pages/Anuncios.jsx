@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Modal } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "../Styles/CSS/Anuncios.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

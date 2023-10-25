@@ -151,14 +151,19 @@ function SectionsPage() {
                   <CardFooter>
                     <Button
                       variant="success"
+                      style={{
+                        backgroundColor: "#002659",
+                        border: "none",
+                        marginRight: "15px",
+                      }}
                       onClick={() => toggleModify(currentSectionId)}
-                      style={{ marginRight: "15px" }}
                     >
                       Modificar
                     </Button>
 
                     <Button
                       variant="danger"
+                      style={{ backgroundColor: "#c6161c", border: "none" }}
                       onClick={() => toggleDeleteConfirmPopup(currentSectionId)}
                     >
                       Eliminar
