@@ -1,29 +1,69 @@
-import {Link, useNavigate} from 'react-router-dom';
-import '../Styles/CSS/NavigationBar.css';
+import React, { useState } from "react";
+import { Navbar, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "../Styles/CSS/NavigationBar.css";
 
 function NavigationBar(props) {
-    const {unitecLogo, navbarBg} = props;
-    const navigate = useNavigate();
+  const { unitecLogo } = props;
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    const handleIniciarSesionClick = () => {
-        navigate('/InicioSesion');
-    }
+  const handleToggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
-    const handleComienzaYaClick = () => {
-        navigate('/Cuestionario');
-    }
-
-    return (
-        <div className="navigation-bar" style={{backgroundImage: {navbarBg}}}>
-            <img className="navigation-bar__logo" src={unitecLogo} alt=""/>
-            <div className='elements-navbar'>
-                <Link className="link-navbar" to="/Inicio">Inicio</Link>
-                <Link className="link-navbar" to="/SobreNosotros">Sobre Nosotros</Link>
-                <button className="iniciar-sesion-navbar" onClick={handleIniciarSesionClick}>Iniciar Sesión</button>
-                <button className="comienza-ya-navbar" onClick={handleComienzaYaClick}>Comienza Ya</button>
-            </div>
-        </div>
-    )
+  return (
+    <div className={`navigation-bar ${menuOpen ? "menu-open" : ""}`}>
+      <Navbar bg="transparent" variant="dark" expand="lg">
+        <Navbar.Brand className="nav-brand">
+          <img className="navigation-bar__logo" src={unitecLogo} alt="" />
+        </Navbar.Brand>
+        <Navbar.Toggle
+          className="navbar-toggle"
+          onClick={handleToggleMenu}
+          aria-controls="basic-navbar-nav"
+        />
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className={menuOpen ? "show" : ""}
+        >
+          <Nav className={menuOpen ? "itemshow" : "elements-navbar"}>
+            <Link
+              className={menuOpen ? "item-bar" : "link-navbar"}
+              to="/Inicio"
+            >
+              Inicio
+            </Link>
+            <Link
+              className={menuOpen ? "item-bar" : "link-navbar"}
+              to="/SobreNosotros"
+            >
+              Sobre Nosotros
+            </Link>
+            <Link
+              className={
+                menuOpen
+                  ? "item-bar iniciar-sesion-navbar"
+                  : "link-navbar iniciar-sesion-navbar"
+              }
+              to="/InicioSesion"
+            >
+              Iniciar Sesión
+            </Link>
+            <Link
+              className={
+                menuOpen
+                  ? "item-bar comienza-ya-navbar"
+                  : "link-navbar comienza-ya-navbar"
+              }
+              to="/Cuestionario"
+            >
+              Comienza Ya
+            </Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </div>
+  );
 }
 
 export default NavigationBar;

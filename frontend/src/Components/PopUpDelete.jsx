@@ -1,53 +1,73 @@
-import "../Styles/CSS/PopUpDelete.css";
+import React from "react";
 import PropTypes from "prop-types";
+import { Modal, Button } from "react-bootstrap";
+import { deleteSection } from "../Utilities/section-services";
+import "../Styles/CSS/PopUpDelete.css";
 
-const PopUpDelete = ({ isOpen, onCancel, onConfirm, itemName, pageName, moduleId }) => { // Se recibe la información del módulo o seccion seleccionado y la función de confirmación
-    const overlayStyle = {
-        opacity: isOpen ? 1 : 0,
-        pointerEvents: isOpen ? "auto" : "none",
-    };
+const PopUpDelete = ({
+  isOpen,
+  onCancel,
+  onConfirm,
+  itemName,
+  pageName,
+  moduleId,
+}) => {
+  async function handleDelete() {
+    try {
+      const response = await deleteSection(moduleId);
+      if (response.status === 200) {
+        console.log("La sección se eliminó correctamente.");
+        onConfirm();
+      } else {
+        console.error("Error al eliminar la sección");
+      }
+    } catch (error) {
+      console.error("Error al eliminar la sección:", error.message);
+    }
+  }
 
-    const popupStyle = {
-        transform: isOpen ? "scale(1)" : "scale(0.8)",
-    };
+  return (
+    <Modal
+      show={isOpen}
+      onHide={onCancel}
+      centered
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header>
+        <Modal.Title>
+          {pageName === "modulo"
+            ? `Eliminar módulo: ${itemName}`
+            : pageName === "seccion"
+            ? `Eliminar sección: ${itemName}`
+            : "ERROR!"}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>
+          ¿Está seguro que desea eliminar{" "}
+          {pageName === "modulo" ? "el módulo" : "la sección"}: {itemName}?
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="danger" onClick={() => handleDelete()}>
+          Eliminar
+        </Button>
+        <Button variant="secondary" onClick={onCancel}>
+          Cancelar
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
-    return (
-        <div className="popup-overlay" style={overlayStyle}>
-            <div className="popup" style={popupStyle}>
-                <div className="popup">
-                    <div>
-                        {console.log(moduleId)}
-                        {pageName === "modulo" ? (
-                            <p className="textarea">{`¿Está seguro que desea eliminar el modulo: "${itemName}"?`}</p>
-                        ) : pageName === "seccion" ? (
-                            <p className="textarea">{`¿Está seguro que desea eliminar la seccion: "${itemName}"?`}</p>
-                        ) : (
-                            <p className="textarea">{"ERROR!"}</p>
-                        )}
-                    </div>
-                    <br></br>
-                    <div>
-                        <button className="confirm-button" onClick={() => onConfirm(moduleId)}>
-                            Eliminar
-                        </button>
-                        
-                        <button className="cancel-button" onClick={onCancel}>
-                            Cancelar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+PopUpDelete.propTypes = {
+  isOpen: PropTypes.bool,
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
+  itemName: PropTypes.string,
+  moduleId: PropTypes.number,
+  pageName: PropTypes.string,
 };
 
 export default PopUpDelete;
-
-PopUpDelete.propTypes = {
-    isOpen: PropTypes.bool,
-    onCancel: PropTypes.func,
-    onConfirm: PropTypes.func,
-    itemName: PropTypes.string,
-    moduleId: PropTypes.number,
-    pageName: PropTypes.string,
-};

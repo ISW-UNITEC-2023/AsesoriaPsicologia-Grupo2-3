@@ -1,63 +1,83 @@
+/* Estilos para la barra de navegación sin desplegar */
+.nav-brand {
+  margin-right: 60vw !important;
+}
+
 .navigation-bar {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    z-index: 2;
-    background-image: url("../Images/navbar.png");
-    background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  background-color: rgb(0, 38, 89);
+  z-index: 2;
+  background-image: url("../Images/navbar.png");
+  background-repeat: no-repeat;
+}
+
+/* Estilos para la barra de navegación cuando se despliega */
+.navigation-bar.show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 3;
+  background-color: rgb(0, 38, 89);
 }
 
 .navigation-bar__logo {
-    width: 170px;
-    margin-left: 10px;
+  width: 170px;
+}
+
+.itemshow {
+  align-items: center;
+  justify-content: center;
+  margin-top: 10vh;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 10vh;
+}
+
+.item-bar {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 3vh;
+  margin-right: 0 !important;
 }
 
 .elements-navbar {
-    display: flex;
-    flex-direction: row;
-    margin-left: auto;
-    align-self: center;
-    justify-self: flex-end;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white;
-    background-color: rgb(0, 0, 0, 0);
-    border: none;
-    border-radius: 25px;
-}
-
-.iniciar-sesion-navbar {
-    margin-right: 20px;
-    font-size: 16px;
-    color: white;
-    background-color: rgb(0, 0, 0, 0);
-    border: 2px solid rgb(198, 22, 28);
-    border-radius: 25px;
-    width: 130px;
-    height: 30px;
-}
-
-.comienza-ya-navbar {
-    cursor:pointer;
-    margin-right: 50px;
-    font-size: 16px;
-    color: white;
-    background-color: rgb(198, 22, 28);
-    border: none;
-    border-radius: 25px;
-    width: 130px;
-    height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
 }
 
 .link-navbar {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    margin: auto 25px auto 0;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  margin-right: 15px;
 }
 
-:root {
-    --segoe-ui-bold-italic: url("../Fonts/Segoe UI Bold Italic.ttf");
-    --segoe-ui-bold: url("../Fonts/Segoe UI Bold.ttf");
-    --segoe-ui-italic: url("../Fonts/Segoe UI Italic.ttf");
-    --segoe-ui: url("../Fonts/Segoe UI.ttf");
+.navbar-toggle {
+  position: relative;
+  margin-top: -70px;
+  margin-left: 85vw;
+}
+
+/* Estilos para los botones "Iniciar Sesión" y "Comienza Ya" */
+.iniciar-sesion-navbar,
+.comienza-ya-navbar {
+  text-align: center;
+  margin-right: 20px;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(198, 22, 28);
+  border-radius: 25px;
+  padding: 8px 15px;
+}
+
+.iniciar-sesion-navbar {
+  background-color: transparent;
+  border: 2px solid rgb(198, 22, 28);
 }

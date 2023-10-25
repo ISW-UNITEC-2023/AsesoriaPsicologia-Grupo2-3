@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrashCan, faPen } from "@fortawesome/free-solid-svg-icons";
 
 import Popup from "../Components/PopUp";
-import PopUpDelete from "../Components/PopUpDelete"
-import PopUpDeleted from "../Components/PopUpDeleted"
+import PopUpDelete from "../Components/PopUpDelete";
+import PopUpDeleted from "../Components/PopUpDeleted";
 import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -28,7 +28,6 @@ function ModulosForm() {
       .get("http://localhost:3001/modulos/all")
       .then((response) => {
         setModules(response.data);
-        
       })
       .catch((error) => {
         console.error("Error al obtener los módulos:", error);
@@ -41,29 +40,27 @@ function ModulosForm() {
     setIsPopupOpen(true);
   };
 
-  const handleDeleteClick = (e, buttonInfo) => { // Función para abrir la ventana emergente de confirmación
-    e.preventDefault(); // Evita que la página se recargue
-    setIsDeletePopUpOpen(true); // Abre la ventana emergente de confirmación
-    setSelectedButtonInfo(buttonInfo); // Guarda la información del módulo seleccionado
+  const handleDeleteClick = (e, buttonInfo) => {
+    e.preventDefault();
+    setIsDeletePopUpOpen(true);
+    setSelectedButtonInfo(buttonInfo);
   };
 
-  const handleCancelDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false);  // Cierra la ventana emergente cuando el usuario cancela
+  const handleCancelDeletePopup = () => {
+    setIsDeletePopUpOpen(false);
   };
 
-  const handleConfirmDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
-    setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
+  const handleConfirmDeletePopup = () => {
+    setIsDeletePopUpOpen(false);
+    setIsDeletedPopUpOpen(true);
   };
 
-  const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
-    setIsDeletedPopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
+  const handleCloseDeletedPopup = () => {
+    setIsDeletedPopUpOpen(false);
   };
 
   const cardElements = modules.map((module) => (
-    
     <Col lg={4} md={6} xs={12}>
-      
       <div className="card">
         <div
           className="color-box"
@@ -86,7 +83,11 @@ function ModulosForm() {
               <FontAwesomeIcon icon={faPen} />
             </a>
             {/*Botón para abrir la ventana emergente de confirmación de eliminar*/}
-            <a href="#" className="btn btn-delete" onClick={(e) => handleDeleteClick(e, module)}>  
+            <a
+              href="#"
+              className="btn btn-delete"
+              onClick={(e) => handleDeleteClick(e, module)}
+            >
               <FontAwesomeIcon icon={faTrashCan} />
             </a>
 
@@ -105,7 +106,7 @@ function ModulosForm() {
   };
 
   return (
-    <div style={{ width: '90%' }}>
+    <div style={{ width: "90%" }}>
       <div className="container-header">
         <h1 className="title-modulo">Módulos</h1>
         <a
