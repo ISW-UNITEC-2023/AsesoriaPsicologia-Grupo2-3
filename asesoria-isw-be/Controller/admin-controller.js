@@ -179,8 +179,9 @@ async function loginUser(req, res) {
             expiresIn: "30d",
           }
         );
+
         res.cookie("email", email, {
-          maxAge: 1000000, // La cookie expirará en 1 día
+          maxAge: 259200000, // Duración de 3 días en milisegundos
           httpOnly: true, // La cookie solo es accesible desde el servidor
           secure: true, // La cookie solo se envía a través de conexiones seguras (HTTPS)
           sameSite: "lax", // Restringe el envío de cookies a solicitudes de terceros
