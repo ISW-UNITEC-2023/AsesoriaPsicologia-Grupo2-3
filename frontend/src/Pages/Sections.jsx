@@ -20,6 +20,7 @@ import ModificarConfirmPopUp from "../Components/SectionPopUp/Modificar/Confirma
 import ModificarSuccessPopUp from "../Components/SectionPopUp/Modificar/successPopUp";
 import ModificarPopUp from "../Components/SectionPopUp/Modificar/ModificarPopUp";
 import "../Styles/CSS/Sections.css";
+import NavigationB from "../Components/Navbar";
 
 function SectionsPage() {
   const [courseList, setCourseList] = useState([]);
@@ -116,10 +117,8 @@ function SectionsPage() {
   };
 
   return (
-    <Container>
-      <div className="container-header text-center my-4">
-        <h1 className="title-modulo">Secciones</h1>
-      </div>
+    <div className="container-header text-center my-4">
+      <NavigationB />
 
       <Row className="justify-content-left">
         {courseList.length > 0 ? (
@@ -240,7 +239,7 @@ function SectionsPage() {
           <p className="text-center">Cargando información del curso...</p>
         )}
       </Row>
-    </Container>
+    </div>
   );
 }
 

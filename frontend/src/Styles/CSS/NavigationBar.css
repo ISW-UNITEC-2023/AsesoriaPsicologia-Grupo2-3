@@ -9,7 +9,7 @@
 
   align-items: center;
   background-color: rgb(0, 38, 89);
-  z-index: 2;
+  z-index: 9999;
   background-image: url("../Images/navbar.png");
   background-repeat: no-repeat;
 }
