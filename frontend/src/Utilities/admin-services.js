@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function GetTeachers() {
+export async function GetTeachers() {
   const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   const options = {

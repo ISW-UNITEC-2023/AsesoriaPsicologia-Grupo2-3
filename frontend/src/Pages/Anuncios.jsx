@@ -42,6 +42,14 @@ function SearchBar() {
 }
 
 function Anuncios() {
+    const [announces, setAnnounces] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleClose = () => {
+        setModalOpen(false);
+    };
+
+
     const modalStyle = {
         position: "absolute",
         top: "35%",
@@ -49,8 +57,6 @@ function Anuncios() {
         transform: "translate(-50%,-50%)",
         width: "90%",
     };
-
-    const [announces, setAnnounces] = useState([]);
 
     useEffect(() => {
         const updateAnnounlist = async () => {
@@ -83,7 +89,8 @@ function Anuncios() {
             hour: "2-digit",
             minute: "2-digit",
         };
-        return date.toLocaleString("es-ES", options);
+        var formattedDate = date.toLocaleString("es-ES", options);
+        return formattedDate;
     };
 
     const [estadoModals, setEstadoModals] = useState({
@@ -177,25 +184,31 @@ function Anuncios() {
                 </ModalFooter>
             </Modal>
             <Modal isOpen={estadoModals.crear} style={modalStyle} backdrop={true} keyboard={true}>
-                <ModalAnuncios {...estadoModals}/>
+                <ModalAnuncios {...estadoModals} onClose={handleClose} isOpen={modalOpen} />
             </Modal>
             <Modal isOpen={estadoModals.editar} style={modalStyle} backdrop={true} keyboard={true}>
-                <ModalAnuncios {...estadoModals} />
+                <ModalAnuncios {...estadoModals} onClose={handleClose} isOpen={modalOpen} />
             </Modal>
             <div className="anuncios-container-box bg-gray-100">
-                <div className="flex flex-col sm:flex-row items-center sm:justify-between">
-                    <SearchBar/>
+                <div className="flex flex-col lg:flex-row items-center justify-center" style={{backgroundColor: '#00367d'}}>
+                    <SearchBar />
                     <button
-                        className="anuncios-crear-button lg:mt-2 sm:mt-0 ml-0 sm:ml-4"
-
+                        className="anuncios-crear-button mr-2 mt-2 mb-2 lg:mb-4"
+                        onClick={() => {
+                            abrirModal(0, "", "", "create");
+                        }}
                     >
-                        <FontAwesomeIcon icon={faSquarePlus} className="anuncios-crear-icon"/>
+                        <FontAwesomeIcon
+                            icon={faSquarePlus}
+                            className="anuncios-crear-icon"
+                        />
                     </button>
                 </div>
+
                 <div className="overflow-hidden mt-4 mr-4 ml-4 mb-2">
                     {announces.map((announce) => (
                         <div
-                            className="anuncio-item-box bg-white rounded-lg p-4 sm:p-6 lg:p-8 shadow-md flex items-center space-x-4"
+                            className="anuncio-item-box bg-white mt-2 rounded-lg p-4 sm:p-6 lg:p-8 shadow-md flex items-center space-x-4"
                             key={announce.AnnounceId}>
                             <FontAwesomeIcon
                                 icon={faUserCircle}
@@ -206,18 +219,21 @@ function Anuncios() {
                                     className="anuncio-titulo text-sm font-semibold leading-5 text-gray-900">{announce.Title}</span>
                                 <p className="anuncio-descripcion text-xs text-gray-500 line-clamp-2">{announce.Message}</p>
                             </div>
-                            <div className="anuncio-item-3 flex flex-row items-end md:flex-col">
-                                <div className="anuncios-group-button mr-3">
+                            <div className="anuncio-item-3 flex flex-col items-end md:flex-col lg:flex-col justify-end">
+                                <div className="anuncios-group-button">
                                     <button className="announce-edit-button">
                                         <FontAwesomeIcon
                                             icon={faPencil}
                                             className="anuncio-icon-button"
+                                            onClick={() => {
+                                                abrirModal(announce.AnnounceId, announce.Title, announce.Message, "update");
+                                            }}
                                         />
                                     </button>
                                     <button
                                         className="announce-edit-button"
                                         onClick={() => {
-                                            abrirModal(announce.AnnounceId);
+                                            abrirModal(announce.AnnounceId, "", "", "delete");
                                         }}
                                     >
                                         <FontAwesomeIcon
@@ -228,7 +244,7 @@ function Anuncios() {
                                 </div>
                                 <div className="anuncio-div-span hidden md:block lg:block">
                                     <span
-                                        className="text-sm leading-1 text-gray-900 font-semibold mr-1">Publicado:</span>
+                                        className="text-sm leading-1 text-gray-900 font-semibold">Publicado:</span>
                                     <a className="text-sm md:text-lg lg:text-2xl"
                                        style={{whiteSpace: 'nowrap'}}>{`${formatDate(announce.Date)}`}</a>
                                 </div>

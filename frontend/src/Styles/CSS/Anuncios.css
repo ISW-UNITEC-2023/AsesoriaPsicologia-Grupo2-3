@@ -21,22 +21,16 @@
 }
 
 .anuncios-crear-button{
-  justify-self: flex-end;
-  margin-left: auto;
-  margin-right: 22px;
   background: none;
-  border: 1px solid #5281ce;
+  border: 1px solid #ffffff;
   border-radius: 5px;
   height: 6.6vh;
   width: 6.6vh;
-  display:flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .anuncios-crear-icon{
   font-size: 26px;
-  color: #5281ce;
+  color: #ffffff;
   text-align: center;
 }
 
