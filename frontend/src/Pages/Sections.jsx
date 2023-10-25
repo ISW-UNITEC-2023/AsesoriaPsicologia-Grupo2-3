@@ -15,6 +15,7 @@ import {
   updateYear,
 } from "../Utilities/section-services";
 
+
 function SectionsPage() {
   const { courseId } = useParams();
   const [courseList, setCourseList] = useState([]);
@@ -211,6 +212,7 @@ function SectionsPage() {
         <p>Cargando información del curso...</p>
       )}
     </div>
+
   );
 }
 

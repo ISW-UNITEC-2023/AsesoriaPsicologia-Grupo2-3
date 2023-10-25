@@ -9,11 +9,14 @@ import LandingPage from "./Pages/LandingPage";
 import Modulos from "./Pages/Modulos";
 import Pacientes from "./Pages/Pacientes";
 import Sections from "./Pages/Sections";
+import Sesiones from "./Pages/Sesiones";
 import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
 import ProfilesPage from "./Pages/Profiles";
+import VistasPDF from "./Pages/DocuPDF";
+import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
   return (
@@ -25,7 +28,9 @@ function App() {
         <Route path="/Anuncios" element={<Anuncios />} />
         <Route path="/Modulos" element={<Modulos />} />
         <Route path="/Expedientes" element={<Vistas />} />
+        <Route path="/ExpedientesPDF" element={<PDFViewer style={{width: "100%", height: "90vh"}}><VistasPDF /></PDFViewer>} />
         <Route path="/Secciones" element={<Sections />} />
+        <Route path="/Sesiones" element={<Sesiones />} />
         <Route path="/Pacientes" element={<Pacientes />} />
         <Route path="/Secciones/:courseId" element={<Sections />} />
         <Route path="/InicioSesion" element={<Login {...loginData} />} />
