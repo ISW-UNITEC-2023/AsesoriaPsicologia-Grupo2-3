@@ -14,9 +14,12 @@ import {
   DeleteAnnounces,
   loadAnnounces,
 } from "../Utilities/announces-services";
+
 import NavigationB from "../Components/Navbar";
 import AnuncioModal from "../Components/AnuncioModal";
 import ModalAnuncios from "../Components/ModalAnuncios";
+import PopUpCrearAnuncio from "../Components/PopUpCrearAnuncio";
+import PopUpEditarAnuncio from "../Components/PopUpEditarAnuncio";
 
 function SearchBar() {
   return (
@@ -119,6 +122,51 @@ function Anuncios() {
     }
   }
 
+  const updateAnnounlist = async () => {
+    try {
+      const updatedAnnounces = await loadAnnounces();
+      setAnnounces(updatedAnnounces);
+      updateAnnounlist(updatedAnnounces);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  const [showModalCrear, setShowModalCrear] = useState(false);
+
+  const handleShowModalCrear = () => {
+    setShowModalCrear(true);
+  };
+
+  const handleCloseModalCrear = () => {
+    setShowModalCrear(false);
+    updateAnnounlist();
+  };
+
+  const [showModalEditar, setShowModalEditar] = useState(false);
+
+  const [selectedAnnounce, setSelectedAnnounce] = useState({
+    id: "",
+    title: "",
+    description: "",
+  });
+
+  const handleShowModalEditar = (announce) => {
+    setSelectedAnnounce({
+      id: announce.AnnounceId,
+      title: announce.Title,
+      description: announce.Message,
+    });
+    setShowModalEditar(true);
+  };
+
+
+  const handleCloseModalEditar = () => {
+    setShowModalEditar(false);
+    updateAnnounlist();
+  };
+
   return (
     <div className="anuncios-container">
       <NavigationB />
@@ -173,12 +221,13 @@ function Anuncios() {
       <div className="anuncios-container-box">
         <div className="anuncios-container-controls">
           <SearchBar />
-          <button className="anuncios-crear-button" onClick={()=>{abrirModal(0, "create")}}>
+          <button className="anuncios-crear-button" onClick={handleShowModalCrear}>
             <FontAwesomeIcon
               icon={faSquarePlus}
               className="anuncios-crear-icon"
             />
           </button>
+          <PopUpCrearAnuncio show={showModalCrear} onHide={handleCloseModalCrear} />
         </div>
         <div className="anuncios-show-box">
           {announces.map((announce) => (
@@ -197,6 +246,9 @@ function Anuncios() {
                     <FontAwesomeIcon
                       icon={faPencil}
                       className="anuncio-icon-button"
+                      onClick={() => {
+                        handleShowModalEditar(announce);
+                      }}
                     />
                   </button>
                   <button
@@ -218,6 +270,15 @@ function Anuncios() {
               </div>
             </div>
           ))}
+
+          <PopUpEditarAnuncio
+            show={showModalEditar}
+            onHide={handleCloseModalEditar}
+            announce_id={selectedAnnounce.id}
+            title={selectedAnnounce.title}
+            description={selectedAnnounce.description}
+          />
+          
         </div>
       </div>
     </div>

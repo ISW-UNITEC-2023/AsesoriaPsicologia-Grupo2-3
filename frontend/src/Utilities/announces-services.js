@@ -48,13 +48,14 @@ export async function CreateAnnounce(info) {
   });
 }
 
-export async function UpdateAnnouncesTitle(data) {
- 
+export async function UpdateAnnouncesTitle(id, title) {
   const options = {
-    method: 'PUT',
+    method: 'POST',
     url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/update/title',
-    params: {id: data.id},
-    data: {title_new: data.title}
+    data: {
+      id: id, 
+      title_new: title
+    }
   };
 
   axios.request(options).then(function (response) {
@@ -64,13 +65,14 @@ export async function UpdateAnnouncesTitle(data) {
   });
 }
 
-export async function UpdateAnnouncesDecription(data) {
- 
+export async function UpdateAnnouncesDecription(id, message) {
   const options = {
-    method: 'PUT',
+    method: 'POST',
     url: 'https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/update/Descrip',
-    params: {id: data.id},
-    data: {description_new: data.description}
+    data: {
+      id: id, 
+      description_new: message
+    }
   };
 
   axios.request(options).then(function (response) {

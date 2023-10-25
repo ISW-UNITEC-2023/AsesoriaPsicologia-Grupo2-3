@@ -1,33 +1,26 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getInfoSection } from "../Utilities/section-services";
+import React, { useState, useEffect } from "react";
+import { getInfoSection, updateTeacher, updateQuarter, updateYear } from "../Utilities/section-services";
+import { Container, Row, Col, Button, Card, CardHeader, CardFooter } from "react-bootstrap";
 import EliminarConfirmarPopUp from "../Components/SectionPopUp/Eliminar/ConfirmarPopUp";
 import EliminarSuccessPopUp from "../Components/SectionPopUp/Eliminar/SucessPopUp";
-
 import ModificarConfirmPopUp from "../Components/SectionPopUp/Modificar/ConfirmarPopUp";
 import ModificarSuccessPopUp from "../Components/SectionPopUp/Modificar/successPopUp";
 import ModificarPopUp from "../Components/SectionPopUp/Modificar/ModificarPopUp";
 import "../Styles/CSS/Sections.css";
 
-import {
-  updateTeacher,
-  updateQuarter,
-  updateYear,
-} from "../Utilities/section-services";
-
 function SectionsPage() {
   const [courseList, setCourseList] = useState([]);
-  const [courseId, setCourseId] = useState(null)
+  const [courseId, setCourseId] = useState(null);
 
   useEffect(() => {
     async function fetchCourseInfo() {
       try {
         const urlParams = new URLSearchParams(window.location.search);
-        let parametro = urlParams.get('course_id');
-        parametro = parseInt(parametro)
-        console.log(parametro)
+        let parametro = urlParams.get("course_id");
+        parametro = parseInt(parametro);
+        console.log(parametro);
         const response = await getInfoSection(parametro);
-        console.log(response)
+        console.log(response);
         setCourseList(response);
       } catch (error) {
         console.error("Error fetching course info:", error);
@@ -66,13 +59,7 @@ function SectionsPage() {
     setModify(!isModify);
   };
 
-  const toggleModifyConfirmPopup = (
-    sectionId,
-    option,
-    quarterOption,
-    teacherOption,
-    yearOption
-  ) => {
+  const toggleModifyConfirmPopup = (sectionId, option, quarterOption, teacherOption, yearOption) => {
     setModifySectionId(sectionId);
     setSelectedOption(option);
     setSelectedQuarterOption(quarterOption);
@@ -110,27 +97,61 @@ function SectionsPage() {
   };
 
   return (
-    <div>
-      <div className="container-header">
+    <Container>
+      <div className="container-header text-center my-4">
         <h1 className="title-modulo">Secciones</h1>
       </div>
 
-      {courseList.length > 0 ? (
-        <div>
-          {courseList.map((course) => {
+      <Row className="justify-content-left">
+        {courseList.length > 0 ? (
+          courseList.map((course) => {
             const currentSectionId = course.SectionId;
             const Year = course.Year;
             return (
-              <div key={course.courseId} className="course-card">
-                <h3>Nombre del Curso: {course.CourseName}</h3>
-                <p>Codigo de Clase: {courseId}</p>
-                <p>Id seccion: {currentSectionId}</p>
-                <p>UV: {course.UV}</p>
-                <p>año: {Year}</p>
-                <p>Trimestre: {course.Quarter}</p>
-                <p>Docente: {course.Teacher}</p>
+              <Col key={course.courseId} md={6} lg={3} className="mb-4">
+                <Card>
+                  <CardHeader>Seccion</CardHeader>
+                  <Card.Body>
+                    <Card.Title>{course.CourseName}</Card.Title>
+                    <Card.Text>
+                      <br /><strong>Código de Clase: </strong>
+                      {courseId} <br />
 
+                      <strong>Id sección: </strong>
+                      {currentSectionId} <br />
+
+                      <strong>UV: </strong>
+                      {course.UV} <br />
+
+                      <strong>Año: </strong>
+                      {Year} <br />
+                      <strong>Trimestre: </strong>
+                      {course.Quarter} <br />
+                      
+                      <strong>Docente: </strong> 
+                      {course.Teacher } <br />
+                    </Card.Text>
+
+                    <CardFooter>
+                      <Button
+                        variant="success"
+                        onClick={() => toggleModify(currentSectionId)}
+                        style={{ marginRight: "15px" }}
+                      >
+                        Modificar
+                      </Button>
+
+                      <Button
+                        variant="danger"
+                        onClick={() => toggleDeleteConfirmPopup(currentSectionId)}
+                      >
+                        Eliminar
+                      </Button>
+                    </CardFooter>
+                  </Card.Body>
+                </Card>
                 
+
                 <ModificarPopUp
                   isOpen={isModify}
                   onClose={() => toggleModify(null)}
@@ -175,20 +196,7 @@ function SectionsPage() {
                   }}
                   sectionId={modifySectionId}
                 />
-                <div style={{display:'flex'}}>
-                  <button
-                    type="button"
-                    className="bi bi-pencil"
-                    style={{ marginRight: "10px",backgroundColor: 'green', color: 'black' }}
-                    onClick={() => toggleModify(currentSectionId)}
-                  />
-                  <button
-                    type="button"
-                    className="bi bi-trash"
-                    style={{backgroundColor: 'red', color: 'black'}}
-                    onClick={() => toggleDeleteConfirmPopup(currentSectionId)}
-                  />
-                </div>
+
                 <EliminarConfirmarPopUp
                   isOpen={isDeleteConfirmPopupOpen}
                   onClose={() => toggleDeleteConfirmPopup(null)}
@@ -202,19 +210,18 @@ function SectionsPage() {
                   isOpen={isDeleteSuccessPopupOpen}
                   onClose={() => {
                     toggleDeleteSuccessPopup();
-                    // Actualiza la información del curso cuando se cierre el SuccessPopup
                     updateCourseInfo();
                   }}
                   sectionId={deleteSectionId}
                 />
-              </div>
+              </Col>
             );
-          })}
-        </div>
-      ) : (
-        <p>Cargando información del curso...</p>
-      )}
-    </div>
+          })
+        ) : (
+          <p className="text-center">Cargando información del curso...</p>
+        )}
+      </Row>
+    </Container>
   );
 }
 

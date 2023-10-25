@@ -41,23 +41,24 @@ function ModulosForm() {
     setIsPopupOpen(true);
   };
 
-  const handleDeleteClick = (e, buttonInfo) => { // Función para abrir la ventana emergente de confirmación
-    e.preventDefault(); // Evita que la página se recargue
-    setIsDeletePopUpOpen(true); // Abre la ventana emergente de confirmación
-    setSelectedButtonInfo(buttonInfo); // Guarda la información del módulo seleccionado
+  const handleDeleteClick = (e, buttonInfo) => {
+    e.preventDefault(); 
+    setIsDeletePopUpOpen(true); 
+    setSelectedButtonInfo(buttonInfo); 
   };
 
-  const handleCancelDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false);  // Cierra la ventana emergente cuando el usuario cancela
+  const handleCancelDeletePopup = () => { 
+    setIsDeletePopUpOpen(false);  
   };
 
-  const handleConfirmDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
-    setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
+  const handleConfirmDeletePopup = () => { 
+    setIsDeletePopUpOpen(false); 
+    setIsDeletedPopUpOpen(true); 
   };
 
-  const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
-    setIsDeletedPopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
+  const handleCloseDeletedPopup = () => {  
+    setIsDeletedPopUpOpen(false); 
+    
   };
 
   const cardElements = modules.map((module) => (
