@@ -30,23 +30,23 @@ function DashBoard() {
         <div className="dashboard-container overflow-hidden">
             <NavigationB/>
             <div className="dashboard-box">
-                <div className="dashboard-header flex flex-col lg:flex-row sm:mb-2 justify-between">
+                <div className="dashboard-header flex flex-col md:flex-row justify-between">
                     <h1 className="dashboard-titulo">Bienvenido {localStorage.getItem("name_user")}!</h1>
-                    <div className="dashboard-buttons flex flex-row gap-2 justify-end">
-                    <Button
-                        className="button-create"
-                        onClick={() => setIsPopupOpen(true)}
-                        variant={"outline-primary"}
-                    >
-                        Nueva clase
-                    </Button>
-                    <Button
-                        className="button-create-s mr-2"
-                        onClick={() => setIsSectionPopupOpen(true)}
-                        variant={"outline-primary"}
-                    >
-                        Nueva sección
-                    </Button>
+                    <div className="dashboard-buttons flex flex-row gap-2 justify-end mb-2 lg:mb-0">
+                        <Button
+                            className="button-create"
+                            onClick={() => setIsPopupOpen(true)}
+                            variant={"outline-primary"}
+                        >
+                            Nueva clase
+                        </Button>
+                        <Button
+                            className="button-create-s mr-2"
+                            onClick={() => setIsSectionPopupOpen(true)}
+                            variant={"outline-primary"}
+                        >
+                            Nueva sección
+                        </Button>
                     </div>
                     <Popup
                         isOpen={isPopupOpen}
