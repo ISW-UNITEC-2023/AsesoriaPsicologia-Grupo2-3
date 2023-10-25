@@ -184,14 +184,15 @@ function Anuncios() {
                 </ModalFooter>
             </Modal>
             <Modal isOpen={estadoModals.crear} style={modalStyle} backdrop={true} keyboard={true}>
-                <ModalAnuncios {...estadoModals} onClose={handleClose} isOpen={modalOpen} />
+                <ModalAnuncios {...estadoModals} onClose={handleClose} isOpen={modalOpen}/>
             </Modal>
             <Modal isOpen={estadoModals.editar} style={modalStyle} backdrop={true} keyboard={true}>
-                <ModalAnuncios {...estadoModals} onClose={handleClose} isOpen={modalOpen} />
+                <ModalAnuncios {...estadoModals} onClose={handleClose} isOpen={modalOpen}/>
             </Modal>
             <div className="anuncios-container-box bg-gray-100">
-                <div className="flex flex-col lg:flex-row items-center justify-center" style={{backgroundColor: '#00367d'}}>
-                    <SearchBar />
+                <div className="flex flex-col lg:flex-row items-center justify-center"
+                     style={{backgroundColor: '#00367d'}}>
+                    <SearchBar/>
                     <button
                         className="anuncios-crear-button mr-2 mt-2 mb-2 lg:mb-4"
                         onClick={() => {

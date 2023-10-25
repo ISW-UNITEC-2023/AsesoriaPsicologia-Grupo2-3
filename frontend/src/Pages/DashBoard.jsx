@@ -30,7 +30,7 @@ function DashBoard() {
         <div className="dashboard-container overflow-hidden">
             <NavigationB/>
             <div className="dashboard-box">
-                <div className="dashboard-header flex flex-row justify-between">
+                <div className="dashboard-header flex flex-col lg:flex-row sm:mb-2 justify-between">
                     <h1 className="dashboard-titulo">Bienvenido {localStorage.getItem("name_user")}!</h1>
                     <div className="dashboard-buttons flex flex-row gap-2 justify-end">
                     <Button
@@ -38,7 +38,7 @@ function DashBoard() {
                         onClick={() => setIsPopupOpen(true)}
                         variant={"outline-primary"}
                     >
-                        Nuevo módulo
+                        Nueva clase
                     </Button>
                     <Button
                         className="button-create-s mr-2"
@@ -64,7 +64,7 @@ function DashBoard() {
                 <div className="dashboard-body">
                     <div style={{}}>
                         <h1>Todos los Módulos</h1>
-                        <div className="section-card-container flex flex-row flex-wrap gap-2">
+                        <div className="section-card-container flex flex-row flex-wrap gap-3">
                             {displayedModules.map((module) => (
                                 <SectionCard
                                     props={module}
