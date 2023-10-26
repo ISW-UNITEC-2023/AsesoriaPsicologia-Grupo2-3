@@ -26,7 +26,7 @@ function NavigationBar(props) {
           id="basic-navbar-nav"
           className={menuOpen ? "show" : ""}
         >
-          <Nav className={menuOpen ? "itemshow" : "elements-navbar"}>
+          <Nav className={menuOpen ? "itemshow" : ""}>
             <Link
               className={menuOpen ? "item-bar" : "link-navbar"}
               to="/Inicio"
