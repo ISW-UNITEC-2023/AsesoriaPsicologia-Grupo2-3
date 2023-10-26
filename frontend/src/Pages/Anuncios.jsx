@@ -238,16 +238,18 @@ function Anuncios() {
         >
           <SearchBar />
           <button
-            className="anuncios-crear-button mr-2 mt-2 mb-2 lg:mb-4"
-            onClick={() => {
-              abrirModal(0, "", "", "create");
-            }}
+            className="anuncios-crear-button"
+            onClick={handleShowModalCrear}
           >
             <FontAwesomeIcon
               icon={faSquarePlus}
               className="anuncios-crear-icon"
             />
           </button>
+          <PopUpCrearAnuncio
+            show={showModalCrear}
+            onHide={handleCloseModalCrear}
+          />
         </div>
 
         <div className="overflow-hidden mt-4 mr-4 ml-4 mb-2">
@@ -275,19 +277,14 @@ function Anuncios() {
                       icon={faPencil}
                       className="anuncio-icon-button"
                       onClick={() => {
-                        abrirModal(
-                          announce.AnnounceId,
-                          announce.Title,
-                          announce.Message,
-                          "update"
-                        );
+                        handleShowModalEditar(announce);
                       }}
                     />
                   </button>
                   <button
                     className="announce-edit-button"
                     onClick={() => {
-                      abrirModal(announce.AnnounceId, "", "", "delete");
+                      abrirModal(announce.AnnounceId, "delete");
                     }}
                   >
                     <FontAwesomeIcon

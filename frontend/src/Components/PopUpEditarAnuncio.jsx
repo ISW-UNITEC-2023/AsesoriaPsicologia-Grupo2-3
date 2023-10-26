@@ -115,7 +115,11 @@ const PopUpEditarAnuncio = ({
         </div>
       </Modal.Body>
       <Modal.Footer className="justify-content-start">
-        <Button variant="danger" onClick={handleClose}>
+        <Button
+          variant="danger"
+          onClick={handleClose}
+          style={{ backgroundColor: "#bb2d3b" }}
+        >
           Cancelar
         </Button>
         <Button
