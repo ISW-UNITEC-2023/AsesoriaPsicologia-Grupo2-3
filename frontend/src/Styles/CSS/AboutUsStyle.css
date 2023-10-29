@@ -17,7 +17,6 @@
   display: none;
 }
 
-
 .about-us-column {
   flex: 1;
   margin-top: 40px;
@@ -42,8 +41,6 @@
   left: 0;
   margin: auto;
 }
-
-
 
 @media screen and (max-width: 1200px) {
   .about-us-columns {

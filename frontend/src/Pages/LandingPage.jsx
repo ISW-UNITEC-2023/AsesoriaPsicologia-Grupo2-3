@@ -33,22 +33,19 @@ function LandingPage(props) {
   const howieImage = isHowieHovered ? HOWIEHovered : HOWIE;
 
   return (
-    <div className="bg-white overflow-hidden">
-      <div className="header bg-white text-white">
+    <div className="Home">
+      <div className="navigation-bar">
         <NavigationBar {...props} />
       </div>
       <main>
-        <div
-          className="sm:mx-auto sm:w-full sm:h-80 lg:mx-auto lg:w-full lg:h-auto"
-          style={{ backgroundColor: "#002559" }}
-        >
+        <div className="slide-container">
           <Slide {...slideProperties}>
             {images.map((each, index) => (
               <img
                 key={index}
                 src={each}
                 alt={`Slide ${index}`}
-                className="mx-auto w-auto h-60 lg:h-80 rounded-xl mt-4"
+                className="centered-image"
               />
             ))}
           </Slide>
