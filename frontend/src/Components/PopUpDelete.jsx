@@ -35,7 +35,7 @@ const PopUpDelete = ({
       keyboard={false}
     >
       <Modal.Header>
-        <Modal.Title>
+        <Modal.Title style={{ fontSize: "1.5rem", textAlign: "center" }}>
           {pageName === "modulo"
             ? `Eliminar módulo: ${itemName}`
             : pageName === "seccion"
@@ -44,16 +44,26 @@ const PopUpDelete = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>
+        <p style={{ fontSize: "1.3rem", textAlign: "center" }}>
           ¿Está seguro que desea eliminar{" "}
           {pageName === "modulo" ? "el módulo" : "la sección"}: {itemName}?
         </p>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="danger" onClick={() => handleDelete()}>
+      <Modal.Footer className="buttons-container">
+        <Button
+          className="confirm-button"
+          variant="danger"
+          style={{ backgroundColor: "#c6161c" }}
+          onClick={() => handleDelete()}
+        >
           Eliminar
         </Button>
-        <Button variant="secondary" onClick={onCancel}>
+        <Button
+          className="cancel-button"
+          variant="secondary-outlined"
+          style={{ border: "2px solid #5c636a" }}
+          onClick={onCancel}
+        >
           Cancelar
         </Button>
       </Modal.Footer>

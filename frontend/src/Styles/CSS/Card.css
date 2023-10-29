@@ -25,7 +25,7 @@ div.card-title.h5 {
   padding-top: 0.5rem;
   text-align: start;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 div.card-title.h5:is(:active, :focus, :hover) {
   color: #2986ff;
@@ -33,7 +33,7 @@ div.card-title.h5:is(:active, :focus, :hover) {
 .text-container-dashboard.card-text > * {
   color: #535252;
   margin-bottom: 5px;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .text-container-dashboard.card-text {
@@ -60,7 +60,7 @@ div.card-title.h5:is(:active, :focus, :hover) {
 }
 
 .modulo-btn {
-  font-size: 1rem;
+  font-size: 0.5rem;
   padding: 10px 20px;
   background-color: #6662d9;
   color: #fff;
@@ -79,7 +79,7 @@ div.card-title.h5:is(:active, :focus, :hover) {
 }
 
 .cta-container > * > * {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
 }
 button.btn.btn-success.entrar-curso-btn {
   background: #0046a3;

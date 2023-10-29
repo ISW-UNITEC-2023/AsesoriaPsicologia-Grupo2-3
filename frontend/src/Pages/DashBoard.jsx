@@ -43,13 +43,6 @@ function DashBoard() {
             >
               Nueva clase
             </Button>
-            <Button
-              className="button-create-s mr-2"
-              onClick={() => setIsSectionPopupOpen(true)}
-              variant={"outline-primary"}
-            >
-              Nueva sección
-            </Button>
           </div>
           <Popup
             isOpen={isPopupOpen}

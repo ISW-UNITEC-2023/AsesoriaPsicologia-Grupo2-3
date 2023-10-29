@@ -27,6 +27,13 @@
   margin-left: 3%;
 }
 
+.dashboard-titulo {
+  margin-left: 1rem;
+}
+.button-create {
+  margin-right: 4rem;
+  width: 15rem;
+}
 button.accordion-button.collapsed {
   background-color: #cfe2ff;
   width: 60rem;

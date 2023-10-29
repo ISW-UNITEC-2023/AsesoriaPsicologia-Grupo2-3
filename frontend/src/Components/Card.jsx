@@ -117,7 +117,14 @@ function MyCard({ props, handleReload }) {
                   >
                     <FontAwesomeIcon icon={faPencil} /> Editar Curso
                   </Dropdown.Item>
-                  <Dropdown.Item eventKey="1"> Crear Sección</Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="1"
+                    className="button-create-s mr-2"
+                    onClick={() => setIsSectionPopupOpen(true)}
+                    variant={"outline-primary"}
+                  >
+                    Crearsección
+                  </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item
                     eventKey="4"
