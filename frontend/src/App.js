@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
@@ -18,7 +18,10 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage {...homedata} />} />
         <Route path="/Inicio" element={<LandingPage {...homedata} />} />
-        <Route path="/ResetPassword" element={<ForgotPassword {...forgotData} />}/>
+        <Route
+          path="/ResetPassword"
+          element={<ForgotPassword {...forgotData} />}
+        />
         <Route path="/Anuncios" element={<Anuncios />} />
         <Route path="/Modulos" element={<Modulos />} />
         <Route path="/Expedientes" element={<Vistas />} />
@@ -34,7 +37,6 @@ function App() {
 }
 
 export default App;
-
 //Aqui se importan las imagenes necesarias para el proyecto
 //Ejemplo const logo = require('./assets/logo.png');
 const wizardData = {

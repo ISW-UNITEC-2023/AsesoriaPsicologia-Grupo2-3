@@ -1,15 +1,15 @@
-.anuncios-container{
-  display:flex;
+.anuncios-container {
+  display: flex;
   flex-direction: row;
-  background-color: rgb(255,255,255);
-  width:100%;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
 }
 
-.anuncios-container-box{
+.anuncios-container-box {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: rgb(255,255,255);
+  background-color: rgb(255, 255, 255);
 }
 
 .anuncios-container-controls {
@@ -20,7 +20,7 @@
   align-items: center;
 }
 
-.anuncios-crear-button{
+.anuncios-crear-button {
   background: none;
   border: 1px solid #ffffff;
   border-radius: 5px;
@@ -28,7 +28,7 @@
   width: 6.6vh;
 }
 
-.anuncios-crear-icon{
+.anuncios-crear-icon {
   font-size: 26px;
   color: #ffffff;
   text-align: center;
@@ -40,28 +40,28 @@
   text-align: center;
 }
 
-.anuncio-item-box{
+.anuncio-item-box {
   border: 1px solid #ccc;
-  display:flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
   height: 15vh;
 }
 
-.anuncio-item-2{
-  width:75%;
-  display:flex;
+.anuncio-item-2 {
+  width: 75%;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.anuncio-item-3{
-  width:15%;
+.anuncio-item-3 {
+  width: 15%;
   text-align: end;
   padding-right: 25px;
 }
 
-.anuncios-group-button{
+.anuncios-group-button {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -69,7 +69,7 @@
   margin-bottom: 10px;
 }
 
-.announce-edit-button{
+.announce-edit-button {
   border: 1px solid #5281ce;
   border-radius: 8px;
   background: none;
@@ -78,12 +78,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .anuncio-icon-persona {
   font-size: 40px;
-  width:10%;
+  width: 10%;
   color: #5281ce;
   align-self: center;
 }
@@ -103,19 +103,19 @@
   color: #555;
 }
 
-.anuncio-div-span{
+.anuncio-div-span {
   display: flex;
   flex-direction: column;
 }
 
-.anuncio-div-span a{
-  font-size:14px;
+.anuncio-div-span a {
+  font-size: 14px;
   color: #6b6b6b;
 }
 
-.anuncio-div-span span{
+.anuncio-div-span span {
   font-size: 14px;
-  font-weight:600;
+  font-weight: 600;
 }
 
 .anuncio-dropdown-menu {
@@ -131,28 +131,28 @@
   cursor: pointer;
 }
 
-.anuncios-show-box{
-  height:90vh;
+.anuncios-show-box {
+  height: 90vh;
   width: 100%;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  background-color: rgb(255,255,255);
+  background-color: rgb(255, 255, 255);
   overflow-y: auto;
 }
 
-.custom-searchbar{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.custom-searchbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.input-search-box{
-    width: 100%;
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.input-search-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
