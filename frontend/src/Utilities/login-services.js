@@ -58,7 +58,7 @@ async function getSeccionbyModu() {
 async function registerUser(id_account, role, name, email, password, active) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/register",
+    url: "http://localhost:8000/user/register",
     data: { id_account, role, name, email, password, active },
   };
 

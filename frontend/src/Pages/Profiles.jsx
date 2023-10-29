@@ -5,18 +5,19 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
 
+import CrearUser from "../Components/PopUp_CrearUser";
 import EmailPopUP from "../Components/emailPopUp";
 import ProfilePopUp from "../Components/profilePopUp";
 function ProfilesPage() {
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupOpenProfile, setIsPopupOpenProfile] = useState(false);
-
+  const [nombres, setNombres] = useState([]);
   const [id_accountID, setId_account] = useState(null);
   const [activeID, setActive] = useState(null);
   const [nameId, setNameId] = useState(null);
   const [emailId, setEmailId] = useState(null);
-
+  const [showCrearPopup, setShowCrearPopup] = useState(false);
   const handleOpcionCambiada = (e) => {
     setOpcionSeleccionada(e.target.id);
   };
@@ -106,11 +107,31 @@ function ProfilesPage() {
   const closePopupProfile = () => {
     setIsPopupOpenProfile(false);
   };
+  const openCrearPopup = () => {
+    setShowCrearPopup(true);
+  };
 
+  const closeCrearPopup = () => {
+    setShowCrearPopup(false);
+  };
+  const addPacienteAndUpdateList = async (newPaciente) => {
+    // Agregar el nuevo paciente a la lista existente
+    setNombres([...nombres, newPaciente]);
+  };
   return (
     <div>
       <div>
         <h1>LISTA DE PARTICIPANTES</h1>
+        <button className="crear-participante-button" onClick={openCrearPopup}>
+          Crear participante
+        </button>
+        {showCrearPopup && (
+          <CrearUser
+            onClose={closeCrearPopup}
+            isOpen={showCrearPopup}
+            onUpdatePacientesList={addPacienteAndUpdateList} // Pasa la función aquí
+          />
+        )}
         <div style={{ width: "200px" }}>
           <Form>
             <Form.Check
