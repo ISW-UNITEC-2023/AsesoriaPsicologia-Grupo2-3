@@ -252,6 +252,7 @@ function Anuncios() {
           />
         </div>
 
+
         <div className="overflow-hidden mt-4 mr-4 ml-4 mb-2">
           {announces.map((announce) => (
             <div
@@ -292,6 +293,7 @@ function Anuncios() {
                       className="anuncio-icon-button"
                     />
                   </button>
+
                 </div>
                 <div className="anuncio-div-span hidden md:block lg:block">
                   <span className="text-sm leading-1 text-gray-900 font-semibold">

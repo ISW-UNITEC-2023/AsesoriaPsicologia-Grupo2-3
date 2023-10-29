@@ -54,6 +54,7 @@ function AboutUs(props) {
                     </p>
                 </div>
             </div>
+            <div className="last-line"></div>
             <footer className="pie"></footer>
         </div>
     );
