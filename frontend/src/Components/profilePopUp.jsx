@@ -4,15 +4,17 @@ import userIcon from "../Styles/Images/tempprofile.png";
 
 function ProfilePopUp({ isOpen, onClose, id_account, name, email, active }) {
   if (!isOpen) {
-    return null; // No se muestra si no está abierto
+    return null;
   }
+
+  const activeStatus = active === 1 ? "Activo" : "Inactivo";
 
   return (
     <div className="popup-overlay">
       <div className="popup">
         <div className="popup-content">
           <div className="user-info">
-            <h2>informacion de usuario</h2>
+            <h2>información de usuario</h2>
             <div className="user-details">
               <div className="image-container">
                 <img
@@ -36,7 +38,7 @@ function ProfilePopUp({ isOpen, onClose, id_account, name, email, active }) {
                 </div>
                 <div className="user-detail">
                   <div className="label">Estado:</div>
-                  <div className="value">{active}</div>
+                  <div className="value">{activeStatus}</div>
                 </div>
               </div>
             </div>
