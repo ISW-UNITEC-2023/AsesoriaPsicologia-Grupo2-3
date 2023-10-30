@@ -18,13 +18,14 @@ function DashBoard() {
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
   const [cookies, setCookies] = useState({});
   const [cookiesLoaded, setCookiesLoaded] = useState(false);
+
   useEffect(() => {
     updateModuleList();
     if (cookiesLoaded) {
       console.log("Cookies:", cookies);
     }
-  }, [cookies, cookiesLoaded]);
-  const updateModuleList = () => {
+    }, [cookies, cookiesLoaded]);
+    const updateModuleList = () => {
     async function fetchData() {
       setModules(await loadModules());
       if (!cookiesLoaded) {
@@ -35,6 +36,11 @@ function DashBoard() {
     }
 
     fetchData();
+  };
+
+  const toggleSectionPopup = (CourseName, CourseId) => {
+    setSelectedButtonInfo({ CourseName, CourseId });
+    setSectionPopupOpen(!isSectionPopupOpen);
   };
 
   return (
@@ -57,12 +63,6 @@ function DashBoard() {
           <Popup
             isOpen={isPopupOpen}
             onClose={() => setIsPopupOpen(false)}
-            selectedButtonInfo={selectedButtonInfo}
-            onUpdateModuleList={updateModuleList}
-          />
-          <SectionPopUp
-            isOpen={isSectionPopupOpen}
-            onClose={() => setIsSectionPopupOpen(false)}
             selectedButtonInfo={selectedButtonInfo}
             onUpdateModuleList={updateModuleList}
           />

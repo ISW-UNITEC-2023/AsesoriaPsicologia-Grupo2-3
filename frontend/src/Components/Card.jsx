@@ -5,12 +5,12 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { Link } from "react-router-dom"; // Importar Link
-import Popup from "./PopUp.jsx";
+import Popup from "./SectionPopUp.jsx";
 import PopUpDelete from "../Components/PopUpDelete.jsx";
 import PopUpDeleted from "../Components/PopUpDeleted.jsx";
 import { deleteModule } from "../Utilities/course-services.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import "../Styles/CSS/Card.css";
@@ -120,10 +120,10 @@ function MyCard({ props, handleReload }) {
                   <Dropdown.Item
                     eventKey="1"
                     className="button-create-s mr-2"
-                    onClick={() => setIsSectionPopupOpen(true)}
+                    onClick={() => togglePopup(props.name, props.id)}
                     variant={"outline-primary"}
                   >
-                    Crearsección
+                    <FontAwesomeIcon icon={faPlus} /> Crear Sección
                   </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item
@@ -137,6 +137,11 @@ function MyCard({ props, handleReload }) {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
+            <Popup
+              isOpen={isPopupOpen}
+              onClose={() => togglePopup("", "")}
+              selectedButtonInfo={selectedButtonInfo}
+            />
             {/* <div className="tab-container">
               <Button
                 className="tab-button"
@@ -145,11 +150,6 @@ function MyCard({ props, handleReload }) {
               >
                 +
               </Button>
-              <Popup
-                isOpen={isPopupOpen}
-                onClose={() => togglePopup("", "")}
-                selectedButtonInfo={selectedButtonInfo}
-              />
             </div> */}
           </div>
         </Card.Body>
