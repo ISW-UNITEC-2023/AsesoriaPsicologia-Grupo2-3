@@ -101,7 +101,10 @@ function MyNavbar() {
           Pacientes
         </Link>
         <Link to="/Profiles" className="link-navbar-plataforma">
-          <img src={profilerIcon} className="navbar-plataforma-icon" alt="" />
+          <FontAwesomeIcon
+            icon={faUserGroup}
+            className="navbar-plataforma-icon"
+          />
           Perfiles
         </Link>
       </div>

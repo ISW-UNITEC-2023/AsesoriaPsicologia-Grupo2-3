@@ -13,7 +13,7 @@ function isNumeric(val) {
 
 function isName(string)
 {
-    let regex = /^[a-zA-Z]*$/;
+    let regex = /^[ÁÉÍÓÚA-Z][a-záéíóú]+(\s+[ÁÉÍÓÚA-Z]?[a-záéíóú]+)*$/;
     return (regex.test(string));
 }
 
