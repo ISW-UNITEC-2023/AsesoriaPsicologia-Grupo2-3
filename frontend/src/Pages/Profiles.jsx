@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Form } from "react-bootstrap";
-
 import CrearUser from "../Components/PopUp_CrearUser";
+import EditarUser from "../Components/PopUp_EditarUser";
 import EmailPopUP from "../Components/emailPopUp";
 import ProfilePopUp from "../Components/profilePopUp";
+
 function ProfilesPage() {
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -17,7 +18,11 @@ function ProfilesPage() {
   const [activeID, setActive] = useState(null);
   const [nameId, setNameId] = useState(null);
   const [emailId, setEmailId] = useState(null);
+
   const [showCrearPopup, setShowCrearPopup] = useState(false);
+  const [showEditarPopup, setShowEditarPopup] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const handleOpcionCambiada = (e) => {
     setOpcionSeleccionada(e.target.id);
   };
@@ -58,6 +63,7 @@ function ProfilesPage() {
         name: admin.name,
         email: admin.email,
         active: admin.active,
+        role: admin.role
       });
     });
 
@@ -118,6 +124,22 @@ function ProfilesPage() {
     // Agregar el nuevo paciente a la lista existente
     setNombres([...nombres, newPaciente]);
   };
+
+  //editar popup
+  const openEditarPopup = (user) => {
+    localStorage.setItem("selectedUserId", user.id_account);
+    localStorage.setItem("selectedUserName", user.nombre);
+    localStorage.setItem("selectedUserEmail", user.email);
+
+    setSelectedUser(user);
+    setShowEditarPopup(true);
+  };
+
+  const closeEditarPopup = () => {
+    setShowEditarPopup(false);
+    setSelectedUser(null);
+  };
+
   return (
     <div>
       <div>
@@ -132,6 +154,13 @@ function ProfilesPage() {
             onUpdatePacientesList={addPacienteAndUpdateList} // Pasa la función aquí
           />
         )}
+        {showEditarPopup && selectedUser && (
+        <EditarUser
+          onClose={closeEditarPopup}
+          isOpen={showEditarPopup}
+          user={selectedUser} // Pasa el usuario seleccionado para la edición
+        />
+      )}
         <div style={{ width: "200px" }}>
           <Form>
             <Form.Check
@@ -221,8 +250,14 @@ function ProfilesPage() {
                   />
                 )}
 
-                <button>Editar</button>
-              </div>
+                  <button onClick={() => openEditarPopup({
+                    id_account: admin.id_account,
+                    nombre: admin.name,
+                    email: admin.email,
+                    active: admin.active,
+                    role: "ADMIN",
+                  })}>Editar</button>
+                </div>
             )}
             {opcionSeleccionada === "active" && admin.active === 1 && (
               <div className="nombre-box">
@@ -266,7 +301,13 @@ function ProfilesPage() {
                   />
                 )}
 
-                <button>Editar</button>
+                  <button onClick={() => openEditarPopup({
+                    id_account: admin.id_account,
+                    nombre: admin.name,
+                    email: admin.email,
+                    active: admin.active,
+                    role: "ADMIN",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "inactive" && admin.active === 0 && (
@@ -311,7 +352,13 @@ function ProfilesPage() {
                   />
                 )}
 
-                <button>Editar</button>
+                  <button onClick={() => openEditarPopup({
+                    id_account: admin.id_account,
+                    nombre: admin.name,
+                    email: admin.email,
+                    active: admin.active,
+                    role: "ADMIN",
+                  })}>Editar</button>
               </div>
             )}
           </li>
@@ -379,7 +426,13 @@ function ProfilesPage() {
                   />
                 )}
 
-                <button>Editar</button>
+                  <button onClick={() => openEditarPopup({
+                    id_account: teacher.id_account,
+                    nombre: teacher.name,
+                    email: teacher.email,
+                    active: teacher.active,
+                    role: "DOCENTE",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "active" && teacher.active === 1 && (
@@ -426,7 +479,13 @@ function ProfilesPage() {
                   />
                 )}
 
-                <button onClick={() => toggleOnClick()}>Editar</button>
+                  <button onClick={() => openEditarPopup({
+                    id_account: teacher.id_account,
+                    nombre: teacher.name,
+                    email: teacher.email,
+                    active: teacher.active,
+                    role: "DOCENTE",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "inactive" && teacher.active === 0 && (
@@ -472,7 +531,13 @@ function ProfilesPage() {
                     email={teacher.email}
                   />
                 )}
-                <button>Editar</button>
+                  <button onClick={() => openEditarPopup({
+                    id_account: teacher.id_account,
+                    nombre: teacher.name,
+                    email: teacher.email,
+                    active: teacher.active,
+                    role: "DOCENTE",
+                  })}>Editar</button>
               </div>
             )}
           </li>
@@ -539,7 +604,13 @@ function ProfilesPage() {
                     email={student.email}
                   />
                 )}
-                <button>Editar</button>
+                <button onClick={() => openEditarPopup({
+                    id_account: student.id_account,
+                    nombre: student.name,
+                    email: student.email,
+                    active: student.active,
+                    role: "ESTUDIANTE",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "active" && student.active === 1 && (
@@ -585,7 +656,13 @@ function ProfilesPage() {
                     email={student.email}
                   />
                 )}
-                <button>Editar</button>
+                <button onClick={() => openEditarPopup({
+                    id_account: student.id_account,
+                    nombre: student.name,
+                    email: student.email,
+                    active: student.active,
+                    role: "ESTUDIANTE",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "inactive" && student.active === 0 && (
@@ -631,7 +708,13 @@ function ProfilesPage() {
                     email={student.email}
                   />
                 )}
-                <button>Editar</button>
+                <button onClick={() => openEditarPopup({
+                    id_account: student.id_account,
+                    nombre: student.name,
+                    email: student.email,
+                    active: student.active,
+                    role: "ESTUDIANTE",
+                  })}>Editar</button>
               </div>
             )}
           </li>
@@ -698,7 +781,13 @@ function ProfilesPage() {
                     email={patient.email}
                   />
                 )}
-                <button>Editar</button>
+                <button onClick={() => openEditarPopup({
+                    id_account: patient.id_account,
+                    nombre: patient.name,
+                    email: patient.email,
+                    active: patient.active,
+                    role: "PACIENTE",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "active" && patient.active === 1 && (
@@ -744,7 +833,13 @@ function ProfilesPage() {
                     email={patient.email}
                   />
                 )}
-                <button>Editar</button>
+                <button onClick={() => openEditarPopup({
+                    id_account: patient.id_account,
+                    nombre: patient.name,
+                    email: patient.email,
+                    active: patient.active,
+                    role: "PACIENTE",
+                  })}>Editar</button>
               </div>
             )}
             {opcionSeleccionada === "inactive" && patient.active === 0 && (
@@ -790,7 +885,13 @@ function ProfilesPage() {
                     email={patient.email}
                   />
                 )}
-                <button>Editar</button>
+                <button onClick={() => openEditarPopup({
+                    id_account: patient.id_account,
+                    nombre: patient.name,
+                    email: patient.email,
+                    active: patient.active,
+                    role: "PACIENTE",
+                  })}>Editar</button>
               </div>
             )}
           </li>
