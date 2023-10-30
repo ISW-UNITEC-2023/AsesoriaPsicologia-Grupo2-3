@@ -257,7 +257,7 @@ function SectionsPage() {
               );
             })
           ) : (
-            <p>------</p>
+            <p>No hay secciones existentes para este módulo.</p>
           )}
         </Row>
       </div>

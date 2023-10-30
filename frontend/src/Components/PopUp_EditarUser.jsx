@@ -113,7 +113,6 @@ const EditarUser = ({ isOpen, onClose, user }) => {
             className="btn btn-danger"
             onClick={() => {
               onClose();
-              borrarStorage();
             }}
             style={{ marginRight: "10px" }}
           >
