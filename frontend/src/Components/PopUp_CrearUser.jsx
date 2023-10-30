@@ -222,6 +222,7 @@ const CrearUser = ({ isOpen, onClose, onUpdatePacientesList }) => {
                 console.log("No puede dejar ningun campo vacio.");
               } else if (!!response.message) {
                 // Aquí puedes mostrar una notificación o mensaje de error
+
                 console.log("Un campo no es valido.");
               } else {
                 // Aquí va un popup de creación exitosa

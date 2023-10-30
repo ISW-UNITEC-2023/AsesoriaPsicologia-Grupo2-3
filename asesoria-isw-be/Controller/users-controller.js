@@ -1,7 +1,8 @@
 const HTTPCodes = require("../Utils/HTTPCodes");
 
 const { getUsersCredentials, createUser, updUserAdmin, delUser, 
-        findExistingEmail, updUserEmail, updUserPassword, getUserByID
+        findExistingEmail, updUserEmail, updUserPassword, getUserByID,
+        getAdmins, getStudents, getTeachers, getPatients,
 } = require("../Service/users-services");
 
 const { isName, isEmail, isPassword} = require("../Utils/validator");
@@ -182,6 +183,26 @@ async function updateUserEmail(req, res) {
   }
 }
 
+async function getAdminsList(_, res) {
+  const users = await getAdmins();
+  res.send(users);
+}
+
+async function getTeachersList(_, res) {
+  const teachers = await getTeachers();
+  res.send(teachers);
+}
+
+async function getStudentsList(_, res) {
+  const students = await getStudents();
+  res.send(students);
+}
+
+async function getPatientsList(_, res) {
+  const students = await getPatients();
+  res.send(students);
+}
+
 module.exports = {
   getUserList,
   getUser,
@@ -190,4 +211,8 @@ module.exports = {
   updateUserAdmin,
   updateUserPassword,
   updateUserEmail,
+  getAdminsList,
+  getTeachersList,
+  getStudentsList,
+  getPatientsList,
 };

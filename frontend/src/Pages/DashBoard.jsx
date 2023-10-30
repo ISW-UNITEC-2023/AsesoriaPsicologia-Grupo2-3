@@ -8,6 +8,7 @@ import { loadModules } from "../Utilities/course-services";
 import { Button, Accordion } from "react-bootstrap";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getCookies } from "../Utilities/login-services.js";
 
 function DashBoard() {
   const [displayedModules, setModules] = useState([]);
@@ -15,13 +16,22 @@ function DashBoard() {
   const [isSectionPopupOpen, setIsSectionPopupOpen] = useState(false);
   const [state, setState] = useState(false);
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
-
+  const [cookies, setCookies] = useState({});
+  const [cookiesLoaded, setCookiesLoaded] = useState(false);
   useEffect(() => {
     updateModuleList();
-  }, []);
+    if (cookiesLoaded) {
+      console.log("Cookies:", cookies);
+    }
+  }, [cookies, cookiesLoaded]);
   const updateModuleList = () => {
     async function fetchData() {
       setModules(await loadModules());
+      if (!cookiesLoaded) {
+        const obtainedCookies = await getCookies();
+        setCookies(obtainedCookies);
+        setCookiesLoaded(true);
+      }
     }
 
     fetchData();

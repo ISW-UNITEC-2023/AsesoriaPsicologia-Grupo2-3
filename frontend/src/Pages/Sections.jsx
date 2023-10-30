@@ -262,6 +262,7 @@ function SectionsPage() {
         </Row>
       </div>
     </div>
+
   );
 }
 
