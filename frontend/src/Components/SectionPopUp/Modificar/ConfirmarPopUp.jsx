@@ -3,7 +3,6 @@ import propsTypes from "prop-types";
 
 const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
-    opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
   };
 

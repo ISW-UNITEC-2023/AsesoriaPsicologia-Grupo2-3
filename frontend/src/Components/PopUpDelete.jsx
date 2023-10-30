@@ -62,8 +62,8 @@ const PopUpDelete = ({
       <Modal.Body>
         <p style={{ fontSize: "1.3rem", textAlign: "center" }}>
           {pageName === "modulo"
-            ? "¿Está seguro que desea eliminar el módulo"
-            : "¿Está seguro que desea eliminar la sección"
+            ? "¿Está seguro que desea eliminar el módulo?"
+            : "¿Está seguro que desea eliminar la sección?"
             ? "Esta acción no puede ser retrocedida."
             : { itemName }}
         </p>

@@ -1,6 +1,12 @@
+.pacientes-container {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(255, 255, 255);
+  overflow: scroll;
+}
+
 .title-pacientes {
   font-size: 40px;
-
   padding: 20px;
   color: #333;
   font-weight: bold;
@@ -89,4 +95,13 @@ ul {
 
 .nombre {
   margin-right: auto;
+}
+.container-pacientes-title-list {
+  width: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+  .pacientes-container {
+    height: 100vh;
+  }
 }

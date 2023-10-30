@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
+import NavigationB from "../Components/Navbar";
 
 function PacientesForm() {
   const navigate = useNavigate();
@@ -65,34 +66,28 @@ function PacientesForm() {
   };
 
   return (
-    <div style={{ width: "90%" }}>
-      <div className="container-header">
+    <div className="pacientes-container">
+      <NavigationB />
+      <div className="container-pacientes-title-list">
         <h1 className="title-pacientes" style={{ width: "400%" }}>
           Pacientes
         </h1>
-        <button className="crear-participante-button" onClick={openCrearPopup}>
-          Crear participante
-        </button>
+
+        <ul>
+          {nombres.map((nombre) => (
+            <li key={nombre.email}>
+              <div className="nombre-box">
+                <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
+                <span className="nombre" style={{ width: "400%" }}>
+                  <Link to={"/sesiones"}>{nombre.nombre}</Link>
+                </span>
+                {/* Agrega el evento onClick para abrir el popup de edición */}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {nombres.map((nombre) => (
-          <li key={nombre.email}>
-            <div className="nombre-box">
-              <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
-              <span className="nombre" style={{ width: "400%" }}>
-                <Link to={"/sesiones"}>{nombre.nombre}</Link>
-              </span>
-              {/* Agrega el evento onClick para abrir el popup de edición */}
-              <button
-                className="editar-button"
-                onClick={() => openEditarPopup(nombre)}
-              >
-                Editar
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+
       {showCrearPopup && (
         <CrearUser
           onClose={closeCrearPopup}

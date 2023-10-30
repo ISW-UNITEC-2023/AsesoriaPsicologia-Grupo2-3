@@ -139,7 +139,7 @@ function SectionsPage() {
                 const Year = course.Year;
                 return (
                   <>
-                    <Card border="success" style={{ width: "25rem" }}>
+                    <Card border="dark" style={{ width: "25rem" }}>
                       <Card.Body>
                         <Card.Title className="title-section-card">
                           Sección : {currentSectionId}
@@ -164,32 +164,39 @@ function SectionsPage() {
                         </Card.Text>
                       </Card.Body>
                       <CardFooter
-                        style={{ display: "flex", justifyContent: "center" }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          paddingBlock: "1rem",
+                          width: "100%",
+                        }}
                       >
                         <br />
                         <br />
-                        <Button
-                          variant="success"
-                          onClick={() => toggleModify(currentSectionId)}
-                          style={{
-                            backgroundColor: "#157347",
-                            marginRight: "15px",
-                          }}
-                        >
-                          Modificar
-                        </Button>
 
                         <Button
                           variant="danger"
                           style={{
-                            backgroundColor: "#bb2d3b",
                             marginRight: "15px",
                           }}
+                          className="eliminar-button-section"
                           onClick={() =>
                             toggleDeleteConfirmPopup(currentSectionId)
                           }
                         >
                           Eliminar
+                        </Button>
+
+                        <Button
+                          variant="success"
+                          className="modificar-button-section"
+                          onClick={() => toggleModify(currentSectionId)}
+                          style={{
+                            backgroundColor: "#00367d",
+                            marginRight: "15px",
+                          }}
+                        >
+                          Modificar
                         </Button>
                         <br />
                         <br />
