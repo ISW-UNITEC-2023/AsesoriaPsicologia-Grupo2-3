@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Modal } from "reactstrap";
 import "../Styles/CSS/Anuncios.css";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PopUpDelete from "../Components/PopUpDelete.jsx";
+import PopUpDeleted from "../Components/PopUpDeleted.jsx";
 import {
   faMagnifyingGlass,
   faPencil,
@@ -53,6 +57,36 @@ function SearchBar() {
 }
 
 function Anuncios() {
+  /**DELETE */
+  const [title, setTitle] = "";
+  const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
+  const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado
+
+  const handleCancelDeletePopup = () => {
+    // Función para cerrar la ventana emergente de confirmación
+    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
+  };
+
+  const handleConfirmDeletePopup = async () => {
+    try {
+      handleCancelDeletePopup();
+      updatedAnnounces.splice(
+        updatedAnnounces.findIndex(
+          (announce) => announce.AnnounceId === modalEliminar.id
+        ),
+        1
+      );
+      setAnnounces(updatedAnnounces); // Update state with updated list
+
+      setModalEliminar({
+        estado: false,
+        id: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [announces, setAnnounces] = useState([]);
 
   useEffect(() => {
@@ -110,33 +144,6 @@ function Anuncios() {
     }
   };
 
-  async function eliminarAnuncio(sel) {
-    if (sel === "si") {
-      try {
-        await DeleteAnnounces(modalEliminar.id);
-        const updatedAnnounces = await loadAnnounces();
-        updatedAnnounces.splice(
-          updatedAnnounces.findIndex(
-            (announce) => announce.AnnounceId === modalEliminar.id
-          ),
-          1
-        );
-        setAnnounces(updatedAnnounces); // Update state with updated list
-        setModalEliminar({
-          estado: false,
-          id: "",
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setModalEliminar({
-        estado: false,
-        id: "",
-      });
-    }
-  }
-
   const updateAnnounlist = async () => {
     try {
       const updatedAnnounces = await loadAnnounces();
@@ -175,6 +182,16 @@ function Anuncios() {
     setShowModalEditar(true);
   };
 
+  const handleShowModalEliminar = (announce) => {
+    setSelectedAnnounce({
+      id: announce.AnnounceId,
+      title: announce.Title,
+      description: announce.Message,
+    });
+
+    setIsDeletePopUpOpen(true);
+  };
+
   const handleCloseModalEditar = () => {
     setShowModalEditar(false);
     updateAnnounlist();
@@ -195,25 +212,7 @@ function Anuncios() {
         backdrop={true}
         keyboard={true}
       >
-        <div>
-          <span>
-            Seguro que deseas eliminar este anuncio? <br />
-            <button
-              onClick={() => {
-                eliminarAnuncio("si");
-              }}
-            >
-              Si
-            </button>
-            <button
-              onClick={() => {
-                eliminarAnuncio("no");
-              }}
-            >
-              No
-            </button>
-          </span>
-        </div>
+        {}
       </Modal>
       <Modal
         isOpen={modalCrear.abierto}
@@ -231,12 +230,17 @@ function Anuncios() {
           <span>modalCrear</span>
         </div>
       </Modal>
-      <div className="anuncios-container-box bg-gray-100">
+      <div className="anuncios-container-box ">
         <div
-          className="flex flex-col lg:flex-row items-center justify-center"
-          style={{ backgroundColor: "#00367d" }}
+          className="flex lg:flex-row items-center "
+          style={{
+            backgroundColor: "#ffffff",
+            height: "7rem",
+            justifyContent: "space-between",
+          }}
         >
-          <SearchBar />
+          <h1 className="title-anuncios">Anuncios</h1>
+          {/**  <SearchBar />*/}
           <button
             className="anuncios-crear-button"
             onClick={handleShowModalCrear}
@@ -245,18 +249,17 @@ function Anuncios() {
               icon={faSquarePlus}
               className="anuncios-crear-icon"
             />
+            <p>Crear Anuncio</p>
           </button>
           <PopUpCrearAnuncio
             show={showModalCrear}
             onHide={handleCloseModalCrear}
           />
         </div>
-
-
         <div className="overflow-hidden mt-4 mr-4 ml-4 mb-2">
           {announces.map((announce) => (
             <div
-              className="anuncio-item-box bg-white mt-2 rounded-lg p-4 sm:p-6 lg:p-8 shadow-md flex items-center space-x-4"
+              className="anuncio-item-box bg-white mt-2 rounded-lg p-4 sm:p-6 lg:p-8 shadow-md flex items-center"
               key={announce.AnnounceId}
             >
               <FontAwesomeIcon
@@ -264,48 +267,58 @@ function Anuncios() {
                 className="anuncio-icon-persona h-12 w-12 flex-none rounded-full bg-gray-50"
               />
               <div className="anuncio-item-2 min-w-0 flex-auto">
-                <span className="anuncio-titulo text-sm font-semibold leading-5 text-gray-900">
+                <span className="anuncio-titulo font-semibold leading-5 text-gray-900">
                   {announce.Title}
                 </span>
-                <p className="anuncio-descripcion text-xs text-gray-500 line-clamp-2">
+                <p className="anuncio-descripcion text-gray-500 ">
                   {announce.Message}
                 </p>
+                <span className="text-sm leading-1 text-gray-400 font-semibold">
+                  Publicado:
+                  <a style={{ whiteSpace: "nowrap", color: "#9ca3af" }}>
+                    {`${formatDate(announce.Date)}`}
+                  </a>
+                </span>
               </div>
-              <div className="anuncio-item-3 flex flex-col items-end md:flex-col lg:flex-col justify-end">
+              <div className="anuncio-item-3 flex  md:flex-col lg:flex-col justify-center">
                 <div className="anuncios-group-button">
-                  <button className="announce-edit-button">
-                    <FontAwesomeIcon
-                      icon={faPencil}
-                      className="anuncio-icon-button"
+                  <DropdownButton
+                    align="end"
+                    title="Más acciones"
+                    id="dropdown-menu-align-end"
+                  >
+                    <Dropdown.Item
+                      eventKey="1"
                       onClick={() => {
                         handleShowModalEditar(announce);
                       }}
-                    />
-                  </button>
-                  <button
-                    className="announce-edit-button"
-                    onClick={() => {
-                      abrirModal(announce.AnnounceId, "delete");
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faTrashCan}
-                      className="anuncio-icon-button"
-                    />
-                  </button>
+                      className="dropdown-editar"
+                    >
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        className="anuncio-icon-button"
+                      />{" "}
+                      Editar Anuncio
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                      eventKey="4"
+                      className="dropdown-eliminar"
+                      type="button"
+                      onClick={(e) => handleShowModalEliminar(announce)}
+                    >
+                      {" "}
+                      <FontAwesomeIcon
+                        icon={faTrashCan}
+                        className="anuncio-icon-button"
+                      />{" "}
+                      Eliminar Anuncio
+                    </Dropdown.Item>
+                  </DropdownButton>
 
+                  <button></button>
                 </div>
-                <div className="anuncio-div-span hidden md:block lg:block">
-                  <span className="text-sm leading-1 text-gray-900 font-semibold">
-                    Publicado:
-                  </span>
-                  <a
-                    className="text-sm md:text-lg lg:text-2xl"
-                    style={{ whiteSpace: "nowrap" }}
-                  >
-                    {`${formatDate(announce.Date)}`}
-                  </a>
-                </div>
+                <div className="anuncio-div-span hidden md:block lg:block"></div>
               </div>
             </div>
           ))}
@@ -317,8 +330,22 @@ function Anuncios() {
             title={selectedAnnounce.title}
             description={selectedAnnounce.description}
           />
+
+          <PopUpDelete
+            isOpen={isDeletePopUpOpen}
+            onCancel={handleCancelDeletePopup}
+            pageName="anuncios"
+            announceId={selectedAnnounce.id}
+            itemName={selectedAnnounce.title}
+            onConfirm={handleConfirmDeletePopup}
+          />
         </div>
       </div>
+
+      {isDeletedPopUpOpen && (
+        // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
+        <PopUpDeleted isOpen={isDeletedPopUpOpen} pageName="anuncios" />
+      )}
     </div>
   );
 }

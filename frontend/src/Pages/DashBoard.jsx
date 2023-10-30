@@ -24,8 +24,8 @@ function DashBoard() {
     if (cookiesLoaded) {
       console.log("Cookies:", cookies);
     }
-    }, [cookies, cookiesLoaded]);
-    const updateModuleList = () => {
+  }, [cookies, cookiesLoaded]);
+  const updateModuleList = () => {
     async function fetchData() {
       setModules(await loadModules());
       if (!cookiesLoaded) {
@@ -44,7 +44,7 @@ function DashBoard() {
   };
 
   return (
-    <div className="dashboard-container overflow-hidden">
+    <div className="dashboard-container">
       <NavigationB />
       <div className="dashboard-box">
         <div className="dashboard-header flex flex-col md:flex-row justify-between">

@@ -86,14 +86,21 @@ const PopUpEditarAnuncio = ({
       keyboard={false}
       size="xl"
     >
-      <Modal.Header className="justify-content-center">
+      <Modal.Header className="justify-content-center modal-header-editar">
         <Modal.Title className="text-center">
-          Titulo Anuncio: {newTitle}
+          Editar Anuncio <p className="titulo"> {newTitle}</p>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <div className="form-group">
-          <label class="form-label">Titulo del anuncio: </label>
+      <Modal.Body className="editar-modal-body">
+        <div
+          className="form-group"
+          style={{
+            marginBottom: "20px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <label class="form-label titulos">Titulo del anuncio: </label>
           <input
             type="text"
             className="form-control"
@@ -103,22 +110,32 @@ const PopUpEditarAnuncio = ({
           />
         </div>
         <div className="form-group">
-          <Form.Group controlId="formTexto">
-            <label class="form-label">Descripcion del anuncio: </label>
-            <textarea
+          <Form.Group
+            controlId="formTexto"
+            style={{
+              marginBottom: "20px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <label class="form-label titulos">Descripcion del anuncio: </label>
+            <Form.Control
+              as="textarea"
               rows="3"
               value={newDescription}
+              style={{ height: "10rem" }}
               placeholder="Escribe el texto del anuncio"
               onChange={(e) => handleDescriptionChange(e)}
             />
           </Form.Group>
         </div>
       </Modal.Body>
-      <Modal.Footer className="justify-content-start">
+      <Modal.Footer className="footer-anuncios editar-anuncio">
+        {" "}
         <Button
           variant="danger"
           onClick={handleClose}
-          style={{ backgroundColor: "#bb2d3b" }}
+          className="cancelar-button-editar"
         >
           Cancelar
         </Button>
@@ -126,6 +143,7 @@ const PopUpEditarAnuncio = ({
           variant="primary"
           onClick={handleUpdate}
           style={{ backgroundColor: "#002659", border: "none" }}
+          className="actualizar-button"
         >
           Actualizar
         </Button>

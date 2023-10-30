@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Dropdown, Form } from "react-bootstrap";
 import "../Styles/CSS/PopUpEditarAnuncio.css";
-
+import "../Styles/CSS/PopUpCrearAnuncio.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CreateAnnounce } from "../Utilities/announces-services";
 import { GetSections } from "../Utilities/section-services";
@@ -66,12 +66,24 @@ const PopUpCrearAnuncio = ({ show, onHide }) => {
       keyboard={false}
       size="xl"
     >
-      <Modal.Header className="justify-content-center">
-        <Modal.Title>Nuevo Anuncio: {titulo}</Modal.Title>
+      <Modal.Header className="justify-content-center header-anuncios">
+        <Modal.Title placeholder="Titulo de Anuncio Nuevo: ">
+          Crear Anuncio
+          <p className="titulo"> {titulo}</p>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="form-group">
-          <Form.Group controlId="formTitulo" style={{ marginBottom: "20px" }}>
+          <Form.Group
+            controlId="formTitulo"
+            style={{
+              marginBottom: "20px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Form.Label className="titulos">Titulo de Anuncio</Form.Label>
+
             <Form.Control
               type="text"
               placeholder="Escribe el título del anuncio"
@@ -81,44 +93,54 @@ const PopUpCrearAnuncio = ({ show, onHide }) => {
           </Form.Group>
         </div>
 
-        <div className="form-group">
-          <Form.Group controlId="formTexto">
-            <textarea
+        <div>
+          <Form.Group
+            controlId="formTexto"
+            className="form-group-descripcion "
+            style={{
+              marginBottom: "20px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Form.Label className="titulos">Descripción de Anuncio</Form.Label>
+            <Form.Control
+              as="textarea"
               rows="3"
               value={texto}
               placeholder="Escribe el texto del anuncio"
+              style={{ height: "10rem" }}
               onChange={(e) => setTexto(e.target.value)}
             />
           </Form.Group>
         </div>
-      </Modal.Body>
-      <Modal.Footer className="justify-content-start">
-        <Button
-          variant="danger"
-          style={{ backgroundColor: "#c6161c", border: "none" }}
-          onClick={handleClose}
-        >
-          Cancelar
-        </Button>
-        <Dropdown>
-          <Dropdown.Toggle
-            variant="primary"
-            style={{ backgroundColor: "#002659", border: "none" }}
+
+        <Modal.Footer className="footer-anuncios">
+          <Button
+            variant="danger"
+            onClick={handleClose}
+            className="cancelar-button"
           >
-            Publicar
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            {opciones.map((opcion, index) => (
-              <Dropdown.Item
-                key={index}
-                onClick={() => publicarAnuncio(opcion.SectionId)}
-              >
-                {opcion.SectionId} - {opcion.CourseName}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-      </Modal.Footer>
+            Cancelar
+          </Button>
+          <Dropdown className="publicar-button-container">
+            <Dropdown.Toggle className="publicar-button">
+              Publicar
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className="publicar-menu">
+              {opciones.map((opcion, index) => (
+                <Dropdown.Item
+                  key={index}
+                  onClick={() => publicarAnuncio(opcion.SectionId)}
+                >
+                  {opcion.SectionId} - {opcion.CourseName}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Modal.Footer>
+      </Modal.Body>
     </Modal>
   );
 };

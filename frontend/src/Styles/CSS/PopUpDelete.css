@@ -77,3 +77,20 @@
   width: 100%;
   font-size: 20px;
 }
+div.modal-footer {
+  margin-bottom: 2rem;
+  margin-top: 0px !important;
+}
+
+div.modal-body {
+  text-align: center;
+}
+
+div.modal-header {
+  margin-bottom: 0px;
+  display: block;
+}
+
+div.modal-content {
+  width: 300rem !important;
+}

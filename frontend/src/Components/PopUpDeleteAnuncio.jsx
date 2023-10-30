@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 import { Modal, Button } from "react-bootstrap";
 import { deleteSection } from "../Utilities/section-services";
 import "../Styles/CSS/PopUpDelete.css";
-import {
-  DeleteAnnounces,
-  loadAnnounces,
-} from "../Utilities/announces-services";
 
 const PopUpDelete = ({
   isOpen,
@@ -15,28 +11,18 @@ const PopUpDelete = ({
   itemName,
   pageName,
   moduleId,
-  announceId,
 }) => {
   async function handleDelete() {
     try {
-      if (pageName === "modulos") {
-        const response = await deleteSection(moduleId);
-      }
-
-      if (pageName === "anuncios") {
-        await DeleteAnnounces(announceId);
-
-        onConfirm();
-      }
-
+      const response = await deleteSection(moduleId);
       if (response.status === 200) {
-        console.log("La sección se eliminó correctamente.");
+        console.log("El anuncio se eliminó correctamente.");
         onConfirm();
       } else {
-        console.error("Error al eliminar la sección");
+        console.error("Error al eliminar el anuncio");
       }
     } catch (error) {
-      console.error("Error al eliminar la sección:", error.message);
+      console.error("Error al eliminar el anuncio", error.message);
     }
   }
 
@@ -54,18 +40,14 @@ const PopUpDelete = ({
             ? `Eliminar módulo: ${itemName}`
             : pageName === "seccion"
             ? `Eliminar sección: ${itemName}`
-            : pageName === "anuncios"
-            ? `¿Eliminar: ${itemName}?`
-            : "ERROR"}
+            : `Eliminar anuncio:  ${itemName}`}
         </Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
         <p style={{ fontSize: "1.3rem", textAlign: "center" }}>
-          {pageName === "modulo"
-            ? "¿Está seguro que desea eliminar el módulo"
-            : "¿Está seguro que desea eliminar la sección"
-            ? "Esta acción no puede ser retrocedida."
-            : { itemName }}
+          ¿Está seguro que desea eliminar{" "}
+          {pageName === "modulo" ? "el módulo" : "la sección"}: {itemName}?
         </p>
       </Modal.Body>
       <Modal.Footer className="buttons-container">

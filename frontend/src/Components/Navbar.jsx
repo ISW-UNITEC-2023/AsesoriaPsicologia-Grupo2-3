@@ -16,7 +16,7 @@ import {
   faBullhorn,
   faGaugeHigh,
   faArrowLeft,
-  faAddressCard
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import backIcon from "../Styles/Images/back-icon-nb.png";
 
@@ -108,12 +108,10 @@ function MyNavbar() {
           />
           Perfiles
         </Link>
-      </div>
-      <div className="back-navbar-container">
-        <FontAwesomeIcon
+        {/**<FontAwesomeIcon
           icon={faArrowLeft}
           className="navbar-plataforma-icon"
-        />
+        /> */}
       </div>
     </div>
   );

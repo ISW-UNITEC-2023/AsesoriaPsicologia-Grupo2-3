@@ -111,14 +111,6 @@ function MyCard({ props, handleReload }) {
                 <Dropdown.Menu>
                   <Dropdown.Item
                     eventKey="1"
-                    type="button"
-                    className="dropdown-editar"
-                    onClick={() => toggleModify(currentSectionId)}
-                  >
-                    <FontAwesomeIcon icon={faPencil} /> Editar Curso
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    eventKey="1"
                     className="button-create-s mr-2"
                     onClick={() => togglePopup(props.name, props.id)}
                     variant={"outline-primary"}

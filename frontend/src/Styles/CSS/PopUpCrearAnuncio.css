@@ -1,0 +1,81 @@
+.titulo {
+  font-weight: normal;
+}
+
+.titulos {
+  font-weight: 600;
+  text-align: start;
+}
+
+.form-group-descripcion {
+  margin-top: 2rem !important;
+}
+
+.footer-anuncios {
+  margin-bottom: 0px;
+}
+
+.header-anuncios {
+  border-bottom: 0px !important;
+  margin-top: 1rem;
+}
+
+div.modal-body {
+  padding-inline: 2rem !important;
+  margin-bottom: 1rem;
+}
+
+.cancelar-button {
+  border: 2px solid #c6161c !important;
+  color: #c6161c !important;
+  border: none;
+  width: 40%;
+}
+
+.cancelar-button:hover {
+  background-color: 2px solid #c6161c !important;
+  color: white !important;
+  transition: background-color 0.3s ease;
+}
+
+.publicar-button-container,
+.publicar-menu {
+  width: 58% !important;
+}
+
+.publicar-button {
+  background-color: #002659 !important;
+  border: none;
+  width: 100% !important;
+}
+
+[type="button"]:not(:disabled):is(:hover, :active, :focus) {
+  background-color: 2px solid #d5deea !important;
+  color: white !important;
+  transition: background-color 0.3s ease;
+}
+
+div.modal-footer {
+  padding: 0px !important;
+  justify-content: center;
+  margin-top: 2rem;
+  border-top: 0px;
+}
+
+div.modal-title {
+  text-align: center;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  .publicar-button-container,
+  .publicar-menu {
+    width: 100% !important;
+  }
+  .cancelar-button {
+    border: 2px solid #c6161c !important;
+    color: #c6161c !important;
+    border: none;
+    width: 100% !important;
+  }
+}

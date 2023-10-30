@@ -23,9 +23,12 @@ import CrearSeccion from "../Components/SectionPopUp.jsx";
 
 import "../Styles/CSS/Sections.css";
 import NavBar from "../Components/Navbar";
+
 function SectionsPage() {
+  let courseNameFromList = [];
   const [courseList, setCourseList] = useState([]);
   const [courseId, setCourseId] = useState(null);
+  const [courseName, setCourseName] = useState(null);
 
   useEffect(() => {
     async function fetchCourseInfo() {
@@ -123,146 +126,149 @@ function SectionsPage() {
   };
 
   return (
-    <div className="sections">
-      <div className="Navbar">
-        <NavBar />
-      </div>
+    <div className="dashboard-container">
+      <NavBar />
 
-      <div className="section-container">
+      <div className="dashboard-box box">
         <Row>
-          <h1 className="title-modulo">Secciones</h1>
-
-          {courseList.length > 0 ? (
-            courseList.map((course) => {
-              const currentSectionId = course.SectionId;
-              const Year = course.Year;
-              return (
-                <Col key={course.courseId} md={6} lg={3} className="mb-4">
-                  <Card>
-                    <CardHeader>ID Sección: {currentSectionId} </CardHeader>
-                    <Card.Body>
-                      <Card.Title>{course.CourseName}</Card.Title>
-                      <Card.Text>
+          <h1 className="title-seccion">Secciones</h1>
+          <div className="section-container flex flex-row flex-wrap gap-3">
+            {courseList.length > 0 ? (
+              courseList.map((course) => {
+                const currentSectionId = course.SectionId;
+                const Year = course.Year;
+                return (
+                  <>
+                    <Card border="success" style={{ width: "25rem" }}>
+                      <Card.Body>
+                        <Card.Title className="title-section-card">
+                          Sección : {currentSectionId}
+                          <Card.Subtitle style={{ color: "#5a5e6a" }}>
+                            {course.CourseName}{" "}
+                          </Card.Subtitle>
+                        </Card.Title>
+                        <Card.Text className="section-text">
+                          <br />
+                          <strong>Código de Clase: </strong>
+                          {courseId} <br />
+                          <strong>Id sección: </strong>
+                          {currentSectionId} <br />
+                          <strong>UV: </strong>
+                          {course.UV} <br />
+                          <strong>Año: </strong>
+                          {Year} <br />
+                          <strong>Trimestre: </strong>
+                          {course.Quarter} <br />
+                          <strong>Docente: </strong>
+                          {course.Teacher} <br />
+                        </Card.Text>
+                      </Card.Body>
+                      <CardFooter
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
                         <br />
-                        <strong>Código de Clase: </strong>
-                        {courseId} <br />
-                        <strong>Id sección: </strong>
-                        {currentSectionId} <br />
-                        <strong>UV: </strong>
-                        {course.UV} <br />
-                        <strong>Año: </strong>
-                        {Year} <br />
-                        <strong>Trimestre: </strong>
-                        {course.Quarter} <br />
-                        <strong>Docente: </strong>
-                        {course.Teacher} <br />
-                      </Card.Text>
-                    </Card.Body>
-                    <CardFooter
-                      style={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <br />
-                      <br />
-                      <Button
-                        variant="success"
-                        onClick={() => toggleModify(currentSectionId)}
-                        style={{
-                          backgroundColor: "#157347",
-                          marginRight: "15px",
-                        }}
-                      >
-                        Modificar
-                      </Button>
+                        <br />
+                        <Button
+                          variant="success"
+                          onClick={() => toggleModify(currentSectionId)}
+                          style={{
+                            backgroundColor: "#157347",
+                            marginRight: "15px",
+                          }}
+                        >
+                          Modificar
+                        </Button>
 
-                      <Button
-                        variant="danger"
-                        style={{
-                          backgroundColor: "#bb2d3b",
-                          marginRight: "15px",
-                        }}
-                        onClick={() =>
-                          toggleDeleteConfirmPopup(currentSectionId)
-                        }
-                      >
-                        Eliminar
-                      </Button>
-                      <br />
-                      <br />
-                    </CardFooter>
-                  </Card>
+                        <Button
+                          variant="danger"
+                          style={{
+                            backgroundColor: "#bb2d3b",
+                            marginRight: "15px",
+                          }}
+                          onClick={() =>
+                            toggleDeleteConfirmPopup(currentSectionId)
+                          }
+                        >
+                          Eliminar
+                        </Button>
+                        <br />
+                        <br />
+                      </CardFooter>
+                    </Card>
 
-                  <ModificarPopUp
-                    isOpen={isModify}
-                    onClose={() => toggleModify(null)}
-                    onConfirm={(
-                      option,
-                      quarterOption,
-                      teacherOption,
-                      yearOption
-                    ) => {
-                      toggleModify(null);
-                      toggleModifyConfirmPopup(
-                        modifySectionId,
+                    <ModificarPopUp
+                      isOpen={isModify}
+                      onClose={() => toggleModify(null)}
+                      onConfirm={(
                         option,
                         quarterOption,
                         teacherOption,
                         yearOption
-                      );
-                    }}
-                    sectionId={modifySectionId}
-                    Year={Year}
-                  />
+                      ) => {
+                        toggleModify(null);
+                        toggleModifyConfirmPopup(
+                          modifySectionId,
+                          option,
+                          quarterOption,
+                          teacherOption,
+                          yearOption
+                        );
+                      }}
+                      sectionId={modifySectionId}
+                      Year={Year}
+                    />
 
-                  <ModificarConfirmPopUp
-                    isOpen={isModifyConfirmPopupOpen}
-                    onClose={() => toggleModifyConfirmPopup(null)}
-                    onConfirm={() => {
-                      handleConfirm(); // Llama a handleConfirm aquí
-                      toggleModifyConfirmPopup(null);
-                      toggleModifySuccessPopup();
-                    }}
-                    sectionId={modifySectionId}
-                  />
+                    <ModificarConfirmPopUp
+                      isOpen={isModifyConfirmPopupOpen}
+                      onClose={() => toggleModifyConfirmPopup(null)}
+                      onConfirm={() => {
+                        handleConfirm(); // Llama a handleConfirm aquí
+                        toggleModifyConfirmPopup(null);
+                        toggleModifySuccessPopup();
+                      }}
+                      sectionId={modifySectionId}
+                    />
 
-                  <ModificarSuccessPopUp
-                    isOpen={isModifySuccessPopupOpen}
-                    onClose={() => {
-                      toggleModifySuccessPopup();
-                      // Actualiza la información del curso cuando se cierre el SuccessPopup
-                      if (isModifyConfirmed) {
+                    <ModificarSuccessPopUp
+                      isOpen={isModifySuccessPopupOpen}
+                      onClose={() => {
+                        toggleModifySuccessPopup();
+                        // Actualiza la información del curso cuando se cierre el SuccessPopup
+                        if (isModifyConfirmed) {
+                          updateCourseInfo();
+                        }
+                      }}
+                      sectionId={modifySectionId}
+                    />
+
+                    <EliminarConfirmarPopUp
+                      isOpen={isDeleteConfirmPopupOpen}
+                      onClose={() => toggleDeleteConfirmPopup(null)}
+                      onConfirm={() => {
+                        toggleDeleteConfirmPopup(null);
+                        toggleDeleteSuccessPopup();
+                      }}
+                      sectionId={deleteSectionId}
+                    />
+
+                    <EliminarSuccessPopUp
+                      isOpen={isDeleteSuccessPopupOpen}
+                      onClose={() => {
+                        toggleDeleteSuccessPopup();
                         updateCourseInfo();
-                      }
-                    }}
-                    sectionId={modifySectionId}
-                  />
-
-                  <EliminarConfirmarPopUp
-                    isOpen={isDeleteConfirmPopupOpen}
-                    onClose={() => toggleDeleteConfirmPopup(null)}
-                    onConfirm={() => {
-                      toggleDeleteConfirmPopup(null);
-                      toggleDeleteSuccessPopup();
-                    }}
-                    sectionId={deleteSectionId}
-                  />
-                  <EliminarSuccessPopUp
-                    isOpen={isDeleteSuccessPopupOpen}
-                    onClose={() => {
-                      toggleDeleteSuccessPopup();
-                      updateCourseInfo();
-                    }}
-                    sectionId={deleteSectionId}
-                  />
-                </Col>
-              );
-            })
-          ) : (
-            <p>No hay secciones existentes para este módulo.</p>
-          )}
+                      }}
+                      sectionId={deleteSectionId}
+                    />
+                  </>
+                );
+              })
+            ) : (
+              <p>No hay secciones existentes para este módulo.</p>
+            )}
+          </div>
         </Row>
       </div>
     </div>
-
   );
 }
 
