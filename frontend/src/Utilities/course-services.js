@@ -3,7 +3,8 @@ import axios from "axios";
 export async function loadModules() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos/all",
+    url: "http://localhost:8000/courses/getCourses",
+    withCredentials: true,
   };
   const response = await axios.request(options);
   return response.data;

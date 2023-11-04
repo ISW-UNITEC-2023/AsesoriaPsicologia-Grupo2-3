@@ -3,7 +3,7 @@ import axios from "axios";
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/admins/login",
+    url: "http://localhost:8000/users/login",
     data: { email, password },
     withCredentials: true, // Esto es para que axios envíe las cookies
   };
@@ -14,7 +14,7 @@ async function postLogin(email, password) {
 async function getUsers() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/list",
+    url: "http://localhost:8000/users/viewUsers",
   };
 
   try {
@@ -55,11 +55,11 @@ async function getSeccionbyModu() {
   }
 }
 
-async function registerUser(id_account, role, name, email, password, active) {
+async function registerUser(name, email, phone, password, type, active) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/user/register",
-    data: { id_account, role, name, email, password, active },
+    url: "http://localhost:8000/users/register",
+    data: { name, email, phone, password, type, active },
   };
 
   try {

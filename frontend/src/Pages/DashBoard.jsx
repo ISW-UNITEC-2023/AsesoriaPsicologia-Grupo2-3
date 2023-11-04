@@ -75,12 +75,16 @@ function DashBoard() {
             <br />
             <br />
             <div className="section-card-container flex flex-row flex-wrap gap-3 center">
-              {displayedModules.map((module) => (
-                <SectionCard
-                  props={module}
-                  handleReload={() => setState(true)}
-                />
-              ))}
+              {Array.isArray(displayedModules) ? (
+                displayedModules.map((module) => (
+                  <SectionCard
+                    props={module}
+                    handleReload={() => setState(true)}
+                  />
+                ))
+              ) : (
+                <p>No hay módulos para mostrar</p>
+              )}
             </div>
           </div>
         </div>
