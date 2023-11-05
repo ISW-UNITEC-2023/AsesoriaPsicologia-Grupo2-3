@@ -5,7 +5,7 @@ export async function GetSections() {
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   const options = {
     method: "GET",
-    url: `${host}/sections/`,
+    url: `${host}/sections/getAll`,
   };
 
   const response = await axios.request(options);

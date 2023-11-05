@@ -21,9 +21,10 @@ const PopUpCrearAnuncio = ({ show, onHide }) => {
     const fetchData = async () => {
       try {
         const seccionesResponse = await GetSections(); //Obtener secciones para el usuario especifico
-        const secciones = seccionesResponse.map((section) => ({
-          SectionId: section.SectionId,
-          CourseName: section.CourseName,
+        console.log(seccionesResponse)
+        const secciones = seccionesResponse.sections.map((section) => ({
+          SectionId: section.id_section,
+          CourseName: section.name_course,
         }));
 
         setOpciones(secciones);

@@ -53,7 +53,7 @@ async function getTeacherSection(id_user) {
 }
 
 async function getAllSections() {
-  let sections = await knex.select("*").from("sections");
+  let sections = await knex.select("*").from("sections").innerJoin("courses","sections.id_course","=","courses.id_course");
   sections = JSON.stringify(sections);
   return JSON.parse(sections);
 }
