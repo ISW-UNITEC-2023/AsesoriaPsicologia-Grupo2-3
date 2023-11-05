@@ -107,7 +107,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
                     <option value="">Seleccione un docente</option>
                     {selectedTeacherOption.map((teacher, index) => (
                       <option key={index} value={teacher.id}>
-                        {teacher.id_account} - {teacher.name}
+                        {teacher.id_user} - {teacher.name_user}
                       </option>
                     ))}
                   </select>
@@ -163,11 +163,15 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
           </div>
 
           <div className="button-container-modificar">
-            <button className="eliminar-section-popup" onClick={onClose}>
+            <Button className="eliminar-section-popup" onClick={onClose}>
               Cancelar
-            </button>
+            </Button>
 
-            <Button className="modificar-section-popup" onClick={handleConfirm}>
+            <Button
+              className="modificar-section-popup"
+              onClick={handleConfirm}
+              disabled={isButtonDisabled()}
+            >
               Modificar
             </Button>
           </div>

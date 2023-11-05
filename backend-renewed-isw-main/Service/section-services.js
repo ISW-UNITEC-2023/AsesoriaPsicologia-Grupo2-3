@@ -42,12 +42,15 @@ async function setActiveSection(section) {
 
 //Get
 async function getTeacherSection(id_user) {
-  let sections = await knex.raw(`
+  let sections = await knex.raw(
+    `
       SELECT sections.*
       FROM sections
       INNER JOIN users ON users.id_user = sections.id_teacher
       WHERE users.id_user = ?
-    `, [id_user]);
+    `,
+    [id_user]
+  );
   sections = JSON.stringify(sections[0]);
   return JSON.parse(sections);
 }
@@ -58,10 +61,15 @@ async function getAllSections() {
   return JSON.parse(sections);
 }
 
+async function deleteSection(id) {
+  return knex("sections").where("id_section", id).del();
+}
+
 module.exports = {
   createSection,
   assignTeacher,
   setActiveSection,
   getTeacherSection,
   getAllSections,
+  deleteSection,
 };

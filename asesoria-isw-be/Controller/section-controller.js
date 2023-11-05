@@ -13,15 +13,24 @@ async function createSection(req, res) {
 
 async function getSectionByCourse(req, res) {
   const { course_id } = req.query;
-  const section = await sectionServices.getSectionByCourse(course_id);
-  res.send(section);
+
+  try {
+    const section = await sectionServices.getSectionByCourse(course_id);
+    res.send(section);
+  } catch (error) {
+    res.send({ message: "No se ha podido recuperar la sección" });
+  }
 }
 
 async function assignTeacher(req, res) {
   const { id, teacher, editor } = req.body;
   try {
-    await sectionServices.assignTeacher({ id: id , teacher: teacher, editor: editor });
-    res.send({ message: "Se ha asignado un catedrático al curso" })
+    await sectionServices.assignTeacher({
+      id: id,
+      teacher: teacher,
+      editor: editor,
+    });
+    res.send({ message: "Se ha asignado un catedrático al curso" });
   } catch (error) {
     res.send({ message: "No se ha podido asignar un catedrático al curso" });
   }
@@ -30,7 +39,11 @@ async function assignTeacher(req, res) {
 async function setActiveSection(req, res) {
   const { id, active, editor } = req.body;
   try {
-    await sectionServices.setActiveSection({ id: id, active: active, editor: editor });
+    await sectionServices.setActiveSection({
+      id: id,
+      active: active,
+      editor: editor,
+    });
     res.send({ message: "Se ha actualizado el estado de la sección" });
   } catch (error) {
     res.send({ message: "No se ha podido activar la sección" });
@@ -60,12 +73,21 @@ async function getAllSections(req, res) {
     res.send("No se ha podido recuperar las secciones");
   }
 }
-
+async function deleteSection(req, res) {
+  const { id } = req.body;
+  try {
+    await sectionServices.deleteSection(id);
+    res.send({ message: "Se ha eliminado la sección" });
+  } catch (error) {
+    res.send({ message: "No se ha podido eliminar la sección" });
+  }
+}
 module.exports = {
   createSection,
   assignTeacher,
   setActiveSection,
   getTeacherSection,
   getAllSections,
-  getSectionByCourse
+  getSectionByCourse,
+  deleteSection,
 };

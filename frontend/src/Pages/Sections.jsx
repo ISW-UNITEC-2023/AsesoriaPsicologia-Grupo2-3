@@ -25,27 +25,23 @@ import "../Styles/CSS/Sections.css";
 import NavBar from "../Components/Navbar";
 
 function SectionsPage() {
-  let courseNameFromList = [];
   const [courseList, setCourseList] = useState([]);
-  const [courseId, setCourseId] = useState(null);
-  const [courseName, setCourseName] = useState(null);
-
+  const [id, setId] = useState(null);
   useEffect(() => {
     async function fetchCourseInfo() {
       try {
         const urlParams = new URLSearchParams(window.location.search);
         let parametro = urlParams.get("course_id");
         parametro = parseInt(parametro);
-        console.log(parametro);
+        setId(parametro);
         const response = await getInfoSection(parametro);
-        console.log(response);
         setCourseList(response);
       } catch (error) {
         console.error("Error fetching course info:", error);
       }
     }
     fetchCourseInfo();
-  }, [courseId]);
+  }, [id]);
 
   const [isCreateButtonPopupOpen, setCreateButtonPopupOpen] = useState(false);
   const [isModifyConfirmPopupOpen, setModifyConfirmPopupOpen] = useState(false);
@@ -62,7 +58,11 @@ function SectionsPage() {
 
   const updateCourseInfo = async () => {
     try {
-      const response = await getInfoSection(courseId);
+      const urlParams = new URLSearchParams(window.location.search);
+      let parametro = urlParams.get("course_id");
+      parametro = parseInt(parametro);
+      setId(parametro);
+      const response = await getInfoSection(parametro);
       setCourseList(response);
     } catch (error) {
       console.error("Error fetching course info:", error);
@@ -111,6 +111,7 @@ function SectionsPage() {
   };
 
   const handleConfirm = async () => {
+    console.log("selectedOption", selectedOption);
     try {
       if (selectedOption === "teacher_id") {
         await updateTeacher(modifySectionId, selectedTeacherOption);
@@ -135,14 +136,12 @@ function SectionsPage() {
           <div className="section-container flex flex-row flex-wrap gap-3">
             {courseList.length > 0 ? (
               courseList.map((course) => {
-                const currentSectionId = course.SectionId;
-                const Year = course.Year;
                 return (
                   <>
                     <Card border="dark" style={{ width: "25rem" }}>
                       <Card.Body>
                         <Card.Title className="title-section-card">
-                          Sección : {currentSectionId}
+                          Sección : {course.SectionId}
                           <Card.Subtitle style={{ color: "#5a5e6a" }}>
                             {course.CourseName}{" "}
                           </Card.Subtitle>
@@ -150,13 +149,11 @@ function SectionsPage() {
                         <Card.Text className="section-text">
                           <br />
                           <strong>Código de Clase: </strong>
-                          {courseId} <br />
+                          {course.CourseId} <br />
                           <strong>Id sección: </strong>
-                          {currentSectionId} <br />
-                          <strong>UV: </strong>
-                          {course.UV} <br />
+                          {course.SectionId} <br />
                           <strong>Año: </strong>
-                          {Year} <br />
+                          {course.Year} <br />
                           <strong>Trimestre: </strong>
                           {course.Quarter} <br />
                           <strong>Docente: </strong>
@@ -181,7 +178,7 @@ function SectionsPage() {
                           }}
                           className="eliminar-button-section"
                           onClick={() =>
-                            toggleDeleteConfirmPopup(currentSectionId)
+                            toggleDeleteConfirmPopup(course.SectionId)
                           }
                         >
                           Eliminar
@@ -190,7 +187,7 @@ function SectionsPage() {
                         <Button
                           variant="success"
                           className="modificar-button-section"
-                          onClick={() => toggleModify(currentSectionId)}
+                          onClick={() => toggleModify(course.SectionId)}
                           style={{
                             backgroundColor: "#00367d",
                             marginRight: "15px",
@@ -221,31 +218,31 @@ function SectionsPage() {
                           yearOption
                         );
                       }}
-                      sectionId={modifySectionId}
-                      Year={Year}
+                      sectionId={course.SectionId}
+                      Year={course.Year}
                     />
 
                     <ModificarConfirmPopUp
                       isOpen={isModifyConfirmPopupOpen}
                       onClose={() => toggleModifyConfirmPopup(null)}
                       onConfirm={() => {
-                        handleConfirm(); // Llama a handleConfirm aquí
+                        handleConfirm();
                         toggleModifyConfirmPopup(null);
                         toggleModifySuccessPopup();
                       }}
-                      sectionId={modifySectionId}
+                      sectionId={course.SectionId}
                     />
 
                     <ModificarSuccessPopUp
                       isOpen={isModifySuccessPopupOpen}
                       onClose={() => {
-                        toggleModifySuccessPopup();
-                        // Actualiza la información del curso cuando se cierre el SuccessPopup
+                        toggleModifySuccessPopup(null);
+
                         if (isModifyConfirmed) {
                           updateCourseInfo();
                         }
                       }}
-                      sectionId={modifySectionId}
+                      sectionId={course.SectionId}
                     />
 
                     <EliminarConfirmarPopUp
@@ -255,7 +252,7 @@ function SectionsPage() {
                         toggleDeleteConfirmPopup(null);
                         toggleDeleteSuccessPopup();
                       }}
-                      sectionId={deleteSectionId}
+                      sectionId={course.SectionId}
                     />
 
                     <EliminarSuccessPopUp
@@ -264,7 +261,7 @@ function SectionsPage() {
                         toggleDeleteSuccessPopup();
                         updateCourseInfo();
                       }}
-                      sectionId={deleteSectionId}
+                      sectionId={course.SectionId}
                     />
                   </>
                 );

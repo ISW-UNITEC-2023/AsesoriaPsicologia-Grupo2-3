@@ -4,7 +4,11 @@ const sectionServices = require("../Service/section-services");
 async function createSection(req, res) {
   const { id, course, creator } = req.body;
   try {
-    await sectionServices.createSection({ id: id, course: course, creator: creator });
+    await sectionServices.createSection({
+      id: id,
+      course: course,
+      creator: creator,
+    });
     res.send({ message: "Se ha creado la sección" });
   } catch (error) {
     res.send({ message: "No se ha podido crear la sección" });
@@ -14,8 +18,12 @@ async function createSection(req, res) {
 async function assignTeacher(req, res) {
   const { id, teacher, editor } = req.body;
   try {
-    await sectionServices.assignTeacher({ id: id , teacher: teacher, editor: editor });
-    res.send({ message: "Se ha asignado un catedrático al curso" })
+    await sectionServices.assignTeacher({
+      id: id,
+      teacher: teacher,
+      editor: editor,
+    });
+    res.send({ message: "Se ha asignado un catedrático al curso" });
   } catch (error) {
     res.send({ message: "No se ha podido asignar un catedrático al curso" });
   }
@@ -24,7 +32,11 @@ async function assignTeacher(req, res) {
 async function setActiveSection(req, res) {
   const { id, active, editor } = req.body;
   try {
-    await sectionServices.setActiveSection({ id: id, active: active, editor: editor });
+    await sectionServices.setActiveSection({
+      id: id,
+      active: active,
+      editor: editor,
+    });
     res.send({ message: "Se ha actualizado el estado de la sección" });
   } catch (error) {
     res.send({ message: "No se ha podido activar la sección" });
@@ -55,10 +67,21 @@ async function getAllSections(req, res) {
   }
 }
 
+async function deleteSection(req, res) {
+  const { id } = req.body;
+  try {
+    await sectionServices.deleteSection(id);
+    res.send({ message: "Se ha eliminado la sección" });
+  } catch (error) {
+    res.send({ message: "No se ha podido eliminar la sección" });
+  }
+}
+
 module.exports = {
   createSection,
   assignTeacher,
   setActiveSection,
   getTeacherSection,
   getAllSections,
+  deleteSection,
 };

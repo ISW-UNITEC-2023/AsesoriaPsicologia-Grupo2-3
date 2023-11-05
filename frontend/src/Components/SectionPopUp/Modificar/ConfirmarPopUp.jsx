@@ -24,7 +24,6 @@ const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
             <button
               className="btn btn-danger"
               onClick={() => {
-                // Aquí llamamos a la función onConfirm para ejecutar handleConfirm en SectionsPage
                 onConfirm();
               }}
               style={{ marginRight: "10px" }}

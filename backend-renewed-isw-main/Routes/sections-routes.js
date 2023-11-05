@@ -12,4 +12,7 @@ router.post("/getTeacherSections", sectionController.getTeacherSection);
 //Get
 router.get("/getAll", sectionController.getAllSections);
 
+//Delete
+router.delete("/delete", sectionController.deleteSection);
+
 module.exports = router;
