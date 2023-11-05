@@ -4,58 +4,60 @@ import tempImage from "../Styles/Images/tempprofile.png";
 import logoUnitec from "../Styles/Images/unitec-logo.png";
 import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
 import ListGroup from 'react-bootstrap/ListGroup';
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import VistasPDF from "./DocuPDF";
-import Button from 'react-bootstrap/Button';
+import "../Styles/CSS/Sesiones.css";
+import { Link } from "react-router-dom";
 
 function Sesiones() {
   return (
-                <><ListGroup defaultActiveKey="#link1">
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 1
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 2
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 3
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 4
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 5
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 6
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 7
-              </ListGroup.Item>
-          </div>
-          <div>
-              <ListGroup.Item action href="/Expedientes">
-                  SESION 8
-              </ListGroup.Item>
-          </div>
-      </ListGroup><div>
-              <PDFDownloadLink document={<VistasPDF />} fileName="expediente.pdf">
-                  <Button>Descargar Expediente PDF</Button>
-              </PDFDownloadLink>
-          </div></>
+    <div style={{ width: "90%" }}>
+      <div className="container-header">
+        <h1 className="title-sesiones" style={{ width: "400%" }}>
+          Sesiones
+        </h1>
+      </div>
+      <ul>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 1</Link>
+              </span>
+            </div>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 2</Link>
+              </span>
+            </div>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 3</Link>
+              </span>
+            </div>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 4</Link>
+              </span>
+            </div>
+                        <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 5</Link>
+              </span>
+            </div>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 6</Link>
+              </span>
+            </div>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 7</Link>
+              </span>
+            </div>
+            <div className="nombre-box">
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Expedientes"}>Sesion 8</Link>
+              </span>
+            </div>
+      </ul>
+    </div>
   );
 }
 

@@ -15,6 +15,7 @@ import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
 import VistasPDF from "./Pages/DocuPDF";
+import AuditLogs from "./Pages/AuditLogs";
 import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Crearanuncios" element={<AnunciosCrear />} />
+        <Route path="/AuditLogs" element={<AuditLogs />} />
       </Routes>
     </Router>
   );
