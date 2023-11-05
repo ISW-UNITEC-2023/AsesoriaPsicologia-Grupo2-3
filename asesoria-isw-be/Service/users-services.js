@@ -137,7 +137,7 @@ async function getAllusers() {
 }
 
 async function getTeachers() {
-  let users = await knex.select("*").from("users").where("role");
+  let users = await knex.select("*").from("users").innerJoin("user_role","users.id_user","=","user_role.id_user").where("id_role",5);
   users = JSON.stringify(users);
   return JSON.parse(users);
 }
@@ -155,4 +155,5 @@ module.exports = {
   getUserCredentials,
   findExistingEmail,
   getAllusers,
+  getTeachers
 };

@@ -27,7 +27,7 @@ export async function createSection(section) {
 export async function getInfoSection(id) {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/search",
+    url: process.env.REACT_APP_API_BASE_URL+"/sections/search",
     params: { course_id: id },
   };
   const response = await axios.request(options);

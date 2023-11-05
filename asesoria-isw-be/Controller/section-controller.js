@@ -2,13 +2,19 @@ const sectionServices = require("../Service/section-services");
 
 //Post
 async function createSection(req, res) {
-  const { id, course, creator } = req.body;
+  const section = req.body;
   try {
-    await sectionServices.createSection({ id: id, course: course, creator: creator });
+    await sectionServices.createSection(section);
     res.send({ message: "Se ha creado la sección" });
   } catch (error) {
     res.send({ message: "No se ha podido crear la sección" });
   }
+}
+
+async function getSectionByCourse(req, res) {
+  const { course_id } = req.query;
+  const section = await sectionServices.getSectionByCourse(course_id);
+  res.send(section);
 }
 
 async function assignTeacher(req, res) {
@@ -61,4 +67,5 @@ module.exports = {
   setActiveSection,
   getTeacherSection,
   getAllSections,
+  getSectionByCourse
 };

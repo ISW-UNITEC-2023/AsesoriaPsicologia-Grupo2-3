@@ -51,11 +51,11 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
       teacher_id,
       year,
       quarter,
+      user_creator: "13"
     };
 
     try {
       // Llamar a la función createSection con los datos
-
       await createSection(sectionData);
       // Cerrar el popup
       onClose();
@@ -141,6 +141,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
               onChange={handleTeacherChange}
               value={selectedTeacher}
             >
+              {console.log(displayedSections)}
               {displayedSections.map((teacher, index) => (
                 <option key={index} value={teacher.id_user}>
                   {teacher.id_user} - {teacher.name_user}
