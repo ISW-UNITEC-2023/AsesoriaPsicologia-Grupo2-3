@@ -51,7 +51,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
       teacher_id,
       year,
       quarter,
-      user_creator: "13"
+      user_creator: 13
     };
 
     try {

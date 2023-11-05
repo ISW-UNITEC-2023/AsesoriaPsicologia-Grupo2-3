@@ -61,6 +61,7 @@ function Anuncios() {
   const [title, setTitle] = "";
   const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
   const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado
+  const [announces, setAnnounces] = useState([]);
 
   const handleCancelDeletePopup = () => {
     // Función para cerrar la ventana emergente de confirmación
@@ -87,11 +88,9 @@ function Anuncios() {
     }
   };
 
-  const [announces, setAnnounces] = useState([]);
-
   useEffect(() => {
     const updateAnnounlist = async () => {
-      setAnnounces(await loadAnnounces().announcementsInfo);
+      setAnnounces((await loadAnnounces()).announcementsInfo);
     };
     updateAnnounlist();
   }, []);
@@ -183,9 +182,9 @@ function Anuncios() {
 
   const handleShowModalEliminar = (announce) => {
     setSelectedAnnounce({
-      id: announce.AnnounceId,
-      title: announce.Title,
-      description: announce.Message,
+      id: announce.id_announcement,
+      title: announce.title_announcement,
+      description: announce.message_announcement,
     });
 
     setIsDeletePopUpOpen(true);
@@ -256,11 +255,11 @@ function Anuncios() {
           />
         </div>
         <div className="overflow-hidden mt-4 mr-4 ml-4 mb-2">
-          {console.log(announces)}
+          {console.log("anuncios ",announces)}
           {Array.isArray(announces) ? announces.map((announce) => (
             <div
               className="anuncio-item-box bg-white mt-2 rounded-lg p-4 sm:p-6 lg:p-8 shadow-md flex items-center"
-              key={announce.AnnounceId}
+              key={announce.id_announcement}
             >
               <FontAwesomeIcon
                 icon={faUserCircle}
@@ -268,15 +267,15 @@ function Anuncios() {
               />
               <div className="anuncio-item-2 min-w-0 flex-auto">
                 <span className="anuncio-titulo font-semibold leading-5 text-gray-900">
-                  {announce.Title}
+                  {announce.title_announcement}
                 </span>
                 <p className="anuncio-descripcion text-gray-500 ">
-                  {announce.Message}
+                  {announce.message_announcement}
                 </p>
                 <span className="text-sm leading-1 text-gray-400 font-semibold">
-                  Publicado:
+                  Publicado: 
                   <a style={{ whiteSpace: "nowrap", color: "#9ca3af" }}>
-                    {`${formatDate(announce.Date)}`}
+                    {` ${formatDate(announce.creation_date)}`}
                   </a>
                 </span>
               </div>

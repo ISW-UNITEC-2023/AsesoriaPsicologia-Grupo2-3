@@ -3,7 +3,7 @@ import axios from "axios";
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: process.env.REACT_APP_API_BASE_ULR+"/users/login",
+    url: process.env.REACT_APP_API_BASE_URL+"/users/login",
     data: { email, password },
     withCredentials: true, // Esto es para que axios envíe las cookies
   };

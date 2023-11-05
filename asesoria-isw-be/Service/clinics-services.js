@@ -52,7 +52,11 @@ async function viewAllPsychologistClinics(id) {
 
 //Get
 async function viewAllClinics() {
-  let clinics = await knex("clinics").select("*");
+  let clinics = await knex("clinics").select("*")
+  .innerJoin(
+    "sections",
+    "sections.id_section","=","clinics.id_section")
+  .innerJoin("courses","courses.id_course","=","sections.id_course");
   clinics = JSON.stringify(clinics);
   return JSON.parse(clinics);
 }

@@ -15,7 +15,7 @@ export async function DeleteAnnounces(id_announces) {
   const options = {
     method: "DELETE",
     url: process.env.REACT_APP_API_BASE_URL+"/announcements/delete",
-    params: {
+    data: {
       id: id_announces,
     },
   };
@@ -34,12 +34,7 @@ export async function CreateAnnounce(info) {
   const options = {
     method: "POST",
     url: process.env.REACT_APP_API_BASE_URL+"/announcements/create",
-    data: {
-      message: info.message,
-      title: info.title,
-      section_id: info.section_id,
-      user_id: info.user_id,
-    },
+    data: info
   };
 
   axios

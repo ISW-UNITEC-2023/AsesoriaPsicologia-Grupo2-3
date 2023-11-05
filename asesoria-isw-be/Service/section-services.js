@@ -18,8 +18,7 @@ async function createSection(section) {
     year: section.year,
     quarter: section.quarter,
     user_creator: section.user_creator
-  },[id_section]);
-  console.log(res);
+  });
   return res;
 }
 

@@ -4,45 +4,46 @@ import "../Styles/CSS/PopUpEditarAnuncio.css";
 import "../Styles/CSS/PopUpCrearAnuncio.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CreateAnnounce } from "../Utilities/announces-services";
-import { GetSections } from "../Utilities/section-services";
+import { getClinics } from "../Utilities/clinics-services";
 
 const PopUpCrearAnuncio = ({ show, onHide }) => {
   const [titulo, setTitulo] = useState("");
   const [texto, setTexto] = useState("");
-  const [seccion, setSeccion] = useState(null);
+  const [clinic, setClinic] = useState(0);
   const [user_id, setUserID] = useState(null);
   const [opciones, setOpciones] = useState([]);
 
   useEffect(() => {
-    obtenerSecciones();
+    obtainClinics();
   }, []);
 
-  async function obtenerSecciones() {
+  async function obtainClinics() {
     const fetchData = async () => {
       try {
-        const seccionesResponse = await GetSections(); //Obtener secciones para el usuario especifico
-        console.log(seccionesResponse)
-        const secciones = seccionesResponse.sections.map((section) => ({
-          SectionId: section.id_section,
+        const clinicsResponse = await getClinics(); //Obtener secciones para el usuario especifico
+        console.log(clinicsResponse)
+        const clinics = clinicsResponse.clinicsInfo.map((section) => ({
+          clinicId: section.id_clinic,
           CourseName: section.name_course,
         }));
 
-        setOpciones(secciones);
+        setOpciones(clinics);
       } catch (error) {
-        console.error("Error al obtener las secciones:", error);
+        console.error("Error al obtener las clinicas:", error);
       }
     };
 
     fetchData();
   }
 
-  async function publicarAnuncio(_seccion) {
-    setSeccion(_seccion);
+  async function publicarAnuncio(_clinic) {
+    setClinic(_clinic);
+    console.log("CLINICA"+clinic)
     const data = {
       message: texto,
       title: titulo,
-      section_id: seccion,
-      user_id: user_id,
+      clinic: _clinic,
+      creator: 13,
     };
     try {
       await CreateAnnounce(data);
@@ -133,9 +134,9 @@ const PopUpCrearAnuncio = ({ show, onHide }) => {
               {opciones.map((opcion, index) => (
                 <Dropdown.Item
                   key={index}
-                  onClick={() => publicarAnuncio(opcion.SectionId)}
+                  onClick={() => publicarAnuncio(opcion.clinicId)}
                 >
-                  {opcion.SectionId} - {opcion.CourseName}
+                  {opcion.clinicId} - {opcion.CourseName}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
