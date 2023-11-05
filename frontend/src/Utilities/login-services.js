@@ -1,16 +1,5 @@
 import axios from "axios";
 
-async function postLogin(email, password) {
-  const options = {
-    method: "POST",
-    url: "http://localhost:8000/users/login",
-    data: { email, password },
-    withCredentials: true, // Esto es para que axios envíe las cookies
-  };
-  const response = await axios.request(options);
-  return response.data;
-}
-
 async function getUsers() {
   const options = {
     method: "GET",
@@ -130,21 +119,6 @@ async function updateUserEmail(id_account, email) {
   }
 }
 
-export async function getCookies() {
-  try {
-    const options = {
-      method: "GET",
-      url: "http://localhost:8000/users/getCookies",
-      withCredentials: true,
-    };
-    const response = await axios.request(options);
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener cookies:", error);
-    return null; // O maneja el error de otra manera
-  }
-}
-
 export async function deleteCookies() {
   try {
     const options = {
@@ -163,20 +137,6 @@ async function getAdmins() {
   const options = {
     method: "GET",
     url: "http://localhost:8000/user/admins",
-  };
-
-  try {
-    const response = await axios.request(options);
-    return response.data;
-  } catch (e) {
-    return { message: e.response.data.error };
-  }
-}
-
-async function getTeachers() {
-  const options = {
-    method: "GET",
-    url: "http://localhost:8000/users/viewTeachers",
   };
 
   try {
@@ -212,6 +172,45 @@ async function getPatients() {
     return response.data;
   } catch (e) {
     return { message: e.response.data.error };
+  }
+}
+
+//--------------------------------------------------------------
+async function postLogin(email, password) {
+  const options = {
+    method: "POST",
+    url: "http://localhost:8000/users/login",
+    data: { email, password },
+    withCredentials: true, // Esto es para que axios envíe las cookies
+  };
+  const response = await axios.request(options);
+  return response.data;
+}
+async function getTeachers() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/users/viewTeachers",
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+export async function getCookies() {
+  try {
+    const options = {
+      method: "GET",
+      url: "http://localhost:8000/users/getCookies",
+      withCredentials: true,
+    };
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener cookies:", error);
+    return null; // O maneja el error de otra manera
   }
 }
 
