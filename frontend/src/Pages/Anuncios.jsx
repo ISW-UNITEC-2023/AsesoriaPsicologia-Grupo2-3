@@ -91,11 +91,10 @@ function Anuncios() {
 
   useEffect(() => {
     const updateAnnounlist = async () => {
-      setAnnounces(await loadAnnounces());
+      setAnnounces(await loadAnnounces().announcementsInfo);
     };
     updateAnnounlist();
   }, []);
-
   const formatDate = (announceDate) => {
     var date = new Date(announceDate);
     var options = {
@@ -257,7 +256,8 @@ function Anuncios() {
           />
         </div>
         <div className="overflow-hidden mt-4 mr-4 ml-4 mb-2">
-          {announces.map((announce) => (
+          {console.log(announces)}
+          {Array.isArray(announces) ? announces.map((announce) => (
             <div
               className="anuncio-item-box bg-white mt-2 rounded-lg p-4 sm:p-6 lg:p-8 shadow-md flex items-center"
               key={announce.AnnounceId}
@@ -321,7 +321,9 @@ function Anuncios() {
                 <div className="anuncio-div-span hidden md:block lg:block"></div>
               </div>
             </div>
-          ))}
+          )) :
+          (<>No hay anuncios para mostrar</>)
+          }
 
           <PopUpEditarAnuncio
             show={showModalEditar}
