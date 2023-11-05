@@ -15,6 +15,7 @@ router.post("/assignRole", userController.assignRole);
 
 //Get
 router.get("/viewUsers", userController.getAllusers);
+router.get("/viewTeachers", userController.getAllTeachers);
 //COOKIES
 router.get("/getCookies", (req, res) => {
   res.send(req.signedCookies);

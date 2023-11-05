@@ -37,7 +37,7 @@ async function registerUser(req, res) {
         )
         .toString("base64");
       let newUserId = null;
-      if(type === "patient"){
+      if (type === "patient") {
         newUserId = userServices.createPatient({
           name: name,
           email: email,
@@ -45,8 +45,8 @@ async function registerUser(req, res) {
           encryptedPassword: encryptedPassword,
           salt: salt,
         });
-        console.log("es paciente")
-      }else{
+        console.log("es paciente");
+      } else {
         newUserId = userServices.createUser({
           name: name,
           email: email,
@@ -55,7 +55,7 @@ async function registerUser(req, res) {
           salt: salt,
           active: active,
         });
-        console.log("sin rol")
+        console.log("sin rol");
       }
 
       res.send({
@@ -354,6 +354,17 @@ function encryptPassword(
   };
 }
 
+async function getAllTeachers(req, res) {
+  try {
+    const teachers = await userServices.getAllTeachers();
+    res.send(teachers);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
+  }
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -365,4 +376,5 @@ module.exports = {
   assignRole,
   removeRole,
   getAllusers,
+  getAllTeachers,
 };

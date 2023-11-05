@@ -134,7 +134,7 @@ export async function getCookies() {
   try {
     const options = {
       method: "GET",
-      url: "http://localhost:8000/admins/getCookies",
+      url: "http://localhost:8000/users/getCookies",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -176,7 +176,7 @@ async function getAdmins() {
 async function getTeachers() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/teachers",
+    url: "http://localhost:8000/users/viewTeachers",
   };
 
   try {

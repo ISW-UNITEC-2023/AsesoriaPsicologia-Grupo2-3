@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../Styles/CSS/SectionPopUp.css";
-import { GetTeachers } from "../Utilities/admin-services.js";
+import services from "../Utilities/login-services.js";
+
 import { createSection } from "../Utilities/section-services.js";
 
 const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
@@ -19,7 +20,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
   const [displayedSections, setSections] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      setSections(await GetTeachers());
+      setSections(await services.getTeachers());
     }
     fetchData();
   }, []);
@@ -35,7 +36,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
 
   useEffect(() => {
     if (displayedSections.length > 0) {
-      setSelectedTeacher(displayedSections[0].id);
+      setSelectedTeacher(displayedSections[0].id_user);
     }
   }, [displayedSections]);
 
@@ -141,8 +142,8 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
               value={selectedTeacher}
             >
               {displayedSections.map((teacher, index) => (
-                <option key={index} value={teacher.id}>
-                  {teacher.id_account} - {teacher.name}
+                <option key={index} value={teacher.id_user}>
+                  {teacher.id_user} - {teacher.name_user}
                 </option>
               ))}
             </select>
