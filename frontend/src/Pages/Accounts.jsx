@@ -8,16 +8,29 @@ import {
   faFilter,
   faArrowUp,
   faArrowDown,
+  faFilterCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Accounts() {
   const [users, setUsers] = useState([]);
+  const [originalUsers, setOriginalUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [matchingNames, setMatchingNames] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
+  const [sorted, setSorted] = useState(false);
 
-  const CustomRadioFilter = ({ type }) => {
+  //Mensajes de filtros
+  const [isHovering, setIsHovering] = useState(false);
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
+
+  //Componentes
+  const CustomBtFilter = ({ type }) => {
     const sortUsers = (mode) => {
       let sortedUsers = [...users];
       sortedUsers.sort((a, b) => {
@@ -43,6 +56,7 @@ function Accounts() {
         return 0;
       });
       setUsers(sortedUsers);
+      setSorted(true);
     };
 
     return (
@@ -82,16 +96,24 @@ function Accounts() {
   };
 
   const SearchDropdown = ({ matchingNames }) => {
+    console.log(matchingNames.length);
     return (
       <div
         className="dropdown-menu show mt-2.5"
         aria-labelledby="searchDropdownMenu"
+        style={{ maxHeight: "200px", overflowY: "auto" }}
       >
-        {matchingNames.map((name) => (
-          <button className="dropdown-item" type="button" key={name}>
-            {name}
+        {matchingNames.length > 0 ? (
+          matchingNames.map((name) => (
+            <button className="dropdown-item" type="button" key={name}>
+              {name}
+            </button>
+          ))
+        ) : (
+          <button className="dropdown-item" type="button" disabled>
+            No se encontraron resultados
           </button>
-        ))}
+        )}
       </div>
     );
   };
@@ -125,6 +147,7 @@ function Accounts() {
         });
       });
       setUsers(fetchedUsers);
+      setOriginalUsers(fetchedUsers);
     };
     fetchData();
   }, []);
@@ -162,6 +185,14 @@ function Accounts() {
     };
   }, []);
 
+  //Limpiar filtros
+  function limpiarFiltros() {
+    if (sorted) {
+      setUsers(originalUsers);
+      setSorted(false);
+    }
+  }
+
   return (
     <div className="account-container">
       <Navbar />
@@ -176,37 +207,47 @@ function Accounts() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {displayResults && matchingNames.length > 0 && (
-              <SearchDropdown matchingNames={matchingNames} />
-            )}
+            {displayResults && <SearchDropdown matchingNames={matchingNames} />}
           </div>
 
-          <button className="crear-cuenta-boton">Crear cuenta</button>
+          <div
+            className="remove-filter-button"
+            onClick={() => {
+              limpiarFiltros();
+            }}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <FontAwesomeIcon icon={faFilterCircleXmark} />
+            {isHovering && sorted && (<span className="limpiar-filtro-div">Limpiar filtros</span>)}
+            {isHovering && !sorted && (<span className="limpiar-filtro-div">No se han aplicado filtros</span>)}
+          </div>
+          <button className="crear-cuenta-button">Crear cuenta</button>
         </div>
         <table className="table table-bordered account-table">
           <thead className="accounts-table-header">
             <tr>
               <th>
                 <div className="th-div-account">
-                  <CustomRadioFilter type="id_user" />
+                  <CustomBtFilter type="id_user" />
                   ID
                 </div>
               </th>
               <th>
                 <div className="th-div-account">
-                  <CustomRadioFilter type="name_user" />
+                  <CustomBtFilter type="name_user" />
                   Nombre
                 </div>
               </th>
               <th>
                 <div className="th-div-account">
-                  <CustomRadioFilter type="email_user" />
+                  <CustomBtFilter type="email_user" />
                   Correo
                 </div>
               </th>
               <th>
                 <div className="th-div-account">
-                  <CustomRadioFilter type="number_user" />
+                  <CustomBtFilter type="number_user" />
                   Número de teléfono
                 </div>
               </th>
@@ -214,7 +255,7 @@ function Accounts() {
               <th>Estado</th>
               <th>
                 <div className="th-div-account">
-                  <CustomRadioFilter type="creation_date" />
+                  <CustomBtFilter type="creation_date" />
                   Fecha de creación
                 </div>
               </th>

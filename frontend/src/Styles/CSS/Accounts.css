@@ -21,7 +21,33 @@
   font-weight: bold;
 }
 
-.crear-cuenta-boton {
+.remove-filter-button{
+  background-color: none;
+  color: #003b88;
+  border: 1px solid #003b88;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  margin-right: 1%;
+  position: relative;
+}
+
+.limpiar-filtro-div{
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 10%);
+  color: #003b88;
+  border: 1px solid #003b88;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  padding: 4px 8px;
+  width: 8rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.crear-cuenta-button {
   margin-right: 3%;
   background-color: #003b88;
   color: white;
@@ -37,7 +63,7 @@
   margin-left: auto;
   margin-right: 1%;
   width: 22%;
-  border: 1px solid #000000;
+  border: 1px solid #003b88;
   border-radius: 5px;
   padding: 5px;
   position: relative;
@@ -47,6 +73,7 @@
   position: absolute;
   top: 7px;
   right: 5px;
+  color: #003b88;
 }
 
 .search-user-box input {
@@ -60,7 +87,7 @@
   position: absolute;
   border-radius: 5px;
   padding: 8px;
-  border: 1px solid #000000;
+  border: 1px solid #003b88;
   display: none;
   background-color: #ffffff;
   margin-top: 10px;
@@ -114,4 +141,8 @@
 
 .filter-icon{
   margin-right: 5px;
+}
+
+.dropdown-item:hover {
+  color: black;
 }

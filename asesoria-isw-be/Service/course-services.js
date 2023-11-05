@@ -9,15 +9,52 @@ const knex = require("knex")({
   },
 });
 
-//GETS
-async function GetCourses() {
-  const courses = JSON.parse(
-    JSON.stringify(await knex.select("name").from("courses"))
-  );
+async function createCourse(course) {
+  return knex("courses").insert({
+    name_course: course.name,
+    description_course: course.description,
+    user_creator: course.creator,
+  });
+}
 
-  return courses;
+async function updateCourseName(course) {
+  return knex("courses")
+    .where("id_course", course.id)
+    .update({
+      name_course: course.name,
+      user_editor: course.editor,
+      last_modification: new Date(),
+    });
+}
+
+async function updateCourseDescription(course) {
+  return knex("courses")
+    .where({ id_course: course.id })
+    .update({
+      description_course: course.description,
+      user_editor: course.editor,
+      last_modification: new Date(),
+    });
+}
+
+async function deleteCourse(id) {
+  try {
+    return await knex("courses").where("id_course", id).del();
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+async function getCourses() {
+  let courses = await knex("courses").select("*");
+  courses = JSON.stringify(courses);
+  return JSON.parse(courses);
 }
 
 module.exports = {
-  GetCourses,
+  createCourse,
+  updateCourseName,
+  updateCourseDescription,
+  deleteCourse,
+  getCourses,
 };

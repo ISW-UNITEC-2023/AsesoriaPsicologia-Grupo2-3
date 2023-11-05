@@ -9,129 +9,59 @@ const knex = require("knex")({
   },
 });
 
-async function getSections() {
-  const sections = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select(
-          "sections.id as SectionId",
-          "course.name as CourseName",
-          "course.id as CourseId",
-          "teacher_id as TeacherId",
-          "users.name as Teacher",
-          "course.uv as UV",
-          "sections.year as Year",
-          "sections.quarter as Quarter"
-        )
-        .table("sections")
-        .innerJoin("users", "users.id", "sections.teacher_id")
-        .innerJoin("course", "course.id", "sections.course_id")
-    )
-  );
-
-  return sections;
-}
-async function GetInfoSection(course_id) {
-  try {
-    const infoSection = await knex
-      .select(
-        "sections.id as SectionId",
-        "course.name as CourseName",
-        "users.name as Teacher",
-        "course.uv as UV",
-        "sections.year as Year",
-        "sections.quarter as Quarter"
-      )
-      .from("sections")
-      .innerJoin("users", "users.id", "sections.teacher_id")
-      .innerJoin("course", "course.id", "sections.course_id")
-      .where("course.id", course_id);
-
-    return infoSection;
-  } catch (error) {
-    // Handle the error here, e.g., log it or throw a custom error
-    console.error(error);
-    throw new Error("Error fetching section information");
-  }
-}
-
-async function GetInfoSectionMon(course_id) {
-  const infoSection = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select(
-          "sections.id as SectionId",
-          "course.name as CourseName",
-          "course.uv as UV",
-          "sections.year as Year",
-          "sections.quarter as Quarter"
-        )
-        .table("sections")
-        .innerJoin("course", "course.id", "sections.course_id")
-    )
-  );
-  //console.log(infoSection);
-  return infoSection;
-}
-
-async function CreateSection(section) {
-  return knex("sections").insert({
-    course_id: section.course_id,
-    teacher_id: section.teacher_id,
-    year: section.year,
-    quarter: section.quarter,
+//Post
+async function createSection(section) {
+  let date = new Date();
+  let month = date.getMonth();
+  let quarter = month < 4 ? 1 : month < 7 ? 2 : month < 10 ? 3 : 4;
+  await knex("sections").insert({
+    id_section: section.id,
+    id_course: section.course,
+    quarter: quarter,
+    year: date.getFullYear(),
+    user_creator: section.creator,
   });
 }
 
-async function DeleteSection(id) {
-  return knex("sections").where("id", id).del(); //delete from table where id=10
-}
-
-async function SectionExists(id) {
-  const SectionExist = JSON.parse(
-    JSON.stringify(await knex.select().table("sections").where("id", id))
-  );
-
-  return SectionExist;
-}
-
-async function updateSectionCourseId(id, course) {
-  await knex("sections").where("id", id).update({
-    course_id: course,
+async function assignTeacher(section) {
+  return knex("sections").where("id_section", section.id).update({
+    id_teacher: section.teacher,
+    active_section: 1,
+    last_modification: new Date(),
+    user_editor: section.editor,
   });
-  return;
 }
 
-async function updateTeacherSection(id, TeacherId) {
-  await knex("sections").where("id", id).update({
-    teacher_id: TeacherId,
+async function setActiveSection(section) {
+  return knex("sections").where("id_section", section.id).update({
+    active_section: section.active,
+    last_modification: new Date(),
+    user_editor: section.editor,
   });
-  return;
 }
 
-async function updateYearSection(id, newYear) {
-  await knex("sections").where("id", id).update({
-    year: newYear,
-  });
-  return;
+//Get
+async function getTeacherSection(id_user) {
+  let sections = await knex.raw(`
+      SELECT sections.*
+      FROM sections
+      INNER JOIN users ON users.id_user = sections.id_teacher
+      WHERE users.id_user = ?
+    `, [id_user]);
+  sections = JSON.stringify(sections[0]);
+  return JSON.parse(sections);
 }
 
-async function updateQuarterSection(id, newQuarter) {
-  await knex("sections").where("id", id).update({
-    quarter: newQuarter,
-  });
-  return;
+async function getAllSections() {
+  let sections = await knex.select("*").from("sections");
+  sections = JSON.stringify(sections);
+  return JSON.parse(sections);
 }
+
 module.exports = {
-  getSections,
-  GetInfoSection,
-  GetInfoSectionMon,
-  CreateSection,
-  DeleteSection,
-  SectionExists,
-  updateSectionCourseId,
-  updateQuarterSection,
-  updateTeacherSection,
-  updateYearSection,
-
+  createSection,
+  assignTeacher,
+  setActiveSection,
+  getTeacherSection,
+  getAllSections,
 };
