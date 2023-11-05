@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function GetSections() {
-  const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  const host = process.env.REACT_APP_API_BASE_URL;
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   const options = {
     method: "GET",
@@ -13,7 +13,7 @@ export async function GetSections() {
 }
 
 export async function createSection(section) {
-  const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  const host = process.env.REACT_APP_API_BASE_URL;
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   const options = {
     method: "POST",
@@ -38,7 +38,7 @@ export async function getInfoSection(id) {
 export async function getInfoSectionMod() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/search2",
+    url: process.env.REACT_APP_API_BASE_URL+"/sections/search2",
   };
 
   const response = await axios.request(options);
@@ -49,7 +49,7 @@ export async function getInfoSectionMod() {
 export async function deleteSection(id) {
   const options = {
     method: "DELETE",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/delete",
+    url: process.env.REACT_APP_API_BASE_URL+"/sections/delete",
     params: { id: id },
   };
 
@@ -65,7 +65,7 @@ export async function deleteSection(id) {
 export async function updateTeacher(id, teacher_id) {
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/update/teacher/",
+    url: process.env.REACT_APP_API_BASE_URL+"/sections/update/teacher/",
     params: { id: id },
     data: { teacher_id: teacher_id },
   };
@@ -81,7 +81,7 @@ export async function updateTeacher(id, teacher_id) {
 export async function updateYear(id, year) {
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/update/year/",
+    url: process.env.REACT_APP_API_BASE_URL+"/sections/update/year/",
     params: { id: id },
     data: { year: year },
   };
@@ -97,7 +97,7 @@ export async function updateYear(id, year) {
 export async function updateQuarter(id, quarter) {
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/update/quarter/",
+    url: process.env.REACT_APP_API_BASE_URL+"/sections/update/quarter/",
     params: { id: id },
     data: { quarter: quarter },
   };

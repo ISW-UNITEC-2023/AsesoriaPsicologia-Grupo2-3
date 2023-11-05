@@ -377,4 +377,5 @@ module.exports = {
   assignRole,
   removeRole,
   getAllusers,
+  getTeachers
 };
