@@ -146,3 +146,15 @@
 .dropdown-item:hover {
   color: black;
 }
+
+.form-check-filter{
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-check-label{
+}
+
+.check-input-filter{
+  margin: 8px;
+}
