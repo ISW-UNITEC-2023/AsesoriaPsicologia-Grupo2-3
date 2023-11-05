@@ -9,139 +9,150 @@ const knex = require("knex")({
   },
 });
 
-const getUsersCredentials = async () => {
-  let usersCredentials = await knex
-    .select("name", "email", "id_account", "role", "active")
-    .from("users");
-  usersCredentials = JSON.stringify(usersCredentials);
-
-  // let patientsCredentials = await knex
-  //   .select("name", "email", "identification", "role", "active")
-  //   .from("patients");
-  // patientsCredentials = JSON.stringify(patientsCredentials);
-
-  return {
-    usersCredentials: JSON.parse(usersCredentials),
-    //patientsCredentials: JSON.parse(patientsCredentials),
-  };
-};
-
-async function getUserByID(id_account) {
-  let user = await knex
-    .select("id_account", "role", "name", "email", "active")
-    .from("users")
-    .where("id_account", id_account);
-  user = JSON.stringify(user);
-
-  return JSON.parse(user);
+//Post
+async function createUser(user){
+  await knex("users").insert({
+    name_user: user.name,
+    email_user: user.email,
+    number_user: user.phone,
+    password_user: user.encryptedPassword,
+    salt_user: user.salt,
+    active_user: user.active,
+  });
 }
 
-const createUser = async (user) => {
-  return knex("users").insert({
-    id_account: user.id_account,
-    role: user.role,
-    name: user.name,
-    email: user.email,
-    password: user.encryptedPassword,
-    salt: user.salt,
-    active: user.active,
+async function createPatient(user) {
+  let patientId = await knex("users").insert({
+    name_user: user.name,
+    email_user: user.email,
+    number_user: user.phone,
+    password_user: user.encryptedPassword,
+    salt_user: user.salt,
   });
-};
 
-const delUser = async (id_account) => {
-  return knex("users").where("id_account", id_account).del();
-};
+  let role_patient = JSON.stringify(await knex("roles").select("id_role").where("name_role", "patient"));
+  role_patient = JSON.parse(role_patient)
 
-const updUserAdmin = async (user) => {
-  await knex("users").where("id_account", user.id_account).update({
-    role: user.role,
-    active: user.active,
+  await knex("user_role").insert({
+    id_user: patientId,
+    id_role: role_patient[0].id_role,
   });
-};
+}
 
-const updUserPassword = async (user) => {
-  await knex("users").where("id_account", user.id_account).update({
-    password: user.password,
-    salt: user.salt,
+async function updUserName(user) {
+  return knex("users").where("id_user", user.id).update({
+    name_user: user.name,
+    user_editor: user.editor,
+    last_modification: new Date(),
   });
-};
+}
 
-const updUserEmail = async (user) => {
-  await knex("users").where("id_account", user.id_account).update({
-    email: user.email,
+async function updUserEmail(user) {
+  return knex("users").where("id_User", user.id).update({
+    email_user: user.newEmail,
+    user_editor: user.editor,
+    last_modification: new Date(),
   });
-};
+}
+
+async function updUserNumber(user) {
+  return knex("users").where("id_user", user.id).update({
+    number_user: user.phone,
+    user_editor: user.editor,
+    last_modification: new Date(),
+  });
+}
+
+async function updUserPassword(user) {
+  return await knex("users").where({ email_user: user.email }).update({
+    password_user: user.encryptedPassword,
+    salt_user: user.salt,
+    user_editor: user.editor,
+    last_modification: new Date(),
+  });
+}
+
+async function changeUserActive(user) {
+  return knex("users").where("id_user", user.id).update({
+    active_user: user.active,
+    user_editor: user.editor,
+    last_modification: new Date(),
+  });
+}
+
+async function assignRole(user) {
+  const role = await knex("roles")
+    .select("id_role")
+    .where("id_role", user.id_role);
+  if (!role) {
+    throw new Error("Role not found");
+  }
+
+  const userInfo = await knex("users")
+    .select("id_user")
+    .where("id_user", user.id_user);
+  if (!userInfo) {
+    throw new Error("User not found");
+  }
+
+  return await knex("user_role").insert({
+    id_role: user.id_role,
+    id_user: user.id_user,
+  });
+}
+
+async function removeRole(user) {
+  try {
+    await knex("user_role")
+      .where({ id_user: user.id_user, id_role: user.id_role })
+      .del();
+    console.log("Role deleted successfully");
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+//Get
+async function getUserCredentials(email) {
+  let usersCredentials = await knex
+    .select("*")
+    .from("users")
+    .where("email", email);
+  usersCredentials = JSON.stringify(usersCredentials);
+  return JSON.parse(usersCredentials);
+}
 
 async function findExistingEmail(email) {
-  const email_find = JSON.parse(
-    JSON.stringify(await knex.select().table("users").where("email", email))
-  );
-  return email_find;
+  let emailExists = await knex("users")
+    .select("*")
+    .where("email_user", email);
+  emailExists = JSON.stringify(emailExists);
+  return JSON.parse(emailExists);
 }
 
-async function getAdmins() {
-  const admins = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select("id", "id_account", "name", "email", "active")
-        .table("users")
-        .where("role", "ADMIN")
-    )
-  );
-
-  return admins;
+async function getAllusers() {
+  let users = await knex.select("*").from("users");
+  users = JSON.stringify(users);
+  return JSON.parse(users);
 }
 
 async function getTeachers() {
-  const teacher = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select("id", "id_account", "name", "email", "active")
-        .table("users")
-        .where("role", "DOCENTE")
-    )
-  );
-
-  return teacher;
-}
-
-async function getStudents() {
-  const student = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select("id", "id_account", "name", "email", "active")
-        .table("users")
-        .where("role", "ESTUDIANTE")
-    )
-  );
-
-  return student;
-}
-
-async function getPatients() {
-  const patient = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select("id", "id_account", "name", "email", "active")
-        .table("users")
-        .where("role", "PACIENTE")
-    )
-  );
-
-  return patient;
+  let users = await knex.select("*").from("users").where("role");
+  users = JSON.stringify(users);
+  return JSON.parse(users);
 }
 
 module.exports = {
-  getUsersCredentials,
-  getUserByID,
   createUser,
-  delUser,
-  updUserAdmin,
-  findExistingEmail,
-  updUserPassword,
+  createPatient,
+  updUserName,
   updUserEmail,
-  getAdmins,
-  getTeachers,
-  getStudents,
-  getPatients,
+  updUserNumber,
+  updUserPassword,
+  changeUserActive,
+  assignRole,
+  removeRole,
+  getUserCredentials,
+  findExistingEmail,
+  getAllusers,
 };

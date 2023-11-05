@@ -1,16 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
+const secretKey = process.env.SECRETKEY;
+app.use(cookieParser(secretKey));
+
+// REDIS
 const redis = require('./configs/redis');
 const { tokenCheck } = require('./middlewares/tokenCheck');
-
 (async () => {
   await redis.connect();
 })();
-
 redis.on('connect', (err) => {
   if (err) {
     console.log('Could not establish connection with redis');
@@ -19,25 +22,13 @@ redis.on('connect', (err) => {
   }
 });
 
-app.use([
-  express.json(),
-  express.urlencoded({ extended: false }),
-]);
-
-require("dotenv").config();
-
-const secretKey = process.env.SECRETKEY;
-
-app.use(cookieParser(secretKey));
-
-const allowedOrigins = ["Access-Control-Allow-Origin", "http://localhost:3000"];
-
+const allowedOrigins = ['Access-Control-Allow-Origin',"http://localhost:3000"];
 const corsOptions = {
-  origin: (origin, callback) => {
+  origin: function (origin, callback) {
     console.log(origin);
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
-      console.log("allowed");
+      console.log("allowed")
     } else {
       console.log("error");
       callback(new Error("Not allowed by CORS"));
@@ -49,28 +40,37 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-const adminRouter = require("./Route/admin-routes");
-const sectionRouter = require("./Route/section-routes");
-const modulosRouter = require("./Route/modules-routes");
-const userRouter = require("./Route/users-routes");
-const mailRouter = require("./Route/mail-routes");
-const announceRouter = require("./Route/announce-routes");
+const usersRouter = require("./Routes/users-routes")
+const rolesRouter = require("./Routes/roles-routes")
+const privilegesRouter = require("./Routes/privileges-routes")
+const patientsRouter = require("./Routes/patients-routes")
+const courseRouter = require("./Routes/course-routes")
+const sectionRouter = require("./Routes/sections-routes")
+const clinicRouter = require("./Routes/clinics-routes")
+const announcementRouter = require("./Routes/announcement-routes")
+const fileRouter = require("./Routes/files-routes")
+const zoomUsersRouter = require('./Routes/zoom/users')
+const zoomMeetingsRouter = require('./Routes/zoom/meetings')
+const zoomWebinarsRouter = require('./Routes/zoom/webinars')
 
-app.use("/admins", adminRouter);
+// Zoom
+app.use('/api/users', tokenCheck, zoomUsersRouter);
+app.use('/api/meetings', tokenCheck, zoomMeetingsRouter);
+app.use('/api/webinars', tokenCheck, zoomWebinarsRouter);
+
+app.use("/users", usersRouter);
+app.use("/roles", rolesRouter);
+app.use("/privileges", privilegesRouter);
+app.use("/patients", patientsRouter);
 app.use("/sections", sectionRouter);
-app.use("/modulos", modulosRouter);
-app.use("/user", userRouter);
-app.use("/mail", mailRouter);
-app.use("/announce", announceRouter);
-
-
-app.use('/api/users', tokenCheck, require('./Route/zoom/users'));
-app.use('/api/meetings', tokenCheck, require('./Route/zoom/meetings'));
-app.use('/api/webinars', tokenCheck, require('./Route/zoom/webinars'));
+app.use("/courses", courseRouter);
+app.use("/clinics", clinicRouter);
+app.use("/announcements", announcementRouter);
+app.use("/files", fileRouter)
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log("Server started!" + PORT);
+  console.log("Server started!");
 });
 
 const cleanup = async () => {
@@ -84,3 +84,4 @@ const cleanup = async () => {
 
 process.on('SIGTERM', cleanup);
 process.on('SIGINT', cleanup);
+
