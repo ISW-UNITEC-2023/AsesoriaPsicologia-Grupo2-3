@@ -14,7 +14,7 @@ async function postLogin(email, password) {
 async function getUsers() {
   const options = {
     method: "GET",
-    url: process.env.REACT_APP_API_BASE_URL+"/user/list",
+    url: process.env.REACT_APP_API_BASE_URL+"/users/viewUsers",
   };
 
   try {
@@ -55,11 +55,11 @@ async function getSeccionbyModu() {
   }
 }
 
-async function registerUser(id_account, role, name, email, password, active) {
+async function registerUser(name, email, phone, password, type, active) {
   const options = {
     method: "POST",
     url: process.env.REACT_APP_API_BASE_URL+"/user/register",
-    data: { id_account, role, name, email, password, active },
+    data: { name, email, phone, password, type, active },
   };
 
   try {
@@ -134,7 +134,7 @@ export async function getCookies() {
   try {
     const options = {
       method: "GET",
-      url: process.env.REACT_APP_API_BASE_URL+"/admins/getCookies",
+      url: process.env.REACT_APP_API_BASE_URL+"/users/getCookies",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -176,7 +176,7 @@ async function getAdmins() {
 async function getTeachers() {
   const options = {
     method: "GET",
-    url: process.env.REACT_APP_API_BASE_URL+"/user/teachers",
+    url: process.env.REACT_APP_API_BASE_URL+"/users/viewTeachers",
   };
 
   try {
