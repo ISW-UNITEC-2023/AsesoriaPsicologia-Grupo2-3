@@ -11,16 +11,16 @@ const knex = require("knex")({
 
 //Post
 async function createSection(section) {
-  console.log(section)
-  const res = knex("sections").insert({
-    id_course: section.course_id,
-    id_teacher: section.teacher_id,
-    year: section.year,
-    quarter: section.quarter,
-    user_creator: section.user_creator
-  },[id_section]);
-  console.log(res);
-  return res;
+  let date = new Date();
+  let month = date.getMonth();
+  let quarter = month < 4 ? 1 : month < 7 ? 2 : month < 10 ? 3 : 4;
+  await knex("sections").insert({
+    id_section: section.id,
+    id_course: section.course,
+    quarter: quarter,
+    year: date.getFullYear(),
+    user_creator: section.creator,
+  });
 }
 
 async function assignTeacher(section) {
@@ -58,32 +58,10 @@ async function getAllSections() {
   return JSON.parse(sections);
 }
 
-async function getSectionByCourse(course_id) {
-  const infoSection = JSON.parse(
-    JSON.stringify(
-      await knex
-        .select(
-          "sections.id_section as SectionId",
-          "courses.name_course as CourseName",
-          "users.name_user as Teacher",
-          "sections.year as Year",
-          "sections.quarter as Quarter"
-        )
-        .table("sections")
-        .innerJoin("users", "users.id_user", "sections.id_teacher")
-        .innerJoin("courses", "courses.id_course", "sections.id_course")
-        .where("courses.id_course", course_id)
-    )
-  );
-
-  return infoSection;
-}
-
 module.exports = {
   createSection,
   assignTeacher,
   setActiveSection,
   getTeacherSection,
   getAllSections,
-  getSectionByCourse
 };

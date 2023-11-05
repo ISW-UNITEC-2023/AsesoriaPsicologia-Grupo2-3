@@ -11,6 +11,5 @@ router.post("/getTeacherSections", sectionController.getTeacherSection);
 
 //Get
 router.get("/getAll", sectionController.getAllSections);
-router.get("/search", sectionController.getSectionByCourse);
 
 module.exports = router;

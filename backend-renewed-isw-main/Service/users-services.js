@@ -10,7 +10,7 @@ const knex = require("knex")({
 });
 
 //Post
-async function createUser(user){
+async function createUser(user) {
   await knex("users").insert({
     name_user: user.name,
     email_user: user.email,
@@ -30,8 +30,10 @@ async function createPatient(user) {
     salt_user: user.salt,
   });
 
-  let role_patient = JSON.stringify(await knex("roles").select("id_role").where("name_role", "patient"));
-  role_patient = JSON.parse(role_patient)
+  let role_patient = JSON.stringify(
+    await knex("roles").select("id_role").where("name_role", "patient")
+  );
+  role_patient = JSON.parse(role_patient);
 
   await knex("user_role").insert({
     id_user: patientId,
@@ -123,9 +125,7 @@ async function getUserCredentials(email) {
 }
 
 async function findExistingEmail(email) {
-  let emailExists = await knex("users")
-    .select("*")
-    .where("email_user", email);
+  let emailExists = await knex("users").select("*").where("email_user", email);
   emailExists = JSON.stringify(emailExists);
   return JSON.parse(emailExists);
 }
@@ -136,10 +136,21 @@ async function getAllusers() {
   return JSON.parse(users);
 }
 
-async function getTeachers() {
-  let users = await knex.select("*").from("users").innerJoin("user_role","users.id_user","=","user_role.id_user").where("id_role",5);
-  users = JSON.stringify(users);
-  return JSON.parse(users);
+async function getAllTeachers() {
+  let teachers = await knex
+    .select(
+      "users.id_user",
+      "users.name_user",
+      "users.email_user",
+      "users.number_user",
+      "users.active_user"
+    )
+    .from("users")
+    .join("user_role", "users.id_user", "=", "user_role.id_user")
+    .join("roles", "user_role.id_role", "=", "roles.id_role")
+    .where("roles.name_role", "teacher");
+  teachers = JSON.stringify(teachers);
+  return JSON.parse(teachers);
 }
 
 module.exports = {
@@ -155,5 +166,5 @@ module.exports = {
   getUserCredentials,
   findExistingEmail,
   getAllusers,
-  getTeachers
+  getAllTeachers,
 };

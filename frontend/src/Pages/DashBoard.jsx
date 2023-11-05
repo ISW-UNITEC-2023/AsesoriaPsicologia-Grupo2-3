@@ -1,7 +1,6 @@
 import "../Styles/CSS/DashBoard.css";
 import { useEffect, useState } from "react";
 import Popup from "../Components/PopUp";
-import SectionPopUp from "../Components/SectionPopUp";
 import NavigationB from "../Components/Navbar";
 import SectionCard from "../Components/Card";
 import { loadModules } from "../Utilities/course-services";
@@ -13,7 +12,7 @@ import { getCookies } from "../Utilities/login-services.js";
 function DashBoard() {
   const [displayedModules, setModules] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [isSectionPopupOpen, setIsSectionPopupOpen] = useState(false);
+
   const [state, setState] = useState(false);
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
   const [cookies, setCookies] = useState({});
@@ -27,7 +26,8 @@ function DashBoard() {
   }, [cookies, cookiesLoaded]);
   const updateModuleList = () => {
     async function fetchData() {
-      setModules(await loadModules());
+      const course = await loadModules();
+      setModules(course.coursesInfo);
       if (!cookiesLoaded) {
         const obtainedCookies = await getCookies();
         setCookies(obtainedCookies);
@@ -36,11 +36,6 @@ function DashBoard() {
     }
 
     fetchData();
-  };
-
-  const toggleSectionPopup = (CourseName, CourseId) => {
-    setSelectedButtonInfo({ CourseName, CourseId });
-    setSectionPopupOpen(!isSectionPopupOpen);
   };
 
   return (

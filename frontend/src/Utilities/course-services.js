@@ -3,7 +3,8 @@ import axios from "axios";
 export async function loadModules() {
   const options = {
     method: "GET",
-    url: process.env.REACT_APP_API_BASE_ULR+"/courses/getCourses",
+    url: process.env.REACT_APP_API_BASE_URL+"/courses/getCourses",
+    withCredentials: true,
   };
   const response = await axios.request(options);
   return response.data;
@@ -12,7 +13,7 @@ export async function loadModules() {
 export async function deleteModule(id) {
   const options = {
     method: "DELETE",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos",
+    url: process.env.REACT_APP_API_BASE_URL+"/modulos",
     data: { id: id },
   };
 

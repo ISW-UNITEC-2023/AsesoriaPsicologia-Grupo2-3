@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import services from "../../../Utilities/admin-services";
+import services from "../../../Utilities/login-services.js";
 import "../../../Styles/CSS/SectionPopUp/Modificar/ModificarPopUp.css";
 import propsTypes from "prop-types";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -25,7 +25,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
   useEffect(() => {
     async function fetchTeachers() {
       try {
-        const response = await services.GetTeachers();
+        const response = await services.getTeachers();
         setSelectedTeacherOption(response);
       } catch (error) {
         console.error("Error fetching teachers:", error);

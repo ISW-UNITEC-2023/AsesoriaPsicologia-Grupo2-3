@@ -20,7 +20,7 @@ function MyCard({ props, handleReload }) {
 
   const handleButtonClick = () => {
     // Use the navigate function to navigate to the specified URL.
-    navigate(`/Secciones?course_id=${props.id}`);
+    navigate(`/Secciones?course_id=${props.id_course}`);
   };
 
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -76,14 +76,16 @@ function MyCard({ props, handleReload }) {
         />
         <Card.Body>
           <Card.Title>
-            <Link to={`/Secciones?course_id=${props.id}`}>{props.name}</Link>
+            <Link to={`/Secciones?course_id=${props.id_course}`}>
+              {props.name_course}
+            </Link>
           </Card.Title>
           <Card.Text className="text-container-dashboard">
             <p>
-              <strong>Id:</strong> {props.id}
+              <strong>Id:</strong> {props.id_course}
             </p>
             <p>
-              <strong>Description:</strong> {props.description}
+              <strong>Description:</strong> {props.description_course}
             </p>
           </Card.Text>
           <div>
@@ -112,7 +114,9 @@ function MyCard({ props, handleReload }) {
                   <Dropdown.Item
                     eventKey="1"
                     className="button-create-s mr-2"
-                    onClick={() => togglePopup(props.name, props.id)}
+                    onClick={() =>
+                      togglePopup(props.name_course, props.id_course)
+                    }
                     variant={"outline-primary"}
                   >
                     <FontAwesomeIcon icon={faPlus} /> Crear Sección
@@ -153,8 +157,8 @@ function MyCard({ props, handleReload }) {
           isOpen={isDeletePopUpOpen}
           onConfirm={handleConfirmDeletePopup}
           onCancel={handleCancelDeletePopup}
-          itemName={selectedButtonInfo.name}
-          moduleId={selectedButtonInfo.id}
+          itemName={selectedButtonInfo.name_course}
+          moduleId={selectedButtonInfo.id_course}
           pageName="modulo"
         />
       )}
