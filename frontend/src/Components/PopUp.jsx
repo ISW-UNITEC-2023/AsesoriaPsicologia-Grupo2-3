@@ -25,7 +25,7 @@ const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
     };
 
     axios
-      .post(process.env.REACT_APP_API_BASE_ULR+"/courses/create", newModule)
+      .post(process.env.REACT_APP_API_BASE_URL+"/courses/create", newModule)
       .then((response) => {
         console.log("Módulo creado:", response.data);
         onUpdateModuleList(); // Llama a la función para actualizar la lista de módulos
