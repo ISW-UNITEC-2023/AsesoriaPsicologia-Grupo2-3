@@ -4,7 +4,7 @@ import services from "../Utilities/login-services.js";
 
 import { createSection } from "../Utilities/section-services.js";
 
-const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
+const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -51,7 +51,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
       teacher_id,
       year,
       quarter,
-      user_creator: 13
+      user_creator: "13",
     };
 
     try {
@@ -61,8 +61,6 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
       onClose();
       // Mostrar un mensaje de éxito
       alert("Sección creada exitosamente");
-
-      console.log("sectionData", sectionData);
     } catch (error) {
       alert("Error al crear la sección!");
     }
@@ -141,7 +139,6 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
               onChange={handleTeacherChange}
               value={selectedTeacher}
             >
-              {console.log(displayedSections)}
               {displayedSections.map((teacher, index) => (
                 <option key={index} value={teacher.id_user}>
                   {teacher.id_user} - {teacher.name_user}

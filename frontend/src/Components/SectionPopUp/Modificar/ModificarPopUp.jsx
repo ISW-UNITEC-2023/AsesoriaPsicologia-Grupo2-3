@@ -12,6 +12,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
   const [selectedTeacher, setSelectedTeacher] = useState("");
   const [selectedYearOption, setSelectedYearOption] = useState("");
   const [selectedQuarterOption, setSelectedQuarterOption] = useState("");
+  const [selectedActiveOption, setSelectedActiveOption] = useState("");
 
   useEffect(() => {
     if (isOpen) {
@@ -19,6 +20,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
       setSelectedTeacher("");
       setSelectedYearOption("");
       setSelectedQuarterOption("");
+      setSelectedActiveOption("");
     }
   }, [isOpen]);
 
@@ -49,7 +51,8 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
       selectedOption === "" ||
       (selectedOption === "teacher_id" && selectedTeacher === "") ||
       (selectedOption === "year" && selectedYearOption === "") ||
-      (selectedOption === "quarter" && selectedQuarterOption === "")
+      (selectedOption === "quarter" && selectedQuarterOption === "") ||
+      (selectedOption === "active" && selectedActiveOption === "")
     );
   };
 
@@ -58,17 +61,9 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
       selectedOption,
       selectedQuarterOption,
       selectedTeacher,
-      selectedYearOption
+      selectedYearOption,
+      selectedActiveOption
     );
-
-    if (selectedOption === "teacher_id") {
-      const teacher_id = selectedTeacher;
-      console.log(`Teacher ID seleccionado: ${teacher_id}`);
-    } else if (selectedOption === "year") {
-      console.log(`Año seleccionado: ${selectedYearOption}`);
-    } else if (selectedOption === "quarter") {
-      console.log(`Trimestre seleccionado: Q${selectedQuarterOption}`);
-    }
   };
   const currentYear = new Date().getFullYear();
   return (
@@ -92,6 +87,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
                 <option value="teacher_id">Teacher ID</option>
                 <option value="year">Year</option>
                 <option value="quarter">Quarter</option>
+                <option value="active">Estado</option>
               </select>
             </div>
 
@@ -106,8 +102,8 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
                   >
                     <option value="">Seleccione un docente</option>
                     {selectedTeacherOption.map((teacher, index) => (
-                      <option key={index} value={teacher.id}>
-                        {teacher.id_account} - {teacher.name}
+                      <option key={index} value={teacher.id_user}>
+                        {teacher.id_user} - {teacher.name_user}
                       </option>
                     ))}
                   </select>
@@ -159,15 +155,33 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
                   </select>
                 </>
               )}
+              {selectedOption === "active" && (
+                <>
+                  <label htmlFor="selectActive">Seleccione un estado:</label>
+                  <select
+                    id="selectActive"
+                    value={selectedActiveOption}
+                    onChange={(e) => setSelectedActiveOption(e.target.value)}
+                  >
+                    <option value="">Seleccione un estado</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                  </select>
+                </>
+              )}
             </div>
           </div>
 
           <div className="button-container-modificar">
-            <button className="eliminar-section-popup" onClick={onClose}>
+            <Button className="eliminar-section-popup" onClick={onClose}>
               Cancelar
-            </button>
+            </Button>
 
-            <Button className="modificar-section-popup" onClick={handleConfirm}>
+            <Button
+              className="modificar-section-popup"
+              onClick={handleConfirm}
+              disabled={isButtonDisabled()}
+            >
               Modificar
             </Button>
           </div>

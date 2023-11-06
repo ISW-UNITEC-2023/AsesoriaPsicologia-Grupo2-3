@@ -1,7 +1,7 @@
-import "../../../Styles/CSS/SectionPopUp/Modificar/successPopUp.css";
-import propsTypes from "prop-types";
+import React from "react";
+import PropTypes from "prop-types";
 
-const Popup = ({ isOpen, onClose, sectionId }) => {
+const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -15,11 +15,18 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2  style={{ marginBottom:'20px' }}>Sección {sectionId} modificada con éxito</h2>
+          <h2 style={{ marginBottom: "20px" }}>
+            Sección {sectionId} modificada con éxito
+          </h2>
           <button
             className="btn btn-danger"
             onClick={onClose}
-            style={{backgroundColor: 'green', color: 'white', borderBlockColor:'green', marginRight: "10px" }}
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              borderBlockColor: "green",
+              marginRight: "10px",
+            }}
           >
             Cerrar
           </button>
@@ -29,10 +36,11 @@ const Popup = ({ isOpen, onClose, sectionId }) => {
   );
 };
 
-export default Popup;
-
-Popup.propsTypes = {
-  isOpen: propsTypes.bool,
-  onClose: propsTypes.func,
-  sectionId: propsTypes.number,
+Popup.propTypes = {
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  onConfirm: PropTypes.func,
+  sectionId: PropTypes.number,
 };
+
+export default Popup;
