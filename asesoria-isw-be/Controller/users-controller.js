@@ -37,7 +37,7 @@ async function registerUser(req, res) {
         )
         .toString("base64");
       let newUserId = null;
-      if(type === "patient"){
+      if (type === "patient") {
         newUserId = userServices.createPatient({
           name: name,
           email: email,
@@ -45,8 +45,8 @@ async function registerUser(req, res) {
           encryptedPassword: encryptedPassword,
           salt: salt,
         });
-        console.log("es paciente")
-      }else{
+        console.log("es paciente");
+      } else {
         newUserId = userServices.createUser({
           name: name,
           email: email,
@@ -55,7 +55,7 @@ async function registerUser(req, res) {
           salt: salt,
           active: active,
         });
-        console.log("sin rol")
+        console.log("sin rol");
       }
 
       res.send({
@@ -67,7 +67,7 @@ async function registerUser(req, res) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
       error: "No se pudo crear el usuario.",
     });
-    console.log(e)
+    console.log(e);
   }
 }
 
@@ -366,6 +366,11 @@ function encryptPassword(
   };
 }
 
+async function getCookie(req, res) {
+  const cookies = req.signedCookies;
+  res.send(cookies);
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -377,5 +382,6 @@ module.exports = {
   assignRole,
   removeRole,
   getAllusers,
-  getTeachers
+  getTeachers,
+  getCookie,
 };

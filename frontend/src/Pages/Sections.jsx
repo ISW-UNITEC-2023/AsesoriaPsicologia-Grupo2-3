@@ -20,7 +20,7 @@ import EliminarSuccessPopUp from "../Components/SectionPopUp/Eliminar/SucessPopU
 import ModificarConfirmPopUp from "../Components/SectionPopUp/Modificar/ConfirmarPopUp";
 import ModificarSuccessPopUp from "../Components/SectionPopUp/Modificar/successPopUp";
 import ModificarPopUp from "../Components/SectionPopUp/Modificar/ModificarPopUp";
-import CrearSeccion from "../Components/SectionPopUp.jsx";
+//import CrearSeccion from "../Components/SectionPopUp.jsx";
 
 import "../Styles/CSS/Sections.css";
 import NavBar from "../Components/Navbar";
@@ -44,7 +44,6 @@ function SectionsPage() {
     fetchCourseInfo();
   }, [id]);
 
-  const [isCreateButtonPopupOpen, setCreateButtonPopupOpen] = useState(false);
   const [isModifyConfirmPopupOpen, setModifyConfirmPopupOpen] = useState(false);
   const [isModifySuccessPopupOpen, setModifySuccessPopupOpen] = useState(false);
   const [isModify, setModify] = useState(false);
@@ -69,10 +68,6 @@ function SectionsPage() {
     } catch (error) {
       console.error("Error fetching course info:", error);
     }
-  };
-
-  const toggleCreateButtonPopupOpen = () => {
-    setCreateButtonPopupOpen(!isCreateButtonPopupOpen);
   };
 
   const toggleModifySuccessPopup = () => {

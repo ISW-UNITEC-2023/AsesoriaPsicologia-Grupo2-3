@@ -17,9 +17,9 @@ router.post("/assignRole", userController.assignRole);
 router.get("/viewUsers", userController.getAllusers);
 router.get("/viewTeachers", userController.getTeachers);
 //COOKIES
-router.get("/getCookies", (req, res) => {
-  res.send(req.signedCookies);
-});
+
+router.get("/getCookies", userController.getCookie);
+
 //Delete
 router.delete("/removeRole", userController.removeRole);
 

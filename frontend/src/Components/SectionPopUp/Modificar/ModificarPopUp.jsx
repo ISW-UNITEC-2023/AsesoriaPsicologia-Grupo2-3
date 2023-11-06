@@ -87,7 +87,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
                 <option value="teacher_id">Teacher ID</option>
                 <option value="year">Year</option>
                 <option value="quarter">Quarter</option>
-                <option value="active">Active</option>
+                <option value="active">Estado</option>
               </select>
             </div>
 

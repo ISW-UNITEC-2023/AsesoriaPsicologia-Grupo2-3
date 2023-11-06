@@ -4,7 +4,7 @@ import services from "../Utilities/login-services.js";
 
 import { createSection } from "../Utilities/section-services.js";
 
-const Popup = ({ isOpen, onClose, selectedButtonInfo, selectedTeacherId }) => {
+const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
