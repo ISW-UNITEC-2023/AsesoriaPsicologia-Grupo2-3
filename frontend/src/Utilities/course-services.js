@@ -10,6 +10,18 @@ export async function loadModules() {
   return response.data;
 }
 
+export async function createModules(module) {
+  const host = process.env.REACT_APP_API_BASE_URL;
+  const options = {
+    method: "POST",
+    url: `${host}/courses/create`, // Correct endpoint URL
+    withCredentials: true,
+    data: module, // Use the 'module' parameter
+  };
+  const response = await axios.request(options);
+  return response.data;
+}
+
 export async function deleteModule(id) {
   const options = {
     method: "DELETE",

@@ -10,11 +10,13 @@ const knex = require("knex")({
 });
 
 async function createCourse(course) {
-  return knex("courses").insert({
+  console.log(course);
+  const res = knex("courses").insert({
     name_course: course.name,
     description_course: course.description,
     user_creator: course.creator,
   });
+  return res;
 }
 
 async function updateCourseName(course) {
