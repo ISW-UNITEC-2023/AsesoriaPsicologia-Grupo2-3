@@ -3,6 +3,7 @@ import propsTypes from "prop-types";
 
 const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
+    opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
   };
 
@@ -12,7 +13,7 @@ const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
 
   const buttonContainerStyle = {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-between", // Para colocar los botones uno al lado del otro
   };
 
   return (
@@ -26,7 +27,12 @@ const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
               onClick={() => {
                 onConfirm();
               }}
-              style={{ marginRight: "10px" }}
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                borderBlockColor: "green",
+                marginRight: "10px",
+              }}
             >
               Sí, deseo modificar sección {sectionId}
             </button>
