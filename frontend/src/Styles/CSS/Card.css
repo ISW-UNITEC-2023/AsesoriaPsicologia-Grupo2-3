@@ -1,0 +1,105 @@
+.tab-container {
+  display: inline-block;
+  margin-right: 10px; /* Espacio entre las pestañas */
+}
+
+.tab-button {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  /* Color de fondo */
+  cursor: pointer;
+  /* Otros estilos según tu preferencia */
+}
+
+.card-image-module {
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
+div.card-title.h5 {
+  text-decoration: underline;
+  color: black;
+  padding-top: 0.5rem;
+  text-align: start;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+div.card-title.h5:is(:active, :focus, :hover) {
+  color: #2986ff;
+}
+.text-container-dashboard.card-text > * {
+  color: #535252;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.text-container-dashboard.card-text {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.modulo-card {
+  width: 20rem; /* Ancho fijo */
+  height: 27rem; /* Alto fijo */
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.modulo-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.modulo-btn {
+  font-size: 0.5rem;
+  padding: 10px 20px;
+  background-color: #6662d9;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-body {
+  padding: 5px !important;
+}
+
+.text-container-dashboard.card-text > :first-child {
+  margin-top: 15px;
+}
+
+.cta-container > * > * {
+  font-size: 1rem !important;
+}
+button.btn.btn-success.entrar-curso-btn {
+  background: #0046a3;
+}
+
+a.dropdown-editar.dropdown-item:is(:focus, :hover),
+button.btn.btn-success.entrar-curso-btn:is(:focus, :hover) {
+  background: #2986ff;
+  color: white;
+}
+
+.dropdown-toggle.dropdown-toggle-split.btn.btn-success.dropdown-curso {
+  background: #cf0038;
+}
+
+a.dropdown-eliminar.dropdown-item:is(:focus, :hover),
+.dropdown-toggle.dropdown-toggle-split.btn.btn-success.dropdown-curso:is(
+    :focus,
+    :hover
+  ) {
+  background: #ff0f17;
+  color: white;
+}

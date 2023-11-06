@@ -1,0 +1,107 @@
+.pacientes-container {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(255, 255, 255);
+  overflow: scroll;
+}
+
+.title-pacientes {
+  font-size: 40px;
+  padding: 20px;
+  color: #333;
+  font-weight: bold;
+  text-align: left;
+}
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nombre-box {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  color: #333;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.nombre-box:hover {
+  /* background-color: #d3d3d3;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); */
+}
+
+.editar-button:hover {
+  background-color: #13c52d;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.icon-persona {
+  margin-right: 15px;
+  font-size: 30px;
+  color: #5281ce;
+}
+
+.crear-participante-button {
+  background-color: #007bff; /* Cambia el color de fondo según tus preferencias */
+  color: #fff; /* Cambia el color del texto según tus preferencias */
+  font-size: 14px; /* Cambia el tamaño de fuente según tus preferencias */
+  padding: 8px 16px; /* Ajusta el espaciado interno según tus preferencias */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right; /* Alinea a la derecha */
+  margin-right: 5%; /* Agrega un margen derecho para separarlo del título */
+}
+
+.nombre-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editar-button {
+  /* Alinea el botón a la derecha */
+  margin-left: auto;
+  background-color: rgb(14, 182, 98);
+  color: white;
+  /* Agrega cualquier otro estilo deseado para el botón de editar */
+}
+
+.nombre-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nombre {
+  margin-right: auto;
+}
+.container-pacientes-title-list {
+  width: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+  .pacientes-container {
+    height: 100vh;
+  }
+}

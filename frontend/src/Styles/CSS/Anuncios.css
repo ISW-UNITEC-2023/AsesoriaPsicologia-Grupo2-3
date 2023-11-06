@@ -1,0 +1,257 @@
+.anuncios-container {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+}
+
+.anuncios-container-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(249, 248, 248);
+}
+
+.anuncios-container-controls {
+  height: 9.8vh;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title-anuncios {
+  margin-left: 3rem;
+  align-items: start;
+  font-weight: bold;
+  color: #00367d;
+}
+
+.anuncios-crear-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: 1px solid #0d6efd;
+  border-radius: 5px;
+  height: 5.5vh;
+  width: 7vh;
+  margin-right: 4.9rem;
+  width: fit-content;
+  color: #0d6efd;
+  font-weight: bold;
+  padding-inline: 1rem;
+  justify-content: end;
+  position: sticky;
+  transition: background-color 0.2s ease;
+}
+
+.anuncios-crear-button:is(:hover) {
+  background-color: #0d6efd;
+  color: white;
+
+  .anuncios-crear-icon {
+    font-size: 26px;
+    color: white;
+    text-align: center;
+  }
+}
+
+.anuncios-crear-button > * {
+  margin: 0.5rem;
+}
+
+.anuncios-crear-icon {
+  font-size: 26px;
+  color: #0d6efd;
+  text-align: center;
+}
+
+.anuncios-column {
+  flex: 1;
+  margin: 10px;
+  text-align: center;
+}
+
+.anuncio-item-box {
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.anuncio-item-2 {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  margin-right: 2rem;
+}
+
+.anuncio-item-3 {
+  width: 15%;
+  text-align: end;
+  position: sticky;
+  height: 100%;
+  margin: 0px;
+  align-items: center;
+  margin-inline: 2rem;
+}
+
+.anuncios-group-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 5%;
+  margin-bottom: 10px;
+}
+
+.anuncio-icon-persona {
+  font-size: 40px;
+  width: 10%;
+  color: #5281ce;
+  align-self: center;
+}
+
+.anuncio-icon-button {
+  font-size: 15px;
+  color: #5281ce;
+}
+
+.anuncio-titulo {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.anuncio-descripcion {
+  font-size: 1rem;
+  color: #555;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 0.3rem;
+  text-align: justify;
+}
+
+.anuncio-div-span {
+  display: flex;
+  flex-direction: column;
+}
+
+.anuncio-div-span a {
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+.anuncio-div-span span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.anuncio-dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.dropdown-item {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.anuncios-show-box {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  overflow-y: auto;
+}
+
+.custom-searchbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.input-search-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#dropdown-menu-align-end.dropdown-toggle.btn.btn-primary {
+  padding-inline: 3rem !important;
+  padding-block: 0.5rem;
+  background-color: #00367d;
+  color: white;
+}
+
+#dropdown-menu-align-end.dropdown-toggle.btn.btn-primary:is(
+    :focus,
+    :active,
+    :hover
+  ) {
+  background-color: #2986ff;
+  color: white;
+}
+
+a.dropdown-eliminar.dropdown-item:is(:focus, :hover) {
+  background: #ff0f17;
+  color: white;
+
+  .anuncio-icon-button {
+    color: white;
+  }
+}
+
+a.dropdown-editar.dropdown-item:is(:focus, :hover) {
+  background: #2986ff !important;
+  color: white;
+
+  .anuncio-icon-button {
+    color: white;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .anuncio-item-box {
+    flex-direction: column;
+  }
+
+  .title-anuncios {
+    margin-left: 2rem;
+    margin-right: 1rem;
+  }
+  .anuncio-item-2 {
+    margin-top: 1rem;
+  }
+  .anuncio-item-3 {
+    margin-top: 1rem;
+    margin-right: 1rem;
+  }
+  .anuncio-item-box > :first-child {
+    margin: 1rem !important;
+  }
+
+  #dropdown-menu-align-end.dropdown-toggle.btn.btn-primary {
+    padding-inline: 5rem !important;
+    padding-block: 0.5rem;
+  }
+  .anuncios-crear-button {
+    margin-right: 2rem;
+  }
+}
+
+@media screen and (min-width: 899px) {
+  .anuncio-item-box > :first-child {
+    margin: 1rem !important;
+  }
+}
