@@ -73,7 +73,8 @@ async function getSectionByCourse(course_id) {
           "courses.name_course as CourseName",
           "users.name_user as Teacher",
           "sections.year as Year",
-          "sections.quarter as Quarter"
+          "sections.quarter as Quarter",
+          "sections.active_section as Active"
         )
         .table("sections")
         .innerJoin("users", "users.id_user", "sections.id_teacher")
@@ -89,6 +90,35 @@ async function deleteSection(id) {
   section = JSON.stringify(section);
   return JSON.parse(section);
 }
+
+async function updateYear(section) {
+  return knex("sections").where("id_section", section.id_sections).update({
+    year: section.year,
+    last_modification: new Date(),
+  });
+}
+
+async function updateQuarter(section) {
+  return knex("sections").where("id_section", section.id_sections).update({
+    quarter: section.quarter,
+    last_modification: new Date(),
+  });
+}
+
+async function updateTeacher(section) {
+  return knex("sections").where("id_section", section.id_sections).update({
+    id_teacher: section.id_teacher,
+    last_modification: new Date(),
+  });
+}
+
+async function updateActive(section) {
+  return knex("sections").where("id_section", section.id_sections).update({
+    active_section: section.active_section,
+    last_modification: new Date(),
+  });
+}
+
 module.exports = {
   createSection,
   assignTeacher,
@@ -97,4 +127,8 @@ module.exports = {
   getAllSections,
   getSectionByCourse,
   deleteSection,
+  updateYear,
+  updateQuarter,
+  updateTeacher,
+  updateActive,
 };

@@ -4,6 +4,7 @@ import {
   updateTeacher,
   updateQuarter,
   updateYear,
+  updateActive,
 } from "../Utilities/section-services";
 import {
   Container,
@@ -53,6 +54,7 @@ function SectionsPage() {
   const [selectedQuarterOption, setSelectedQuarterOption] = useState("");
   const [selectedTeacherOption, setSelectedTeacherOption] = useState("");
   const [selectYearOption, setSelectedYearOption] = useState("");
+  const [selectedActiveOption, setSelectedActiveOption] = useState("");
 
   const [isModifyConfirmed, setIsModifyConfirmed] = useState(false);
 
@@ -87,13 +89,15 @@ function SectionsPage() {
     option,
     quarterOption,
     teacherOption,
-    yearOption
+    yearOption,
+    activeOption
   ) => {
     setModifySectionId(sectionId);
     setSelectedOption(option);
     setSelectedQuarterOption(quarterOption);
     setSelectedTeacherOption(teacherOption);
     setSelectedYearOption(yearOption);
+    setSelectedActiveOption(activeOption);
     setModifyConfirmPopupOpen(!isModifyConfirmPopupOpen);
   };
 
@@ -111,7 +115,6 @@ function SectionsPage() {
   };
 
   const handleConfirm = async () => {
-    console.log("selectedOption", selectedOption);
     try {
       if (selectedOption === "teacher_id") {
         await updateTeacher(modifySectionId, selectedTeacherOption);
@@ -119,8 +122,10 @@ function SectionsPage() {
         await updateYear(modifySectionId, selectYearOption);
       } else if (selectedOption === "quarter") {
         await updateQuarter(modifySectionId, selectedQuarterOption);
+      } else if (selectedOption === "active") {
+        await updateActive(modifySectionId, selectedActiveOption);
       }
-      setIsModifyConfirmed(true); // Indica que se ha confirmado la modificación
+      setIsModifyConfirmed(true);
     } catch (error) {
       console.error("Error al actualizar:", error);
     }
@@ -158,6 +163,12 @@ function SectionsPage() {
                           {course.Quarter} <br />
                           <strong>Docente: </strong>
                           {course.Teacher} <br />
+                          {course.Active === 1 ? (
+                            <strong>Estado: Activo</strong>
+                          ) : (
+                            <strong>Estado: Inactivo</strong>
+                          )}
+                          <br />
                         </Card.Text>
                       </Card.Body>
                       <CardFooter
@@ -207,7 +218,8 @@ function SectionsPage() {
                         option,
                         quarterOption,
                         teacherOption,
-                        yearOption
+                        yearOption,
+                        activeOption
                       ) => {
                         toggleModify(null);
                         toggleModifyConfirmPopup(
@@ -215,7 +227,8 @@ function SectionsPage() {
                           option,
                           quarterOption,
                           teacherOption,
-                          yearOption
+                          yearOption,
+                          activeOption
                         );
                       }}
                       sectionId={course.SectionId}

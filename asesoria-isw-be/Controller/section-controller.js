@@ -82,6 +82,63 @@ async function deleteSection(req, res) {
     res.send({ message: "No se ha podido eliminar la sección" });
   }
 }
+
+async function updateYear(req, res) {
+  const { id_sections, year } = req.body;
+  try {
+    await sectionServices.updateYear({
+      id_sections: id_sections,
+      year: year,
+    });
+    res.send({ message: "Se ha actualizado el año de la sección" });
+  } catch (error) {
+    res.send({ message: "No se ha podido actualizar el año de la sección" });
+  }
+}
+
+async function updateQuarter(req, res) {
+  const { id_sections, quarter } = req.body;
+  try {
+    await sectionServices.updateQuarter({
+      id_sections: id_sections,
+      quarter: quarter,
+    });
+    res.send({ message: "Se ha actualizado el trimestre de la sección" });
+  } catch (error) {
+    res.send({
+      message: "No se ha podido actualizar el trimestre de la sección",
+    });
+  }
+}
+
+async function updateTeacher(req, res) {
+  const { id_sections, id_teacher } = req.body;
+  try {
+    await sectionServices.updateTeacher({
+      id_sections: id_sections,
+      id_teacher: id_teacher,
+    });
+    res.send({ message: "Se ha actualizado el catedrático de la sección" });
+  } catch (error) {
+    res.send({
+      message: "No se ha podido actualizar el catedrático de la sección",
+    });
+  }
+}
+
+async function updateActive(req, res) {
+  const { id_sections, active_section } = req.body;
+  try {
+    await sectionServices.updateActive({
+      id_sections: id_sections,
+      active_section: active_section,
+    });
+    res.send({ message: "Se ha actualizado el estado de la sección" });
+  } catch (error) {
+    res.send({ message: "No se ha podido actualizar el estado de la sección" });
+  }
+}
+
 module.exports = {
   createSection,
   assignTeacher,
@@ -90,4 +147,8 @@ module.exports = {
   getAllSections,
   getSectionByCourse,
   deleteSection,
+  updateYear,
+  updateQuarter,
+  updateTeacher,
+  updateActive,
 };

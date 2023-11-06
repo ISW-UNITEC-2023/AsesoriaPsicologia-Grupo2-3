@@ -67,9 +67,9 @@ export async function deleteSection(id) {
 export async function updateTeacher(id, teacher_id) {
   const options = {
     method: "PUT",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/update/teacher/",
-    params: { id: id },
-    data: { teacher_id: teacher_id },
+    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateTeacher",
+
+    data: { id_sections: id, id_teacher: teacher_id },
   };
 
   try {
@@ -83,9 +83,9 @@ export async function updateTeacher(id, teacher_id) {
 export async function updateYear(id, year) {
   const options = {
     method: "PUT",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/update/year/",
-    params: { id: id },
-    data: { year: year },
+    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateYear",
+
+    data: { id_sections: id, year: year },
   };
 
   try {
@@ -99,9 +99,25 @@ export async function updateYear(id, year) {
 export async function updateQuarter(id, quarter) {
   const options = {
     method: "PUT",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/update/quarter/",
-    params: { id: id },
-    data: { quarter: quarter },
+    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateQuarter",
+
+    data: { id_sections: id, quarter: quarter },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+export async function updateActive(id, active) {
+  const options = {
+    method: "PUT",
+    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateActive",
+
+    data: { id_sections: id, active_section: active },
   };
 
   try {
