@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import "../Styles/CSS/PopUp_CrearUser.css";
-// import "font-awesome/css/font-awesome.css";
-import Services from "../Utilities/login-services";
-import PropTypes from "prop-types";
+import userServices from "../Utilities/user-services";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEye,
+  faEyeSlash,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
-const CrearUser = ({ isOpen, onClose, onUpdatePacientesList }) => {
+const CrearUser = ({ isOpen, onClose }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -16,231 +20,133 @@ const CrearUser = ({ isOpen, onClose, onUpdatePacientesList }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [credentials, setCredentials] = useState({
-    id_account: null,
-    role: "",
     name: "",
     email: "",
+    phone: "",
     password: "",
-    active: null,
+    type: "",
+    active: 1,
   });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleCreateUser = (event) => {
+    event.preventDefault();
+    userServices.createUser(credentials)
+    onClose();
+  };
+
   return (
-    <div className="popup-overlay" style={overlayStyle}>
-      <div className="popup" style={popupStyle}>
-        <button className="close-button" onClick={onClose}>
-          &times;
-        </button>
-        <h2>CREAR NUEVO USUARIO</h2>
-        <div className="grid-container">
-          <div className="form-group">
-            <label htmlFor="usuario">ID Usuario</label>
+    <div className="popup-overlay-cu" style={overlayStyle}>
+      <div className="popup-cu" style={popupStyle}>
+        <div className="form-header-cu">
+          <h2>CREAR NUEVO USUARIO</h2>
+          <FontAwesomeIcon
+            style={{ cursor: "pointer" }}
+            icon={faRightFromBracket}
+            onClick={onClose}
+          />
+        </div>
+        <div className="form-body-cu">
+          <div className="form-group-cu">
+            <label className="form-label-cu">Nombre Completo</label>
             <input
               type="text"
-              className="form-control"
-              id="usuario"
-              placeholder="Ingrese el ID"
-              onChange={(event) => {
+              className="form-control-cu"
+              required
+              onChange={(event) =>
                 setCredentials({
-                  id_account: event.target.value,
-                  role: credentials.role,
-                  name: credentials.name,
-                  email: credentials.email,
-                  password: credentials.password,
-                  active: credentials.active,
-                });
-              }}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="nombre">Nombre Completo</label>
-            <input
-              type="text"
-              className="form-control"
-              id="nombre"
-              placeholder="Ingrese el nombre completo"
-              onChange={(event) => {
-                setCredentials({
-                  id_account: credentials.id_account,
-                  role: credentials.role,
+                  ...credentials,
                   name: event.target.value,
-                  email: credentials.email,
-                  password: credentials.password,
-                  active: credentials.active,
-                });
-              }}
+                })
+              }
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="correo">Correo Electrónico</label>
+          <div className="form-group-cu">
+            <label className="form-label-cu">Correo Eléctronico</label>
             <input
-              type="text"
-              className="form-control"
-              id="correo"
-              placeholder="Ingrese el correo electrónico"
-              onChange={(event) => {
+              type="email"
+              className="form-control-cu"
+              required
+              onChange={(event) =>
                 setCredentials({
-                  id_account: credentials.id_account,
-                  role: credentials.role,
-                  name: credentials.name,
+                  ...credentials,
                   email: event.target.value,
-                  password: credentials.password,
-                  active: credentials.active,
-                });
-              }}
+                })
+              }
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="contraseña">Contraseña</label>
-            <div className="password-input">
+          <div className="form-group-cu">
+            <label className="form-label-cu">Contraseña</label>
+            <div className="form-div-password-cu">
               <input
                 type={showPassword ? "text" : "password"}
-                className="form-control"
-                id="contraseña"
-                placeholder="Ingrese la contraseña"
-                onChange={(event) => {
+                className="form-input-password-cu"
+                required
+                onChange={(event) =>
                   setCredentials({
-                    id_account: credentials.id_account,
-                    role: credentials.role,
-                    name: credentials.name,
-                    email: credentials.email,
+                    ...credentials,
                     password: event.target.value,
-                    active: credentials.active,
-                  });
-                }}
+                  })
+                }
               />
-              <span
-                className={`password-toggle ${
-                  showPassword ? "fa fa-eye" : "fa fa-eye-slash"
-                }`}
-                onClick={togglePasswordVisibility}
-              ></span>
+              {showPassword ? (
+                <FontAwesomeIcon
+                  className="eye-icon-cu"
+                  icon={faEye}
+                  onClick={togglePasswordVisibility}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  className="eye-icon-cu"
+                  icon={faEyeSlash}
+                  onClick={togglePasswordVisibility}
+                />
+              )}
             </div>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="Rol">Estado</label>
-            <select
-              className="form-control"
-              id="estado"
-              defaultValue=""
-              onChange={(event) => {
-                let valor = -1;
-                if (event.target.value === "opcion1") {
-                  valor = 1;
-                } else if (event.target.value === "opcion2") {
-                  valor = 0;
+          <div className="form-group-double-cu">
+            <div className="form-group-cu">
+              <label className="form-label-cu">Teléfono</label>
+              <input
+                type="text"
+                className="form-control-cu"
+                required
+                onChange={(event) =>
+                  setCredentials({
+                    ...credentials,
+                    phone: event.target.value,
+                  })
                 }
-
-                setCredentials({
-                  id_account: credentials.id_account,
-                  role: credentials.role,
-                  name: credentials.name,
-                  email: credentials.email,
-                  password: credentials.password,
-                  active: valor,
-                });
-              }}
-            >
-              <option value="" disabled>
-                Seleccione una opción
-              </option>
-              <option value="opcion1">Activo</option>
-              <option value="opcion2">Inactivo</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="Rol">Rol</label>
-            <select
-              className="form-control"
-              id="rol"
-              defaultValue=""
-              onChange={(event) => {
-                let valor = "";
-                if (event.target.value === "opcion1") {
-                  valor = "ADMIN";
-                } else if (event.target.value === "opcion2") {
-                  valor = "DOCENTE";
-                } else if (event.target.value === "opcion3") {
-                  valor = "ESTUDIANTE";
-                } else if (event.target.value === "opcion4") {
-                  valor = "PACIENTE";
+              />
+            </div>
+            <div className="form-group-cu">
+              <label className="form-label-cu">Estado</label>
+              <select
+                className="form-control-cu"
+                required
+                onChange={(event) =>
+                  setCredentials({
+                    ...credentials,
+                    active: event.target.value,
+                  })
                 }
-
-                setCredentials({
-                  id_account: credentials.id_account,
-                  role: valor,
-                  name: credentials.name,
-                  email: credentials.email,
-                  password: credentials.password,
-                  active: credentials.active,
-                });
-              }}
-            >
-              <option value="" disabled>
-                Seleccione una opción
-              </option>
-              <option value="opcion1">Administrador</option>
-              <option value="opcion2">Docente</option>
-              <option value="opcion3">Estudiante</option>
-              <option value="opcion4">Paciente</option>
-            </select>
+              >
+                <option value={1}>Activo</option>
+                <option value={0}>Inactivo</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div className="buttons">
-          <button
-            className="btn btn-danger"
-            onClick={onClose}
-            style={{ marginRight: "10px" }}
-          >
-            Cancelar
-          </button>
-          <button
-            className="btn btn-success"
-            onClick={async () => {
-              const response = await Services.registerUser(
-                credentials.id_account,
-                credentials.role,
-                credentials.name,
-                credentials.email,
-                credentials.password,
-                credentials.active
-              );
-
-              if (
-                credentials.id_account === null ||
-                credentials.role === "" ||
-                credentials.name === "" ||
-                credentials.email === "" ||
-                credentials.password === "" ||
-                credentials.active === null
-              ) {
-                // Aquí puedes mostrar una notificación o mensaje de error
-                console.log("No puede dejar ningun campo vacio.");
-              } else if (!!response.message) {
-                // Aquí puedes mostrar una notificación o mensaje de error
-
-                console.log("Un campo no es valido.");
-              } else {
-                // Aquí va un popup de creación exitosa
-                console.log("El usuario se creó exitosamente");
-
-                // Llama a la función de actualización para agregar el nuevo paciente a la lista
-                onUpdatePacientesList({
-                  nombre: credentials.name,
-                  email: credentials.email,
-                });
-
-                // Cierra el popup después de crear el usuario exitosamente
-                onClose();
-              }
-            }}
-          >
-            Guardar
-          </button>
+          <div className="form-buttons-cu">
+            <button className="form-cancel-cu" onClick={onClose}>
+              Cancelar
+            </button>
+            <button className="form-create-cu" onClick={handleCreateUser}>
+              Crear
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -248,9 +154,3 @@ const CrearUser = ({ isOpen, onClose, onUpdatePacientesList }) => {
 };
 
 export default CrearUser;
-
-CrearUser.propTypes = {
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  onUpdatePacientesList: PropTypes.func,
-};

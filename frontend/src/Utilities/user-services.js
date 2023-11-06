@@ -20,7 +20,26 @@ async function getAllUsersRoles(){
     return roles.data.rolesInfo[0]
 }
 
+async function createUser(user){
+    const options = {
+        method: "POST",
+        url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/register",
+        data: {
+            name: user.name,
+            email: user.email, 
+            phone: user.phone,
+            password: user.password, 
+            type: user.type, 
+            active: user.active
+        }
+    }
+    let users = await axios.request(options);
+    return users.data
+
+}
+
 export default {
     getUsers,
-    getAllUsersRoles
+    getAllUsersRoles,
+    createUser
 }

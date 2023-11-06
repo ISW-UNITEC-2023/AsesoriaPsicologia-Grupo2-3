@@ -1,8 +1,14 @@
+//Components
 import Navbar from "../Components/Navbar";
+import PopUpCrearUser from "../Components/PopUp_CrearUser";
+
+//Functions
 import { useEffect, useState } from "react";
-import "../Styles/CSS/Accounts.css";
 import user_services from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
+
+//Styles and Icons
+import "../Styles/CSS/Accounts.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -23,6 +29,7 @@ function Accounts() {
   const [sorted, setSorted] = useState(false);
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
+  const [openCreate, setOpenCreate] = useState(0);
 
   //Mensajes de filtros
   const [isHovering, setIsHovering] = useState(false);
@@ -374,7 +381,6 @@ function Accounts() {
             />
             {displayResults && <SearchDropdown matchingNames={matchingNames} />}
           </div>
-
           <div
             className="remove-filter-button"
             onClick={() => {
@@ -393,7 +399,20 @@ function Accounts() {
               </span>
             )}
           </div>
-          <button className="crear-cuenta-button">Crear cuenta</button>
+          <button
+            className="crear-cuenta-button"
+            onClick={() => {
+              setOpenCreate(1);
+            }}
+          >
+            Crear cuenta
+          </button>
+          <PopUpCrearUser
+            isOpen={openCreate}
+            onClose={() => {
+              setOpenCreate(0);
+            }}
+          />
         </div>
         <table className="table table-bordered account-table">
           <thead className="accounts-table-header">
