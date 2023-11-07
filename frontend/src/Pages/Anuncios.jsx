@@ -73,7 +73,7 @@ function Anuncios() {
       handleCancelDeletePopup();
       updatedAnnounces.splice(
         updatedAnnounces.findIndex(
-          (announce) => announce.AnnounceId === modalEliminar.id
+          (announce) => announce.id_announcement === modalEliminar.id
         ),
         1
       );
@@ -144,9 +144,7 @@ function Anuncios() {
 
   const updateAnnounlist = async () => {
     try {
-      const updatedAnnounces = await loadAnnounces();
-      setAnnounces(updatedAnnounces);
-      updateAnnounlist(updatedAnnounces);
+      setAnnounces((await loadAnnounces()).announcementsInfo);
     } catch (error) {
       console.log(error);
     }
@@ -166,25 +164,25 @@ function Anuncios() {
   const [showModalEditar, setShowModalEditar] = useState(false);
 
   const [selectedAnnounce, setSelectedAnnounce] = useState({
-    id: "",
-    title: "",
-    description: "",
+    id_announcement: "",
+    title_announcement: "",
+    message_announcement: "",
   });
 
   const handleShowModalEditar = (announce) => {
     setSelectedAnnounce({
-      id: announce.AnnounceId,
-      title: announce.Title,
-      description: announce.Message,
+      id_announcement: announce.id_announcement,
+      title_announcement: announce.title_announcement,
+      message_announcement: announce.message_announcement,
     });
     setShowModalEditar(true);
   };
 
   const handleShowModalEliminar = (announce) => {
     setSelectedAnnounce({
-      id: announce.id_announcement,
-      title: announce.title_announcement,
-      description: announce.message_announcement,
+      id_announcement: announce.id_announcement,
+      title_announcement: announce.title_announcement,
+      message_announcement: announce.message_announcement,
     });
 
     setIsDeletePopUpOpen(true);
@@ -327,17 +325,17 @@ function Anuncios() {
           <PopUpEditarAnuncio
             show={showModalEditar}
             onHide={handleCloseModalEditar}
-            announce_id={selectedAnnounce.id}
-            title={selectedAnnounce.title}
-            description={selectedAnnounce.description}
+            announce_id={selectedAnnounce.id_announcement}
+            title={selectedAnnounce.title_announcement}
+            description={selectedAnnounce.message_announcement}
           />
 
           <PopUpDelete
             isOpen={isDeletePopUpOpen}
             onCancel={handleCancelDeletePopup}
             pageName="anuncios"
-            announceId={selectedAnnounce.id}
-            itemName={selectedAnnounce.title}
+            announceId={selectedAnnounce.id_announcement}
+            itemName={selectedAnnounce.title_announcement}
             onConfirm={handleConfirmDeletePopup}
           />
         </div>

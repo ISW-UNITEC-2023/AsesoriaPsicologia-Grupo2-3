@@ -36,7 +36,7 @@ const PopUpDelete = ({
         console.error("Error al eliminar la sección");
       }
     } catch (error) {
-      console.error("Error al eliminar la sección:", error.message);
+      console.error("Error al eliminar la sección:", error);
     }
   }
 

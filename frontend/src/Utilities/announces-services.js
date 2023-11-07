@@ -50,10 +50,11 @@ export async function CreateAnnounce(info) {
 export async function UpdateAnnouncesTitle(id, title) {
   const options = {
     method: "POST",
-    url: process.env.REACT_APP_API_BASE_URL+"/announcements/update/title",
+    url: process.env.REACT_APP_API_BASE_URL+"/announcements/updateTitle",
     data: {
       id: id,
-      title_new: title,
+      title: title,
+      editor: 13
     },
   };
 
@@ -70,10 +71,11 @@ export async function UpdateAnnouncesTitle(id, title) {
 export async function UpdateAnnouncesDecription(id, message) {
   const options = {
     method: "POST",
-    url: process.env.REACT_APP_API_BASE_URL+"/announce/update/Descrip",
+    url: process.env.REACT_APP_API_BASE_URL+"/announcements/updateMessage",
     data: {
       id: id,
-      description_new: message,
+      message: message,
+      editor: 13
     },
   };
 
