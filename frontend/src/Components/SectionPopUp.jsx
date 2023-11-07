@@ -64,11 +64,6 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
       onClose();
       // Mostrar un mensaje de éxito
       alert("Sección creada exitosamente");
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/components/SectionPopUp/PopUp.jsx
-
-      //console.log("sectionData", sectionData);
-=======
->>>>>>> Organizacion-Nueva:frontend/src/Components/SectionPopUp.jsx
     } catch (error) {
       alert("Error al crear la sección!");
     }

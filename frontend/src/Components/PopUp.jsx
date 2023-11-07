@@ -1,10 +1,5 @@
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/components/PopUp/PopUp.jsx
-import React, { useState, useEffect } from "react";
-import "./PopUp.css";
-=======
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Styles/CSS/PopUp.css";
->>>>>>> Organizacion-Nueva:frontend/src/Components/PopUp.jsx
 import axios from "axios"; // Importa Axios
 
 const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
@@ -38,11 +33,7 @@ const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
     };
 
     axios
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/components/PopUp/PopUp.jsx
-      .post("http://localhost:3001/modulos", newModule)
-=======
       .post(process.env.REACT_APP_API_BASE_URL+"/courses/create", newModule)
->>>>>>> Organizacion-Nueva:frontend/src/Components/PopUp.jsx
       .then((response) => {
         console.log("Módulo creado:", response.data);
         onUpdateModuleList(); // Llama a la función para actualizar la lista de módulos

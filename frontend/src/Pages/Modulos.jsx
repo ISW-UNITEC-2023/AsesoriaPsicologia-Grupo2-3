@@ -2,17 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "../Styles/CSS/Modulos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/pages/Modulos/Modulos.jsx
-import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
-import { faAdd, faTrashCan, faPen } from "@fortawesome/free-solid-svg-icons";
-
-import Popup from "../../components/PopUp/PopUp";
-import PopUpDelete from "../../components/DeletePopUp/PopUpDelete"
-import PopUpDeleted from "../../components/DeletePopUp/PopUpDeleted"
-=======
 // import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import { faAdd, faTrashCan, faPen } from "@fortawesome/free-solid-svg-icons";
->>>>>>> Organizacion-Nueva:frontend/src/Pages/Modulos.jsx
 
 import Popup from "../Components/PopUp";
 import PopUpDelete from "../Components/PopUpDelete";
@@ -50,25 +41,6 @@ function ModulosForm() {
     setIsPopupOpen(true);
   };
 
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/pages/Modulos/Modulos.jsx
-  const handleDeleteClick = (e, buttonInfo) => { // Función para abrir la ventana emergente de confirmación
-    e.preventDefault(); // Evita que la página se recargue
-    setIsDeletePopUpOpen(true); // Abre la ventana emergente de confirmación
-    setSelectedButtonInfo(buttonInfo); // Guarda la información del módulo seleccionado
-  };
-
-  const handleCancelDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false);  // Cierra la ventana emergente cuando el usuario cancela
-  };
-
-  const handleConfirmDeletePopup = () => { // Función para cerrar la ventana emergente de confirmación
-    setIsDeletePopUpOpen(false); // Cierra la ventana emergente cuando el usuario confirma
-    setIsDeletedPopUpOpen(true); // Abre la ventana emergente de confirmación
-  };
-
-  const handleCloseDeletedPopup = () => {  // Función para cerrar la ventana emergente de confirmación
-    setIsDeletedPopUpOpen(false); // Cierra la ventana emergente cuando el usuario cancela
-=======
   const handleDeleteClick = (e, buttonInfo) => {
     e.preventDefault();
     setIsDeletePopUpOpen(true);
@@ -86,7 +58,6 @@ function ModulosForm() {
 
   const handleCloseDeletedPopup = () => {
     setIsDeletedPopUpOpen(false);
->>>>>>> Organizacion-Nueva:frontend/src/Pages/Modulos.jsx
   };
 
   const cardElements = modules.map((module) => (
@@ -115,15 +86,11 @@ function ModulosForm() {
               <FontAwesomeIcon icon={faPen} />
             </a>
             {/*Botón para abrir la ventana emergente de confirmación de eliminar*/}
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/pages/Modulos/Modulos.jsx
-            <a href="#" className="btn btn-delete" onClick={(e) => handleDeleteClick(e, module)}>  
-=======
             <a
               href="#"
               className="btn btn-delete"
               onClick={(e) => handleDeleteClick(e, module)}
             >
->>>>>>> Organizacion-Nueva:frontend/src/Pages/Modulos.jsx
               <FontAwesomeIcon icon={faTrashCan} />
             </a>
 
@@ -142,11 +109,7 @@ function ModulosForm() {
   };
 
   return (
-<<<<<<< HEAD:portal-administrativo/frontend/asesoria-psicologica/src/pages/Modulos/Modulos.jsx
-    <div style={{ width: '90%' }}>
-=======
     <div style={{ width: "90%" }}>
->>>>>>> Organizacion-Nueva:frontend/src/Pages/Modulos.jsx
       <div className="container-header">
         <h1 className="title-modulo">Módulos</h1>
         <a
