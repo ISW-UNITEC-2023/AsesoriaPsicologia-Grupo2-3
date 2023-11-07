@@ -23,16 +23,19 @@ export async function createModules(module) {
 }
 
 export async function deleteModule(id) {
-  const options = {
-    method: "DELETE",
-    url: process.env.REACT_APP_API_BASE_URL+"/modulos",
-    data: { id: id },
-  };
+  const host = process.env.REACT_APP_API_BASE_URL;
+  const url = `${host}/courses/delete`;
+  const data = { id: id };
 
   try {
-    const response = await axios.request(options);
-    return response.data;
-  } catch (e) {
-    return { message: e.response.data.error };
+    const response = await axios.delete(url, { data });
+    
+    if (response.status === 200) {
+      return { status: response.status };
+    } else {
+      return { message: "Error deleting module" };
+    }
+  } catch (error) {
+    return { message: error.response?.data?.error || "An error occurred while deleting module" };
   }
 }

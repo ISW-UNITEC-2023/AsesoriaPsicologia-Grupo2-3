@@ -6,7 +6,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { Link } from "react-router-dom"; // Importar Link
 import Popup from "./SectionPopUp.jsx";
-import PopUpDelete from "../Components/PopUpDelete.jsx";
+import PUDelete from "../Components/PUDelete.jsx";
 import PopUpDeleted from "../Components/PopUpDeleted.jsx";
 import { deleteModule } from "../Utilities/course-services.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -153,7 +153,7 @@ function MyCard({ props, handleReload }) {
 
       {isDeletePopUpOpen && (
         // Pasa la información del módulo seleccionado y la función de confirmación al PopUp
-        <PopUpDelete
+        <PUDelete
           isOpen={isDeletePopUpOpen}
           onConfirm={handleConfirmDeletePopup}
           onCancel={handleCancelDeletePopup}

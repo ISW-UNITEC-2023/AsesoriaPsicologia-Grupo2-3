@@ -47,7 +47,7 @@ function DashBoard() {
             <Button
               className="button-create"
               onClick={() => setIsPopupOpen(true)}
-              console
+              
               variant={"outline-primary"}
             >
               Nueva clase

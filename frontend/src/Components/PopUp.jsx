@@ -38,21 +38,15 @@ const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
       onClose();
       // Mostrar un mensaje de éxito
       alert("Modulo creado exitosamente");
+      
+        window.location.reload();
+      
     } catch (error) {
       alert("Error al crear el modulo!");
     }
   };
 
-    // axios
-    //   .post(process.env.REACT_APP_API_BASE_ULR+"/courses/create", newModule)
-    //   .then((response) => {
-    //     console.log("Módulo creado:", response.data);
-    //     onUpdateModuleList(); // Llama a la función para actualizar la lista de módulos
-    //     onClose(); // Cierra el popup después de guardar
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error al crear el módulo:", error);
-    //   });
+   
  
   return (
     <div className="popup-overlay" style={overlayStyle}>
