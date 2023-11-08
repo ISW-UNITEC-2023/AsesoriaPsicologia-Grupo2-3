@@ -142,6 +142,31 @@ async function getTeachers() {
   return JSON.parse(users);
 }
 
+async function getUserRoles(idUser){
+  let roles = await knex.raw(
+    `
+      SELECT roles.id_role, roles.name_rol
+        FROM roles
+          INNER JOIN user_role ON user_role.id_role = roles.id_role
+          AND user_role.id_user = ?
+    `, [idUser]
+  )
+  roles = JSON.stringify(roles)
+  return JSON.parse(roles);
+}
+
+async function getAllUsersRoles(){
+  let roles = await knex.raw(
+    `
+      SELECT roles.id_role, roles.name_role, user_role.id_user
+        FROM roles
+          INNER JOIN user_role ON user_role.id_role = roles.id_role
+    `
+  )
+  roles = JSON.stringify(roles)
+  return JSON.parse(roles);
+}
+
 module.exports = {
   createUser,
   createPatient,
@@ -155,5 +180,7 @@ module.exports = {
   getUserCredentials,
   findExistingEmail,
   getAllusers,
-  getTeachers
+  getTeachers,
+  getUserRoles,
+  getAllUsersRoles
 };

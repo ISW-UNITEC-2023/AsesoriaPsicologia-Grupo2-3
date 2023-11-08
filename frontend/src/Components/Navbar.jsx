@@ -101,12 +101,12 @@ function MyNavbar() {
           />
           Pacientes
         </Link>
-        <Link to="/Profiles" className="link-navbar-plataforma">
+        <Link to="/Cuentas" className="link-navbar-plataforma">
           <FontAwesomeIcon
             icon={faAddressCard}
             className="navbar-plataforma-icon"
           />
-          Perfiles
+          Cuentas
         </Link>
         {/**<FontAwesomeIcon
           icon={faArrowLeft}
