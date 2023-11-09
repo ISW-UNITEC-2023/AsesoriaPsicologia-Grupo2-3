@@ -1,5 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useState, useEffect } from "react";
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -15,9 +20,40 @@ import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
 import ProfilesPage from "./Pages/Profiles";
 import VistasPDF from "./Pages/DocuPDF";
+import LoadingSpinner from "./Pages/LoadingStyle";
 import { PDFViewer } from "@react-pdf/renderer";
+import { getCookies } from "../src/Utilities/login-services";
+
+function ProtectedRoute({ element, allowedRoles, userRoles }) {
+  console.log(userRoles);
+  const isAuthorized =
+    userRoles && userRoles.some((role) => allowedRoles.includes(role));
+
+  return isAuthorized ? element : null;
+}
 
 function App() {
+  const [userData, setUserData] = useState(null);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
+
+  const fetchUserData = async () => {
+    const userData = await getCookies();
+
+    if (userData && userData.user_data && userData.user_data.roles) {
+      setUserData(userData.user_data.roles);
+      setUserDataLoaded(true);
+    }
+  };
+
+  const handleLoginSuccess = (e) => {
+    e.preventDefault();
+    fetchUserData();
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <Router>
       <Routes>
@@ -30,16 +66,47 @@ function App() {
         <Route path="/Anuncios" element={<Anuncios />} />
         <Route path="/Modulos" element={<Modulos />} />
         <Route path="/Expedientes" element={<Vistas />} />
-        <Route path="/ExpedientesPDF" element={<PDFViewer style={{width: "100%", height: "90vh"}}><VistasPDF /></PDFViewer>} />
+        <Route
+          path="/ExpedientesPDF"
+          element={
+            <PDFViewer style={{ width: "100%", height: "90vh" }}>
+              <VistasPDF />
+            </PDFViewer>
+          }
+        />
         <Route path="/Secciones" element={<Sections />} />
         <Route path="/Sesiones" element={<Sesiones />} />
         <Route path="/Pacientes" element={<Pacientes />} />
-        <Route path="/InicioSesion" element={<Login {...loginData} />} />
-        <Route path="/Dashboard" element={<DashBoard />} />
+        <Route
+          path="/InicioSesion"
+          element={
+            <Login
+              {...loginData}
+              onLoginSuccess={handleLoginSuccess}
+              setUserDataLoaded={setUserDataLoaded}
+            />
+          }
+        />
+
+        <Route
+          path="/Dashboard"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<DashBoard />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Crearanuncios" element={<AnunciosCrear />} />
-        <Route path="/Profiles" element={<ProfilesPage/>} />
+        <Route path="/Profiles" element={<ProfilesPage />} />
       </Routes>
     </Router>
   );

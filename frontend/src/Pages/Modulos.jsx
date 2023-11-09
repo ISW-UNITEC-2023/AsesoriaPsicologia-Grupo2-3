@@ -28,7 +28,6 @@ function ModulosForm() {
       .get("http://localhost:3001/modulos/all")
       .then((response) => {
         setModules(response.data);
-        
       })
       .catch((error) => {
         console.error("Error al obtener los módulos:", error);
@@ -61,9 +60,7 @@ function ModulosForm() {
   };
 
   const cardElements = modules.map((module) => (
-    
     <Col lg={4} md={6} xs={12}>
-      
       <div className="card">
         <div
           className="color-box"

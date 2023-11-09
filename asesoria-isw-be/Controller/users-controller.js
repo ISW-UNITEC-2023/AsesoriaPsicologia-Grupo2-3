@@ -83,6 +83,14 @@ async function loginUser(req, res) {
     }
 
     const email_exists = await userServices.findExistingEmail(email);
+    const roles = await userServices.getRoles(email_exists[0].id_user);
+    const roleNames = roles.map((role) => role.name_role);
+
+    const userData = {
+      email: email,
+      roles: roleNames,
+    };
+
     if (email_exists.length === 0) {
       errorMessage.push("No existe un correo con este email");
     }
@@ -120,12 +128,12 @@ async function loginUser(req, res) {
           }
         );
 
-        res.cookie("email", email, {
+        res.cookie("user_data", userData, {
           maxAge: 259200000, // Duración de 3 días en milisegundos
-          httpOnly: true, // La cookie solo es accesible desde el servidor
-          secure: true, // La cookie solo se envía a través de conexiones seguras (HTTPS)
-          sameSite: "lax", // Restringe el envío de cookies a solicitudes de terceros
-          signed: true, // Habilita la firma de la cookie
+          httpOnly: true,
+          secure: true,
+          sameSite: "lax",
+          signed: true,
         });
 
         res.send({
@@ -367,8 +375,27 @@ function encryptPassword(
 }
 
 async function getCookie(req, res) {
-  const cookies = req.signedCookies;
-  res.send(cookies);
+  try {
+    const cookies = req.signedCookies;
+
+    res.send(cookies);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
+  }
+}
+
+async function getRoles(req, res) {
+  const { id_user } = req.query;
+  try {
+    const roles = await userServices.getRoles(id_user);
+    res.send(roles);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los roles.",
+    });
+  }
 }
 
 module.exports = {
@@ -384,4 +411,5 @@ module.exports = {
   getAllusers,
   getTeachers,
   getCookie,
+  getRoles,
 };

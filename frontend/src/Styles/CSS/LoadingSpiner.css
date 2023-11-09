@@ -1,0 +1,40 @@
+.loading-container {
+  width: 100%;
+  max-width: 300px; /* Limita el ancho máximo */
+  margin: 0 auto; /* Centra horizontalmente */
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%; /* Centra verticalmente en relación con la mitad superior de la pantalla */
+  left: 50%; /* Centra horizontalmente en relación con la mitad izquierda de la pantalla */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Ajusta al centro tanto vertical como horizontalmente */
+}
+
+.message {
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+/* Estilos responsive */
+@media (max-width: 480px) {
+  .loading-container {
+    max-width: 90%; /* Cambia el ancho máximo en dispositivos pequeños */
+  }
+}

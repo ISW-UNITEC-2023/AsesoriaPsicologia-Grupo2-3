@@ -30,6 +30,7 @@ function DashBoard() {
       if (!cookiesLoaded) {
         const obtainedCookies = await getCookies();
         setCookies(obtainedCookies);
+        console.log(obtainedCookies);
         setCookiesLoaded(true);
       }
     }

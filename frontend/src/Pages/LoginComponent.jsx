@@ -57,7 +57,10 @@ function Login(props) {
 
   //Backend de Login
   const handleLoginSuccess = (e) => {
+    props.onLoginSuccess(e);
+    props.setUserDataLoaded(true);
     e.preventDefault();
+
     navigate("/Dashboard");
   };
 

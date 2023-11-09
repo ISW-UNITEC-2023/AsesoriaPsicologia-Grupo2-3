@@ -54,6 +54,7 @@ function MyNavbar() {
                 />
                 Mi Perfil
               </div>
+
               <div
                 className="nb-dropdown-item"
                 onClick={() => {
