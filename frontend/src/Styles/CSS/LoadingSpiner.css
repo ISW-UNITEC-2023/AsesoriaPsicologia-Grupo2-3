@@ -1,7 +1,7 @@
 .loading-container {
   width: 100%;
-  max-width: 300px; /* Limita el ancho máximo */
-  margin: 0 auto; /* Centra horizontalmente */
+  max-width: 300px;
+  margin: 0 auto;
   padding: 20px;
   text-align: center;
   border: 1px solid #ccc;
@@ -9,12 +9,9 @@
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: absolute;
-  top: 50%; /* Centra verticalmente en relación con la mitad superior de la pantalla */
-  left: 50%; /* Centra horizontalmente en relación con la mitad izquierda de la pantalla */
-  transform: translate(
-    -50%,
-    -50%
-  ); /* Ajusta al centro tanto vertical como horizontalmente */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .message {
@@ -32,9 +29,14 @@
   border-radius: 5px;
 }
 
-/* Estilos responsive */
 @media (max-width: 480px) {
   .loading-container {
-    max-width: 90%; /* Cambia el ancho máximo en dispositivos pequeños */
+    max-width: 90%;
   }
+}
+
+.large-message {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
