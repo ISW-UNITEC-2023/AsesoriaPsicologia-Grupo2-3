@@ -63,20 +63,108 @@ function App() {
           path="/ResetPassword"
           element={<ForgotPassword {...forgotData} />}
         />
-        <Route path="/Anuncios" element={<Anuncios />} />
-        <Route path="/Modulos" element={<Modulos />} />
-        <Route path="/Expedientes" element={<Vistas />} />
+        <Route
+          path="/Anuncios"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Anuncios />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Modulos"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Modulos />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Expedientes"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Vistas />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
         <Route
           path="/ExpedientesPDF"
           element={
-            <PDFViewer style={{ width: "100%", height: "90vh" }}>
-              <VistasPDF />
-            </PDFViewer>
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={
+                  <PDFViewer style={{ width: "100%", height: "90vh" }}>
+                    <VistasPDF />
+                  </PDFViewer>
+                }
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
           }
         />
-        <Route path="/Secciones" element={<Sections />} />
-        <Route path="/Sesiones" element={<Sesiones />} />
-        <Route path="/Pacientes" element={<Pacientes />} />
+        <Route
+          path="/Secciones"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Sections />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Sesiones"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Sesiones />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Pacientes"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Pacientes />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
         <Route
           path="/InicioSesion"
           element={
@@ -105,8 +193,34 @@ function App() {
 
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
-        <Route path="/Crearanuncios" element={<AnunciosCrear />} />
-        <Route path="/Profiles" element={<ProfilesPage />} />
+        <Route
+          path="/Crearanuncios"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<AnunciosCrear />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Profiles"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<ProfilesPage />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
       </Routes>
     </Router>
   );
