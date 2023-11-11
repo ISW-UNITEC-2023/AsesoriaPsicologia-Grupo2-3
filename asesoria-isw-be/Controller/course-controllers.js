@@ -11,7 +11,7 @@ async function createCourse(req, res) {
     });
     res.send({ message: "Se ha creado el curso exitosamente" });
   } catch (error) {
-    res.send({ error: "No se pudo crear el curso" });
+    res.send({ error: "No se pudo crear el curso"+error });
   }
 }
 
