@@ -16,6 +16,13 @@ router.post("/assignRole", userController.assignRole);
 //Get
 router.get("/viewUsers", userController.getAllusers);
 router.get("/viewTeachers", userController.getTeachers);
+router.get("/viewRoles", userController.getAllUsersRoles);
+//COOKIES
+
+router.get("/getCookies", userController.getCookie);
+router.post("/getRoles", userController.getUserRoles)
+
+router.get("/getRoles", userController.getRoles);
 
 //COOKIES
 
@@ -23,7 +30,6 @@ router.get("/getCookies", userController.getCookie);
 router.delete("/removeCookie", userController.removeCookie);
 
 //obtener los roles de usuario por id
-router.get("/getRoles", userController.getRoles);
 
 //Delete
 router.delete("/removeRole", userController.removeRole);

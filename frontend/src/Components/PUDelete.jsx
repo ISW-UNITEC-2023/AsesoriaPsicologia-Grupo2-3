@@ -1,42 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Modal, Button } from "react-bootstrap";
-import { deleteSection } from "../Utilities/section-services";
+import { deleteModule } from "../Utilities/course-services";
 import "../Styles/CSS/PopUpDelete.css";
-import {
-  DeleteAnnounces,
-  loadAnnounces,
-} from "../Utilities/announces-services";
 
-const PopUpDelete = ({
+const PUDelete = ({
   isOpen,
   onCancel,
-  onConfirm,
   itemName,
-  pageName,
   moduleId,
-  announceId,
+  onConfirm,
+  pageName,
 }) => {
+  const [isDeleted, setDeleted] = useState(false);
+
   async function handleDelete() {
     try {
-      if (pageName === "modulos") {
-        const response = await deleteSection(moduleId);
-      }
+      const response = await deleteModule(moduleId);
 
-      if (pageName === "anuncios") {
-        await DeleteAnnounces(announceId);
+      if (response && response.status === 200) {
+        // Set the deleted state to true
+        setDeleted(true);
 
-        onConfirm();
-      }
+        // Display a confirmation alert
+        const userConfirmed = window.confirm(
+          "Módulo eliminado exitosamente. ¿Desea recargar la página?"
+        );
 
-      if (response.status === 200) {
-        console.log("La sección se eliminó correctamente.");
-        onConfirm();
+        if (userConfirmed) {
+          // Refresh the page or call loadModules here
+          window.location.reload();
+        }
       } else {
-        console.error("Error al eliminar la sección");
+        console.error("Error al eliminar el módulo");
       }
     } catch (error) {
-      console.error("Error al eliminar la sección:", error);
+      console.error("Error al eliminar el módulo:", error.message);
     }
   }
 
@@ -50,22 +49,12 @@ const PopUpDelete = ({
     >
       <Modal.Header>
         <Modal.Title style={{ fontSize: "1.5rem", textAlign: "center" }}>
-          {pageName === "modulo"
-            ? `Eliminar módulo: ${itemName}`
-            : pageName === "seccion"
-            ? `Eliminar sección: ${itemName}`
-            : pageName === "anuncios"
-            ? `¿Eliminar: ${itemName}?`
-            : "ERROR"}
+          {`Eliminar módulo: ${itemName}`}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p style={{ fontSize: "1.3rem", textAlign: "center" }}>
-          {pageName === "modulo"
-            ? "¿Está seguro que desea eliminar el módulo?"
-            : "¿Está seguro que desea eliminar la sección?"
-            ? "Esta acción no puede ser retrocedida."
-            : { itemName }}
+          {`¿Está seguro que desea eliminar el módulo?`}
         </p>
       </Modal.Body>
       <Modal.Footer className="buttons-container">
@@ -77,6 +66,7 @@ const PopUpDelete = ({
         >
           Eliminar
         </Button>
+
         <Button
           className="cancel-button"
           variant="secondary-outlined"
@@ -86,17 +76,24 @@ const PopUpDelete = ({
           Cancelar
         </Button>
       </Modal.Footer>
+
+      {/* Conditional rendering of the alert */}
+      {isDeleted && (
+        <div className="alert alert-success" role="alert">
+          Módulo eliminado exitosamente.
+        </div>
+      )}
     </Modal>
   );
 };
 
-PopUpDelete.propTypes = {
+PUDelete.propTypes = {
   isOpen: PropTypes.bool,
   onCancel: PropTypes.func,
-  onConfirm: PropTypes.func,
   itemName: PropTypes.string,
   moduleId: PropTypes.number,
+  onConfirm: PropTypes.func,
   pageName: PropTypes.string,
 };
 
-export default PopUpDelete;
+export default PUDelete;

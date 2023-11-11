@@ -19,6 +19,7 @@ import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
 import ProfilesPage from "./Pages/Profiles";
+import Accounts from "./Pages/Accounts";
 import VistasPDF from "./Pages/DocuPDF";
 import LoadingSpinner from "./Pages/LoadingStyle";
 import { PDFViewer } from "@react-pdf/renderer";
@@ -192,6 +193,7 @@ function App() {
 
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route path="/Cuentas" element={<Accounts/>} />
         <Route
           path="/Crearanuncios"
           element={

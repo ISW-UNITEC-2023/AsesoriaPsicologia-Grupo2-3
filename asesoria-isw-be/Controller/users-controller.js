@@ -353,6 +353,21 @@ async function getTeachers(req, res) {
   }
 }
 
+async function getUserRoles(req, res){
+  const { idUser } = req.body;
+  try{
+    const roles = await userServices.getUserRoles(idUser)
+    res.send({
+      message: "Se obtuvieron los roles del usuario",
+      rolesInfo: roles
+    })
+  }catch(e){
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los roles del usuario"
+    })
+  }
+}
+
 function encryptPassword(
   password,
   salt = crypto.randomBytes(128).toString("base64")
@@ -409,6 +424,20 @@ async function getRoles(req, res) {
   }
 }
 
+async function getAllUsersRoles(req, res){
+  try{
+    const roles = await userServices.getAllUsersRoles();
+    res.send({
+      message: "Se obtuvieron los roles de los usuarios",
+      rolesInfo: roles
+    })
+  }catch(error){
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener todos los roles de los usuarios"
+    })
+  }
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -424,4 +453,7 @@ module.exports = {
   getCookie,
   getRoles,
   removeCookie,
+  getUserRoles,
+  getAllUsersRoles,
+  getRoles
 };

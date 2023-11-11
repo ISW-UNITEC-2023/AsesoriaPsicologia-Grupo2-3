@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../Styles/CSS/PopUp.css";
 import axios from "axios"; // Importa Axios
+import { createModules } from "../Utilities/course-services.js";
 
 const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
   const overlayStyle = {
@@ -23,27 +24,40 @@ const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
     }
   }, [isOpen]);
 
-  const handleSaveModule = () => {
+  const handleSaveModule = async () => {
     console.log("Intentando crear el módulo...");
 
+    console.log("Intentando crear el módulo...");
+    const name = moduleName;
+    const description = moduleDescription;
+    
+   // const creator = selectedQuarter;
+    
+    
     const newModule = {
+
       name: moduleName,
       description: moduleDescription,
-      creator: '13'
-    };
-
-    axios
-      .post(process.env.REACT_APP_API_BASE_URL+"/courses/create", newModule)
-      .then((response) => {
-        console.log("Módulo creado:", response.data);
-        onUpdateModuleList(); // Llama a la función para actualizar la lista de módulos
-        onClose(); // Cierra el popup después de guardar
-      })
-      .catch((error) => {
-        console.error("Error al crear el módulo:", error);
-      });
+      creator: '14'
+    }
+    
+    try {
+      // Llamar a la función createSection con los datos
+      await createModules(newModule);
+      // Cerrar el popup
+      onClose();
+      // Mostrar un mensaje de éxito
+      alert("Modulo creado exitosamente");
+      
+        window.location.reload();
+      
+    } catch (error) {
+      alert("Error al crear el modulo!");
+    }
   };
 
+   
+ 
   return (
     <div className="popup-overlay" style={overlayStyle}>
       <div className="popup" style={popupStyle}>

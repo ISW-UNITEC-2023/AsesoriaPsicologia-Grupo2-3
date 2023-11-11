@@ -11,16 +11,26 @@ app.use(cookieParser(secretKey));
 // REDIS
 const redis = require("./configs/redis");
 const { tokenCheck } = require("./middlewares/tokenCheck");
-(async () => {
-  await redis.connect();
-})();
-redis.on("connect", (err) => {
-  if (err) {
-    console.log("Could not establish connection with redis");
-  } else {
-    console.log("Connected to redis successfully");
-  }
-});
+// (async () => {
+//   try {
+//     await redis.connect();
+//   } catch (error) {
+//     console.log("Redis ERROR: ",error);
+//   }
+// })();
+
+redis.on('connect', () => console.log("Connected to redis succesfully"))
+redis.on('error', (err) => console.log("Redis Client Error", err));
+
+redis.connect();
+
+// redis.on("connect", (err) => {
+//   if (err) {
+//     console.log("Could not establish connection with redis");
+//   } else {
+//     console.log("Connected to redis successfully");
+//   }
+// });
 
 const allowedOrigins = ["Access-Control-Allow-Origin", "http://localhost:3000"];
 const corsOptions = {
@@ -34,7 +44,7 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true,
+  credentials: true
 };
 
 app.use(cors(corsOptions));

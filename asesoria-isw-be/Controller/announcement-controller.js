@@ -16,6 +16,7 @@ async function createAnnouncement(req, res) {
   }
 }
 async function updateTitle(req, res) {
+  console.log("Editando en titulo: ", req.body)
   const { id, title, editor } = req.body;
   try {
     await announcementControllers.updateTitle({
@@ -32,6 +33,7 @@ async function updateTitle(req, res) {
 }
 
 async function updateMessage(req, res) {
+  console.log("Editando en mensaje: ", req.body)
   const { id, message, editor } = req.body;
   try {
     await announcementControllers.updateMessage({
