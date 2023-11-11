@@ -24,7 +24,7 @@ const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
     }
   }, [isOpen]);
 
-  const handleSaveModule = () => {
+  const handleSaveModule = async () => {
     console.log("Intentando crear el módulo...");
 
     console.log("Intentando crear el módulo...");
@@ -39,7 +39,8 @@ const Popup = ({ isOpen, onClose, onUpdateModuleList }) => {
       name: moduleName,
       description: moduleDescription,
       creator: '14'
-    };
+    }
+    
     try {
       // Llamar a la función createSection con los datos
       await createModules(newModule);
