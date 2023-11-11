@@ -87,7 +87,25 @@ function PacientesForm() {
           ))}
         </ul>
       </div>
-
+      <ul>
+        {nombres.map((nombre) => (
+          <li key={nombre.email}>
+            <div className="nombre-box">
+              <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
+              <span className="nombre" style={{ width: "400%" }}>
+                <Link to={"/Sesiones"}>{nombre.nombre}</Link>
+              </span>
+              {/* Agrega el evento onClick para abrir el popup de edición */}
+              <button
+                className="editar-button"
+                onClick={() => openEditarPopup(nombre)}
+              >
+                Editar
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
       {showCrearPopup && (
         <CrearUser
           onClose={closeCrearPopup}

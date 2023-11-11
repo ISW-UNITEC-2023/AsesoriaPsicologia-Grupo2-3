@@ -7,7 +7,7 @@ import { Document, Page, Text, View, Image } from "@react-pdf/renderer";
 function VistasPDF() {
   return (
     <Document>
-      <Page size="A4">
+      <Page size='A4'>
     <View className="page-container">
       <Container>
         <Row>
