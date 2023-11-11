@@ -10,7 +10,7 @@ const knex = require("knex")({
 });
 
 //Post
-async function createUser(user){
+async function createUser(user) {
   await knex("users").insert({
     name_user: user.name,
     email_user: user.email,
@@ -30,8 +30,10 @@ async function createPatient(user) {
     salt_user: user.salt,
   });
 
-  let role_patient = JSON.stringify(await knex("roles").select("id_role").where("name_role", "patient"));
-  role_patient = JSON.parse(role_patient)
+  let role_patient = JSON.stringify(
+    await knex("roles").select("id_role").where("name_role", "patient")
+  );
+  role_patient = JSON.parse(role_patient);
 
   await knex("user_role").insert({
     id_user: patientId,
@@ -123,9 +125,7 @@ async function getUserCredentials(email) {
 }
 
 async function findExistingEmail(email) {
-  let emailExists = await knex("users")
-    .select("*")
-    .where("email_user", email);
+  let emailExists = await knex("users").select("*").where("email_user", email);
   emailExists = JSON.stringify(emailExists);
   return JSON.parse(emailExists);
 }
@@ -137,7 +137,11 @@ async function getAllusers() {
 }
 
 async function getTeachers() {
-  let users = await knex.select("*").from("users").innerJoin("user_role","users.id_user","=","user_role.id_user").where("id_role",5);
+  let users = await knex
+    .select("*")
+    .from("users")
+    .innerJoin("user_role", "users.id_user", "=", "user_role.id_user")
+    .where("id_role", 5);
   users = JSON.stringify(users);
   return JSON.parse(users);
 }
@@ -163,7 +167,17 @@ async function getAllUsersRoles(){
           INNER JOIN user_role ON user_role.id_role = roles.id_role
     `
   )
-  roles = JSON.stringify(roles)
+  roles = JSON.stringify(roles);
+  return JSON.parse(roles);
+  }
+  
+async function getRoles(id) {
+  let roles = await knex
+    .select("name_role")
+    .from("user_role")
+    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+    .where("id_user", "=", id);
+  roles = JSON.stringify(roles);
   return JSON.parse(roles);
 }
 
@@ -182,5 +196,6 @@ module.exports = {
   getAllusers,
   getTeachers,
   getUserRoles,
-  getAllUsersRoles
+  getAllUsersRoles,
+  getRoles
 };

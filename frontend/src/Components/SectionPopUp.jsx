@@ -13,7 +13,7 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
   const popupStyle = {
     transform: isOpen ? "scale(1)" : "scale(0.8)",
   };
-
+  //obtener el año actual y el trimestre actual
   const currentYear = new Date().getFullYear();
   const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3);
 
@@ -23,17 +23,19 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
       setSections(await services.getTeachers());
     }
     fetchData();
-  }, []);
+  }, [isOpen]); // Cambio a [isOpen] para que se actualice cuando se abre el popup
 
+  //seleccionar el primer trimestre de la lista
   const [selectedQuarter, setSelectedQuarter] = useState(1);
+  //seleccionar el año actual
   const [selectedYear, setSelectedYear] = useState(currentYear);
-
+  //deshabilitar el botón de guardar si el año seleccionado es menor al actual
   const isSaveDisabled =
     selectedYear < currentYear ||
     (selectedYear === currentYear && selectedQuarter < currentQuarter);
-
+  //seleccionar el primer docente de la lista
   const [selectedTeacher, setSelectedTeacher] = useState("");
-
+  //seleccionar el docente que se le pasa por parámetro
   useEffect(() => {
     if (displayedSections.length > 0) {
       setSelectedTeacher(displayedSections[0].id_user);
@@ -41,11 +43,12 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
   }, [displayedSections]);
 
   const handleSave = async () => {
+    // Obtener los datos del curso seleccionado
     const course_id = selectedButtonInfo.CourseId;
     const teacher_id = selectedTeacher;
     const year = selectedYear;
     const quarter = selectedQuarter;
-
+    // Crear un objeto con los datos de la sección
     const sectionData = {
       course_id,
       teacher_id,
@@ -69,6 +72,14 @@ const Popup = ({ isOpen, onClose, selectedButtonInfo }) => {
   const handleTeacherChange = (e) => {
     setSelectedTeacher(e.target.value);
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      // Restablecer el estado cuando el componente se abre
+      setSelectedQuarter(1);
+      setSelectedYear(currentYear);
+    }
+  }, [isOpen]);
 
   return (
     <div className="popup-overlay" style={overlayStyle}>

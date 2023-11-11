@@ -20,18 +20,11 @@ function DashBoard() {
 
   useEffect(() => {
     updateModuleList();
-    if (cookiesLoaded) {
-    }
-  }, [cookies, cookiesLoaded]);
+  }, []);
   const updateModuleList = () => {
     async function fetchData() {
       const course = await loadModules();
       setModules(course.coursesInfo);
-      if (!cookiesLoaded) {
-        const obtainedCookies = await getCookies();
-        setCookies(obtainedCookies);
-        setCookiesLoaded(true);
-      }
     }
 
     fetchData();
