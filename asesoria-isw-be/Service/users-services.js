@@ -153,6 +153,28 @@ async function getRoles(id) {
     .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
     .where("id_user", "=", id);
   roles = JSON.stringify(roles);
+async function getUserRoles(idUser){
+  let roles = await knex.raw(
+    `
+      SELECT roles.id_role, roles.name_rol
+        FROM roles
+          INNER JOIN user_role ON user_role.id_role = roles.id_role
+          AND user_role.id_user = ?
+    `, [idUser]
+  )
+  roles = JSON.stringify(roles)
+  return JSON.parse(roles);
+}
+
+async function getAllUsersRoles(){
+  let roles = await knex.raw(
+    `
+      SELECT roles.id_role, roles.name_role, user_role.id_user
+        FROM roles
+          INNER JOIN user_role ON user_role.id_role = roles.id_role
+    `
+  )
+  roles = JSON.stringify(roles)
   return JSON.parse(roles);
 }
 
@@ -171,4 +193,6 @@ module.exports = {
   getAllusers,
   getTeachers,
   getRoles,
+  getUserRoles,
+  getAllUsersRoles
 };

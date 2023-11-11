@@ -2,7 +2,9 @@ const announcementControllers = require("../Service/announcement-services");
 
 async function createAnnouncement(req, res) {
   const { title, message, creator, clinic } = req.body;
+
   console.log(req.body)
+
   try {
     await announcementControllers.createAnnouncement({
       title: title,

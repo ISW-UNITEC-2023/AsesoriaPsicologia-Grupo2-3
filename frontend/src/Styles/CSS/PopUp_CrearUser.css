@@ -1,6 +1,6 @@
 /* PopUp_CrearUser.css */
 
-.popup-overlay {
+.popup-overlay-cu {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,65 +10,147 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 2;
   transition: opacity 0.3s ease;
 }
 
-.popup {
+.popup-cu {
   background-color: #fff;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   max-width: 90%;
-  width: 600px;
+  width: 500px;
   text-align: center;
   position: relative;
   transform-origin: center;
   transition: transform 0.3s ease;
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #333;
+.form-header-cu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #003b88;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.3rem;
+  font-family: sans-serif;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns */
-  grid-gap: 20px; /* Gap between columns and rows */
+.form-body-cu {
+  padding: 40px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-group {
+.form-group-cu {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
+  align-items: flex-start;
+  width: 100%;
 }
 
-.form-control {
-  height: 40px;
-  padding: 0 10px;
+.form-group-double-cu {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+.form-control-cu {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  border: 1px solid #ddd;
-  position: relative;
+  outline: none;
+  transition: border-color 0.5s ease;
 }
 
-.password-input {
-  position: relative; /* Añade posición relativa para que el icono se posicione correctamente */
+.form-label-cu {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-.password-input input {
-  width: 100%; /* Ajusta el ancho del campo de contraseña al 100% */
-  padding-right: 40px; /* Añade un espacio a la derecha para el icono */
+.form-div-password-cu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.password-toggle {
-  position: absolute;
-  top: 50%;
-  right: 5px; /* Ajusta la posición del icono a la derecha */
-  transform: translateY(-50%);
+.form-div-password-cu:focus-within {
+  border-color: #003b88;
+  transition: border-color 0.5s ease;
+}
+
+.form-input-password-cu {
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  transition: border-color 0.5s ease;
+  border-radius: 5px;
+}
+
+.eye-icon-cu {
   cursor: pointer;
+  padding: 10px;
+  width: 5%;
+}
+
+.form-control-cu:focus {
+  border-color: #003b88;
+}
+
+.form-buttons-cu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.form-create-cu {
+  background: none;
+  color: #003b88;
+  border: 1px solid #003b88;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.5s ease;
+}
+
+.form-create-cu:hover {
+  background: #008839;
+  color: #fff;
+  border: 1px solid #008839;
+}
+
+.form-cancel-cu {
+  background: none;
+  color: #003b88;
+  border: 1px solid #003b88;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-right: 10px;
+}
+
+.form-cancel-cu:hover {
+  background: #c00000;
+  color: #fff;
+  border: 1px solid #c00000;
 }

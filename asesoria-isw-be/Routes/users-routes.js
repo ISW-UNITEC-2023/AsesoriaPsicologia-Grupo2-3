@@ -22,6 +22,11 @@ router.get("/viewTeachers", userController.getTeachers);
 router.get("/getCookies", userController.getCookie);
 //obtener los roles de usuario por id
 router.get("/getRoles", userController.getRoles);
+router.post("/getRoles", userController.getUserRoles)
+
+//Get
+router.get("/viewUsers", userController.getAllusers);
+router.get("/viewRoles", userController.getAllUsersRoles);
 
 //Delete
 router.delete("/removeRole", userController.removeRole);
