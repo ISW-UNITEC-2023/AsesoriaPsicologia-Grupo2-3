@@ -25,7 +25,6 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { getCookies } from "../src/Utilities/login-services";
 
 function ProtectedRoute({ element, allowedRoles, userRoles }) {
-  console.log(userRoles);
   const isAuthorized =
     userRoles && userRoles.some((role) => allowedRoles.includes(role));
 
@@ -69,7 +68,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Anuncios />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -83,7 +82,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Modulos />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -97,7 +96,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Vistas />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -115,7 +114,7 @@ function App() {
                     <VistasPDF />
                   </PDFViewer>
                 }
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -129,7 +128,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Sections />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -143,7 +142,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Sesiones />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -157,7 +156,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Pacientes />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -182,7 +181,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<DashBoard />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -199,7 +198,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<AnunciosCrear />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
@@ -213,7 +212,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<ProfilesPage />}
-                allowedRoles={["admin"]}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
