@@ -20,6 +20,8 @@ router.get("/viewTeachers", userController.getTeachers);
 //COOKIES
 
 router.get("/getCookies", userController.getCookie);
+router.delete("/removeCookie", userController.removeCookie);
+
 //obtener los roles de usuario por id
 router.get("/getRoles", userController.getRoles);
 
