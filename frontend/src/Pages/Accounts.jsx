@@ -1,6 +1,7 @@
 //Components
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
+import PopUpEditUser from "../Components/PopUp_EditarUser";
 
 //Functions
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ import {
   faArrowUp,
   faArrowDown,
   faFilterCircleXmark,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -30,6 +32,10 @@ function Accounts() {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
   const [openCreate, setOpenCreate] = useState(0);
+  const [openEdit, setOpenEdit] = useState({
+    open: 0,
+    userInfo: null,
+  });
 
   //Mensajes de filtros
   const [isHovering, setIsHovering] = useState(false);
@@ -122,24 +128,28 @@ function Accounts() {
         <div className="dropdown-menu" aria-labelledby={`dropdownMenu${type}`}>
           {type === "roles" ? (
             <div className="form-check-filter">
-              {roles.map((role) => {
-                return (
-                  <label className="filter-check-label" htmlFor={role.id_role}>
-                    <input
-                      className="check-input-filter"
-                      type="checkbox"
-                      name={type}
-                      value={role.name_role}
-                      id={role.id_role}
-                      checked={selectedRoles.includes(role.name_role)}
-                      onChange={(e) => {
-                        filterSelectedItem(e);
-                      }}
-                    />
-                    {role.name_role}
-                  </label>
-                );
-              })}
+              {roles.length > 0 &&
+                roles.map((role) => {
+                  return (
+                    <label
+                      className="filter-check-label"
+                      htmlFor={role.id_role}
+                    >
+                      <input
+                        className="check-input-filter"
+                        type="checkbox"
+                        name={type}
+                        value={role.name_role}
+                        id={role.id_role}
+                        checked={selectedRoles.includes(role.name_role)}
+                        onChange={(e) => {
+                          filterSelectedItem(e);
+                        }}
+                      />
+                      {role.name_role}
+                    </label>
+                  );
+                })}
               <label className="filter-check-label">
                 <input
                   className="check-input-filter"
@@ -193,7 +203,6 @@ function Accounts() {
   };
 
   const SearchDropdown = ({ matchingNames }) => {
-    console.log(matchingNames.length);
     return (
       <div
         className="dropdown-menu show mt-2.5"
@@ -365,6 +374,27 @@ function Accounts() {
     }
   }
 
+  //Recuperar usuarios para actualizar
+  async function refreshUsers() {
+    const fetchData = async () => {
+      const fetchedUsers = await user_services.getUsers();
+      const fetchedRoles = await user_services.getAllUsersRoles();
+
+      fetchedUsers.forEach((user) => {
+        user.roles = [];
+        fetchedRoles.forEach((role) => {
+          console.log(user);
+          if (user.id_user === role.id_user) {
+            user.roles.push(role.name_role);
+          }
+        });
+      });
+      setUsers(fetchedUsers);
+      setOriginalUsers(fetchedUsers);
+    };
+    fetchData();
+  }
+
   return (
     <div className="account-container">
       <Navbar />
@@ -412,11 +442,24 @@ function Accounts() {
             onClose={() => {
               setOpenCreate(0);
             }}
+            refreshUsers={() => {
+              refreshUsers();
+            }}
           />
+          {openEdit.open === 1 && (
+            <PopUpEditUser
+              isOpen={openEdit.open}
+              onClose={() => {
+                setOpenEdit({ open: 0, userInfo: null });
+              }}
+              user={openEdit.userInfo}
+            />
+          )}
         </div>
         <table className="table table-bordered account-table">
           <thead className="accounts-table-header">
             <tr>
+              <th></th>
               <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="id_user" />
@@ -462,33 +505,46 @@ function Accounts() {
             </tr>
           </thead>
           <tbody>
-            {users.map((itemU) => {
-              return (
-                <tr className="row-table-accounts" key={itemU.id_user}>
-                  <td className="accounts-table-id">{itemU.id_user}</td>
-                  <td className="accounts-table-item">{itemU.name_user}</td>
-                  <td className="accounts-table-item">{itemU.email_user}</td>
-                  <td className="accounts-table-item">{itemU.number_user}</td>
-                  <td className="accounts-table-item">
-                    {itemU.roles.length === 1 && <span>{itemU.roles[0]}</span>}
-                    {itemU.roles.length === 0 && <span>Sin rol</span>}
-                    {itemU.roles.length > 1 && (
-                      <select>
-                        {itemU.roles.map((role) => {
-                          return <option>{role}</option>;
-                        })}
-                      </select>
-                    )}
-                  </td>
-                  <td className="accounts-table-item">
-                    {itemU.active_user === 1 ? "Activo" : "Inactivo"}
-                  </td>
-                  <td className="accounts-table-item">
-                    {formatDate(itemU.creation_date)}
-                  </td>
-                </tr>
-              );
-            })}
+            {users.length > 0 &&
+              users.map((itemU) => {
+                return (
+                  <tr className="row-table-accounts" key={itemU.id_user}>
+                    <td
+                      onClick={() => {
+                        setOpenEdit({
+                          open: 1,
+                          userInfo: itemU,
+                        });
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} className="row-edit-user"/>
+                    </td>
+                    <td className="accounts-table-id">{itemU.id_user}</td>
+                    <td className="accounts-table-item">{itemU.name_user}</td>
+                    <td className="accounts-table-item">{itemU.email_user}</td>
+                    <td className="accounts-table-item">{itemU.number_user}</td>
+                    <td className="accounts-table-item">
+                      {itemU.roles.length === 1 && (
+                        <span>{itemU.roles[0]}</span>
+                      )}
+                      {itemU.roles.length === 0 && <span>Sin rol</span>}
+                      {itemU.roles.length > 1 && (
+                        <select className="select-role-item">
+                          {itemU.roles.map((role) => {
+                            return <option>{role}</option>;
+                          })}
+                        </select>
+                      )}
+                    </td>
+                    <td className="accounts-table-item">
+                      {itemU.active_user === 1 ? "Activo" : "Inactivo"}
+                    </td>
+                    <td className="accounts-table-item">
+                      {formatDate(itemU.creation_date)}
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
