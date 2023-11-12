@@ -137,11 +137,24 @@
   color: #717171;
 }
 
+.row-send-email{
+  margin-left: 15px;
+}
+
+.row-send-email:hover{
+  cursor: pointer;
+  color: #717171;
+}
+
 .row-table-accounts:hover {
   cursor: default;
 }
 
 .accounts-table-id {
+  text-align: center;
+}
+
+.accounts-table-obj{
   text-align: center;
 }
 

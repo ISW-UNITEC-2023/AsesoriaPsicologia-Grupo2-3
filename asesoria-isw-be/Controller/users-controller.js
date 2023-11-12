@@ -37,7 +37,7 @@ async function registerUser(req, res) {
         )
         .toString("base64");
       let newUserId = null;
-      if(type === "patient"){
+      if (type === "patient") {
         newUserId = userServices.createPatient({
           name: name,
           email: email,
@@ -45,8 +45,8 @@ async function registerUser(req, res) {
           encryptedPassword: encryptedPassword,
           salt: salt,
         });
-        console.log("es paciente")
-      }else{
+        console.log("es paciente");
+      } else {
         newUserId = userServices.createUser({
           name: name,
           email: email,
@@ -55,7 +55,7 @@ async function registerUser(req, res) {
           salt: salt,
           active: active,
         });
-        console.log("sin rol")
+        console.log("sin rol");
       }
 
       res.send({
@@ -333,18 +333,18 @@ async function getAllusers(req, res) {
   }
 }
 
-async function getUserRoles(req, res){
+async function getUserRoles(req, res) {
   const { idUser } = req.body;
-  try{
-    const roles = await userServices.getUserRoles(idUser)
+  try {
+    const roles = await userServices.getUserRoles(idUser);
     res.send({
       message: "Se obtuvieron los roles del usuario",
-      rolesInfo: roles
-    })
-  }catch(e){
+      rolesInfo: roles,
+    });
+  } catch (e) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo obtener los roles del usuario"
-    })
+      error: "No se pudo obtener los roles del usuario",
+    });
   }
 }
 
@@ -369,17 +369,39 @@ function encryptPassword(
   };
 }
 
-async function getAllUsersRoles(req, res){
-  try{
+async function getAllUsersRoles(req, res) {
+  try {
     const roles = await userServices.getAllUsersRoles();
     res.send({
       message: "Se obtuvieron los roles de los usuarios",
-      rolesInfo: roles
-    })
-  }catch(error){
+      rolesInfo: roles,
+    });
+  } catch (error) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo obtener todos los roles de los usuarios"
-    })
+      error: "No se pudo obtener todos los roles de los usuarios",
+    });
+  }
+}
+
+async function getCookie(req, res) {
+  try {
+    const cookies = req.signedCookies;
+    res.send(cookies);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
+  }
+}
+
+async function deleteCookies(req, res) {
+  try {
+    res.clearCookie("email");
+    res.send("Cookie eliminada");
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
   }
 }
 
@@ -395,5 +417,7 @@ module.exports = {
   removeRole,
   getAllusers,
   getUserRoles,
-  getAllUsersRoles
+  getAllUsersRoles,
+  getCookie,
+  deleteCookies,
 };

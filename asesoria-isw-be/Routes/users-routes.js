@@ -14,11 +14,15 @@ router.post("/changeActive", userController.updateUserActive);
 router.post("/assignRole", userController.assignRole);
 router.post("/getRoles", userController.getUserRoles)
 
+//Cookies
+router.get("/getCookies", userController.getCookie);
+
 //Get
 router.get("/viewUsers", userController.getAllusers);
 router.get("/viewRoles", userController.getAllUsersRoles);
 
 //Delete
 router.delete("/removeRole", userController.removeRole);
+router.delete("/deleteCookies", userController.deleteCookies);
 
 module.exports = router;

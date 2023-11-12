@@ -3,7 +3,7 @@ import axios from "axios";
 export async function sendEmail(name, remitente, subject, message, email) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/mail/send-Multiple",
+    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/mail/send-Multiple",
     data: {
       name: name,
       email: remitente,

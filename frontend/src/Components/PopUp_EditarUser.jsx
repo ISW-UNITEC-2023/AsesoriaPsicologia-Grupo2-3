@@ -25,17 +25,26 @@ const EditarUser = ({ isOpen, onClose, user }) => {
   });
 
   const [credentials, setCredentials] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    type: "",
-    active: 1,
+    name: user.name_user,
+    email: user.email_user,
+    phone: user.number_user,
+    active: user.active_user,
   });
 
   async function actualizarUsuario() {
     if (credentials.name !== user.user_name) {
-      // await userServices.updateUserName(user.id_user, credentials.name, );
+      await userServices.editName({id: user.id_user, name: credentials.name, editor: user.id_user});
     }
+    if (credentials.email !== user.email_user) {
+      await userServices.editEmail({id: user.id_user, email: credentials.email, editor: user.id_user});
+    }
+    if (credentials.phone !== user.number_user) {
+      await userServices.editPhone({id: user.id_user, phone: credentials.phone, editor: user.id_user});
+    }
+    if (credentials.active !== user.active_user) {
+      await userServices.editActive({id: user.id_user, active: credentials.active, editor: user.id_user});
+    }
+    onClose();
   }
 
   return (
@@ -55,13 +64,13 @@ const EditarUser = ({ isOpen, onClose, user }) => {
             {toggleEdits.editName ? (
               <input
                 type="text"
-                className="form-input-eu"
+                className="form-active-input-eu"
                 required
-                value={user.name_user}
+                value={credentials.name}
                 onChange={(event) =>
                   setCredentials({
                     ...credentials,
-                    password: event.target.value,
+                    name: event.target.value,
                   })
                 }
               />
@@ -71,7 +80,7 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                   type="text"
                   className="form-input-eu"
                   disabled
-                  value={user.name_user}
+                  value={credentials.name}
                 />
                 <FontAwesomeIcon
                   className="pencil-icon-eu"
@@ -91,8 +100,9 @@ const EditarUser = ({ isOpen, onClose, user }) => {
             {toggleEdits.editEmail ? (
               <input
                 type="email"
-                className="form-div-input-eu"
+                className="form-active-input-eu"
                 required
+                value={credentials.email}
                 onChange={(event) =>
                   setCredentials({
                     ...credentials,
@@ -106,7 +116,7 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                   type="text"
                   className="form-input-eu"
                   disabled
-                  value={user.email_user}
+                  value={credentials.email}
                 />
                 <FontAwesomeIcon
                   className="pencil-icon-eu"
@@ -128,6 +138,8 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                   <input
                     type="text"
                     required
+                    value={credentials.phone}
+                    className="form-active-input-eu"
                     onChange={(event) =>
                       setCredentials({
                         ...credentials,
@@ -141,7 +153,7 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                       type="text"
                       className="form-input-eu"
                       disabled
-                      value={user.number_user}
+                      value={credentials.phone}
                     />
                     <FontAwesomeIcon
                       className="pencil-icon-eu"
@@ -169,8 +181,8 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                     })
                   }
                 >
-                  <option value={1}>Activo</option>
                   <option value={0}>Inactivo</option>
+                  <option value={1}>Activo</option>
                 </select>
               ) : (
                 <div className="form-div-input-eu">
@@ -178,7 +190,7 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                     type="text"
                     className="form-input-eu"
                     disabled
-                    value={user.active_user ? "Activo" : "Inactivo"}
+                    value={credentials.active === 1 ? "Activo" : "Inactivo"}
                   />
                   <FontAwesomeIcon
                     className="pencil-icon-eu"
@@ -198,7 +210,7 @@ const EditarUser = ({ isOpen, onClose, user }) => {
             <button className="form-cancel-eu" onClick={onClose}>
               Cancelar
             </button>
-            <button className="form-actualizar-eu">Actualizar</button>
+            <button className="form-actualizar-eu" onClick={()=>{actualizarUsuario()}}>Actualizar</button>
           </div>
         </div>
       </div>

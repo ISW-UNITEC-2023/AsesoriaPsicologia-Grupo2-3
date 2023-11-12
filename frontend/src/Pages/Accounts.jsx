@@ -2,6 +2,7 @@
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
+import EmailPopUp from "../Components/EmailPopUp";
 
 //Functions
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ import {
   faArrowDown,
   faFilterCircleXmark,
   faPenToSquare,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -35,6 +37,11 @@ function Accounts() {
   const [openEdit, setOpenEdit] = useState({
     open: 0,
     userInfo: null,
+  });
+  const [openEmail, setOpenEmail] = useState({
+    open: 0,
+    name: null,
+    email: null,
   });
 
   //Mensajes de filtros
@@ -455,6 +462,15 @@ function Accounts() {
               user={openEdit.userInfo}
             />
           )}
+          {openEmail.open === 1 && (
+            <EmailPopUp
+              isOpen={openEmail.open}
+              onClose={() => {
+                setOpenEmail({ open: 0, name: null });
+              }}
+              name={openEmail.name}
+            />
+          )}
         </div>
         <table className="table table-bordered account-table">
           <thead className="accounts-table-header">
@@ -509,15 +525,28 @@ function Accounts() {
               users.map((itemU) => {
                 return (
                   <tr className="row-table-accounts" key={itemU.id_user}>
-                    <td
-                      onClick={() => {
-                        setOpenEdit({
-                          open: 1,
-                          userInfo: itemU,
-                        });
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} className="row-edit-user"/>
+                    <td className="accounts-table-obj">
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        className="row-edit-user"
+                        onClick={() => {
+                          setOpenEdit({
+                            open: 1,
+                            userInfo: itemU,
+                          });
+                        }}
+                      />
+                      <FontAwesomeIcon
+                        icon={faEnvelope}
+                        className="row-send-email"
+                        onClick={() => {
+                          setOpenEmail({
+                            open: 1,
+                            name: itemU.name_user,
+                            email: itemU.email_user,
+                          });
+                        }}
+                      />
                     </td>
                     <td className="accounts-table-id">{itemU.id_user}</td>
                     <td className="accounts-table-item">{itemU.name_user}</td>
