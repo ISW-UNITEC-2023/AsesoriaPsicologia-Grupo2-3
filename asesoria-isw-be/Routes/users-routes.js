@@ -25,7 +25,6 @@ router.get("/viewRoles", userController.getAllUsersRoles);
 router.get("/getCookies", userController.getCookie);
 router.post("/getRoles", userController.getUserRoles)
 
-router.get("/getRoles", userController.getRoles);
 
 //COOKIES
 

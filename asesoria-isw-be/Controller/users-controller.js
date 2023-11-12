@@ -83,17 +83,21 @@ async function loginUser(req, res) {
     }
 
     const email_exists = await userServices.findExistingEmail(email);
+
+    if (email_exists.length === 0) {
+      errorMessage.push("No existe un correo con este email");
+      res.send({
+        errorMessage,
+      });
+      return res;
+    }
     const roles = await userServices.getUserRoles(email_exists[0].id_user);
-    const roleNames = roles.map((role) => role.name_role);
+    const roleNames = roles[0].map((role) => role.name_role);
 
     const userData = {
       email: email,
       roles: roleNames,
     };
-
-    if (email_exists.length === 0) {
-      errorMessage.push("No existe un correo con este email");
-    }
     if (errorMessage.length) {
       res.send({
         errorMessage,
@@ -411,17 +415,6 @@ async function getAllUsersRoles(req, res){
   } catch (error) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
       error: "No se pudo obtener todos los roles de los usuarios",
-    });
-  }
-}
-
-async function getCookie(req, res) {
-  try {
-    const cookies = req.signedCookies;
-    res.send(cookies);
-  } catch (e) {
-    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo obtener los usuarios.",
     });
   }
 }

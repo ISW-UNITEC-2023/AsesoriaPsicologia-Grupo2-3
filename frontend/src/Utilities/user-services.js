@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 async function getUsers() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/viewUsers",
+    url: host + "/users/viewUsers",
     data: {},
   };
   let users = await axios.request(options);
@@ -13,7 +15,7 @@ async function getUsers() {
 async function getAllUsersRoles() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/viewRoles",
+    url: host + "/users/viewRoles",
     data: {},
   };
   let roles = await axios.request(options);
@@ -23,7 +25,7 @@ async function getAllUsersRoles() {
 async function createUser(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/register",
+    url: host + "/users/register",
     data: {
       name: user.name,
       email: user.email,
@@ -40,7 +42,7 @@ async function createUser(user) {
 async function editName(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/updateName",
+    url: host + "/users/updateName",
     data: {
       id: user.id,
       name: user.name,
@@ -54,7 +56,7 @@ async function editName(user) {
 async function editPhone(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/updatePhone",
+    url: host + "/users/updatePhone",
     data: {
       id: user.id,
       phone: user.phone,
@@ -68,7 +70,7 @@ async function editPhone(user) {
 async function editEmail(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/updateEmail",
+    url: host + "/users/updateEmail",
     data: {
       id: user.id,
       newEmail: user.email,
@@ -82,7 +84,7 @@ async function editEmail(user) {
 async function editActive(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/changeActive",
+    url: host + "/users/changeActive",
     data: {
       id: user.id,
       active: user.active,
@@ -96,7 +98,7 @@ async function editActive(user) {
 async function editPassword(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/updatePassword",
+    url: host + "/users/updatePassword",
     data: {
       id: user.id,
       newPassword: user.password,
@@ -110,7 +112,7 @@ async function editPassword(user) {
 async function assignRole(user) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/assignRole",
+    url: host + "/users/assignRole",
     data: {
       id_user: user.id,
       id_role: user.role,
@@ -123,7 +125,7 @@ async function assignRole(user) {
 async function removeRole(user) {
   const options = {
     method: "DELETE",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/removeRole",
+    url: host + "/users/removeRole",
     data: {
       id_user: user.id,
       id_role: user.role,
@@ -136,7 +138,7 @@ async function removeRole(user) {
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/login",
+    url: host + "/users/login",
     data: { email, password },
     withCredentials: true,
   };
@@ -148,7 +150,7 @@ export async function getCookies() {
   try {
     const options = {
       method: "GET",
-      url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/getCookies",
+      url: host + "/users/getCookies",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -163,7 +165,7 @@ export async function deleteCookies() {
   try {
     const options = {
       method: "GET",
-      url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/deletecookie",
+      url: host + "/users/deletecookie",
       withCredentials: true,
     };
     const response = await axios.request(options);

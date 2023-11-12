@@ -37,7 +37,7 @@ function App() {
 
   const fetchUserData = async () => {
     const userData = await getCookies();
-
+    console.log("Fetching data")
     if (userData && userData.user_data && userData.user_data.roles) {
       setUserData(userData.user_data.roles);
       setUserDataLoaded(true);
@@ -174,6 +174,7 @@ function App() {
             />
           }
         />
+        {console.log("USER DATA:",userData)}
         <Route
           path="/Dashboard"
           element={
@@ -205,7 +206,7 @@ function App() {
             )
           }
         />
-        <Route
+        {/* <Route
           path="/Profiles"
           element={
             userDataLoaded ? (
@@ -218,7 +219,7 @@ function App() {
               <LoadingSpinner />
             )
           }
-        />
+        /> */}
       </Routes>
     </Router>
   );
