@@ -3,7 +3,7 @@ import axios from "axios";
 export async function loadModules() {
   const options = {
     method: "GET",
-    url: process.env.REACT_APP_API_BASE_URL+"/courses/getCourses",
+    url: process.env.REACT_APP_API_BASE_URL + "/courses/getCourses",
     withCredentials: true,
   };
   const response = await axios.request(options);
@@ -29,13 +29,17 @@ export async function deleteModule(id) {
 
   try {
     const response = await axios.delete(url, { data });
-    
+
     if (response.status === 200) {
       return { status: response.status };
     } else {
       return { message: "Error deleting module" };
     }
   } catch (error) {
-    return { message: error.response?.data?.error || "An error occurred while deleting module" };
+    return {
+      message:
+        error.response?.data?.error ||
+        "An error occurred while deleting module",
+    };
   }
 }
