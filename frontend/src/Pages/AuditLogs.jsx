@@ -17,7 +17,7 @@ const datosAPI = [
 
 const AuditLogs = () => {
   const [datos, setDatos] = useState([]);
-  const [campoFiltrado, setCampoFiltrado] = useState('ID');
+  const [campoFiltrado, setCampoFiltrado] = useState('Fecha_Hora');
   const [filtro, setFiltro] = useState('');
 
   useEffect(() => {
@@ -57,13 +57,7 @@ const AuditLogs = () => {
           <Form.Label>Filtrar por:</Form.Label>
           <Form.Control as="select" value={campoFiltrado} onChange={handleCampoFiltradoChange}>
             <option value="Fecha_Hora">Fecha y Hora</option>
-            <option value="ID">ID</option>
             <option value="Usuario">Usuario</option>
-            <option value="Accion">Accion</option>
-            <option value="Tabla">Tabla</option>
-            <option value="Valor_anterior">Valor anterior</option>
-            <option value="Valor_actualizado">Valor actualizado</option>
-            <option value="Comentarios">Comentarios</option>
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="filtro">
