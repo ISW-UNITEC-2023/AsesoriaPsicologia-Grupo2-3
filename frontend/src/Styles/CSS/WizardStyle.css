@@ -35,7 +35,8 @@ input:-webkit-autofill:active {
     padding: 15px 15px 0 15px;
     z-index: 3;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 18px;
+    font-size: 22px;
+    font-style: bold;
     text-align: center;
 }
 
@@ -47,6 +48,8 @@ input:-webkit-autofill:active {
     z-index: 3;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
+    margin-top: 5vh;
+    margin-bottom: 3vh;
 }
 
 .wizard-respuesta{
@@ -57,10 +60,10 @@ input:-webkit-autofill:active {
     z-index: 3;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
-    margin-bottom: 15px;
+    margin-bottom: 3vh;
     cursor: pointer;
     border: none;
-    background-color: rgb(98, 143, 226);
+    background-color:  rgba(0, 38, 89, 0.8);;
     color: white;
 }
 
@@ -81,52 +84,52 @@ input:-webkit-autofill:active {
 }
 
 .howie-img{
-    position: absolute;
+    position: fixed;
     height: auto;
     padding: 15px;
+    left: 20vw;
     border-radius: 10px;
-    width: 280px;
-    z-index: 3;
+    width: 15vw;
+    z-index: 2;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
 }
 
-.progress-bar{
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 2% auto;
-    height: auto;
-    width: 480px;
-    z-index: 3;
-}
-
-.progress-bar-item{
-    height: 10px;
-    width: 100%;
-    margin-right: 5px;
-    z-index: 3;
-    border-radius: 5px;
-}
 
 .register-form {
     position: fixed;
+    align-items: center !important;
     top: 50%;
-    right: 25%;
+    left: 45vw;
+    right: 45vb;
     transform: translate(50%, -50%);
     width: 500px;
     background-color: #d9d9d9;
     padding: 10px;
     border-radius: 20px;
+    z-index: 3;
+}
+
+.progress-bar {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 10%);
+    width: 20%;
+    padding: 5px;
+    border-radius: 20px;
     z-index: 2;
 }
+.custom-progress-bar{
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    height: 10px !important;
+}
+
 
 .containerReg {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
     padding: 20px;
 }
@@ -161,7 +164,7 @@ input:-webkit-autofill:active {
     color: red;
     font-size: 12px;
     margin: -15px 0 -15px 0;
-    align-self: flex-start;
+    align-self: flex-end;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -180,12 +183,12 @@ input:-webkit-autofill:active {
 }
 
 .button-reg {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #c6161c;
-    color: #fff;
-    border-radius: 30px;
-    border: none;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background-color: #c6161c !important;
+    color: #fff !important;
+    border-radius: 30px !important;
+    border: none !important;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25) !important;
 }
 
 .forgot-passwordR {

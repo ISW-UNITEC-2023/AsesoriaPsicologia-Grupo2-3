@@ -48,12 +48,14 @@ function SectionsPage() {
   const [isModifySuccessPopupOpen, setModifySuccessPopupOpen] = useState(false);
   const [isModify, setModify] = useState(false);
   const [modifySectionId, setModifySectionId] = useState(null);
+  const [modifyTeacher, setModifyTeacher] = useState(null);
+  const [modifyQuarter, setModifyQuarter] = useState(null);
+  const [modifyYear, setModifyYear] = useState(null);
 
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedQuarterOption, setSelectedQuarterOption] = useState("");
   const [selectedTeacherOption, setSelectedTeacherOption] = useState("");
-  const [selectYearOption, setSelectedYearOption] = useState("");
-  const [selectedActiveOption, setSelectedActiveOption] = useState("");
+  const [selectedYearOption, setSelectedYearOption] = useState("");
 
   const [isModifyConfirmed, setIsModifyConfirmed] = useState(false);
 
@@ -74,8 +76,11 @@ function SectionsPage() {
     setModifySuccessPopupOpen(!isModifySuccessPopupOpen);
   };
 
-  const toggleModify = (sectionId) => {
+  const toggleModify = (sectionId, teacher, quarter, year) => {
     setModifySectionId(sectionId);
+    setModifyTeacher(teacher);
+    setModifyQuarter(quarter);
+    setModifyYear(year);
     setModify(!isModify);
   };
 
@@ -111,11 +116,15 @@ function SectionsPage() {
 
   const handleConfirm = async () => {
     try {
-      if (selectedOption === "teacher_id") {
+      if (modifyTeacher !== selectedTeacherOption) {
         await updateTeacher(modifySectionId, selectedTeacherOption);
-      } else if (selectedOption === "year") {
-        await updateYear(modifySectionId, selectYearOption);
-      } else if (selectedOption === "quarter") {
+      } 
+      
+      if (modifyYear !== selectedYearOption) {
+        await updateYear(modifySectionId, selectedYearOption);
+      }
+      
+      if (modifyQuarter !== selectedQuarterOption) {
         await updateQuarter(modifySectionId, selectedQuarterOption);
       } else if (selectedOption === "active") {
         await updateActive(modifySectionId, selectedActiveOption);
@@ -136,6 +145,11 @@ function SectionsPage() {
           <div className="section-container flex flex-row flex-wrap gap-3">
             {courseList.length > 0 ? (
               courseList.map((course) => {
+                const currentSectionId = course.SectionId;
+                const currentTeacher = course.Teacher;
+                const currentYear = course.Year;
+                const currentQuarter = course.Quarter;
+                const Year = course.Year;
                 return (
                   <>
                     <Card border="dark" style={{ width: "25rem" }}>
@@ -153,11 +167,11 @@ function SectionsPage() {
                           <strong>Id sección: </strong>
                           {course.SectionId} <br />
                           <strong>Año: </strong>
-                          {course.Year} <br />
+                          {currentYear} <br />
                           <strong>Trimestre: </strong>
-                          {course.Quarter} <br />
+                          {currentQuarter} <br />
                           <strong>Docente: </strong>
-                          {course.Teacher} <br />
+                          {currentTeacher} <br />
                           {course.Active === 1 ? (
                             <strong>Estado: Activo</strong>
                           ) : (
@@ -193,7 +207,7 @@ function SectionsPage() {
                         <Button
                           variant="success"
                           className="modificar-button-section"
-                          onClick={() => toggleModify(course.SectionId)}
+                          onClick={() => toggleModify(currentSectionId, currentTeacher, currentQuarter, currentYear)}
                           style={{
                             backgroundColor: "#00367d",
                             marginRight: "15px",
@@ -226,8 +240,11 @@ function SectionsPage() {
                           activeOption
                         );
                       }}
-                      sectionId={course.SectionId}
-                      Year={course.Year}
+                      sectionId={modifySectionId}
+                      Year={Year}
+                      teacher={modifyTeacher}
+                      quarter={modifyQuarter}
+                      year={modifyYear}
                     />
 
                     <ModificarConfirmPopUp

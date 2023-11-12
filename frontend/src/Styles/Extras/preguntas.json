@@ -1,43 +1,186 @@
-[
+{
+  "preguntas": [
     {
-      "pregunta": "¿Has experimentado cambios drásticos en tu estado de ánimo en las últimas semanas?",
-      "respuestas": {
-        "resp1": "A. Sí, con frecuencia",
-        "resp2": "B. Ocasionalmente",
-        "resp3": "C. Raramente o nunca"
-      }
+      "id": 0,
+      "pregunta": "¿Cuántos años tienes?",
+      "tipo": "opciones",
+      "respuestas": [
+        "18 o más",
+        "Menor de 18 (requiere autorización de un adulto)"
+      ]
     },
     {
-      "pregunta": "¿Has notado alteraciones en tu apetito o peso corporal recientemente?",
-      "respuestas": {
-        "resp1": "A. Sí, he tenido cambios significativos",
-        "resp2": "B. Algunos cambios, pero no significativos",
-        "resp3": "C. No he notado cambios en mi apetito o peso"
-      }
+      "id": 1,
+      "pregunta": "¿La atención es para usted o para algún conocido o familiar?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Para mí",
+        "Para un conocido o familiar"
+      ]
     },
     {
-      "pregunta": "¿Has experimentado dificultades para concentrarte o tomar decisiones en tu vida cotidiana?",
-      "respuestas": {
-        "resp1": "A. Sí, con frecuencia",
-        "resp2": "B. Ocasionalmente",
-        "resp3": "C. No he tenido dificultades en este aspecto"
-      }
+      "id": 2,
+      "pregunta": "¿Es consulta personal o remisión? (Explicar motivo en caso de remisión)",
+      "tipo": "justificacion",
+      "respuestas": [
+        "Consulta Personal",
+        "Remisión",
+        "Especifique"
+      ]
     },
     {
-      "pregunta": "¿Sientes una falta de interés o disfrute en actividades que normalmente solías disfrutar?",
-      "respuestas": {
-        "resp1": "A. Sí, he perdido interés en muchas cosas",
-        "resp2": "B. Algunas actividades me generan menos interés",
-        "resp3": "C. Sigo disfrutando de mis actividades habituales"
-      }
+      "id": 3,
+      "pregunta": "¿A qué departamento pertenece?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Atlántida",
+        "Choluteca",
+        "Colón",
+        "Comayagua",
+        "Copán",
+        "Cortés",
+        "El Paraíso",
+        "Francisco Morazán",
+        "Gracias a Dios",
+        "Intibucá",
+        "Islas de la Bahía",
+        "La Paz",
+        "Lempira",
+        "Ocotepeque",
+        "Olancho",
+        "Santa Bárbara",
+        "Valle",
+        "Yoro"
+      ]
     },
     {
-      "pregunta": "¿Has experimentado cambios en tus patrones de sueño, como insomnio o dormir en exceso?",
-      "respuestas": {
-        "resp1": "A. Sí, mi sueño se ha visto significativamente afectado",
-        "resp2": "B. He tenido algunos problemas de sueño",
-        "resp3": "C. Mi patrón de sueño es relativamente estable"
-      }
+      "id": 4,
+      "pregunta": "Sexo",
+      "tipo": "opciones",
+      "respuestas": [
+        "Femenino",
+        "Masculino",
+        "Otro"
+      ]
+    },
+    {
+      "id": 5,
+      "pregunta": "¿Alguna vez le han dicho que tiene algún problema psicológico?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, he recibido comentarios sobre posibles problemas psicológicos",
+        "No, nunca me han dicho que tenga algún problema psicológico"
+      ]
+    },
+    {
+      "id": 6,
+      "pregunta": "¿Sospecha que tiene algún problema emocional?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, he notado síntomas que me hacen pensar en problemas emocionales",
+        "No, no creo tener problemas emocionales"
+      ]
+    },
+    {
+      "id": 7,
+      "pregunta": "¿Quiero saber cómo soy?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, estoy interesado en conocer más sobre mi personalidad y emociones",
+        "No, no tengo interés en conocer más sobre mí mismo"
+      ]
+    },
+    {
+      "id": 8,
+      "pregunta": "¿Siente falta de aire, presión en el pecho, mareos, visión borrosa, suda bastante, entre otros síntomas físicos, en algunas ocasiones específicas?",
+      "tipo": "justificacion",
+      "respuestas": [
+        "Sí, experimento estos síntomas en ciertas situaciones",
+        "No, no he experimentado estos síntomas",
+        "Especifique"
+      ]
+    },
+    {
+      "id": 9,
+      "pregunta": "¿Se siente triste la mayor parte del tiempo?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, me siento triste con frecuencia",
+        "No, no me siento triste la mayor parte del tiempo"
+      ]
+    },
+    {
+      "id": 10,
+      "pregunta": "¿Ha perdido el ánimo de hacer las cosas?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, he perdido el interés y ánimo para realizar actividades",
+        "No, conservo mi interés y ánimo para realizar actividades"
+      ]
+    },
+    {
+      "id": 11,
+      "pregunta": "¿Le cuesta levantarse de la cama?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, me cuesta levantarme de la cama",
+        "No, no tengo dificultad para levantarme de la cama"
+      ]
+    },
+    {
+      "id": 12,
+      "pregunta": "¿Sus hábitos de alimentación y sueño han cambiado?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, mis hábitos de alimentación y sueño han cambiado",
+        "No, mis hábitos de alimentación y sueño siguen siendo los mismos"
+      ]
+    },
+    {
+      "id": 13,
+      "pregunta": "¿Ha consumido o consume algún tipo de sustancias (alcohol o drogas)",
+      "tipo": "justificacion",
+      "respuestas": [
+        "Sí, consumo sustancias de manera ocasional o regular",
+        "No, no consumo sustancias",
+        "Especifique"
+      ]
+    },
+    {
+      "id": 14,
+      "pregunta": "¿Siente que tiene dificultad para dejar de utilizar juegos virtuales o estar conectados a internet, ver videos constantemente, entre otros?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, me resulta difícil dejar estas actividades",
+        "No, no tengo dificultad para dejar estas actividades"
+      ]
+    },
+    {
+      "id": 15,
+      "pregunta": "¿Siente que está en una relación conflictiva de pareja? (verbal o física)",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, estoy en una relación conflictiva",
+        "No, mi relación de pareja no es conflictiva"
+      ]
+    },
+    {
+      "id": 16,
+      "pregunta": "¿Estás seguro de tus preferencias sexuales?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, estoy seguro de mis preferencias sexuales",
+        "No, no estoy seguro de mis preferencias sexuales"
+      ]
+    },
+    {
+      "id": 17,
+      "pregunta": "¿Tienes dificultad para disfrutar cualquier tipo de relación afectiva?",
+      "tipo": "opciones",
+      "respuestas": [
+        "Sí, tengo dificultad para disfrutar relaciones afectivas",
+        "No, no tengo dificultad para disfrutar relaciones afectivas"
+      ]
     }
   ]
-  
+}

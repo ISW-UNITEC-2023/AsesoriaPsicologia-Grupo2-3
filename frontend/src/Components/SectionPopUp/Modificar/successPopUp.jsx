@@ -1,5 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
+import "../../../Styles/CSS/SectionPopUp/Modificar/successPopUp.css";
+import propsTypes from "prop-types";
+import { Button } from "react-bootstrap";
 
 const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
@@ -15,21 +16,13 @@ const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
     <div className="popup-container" style={overlayStyle}>
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
-          <h2 style={{ marginBottom: "20px" }}>
-            Sección {sectionId} modificada con éxito
-          </h2>
-          <button
-            className="btn btn-danger"
+          <h2  style={{ marginBottom:'20px' }}>Sección {sectionId} modificada con éxito.</h2>
+          <Button 
+            className="cancelar-sus "
             onClick={onClose}
-            style={{
-              backgroundColor: "green",
-              color: "white",
-              borderBlockColor: "green",
-              marginRight: "10px",
-            }}
           >
             Cerrar
-          </button>
+          </Button>
         </div>
       </div>
     </div>

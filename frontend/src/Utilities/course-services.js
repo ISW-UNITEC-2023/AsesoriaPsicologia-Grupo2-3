@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 export async function loadModules() {
   const options = {
     method: "GET",

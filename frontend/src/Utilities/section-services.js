@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export async function GetSections() {
-  const host = process.env.REACT_APP_API_BASE_URL;
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
     url: `${host}/sections/getAll`,
@@ -13,8 +13,8 @@ export async function GetSections() {
 }
 
 export async function createSection(section) {
-  const host = process.env.REACT_APP_API_BASE_URL;
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "POST",
     url: `${host}/sections/create`,
@@ -25,9 +25,10 @@ export async function createSection(section) {
 }
 
 export async function getInfoSection(id) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/search",
+    url: host + "/sections/search",
     params: { course_id: id },
     withCredentials: true,
   };
@@ -37,9 +38,10 @@ export async function getInfoSection(id) {
 }
 
 export async function getInfoSectionMod() {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/search2",
+    url: host + "/sections/search2",
   };
 
   const response = await axios.request(options);
@@ -48,9 +50,10 @@ export async function getInfoSectionMod() {
 }
 
 export async function deleteSection(id) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "DELETE",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/delete",
+    url: host + "/sections/delete",
     data: { id: id },
     withCredentials: true,
   };
@@ -65,9 +68,10 @@ export async function deleteSection(id) {
 
 //Modificar
 export async function updateTeacher(id, teacher_id) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateTeacher",
+    url: host + "/sections/updateTeacher",
 
     data: { id_sections: id, id_teacher: teacher_id },
   };
@@ -81,9 +85,10 @@ export async function updateTeacher(id, teacher_id) {
 }
 
 export async function updateYear(id, year) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateYear",
+    url: host + "/sections/updateYear",
 
     data: { id_sections: id, year: year },
   };
@@ -97,9 +102,10 @@ export async function updateYear(id, year) {
 }
 
 export async function updateQuarter(id, quarter) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: process.env.REACT_APP_API_BASE_URL + "/sections/updateQuarter",
+    url: host + "/sections/updateQuarter",
 
     data: { id_sections: id, quarter: quarter },
   };

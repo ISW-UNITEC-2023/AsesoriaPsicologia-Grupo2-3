@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 async function postLogin(email, password) {
   const options = {
     method: "POST",

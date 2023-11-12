@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 export async function sendEmail(name, remitente, subject, message, email) {
   const options = {
     method: "POST",
-    url: process.env.REACT_APP_API_BASE_URL+"/mail/send-Multiple",
+    url: host + "/mail/send-Multiple",
     data: {
       name: name,
       email: remitente,

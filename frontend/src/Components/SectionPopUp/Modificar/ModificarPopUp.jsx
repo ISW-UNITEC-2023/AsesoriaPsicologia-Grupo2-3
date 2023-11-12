@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import services from "../../../Utilities/login-services.js";
 import "../../../Styles/CSS/SectionPopUp/Modificar/ModificarPopUp.css";
 import propsTypes from "prop-types";
-import Dropdown from "react-bootstrap/Dropdown";
 
 import { Button } from "react-bootstrap";
-const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
+const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year, teacher, quarter, year }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedTeacherOption, setSelectedTeacherOption] = useState([]);
   //---------------------------
@@ -70,7 +69,7 @@ const ModificarPopUp = ({ isOpen, onClose, onConfirm, sectionId, Year }) => {
     <div className="popup-container" style={overlayStyle}>
       <div className="popup-modificar" style={popupStyle}>
         <div className="popup-content">
-          <h2 style={{ marginBottom: "50px", fontWeight: "600" }}>
+          <h2 style={{ marginBottom: "10px", fontWeight: "600" }}>
             ¿Está seguro que desea modificar la sección {sectionId}?
           </h2>
 
@@ -199,4 +198,7 @@ ModificarPopUp.propsTypes = {
   onConfirm: propsTypes.func,
   sectionId: propsTypes.number,
   Year: propsTypes.number,
+  teacher: propsTypes.string,
+  quarter: propsTypes.number,
+  year: propsTypes.number,
 };
