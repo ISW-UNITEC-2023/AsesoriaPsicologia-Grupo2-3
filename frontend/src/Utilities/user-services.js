@@ -148,7 +148,7 @@ export async function getCookies() {
   try {
     const options = {
       method: "GET",
-      url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/admins/getCookies",
+      url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/getCookies",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -163,7 +163,7 @@ export async function deleteCookies() {
   try {
     const options = {
       method: "GET",
-      url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/admins/deletecookie",
+      url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/users/deletecookie",
       withCredentials: true,
     };
     const response = await axios.request(options);

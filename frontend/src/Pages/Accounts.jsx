@@ -40,8 +40,7 @@ function Accounts() {
   });
   const [openEmail, setOpenEmail] = useState({
     open: 0,
-    name: null,
-    email: null,
+    userInfo: null,
   });
 
   //Mensajes de filtros
@@ -466,9 +465,9 @@ function Accounts() {
             <EmailPopUp
               isOpen={openEmail.open}
               onClose={() => {
-                setOpenEmail({ open: 0, name: null });
+                setOpenEmail({ open: 0, userInfo: null });
               }}
-              name={openEmail.name}
+              user={openEmail.userInfo}
             />
           )}
         </div>
@@ -542,8 +541,7 @@ function Accounts() {
                         onClick={() => {
                           setOpenEmail({
                             open: 1,
-                            name: itemU.name_user,
-                            email: itemU.email_user,
+                            userInfo: itemU,
                           });
                         }}
                       />
