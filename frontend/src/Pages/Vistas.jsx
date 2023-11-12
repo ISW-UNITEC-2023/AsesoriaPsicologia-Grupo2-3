@@ -6,6 +6,8 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import VistasPDF from "./DocuPDF";
 import Button from 'react-bootstrap/Button';
 
+
+
 function Vistas() {
   return (
     <><PDFDownloadLink document={<VistasPDF />} fileName="expediente.pdf">
