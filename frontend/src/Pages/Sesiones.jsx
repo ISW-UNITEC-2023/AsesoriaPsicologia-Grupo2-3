@@ -7,7 +7,12 @@ function Sesiones() {
   const [sessions, setSessions] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
 
   const handleCreateSession = () => {
-    const newSession = sessions.length + 1;
+    // Find the maximum session number
+    const maxSessionNumber = Math.max(...sessions);
+    
+    // Generate a new session number by adding 1 to the maximum session number
+    const newSession = maxSessionNumber + 1;
+  
     setSessions([...sessions, newSession]);
   };
 
