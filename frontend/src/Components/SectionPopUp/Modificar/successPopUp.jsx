@@ -1,5 +1,5 @@
 import "../../../Styles/CSS/SectionPopUp/Modificar/successPopUp.css";
-import propsTypes from "prop-types";
+// import propsTypes from "prop-types";
 import { Button } from "react-bootstrap";
 
 const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
@@ -29,11 +29,11 @@ const Popup = ({ isOpen, onClose, onConfirm, sectionId }) => {
   );
 };
 
-Popup.propTypes = {
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  onConfirm: PropTypes.func,
-  sectionId: PropTypes.number,
-};
+// Popup.propTypes = {
+//   isOpen: PropTypes.bool,
+//   onClose: PropTypes.func,
+//   onConfirm: PropTypes.func,
+//   sectionId: PropTypes.number,
+// };
 
 export default Popup;

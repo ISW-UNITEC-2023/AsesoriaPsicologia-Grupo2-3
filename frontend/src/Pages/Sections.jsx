@@ -56,7 +56,8 @@ function SectionsPage() {
   const [selectedQuarterOption, setSelectedQuarterOption] = useState("");
   const [selectedTeacherOption, setSelectedTeacherOption] = useState("");
   const [selectedYearOption, setSelectedYearOption] = useState("");
-
+  const [selectedActiveOption, setSelectedActiveOption] = useState("");
+  
   const [isModifyConfirmed, setIsModifyConfirmed] = useState(false);
 
   const updateCourseInfo = async () => {
