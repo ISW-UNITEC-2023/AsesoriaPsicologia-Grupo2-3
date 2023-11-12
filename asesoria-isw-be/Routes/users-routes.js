@@ -13,6 +13,9 @@ router.post("/updatePassword", userController.updateUserPassword);
 router.post("/changeActive", userController.updateUserActive);
 router.post("/assignRole", userController.assignRole);
 
+//Cookies
+router.get("/getCookies", userController.getCookie);
+
 //Get
 router.get("/viewUsers", userController.getAllusers);
 router.get("/viewTeachers", userController.getTeachers);
@@ -31,5 +34,6 @@ router.get("/getCookies", userController.getCookie);
 
 //Delete
 router.delete("/removeRole", userController.removeRole);
+router.delete("/deleteCookies", userController.deleteCookies);
 
 module.exports = router;

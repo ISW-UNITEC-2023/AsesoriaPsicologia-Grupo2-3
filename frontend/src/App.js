@@ -18,7 +18,6 @@ import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
-import ProfilesPage from "./Pages/Profiles";
 import Accounts from "./Pages/Accounts";
 import VistasPDF from "./Pages/DocuPDF";
 import LoadingSpinner from "./Pages/LoadingStyle";

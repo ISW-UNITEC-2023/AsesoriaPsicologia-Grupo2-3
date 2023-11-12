@@ -83,7 +83,7 @@ async function loginUser(req, res) {
     }
 
     const email_exists = await userServices.findExistingEmail(email);
-    const roles = await userServices.getRoles(email_exists[0].id_user);
+    const roles = await userServices.getUserRoles(email_exists[0].id_user);
     const roleNames = roles.map((role) => role.name_role);
 
     const userData = {
@@ -355,16 +355,16 @@ async function getTeachers(req, res) {
 
 async function getUserRoles(req, res){
   const { idUser } = req.body;
-  try{
-    const roles = await userServices.getUserRoles(idUser)
+  try {
+    const roles = await userServices.getUserRoles(idUser);
     res.send({
       message: "Se obtuvieron los roles del usuario",
-      rolesInfo: roles
-    })
-  }catch(e){
+      rolesInfo: roles,
+    });
+  } catch (e) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo obtener los roles del usuario"
-    })
+      error: "No se pudo obtener los roles del usuario",
+    });
   }
 }
 
@@ -401,29 +401,39 @@ async function getCookie(req, res) {
   }
 }
 
-async function getRoles(req, res) {
-  const { id_user } = req.query;
-  try {
-    const roles = await userServices.getRoles(id_user);
-    res.send(roles);
-  } catch (e) {
-    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo obtener los roles.",
-    });
-  }
-}
-
 async function getAllUsersRoles(req, res){
   try{
     const roles = await userServices.getAllUsersRoles();
     res.send({
       message: "Se obtuvieron los roles de los usuarios",
-      rolesInfo: roles
-    })
-  }catch(error){
+      rolesInfo: roles,
+    });
+  } catch (error) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo obtener todos los roles de los usuarios"
-    })
+      error: "No se pudo obtener todos los roles de los usuarios",
+    });
+  }
+}
+
+async function getCookie(req, res) {
+  try {
+    const cookies = req.signedCookies;
+    res.send(cookies);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
+  }
+}
+
+async function deleteCookies(req, res) {
+  try {
+    res.clearCookie("email");
+    res.send("Cookie eliminada");
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
   }
 }
 
@@ -442,5 +452,5 @@ module.exports = {
   getCookie,
   getUserRoles,
   getAllUsersRoles,
-  getRoles
+  deleteCookies,
 };

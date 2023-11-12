@@ -1,4 +1,6 @@
-.popup-overlay {
+/* PopUp_CrearUser.css */
+
+.popup-overlay-eu {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,50 +10,162 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 2;
   transition: opacity 0.3s ease;
 }
 
-.popup {
+.popup-eu {
   background-color: #fff;
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   max-width: 90%;
-  width: 400px;
+  width: 500px;
   text-align: center;
   position: relative;
   transform-origin: center;
   transition: transform 0.3s ease;
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #333;
+.form-header-eu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #003b88;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.3rem;
+  font-family: sans-serif;
 }
 
-.form-group {
+.form-title-eu{
+  max-width: 70%;
+  text-align: left;
+}
+
+.form-body-eu {
+  padding: 40px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-eu {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
-}
-
-.form-control {
-  height: 40px;
-  padding: 0 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-textarea {
-  height: 200px; /* Ajusta la altura según tu preferencia */
-  resize: vertical; /* Permite redimensionar verticalmente */
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  align-items: flex-start;
   width: 100%;
+}
+
+.form-group-double-eu {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+}
+
+.form-control-eu {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.5s ease;
+}
+
+.form-label-eu {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.form-div-input-eu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-div-input-eu:focus-within {
+  border-color: #003b88;
+  transition: border-color 0.5s ease;
+}
+
+.form-active-input-eu {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.5s ease;
+}
+
+.form-input-eu {
+  width: 100%;
+  outline: none;
+  padding: 10px;
+  transition: border-color 0.5s ease;
+  border-radius: 5px;
+}
+
+.pencil-icon-eu {
+  cursor: pointer;
+  padding: 10px;
+  width: 5%;
+}
+
+.form-control-eu:focus {
+  border-color: #003b88;
+}
+
+.form-buttons-eu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.form-actualizar-eu {
+  background: none;
+  color: #003b88;
+  border: 1px solid #003b88;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.5s ease;
+}
+
+.form-actualizar-eu:hover {
+  background: #003b88;
+  color: #fff;
+  border: 1px solid #003b88;
+}
+
+.form-cancel-eu {
+  background: none;
+  color: #003b88;
+  border: 1px solid #003b88;
+  outline: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-right: 10px;
+}
+
+.form-cancel-eu:hover {
+  background: #c00000;
+  color: #fff;
+  border: 1px solid #c00000;
 }

@@ -8,7 +8,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-const CrearUser = ({ isOpen, onClose }) => {
+const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -35,6 +35,7 @@ const CrearUser = ({ isOpen, onClose }) => {
   const handleCreateUser = (event) => {
     event.preventDefault();
     userServices.createUser(credentials)
+    refreshUsers();
     onClose();
   };
 

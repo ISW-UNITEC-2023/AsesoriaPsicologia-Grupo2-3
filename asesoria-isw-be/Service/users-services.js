@@ -149,7 +149,7 @@ async function getTeachers() {
 async function getUserRoles(idUser){
   let roles = await knex.raw(
     `
-      SELECT roles.id_role, roles.name_rol
+      SELECT roles.id_role, roles.name_role
         FROM roles
           INNER JOIN user_role ON user_role.id_role = roles.id_role
           AND user_role.id_user = ?

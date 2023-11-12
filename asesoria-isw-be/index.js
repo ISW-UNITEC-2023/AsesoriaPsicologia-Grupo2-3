@@ -59,6 +59,9 @@ const sectionRouter = require("./Routes/sections-routes");
 const clinicRouter = require("./Routes/clinics-routes");
 const announcementRouter = require("./Routes/announcement-routes");
 const fileRouter = require("./Routes/files-routes");
+const mailRouter = require("./Routes/mail-routes");
+
+//Rutas de Zoom
 const zoomUsersRouter = require("./Routes/zoom/users");
 const zoomMeetingsRouter = require("./Routes/zoom/meetings");
 const zoomWebinarsRouter = require("./Routes/zoom/webinars");
@@ -77,6 +80,7 @@ app.use("/courses", courseRouter);
 app.use("/clinics", clinicRouter);
 app.use("/announcements", announcementRouter);
 app.use("/files", fileRouter);
+app.use("/mail", mailRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
