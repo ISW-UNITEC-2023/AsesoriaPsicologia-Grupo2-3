@@ -29,6 +29,8 @@ router.post("/getRoles", userController.getUserRoles)
 //COOKIES
 
 router.get("/getCookies", userController.getCookie);
+router.delete("/removeCookie", userController.removeCookie);
+
 //obtener los roles de usuario por id
 
 //Delete

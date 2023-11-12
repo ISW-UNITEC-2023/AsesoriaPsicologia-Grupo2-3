@@ -1,0 +1,80 @@
+
+.page-containerPDF {
+    max-width: 10px; /* Tamaño máximo del contenedor */
+    margin: 2px auto; /* Centrar horizontalmente en la página */
+    padding: 2px; /* Espacio interno alrededor del contenido */
+    background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
+    border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
+    box-shadow: 0 0 10px rgba(141, 141, 141, 0.529) ; /* Sombra (opcional) */
+    max-height: 10px;
+}
+
+.profile-containerPDF {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-imagePDF {
+    width: 10px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    height: 10px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    border-radius: 10%; /* Hace que la imagen sea circular */
+     /* Borde alrededor de la imagen (opcional) */
+    margin-right: 10px;
+}
+ 
+.image-containerPDF {
+  position: relative;
+}
+
+/* Estilos para la imagen */
+.unitec-imagePDF {
+  position:relative;
+  top: 0;
+  right: 0;
+  height: 50px;
+  /* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
+}
+
+  .profile-textPDF {
+    margin-top: 50px;
+    text-align: center;
+    font-style: Times normal;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+.columnaPDF{
+  border:2px solid red;
+}
+
+.with-underlinePDF {
+  text-decoration: underline;
+}
+
+.text-containerPDF {
+  display: grid;
+  grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
+  gap: 10px; /* Espacio entre las columnas */
+  align-items: center; /* Centrar verticalmente */
+  
+}
+
+.fs-5PDF {
+  align-self: center; /* Alinear verticalmente el texto "Nombre:" y otros con subrayado */
+}
+
+.fs-5-alignmentPDF {
+  text-align: right; /* Alinear el texto a la izquierda en los elementos fs-6 sin subrayado */
+  margin: 5; /* Eliminar el margen predeterminado de los elementos p */
+}
+
+.h3PDF{
+  margin-top: 20px;
+}
+
+.text-centerPDF{
+  text-align: center;
+}
+
+
+

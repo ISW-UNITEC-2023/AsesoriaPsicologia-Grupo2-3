@@ -142,15 +142,15 @@ export async function getCookies() {
     const response = await axios.request(options);
     return response.data;
   } catch (error) {
-    return null; // O maneja el error de otra manera
+    return null;
   }
 }
 
 export async function deleteCookies() {
   try {
     const options = {
-      method: "GET",
-      url: process.env.REACT_APP_API_BASE_URL + "/admins/deletecookie",
+      method: "DELETE",
+      url: process.env.REACT_APP_API_BASE_URL + "/users/removeCookie",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -159,6 +159,7 @@ export async function deleteCookies() {
     return null;
   }
 }
+
 async function getAdmins() {
   const options = {
     method: "GET",

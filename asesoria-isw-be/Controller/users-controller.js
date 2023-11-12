@@ -405,6 +405,29 @@ async function getCookie(req, res) {
   }
 }
 
+async function removeCookie(req, res) {
+  try {
+    res.clearCookie("user_data");
+    res.send("Cookie eliminada");
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo eliminar las cookies.",
+    });
+  }
+}
+
+async function getRoles(req, res) {
+  const { id_user } = req.query;
+  try {
+    const roles = await userServices.getRoles(id_user);
+    res.send(roles);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los roles.",
+    });
+  }
+}
+
 async function getAllUsersRoles(req, res){
   try{
     const roles = await userServices.getAllUsersRoles();
@@ -443,6 +466,8 @@ module.exports = {
   getAllusers,
   getTeachers,
   getCookie,
+  getRoles,
+  removeCookie,
   getUserRoles,
   getAllUsersRoles,
   deleteCookies,

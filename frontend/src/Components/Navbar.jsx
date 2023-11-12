@@ -19,7 +19,7 @@ import {
   faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import backIcon from "../Styles/Images/back-icon-nb.png";
-
+import { deleteCookies } from "../Utilities/login-services";
 function MyNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
@@ -29,6 +29,9 @@ function MyNavbar() {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
+
+    deleteCookies();
+
     navigate("/InicioSesion");
   };
 

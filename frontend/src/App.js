@@ -21,6 +21,7 @@ import AnunciosCrear from "./Pages/AnunciosCrear";
 import Accounts from "./Pages/Accounts";
 import VistasPDF from "./Pages/DocuPDF";
 import LoadingSpinner from "./Pages/LoadingStyle";
+import AuditLogs from "./Pages/AuditLogs";
 import { PDFViewer } from "@react-pdf/renderer";
 import { getCookies } from "../src/Utilities/login-services";
 
@@ -220,6 +221,8 @@ function App() {
             )
           }
         /> */}
+      
+        <Route path="/AuditLogs" element={<AuditLogs />} />
       </Routes>
     </Router>
   );
