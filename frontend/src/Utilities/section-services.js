@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export async function GetSections() {
-  const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  //const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
     url: `${host}/sections/`,
@@ -13,8 +14,9 @@ export async function GetSections() {
 }
 
 export async function createSection(section) {
-  const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  //const host = "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
   // const host = process.env.BACKEND_API ? process.env.BACKEND_API : "https://asesoria-isw-be-a2c92def0737.herokuapp.com";
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "POST",
     url: `${host}/sections/create`,
@@ -25,9 +27,10 @@ export async function createSection(section) {
 }
 
 export async function getInfoSection(id) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/search",
+    url: host + "/sections/search",
     params: { course_id: id },
   };
   const response = await axios.request(options);
@@ -36,9 +39,10 @@ export async function getInfoSection(id) {
 }
 
 export async function getInfoSectionMod() {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/search2",
+    url: host + "/sections/search2",
   };
 
   const response = await axios.request(options);
@@ -47,9 +51,10 @@ export async function getInfoSectionMod() {
 }
 
 export async function deleteSection(id) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "DELETE",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/delete",
+    url: host + "/sections/delete",
     params: { id: id },
   };
 
@@ -63,9 +68,10 @@ export async function deleteSection(id) {
 
 //Modificar
 export async function updateTeacher(id, teacher_id) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/update/teacher/",
+    url: host + "/sections/update/teacher/",
     params: { id: id },
     data: { teacher_id: teacher_id },
   };
@@ -79,9 +85,10 @@ export async function updateTeacher(id, teacher_id) {
 }
 
 export async function updateYear(id, year) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/update/year/",
+    url: host + "/sections/update/year/",
     params: { id: id },
     data: { year: year },
   };
@@ -95,9 +102,10 @@ export async function updateYear(id, year) {
 }
 
 export async function updateQuarter(id, quarter) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/sections/update/quarter/",
+    url: host + "/sections/update/quarter/",
     params: { id: id },
     data: { quarter: quarter },
   };

@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate, Link} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { ProgressBar, Button, Form } from 'react-bootstrap';
 import "../Styles/CSS/WizardStyle.css";
 import NavigationBar from "../Components/NavigationBar";
 import quesData from "../Styles/Extras/preguntas.json";
 
 function Wizard(props) {
     const navigate = useNavigate();
-    const {howieImg} = props;
+    const { howieImg } = props;
+    const [progress, setProgress] = useState(0);
 
     //Componentes de Registro
     const [regData, setRegData] = useState({
@@ -26,13 +28,13 @@ function Wizard(props) {
     //Validaciones de Registro
     const valideData = (data) => {
         let re = "";
-        if(data === "email"){
+        if (data === "email") {
             re = /\S+@\S+\.\S+/;
             return re.test(regData.email);
-        }else if(data === "phoneNum"){
+        } else if (data === "phoneNum") {
             re = /^\d{8}$/;
             return re.test(regData.phoneNum);
-        }else if(data === "password"){
+        } else if (data === "password") {
             re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
             return re.test(regData.password);
         }
@@ -46,17 +48,17 @@ function Wizard(props) {
             ...regData,
             [e.target.name]: value,
         })
-        if(dataName === "email"){
+        if (dataName === "email") {
             setValidations({
                 ...validations,
                 isEmailValid: valideData(dataName)
             })
-        }else if(dataName === "phoneNum"){
+        } else if (dataName === "phoneNum") {
             setValidations({
                 ...validations,
                 isPhoneNumValid: valideData(dataName)
             })
-        }else if(dataName === "password"){
+        } else if (dataName === "password") {
             setValidations({
                 ...validations,
                 isPasswordValid: valideData(dataName)
@@ -67,175 +69,200 @@ function Wizard(props) {
     //Componentes de Wizard
     const [preguntas, setPreguntas] = useState({
         pregunta: [],
-        respuesta1: [],
-        respuesta2: [],
-        respuesta3: [],
+        respuestas: [],
         dispPregunta: "",
-        dispRespuesta1: "",
-        dispRespuesta2: "",
-        dispRespuesta3: "",
-        indice: 0
-    })
+        dispRespuestas: [],
+        indice: 0,
+    });
 
     //extraer preguntas del json
     const getPreguntas = async () => {
-        for (let i = 0; i < quesData.length; i++) {
-            preguntas.pregunta.push(quesData[i].pregunta);
-            preguntas.respuesta1.push(quesData[i].respuestas.resp1);
-            preguntas.respuesta2.push(quesData[i].respuestas.resp2);
-            preguntas.respuesta3.push(quesData[i].respuestas.resp3);
-        }
-        setPreguntas({
-            ...preguntas,
-            dispPregunta: preguntas.pregunta[0],
-            dispRespuesta1: preguntas.respuesta1[0],
-            dispRespuesta2: preguntas.respuesta2[0],
-            dispRespuesta3: preguntas.respuesta3[0]
-        })
-    }
+        try {
+            const preguntasArray = quesData.preguntas.map((pregunta) => {
+                return {
+                    pregunta: pregunta.pregunta,
+                    respuestas: pregunta.respuestas,
+                };
+            });
 
+            setPreguntas({
+                pregunta: preguntasArray,
+                dispPregunta: preguntasArray[0].pregunta,
+                dispRespuestas: preguntasArray[0].respuestas,
+                indice: 0,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
     //Ejecutar fetch de preguntas
     useEffect(() => {
-        if(preguntas.pregunta.length === 0){
+        if (preguntas.pregunta.length === 0) {
             getPreguntas().then(r => r);
         }
     }, [])
 
     const handlePregunta = (index) => {
-        setPreguntas({
-            ...preguntas,
-            dispPregunta: preguntas.pregunta[preguntas.indice+1],
-            dispRespuesta1: preguntas.respuesta1[preguntas.indice+1],
-            dispRespuesta2: preguntas.respuesta2[preguntas.indice+1],
-            dispRespuesta3: preguntas.respuesta3[preguntas.indice+1],
-            indice: preguntas.indice+1
-        })
-    }
+        try {
+            setPreguntas({
+                ...preguntas,
+                dispPregunta: preguntas.pregunta[preguntas.indice + 1].pregunta,
+                dispRespuestas: preguntas.pregunta[preguntas.indice + 1].respuestas,
+                indice: preguntas.indice + 1,
+            });
+
+            setProgress((preguntas.indice + 1) * 100 / preguntas.pregunta.length);
+        } catch (e) {
+            setPreguntas({
+                ...preguntas,
+                indice: preguntas.indice + 1,
+            });
+            console.log(e);
+        }
+
+    };
 
     return (
         <>
             <div className={"bodyR"}>
                 <div className="navigation-bar">
-                    <NavigationBar {...props}/>
+                    <NavigationBar {...props} />
                 </div>
-                {preguntas.indice <= preguntas.pregunta.length-1 &&
+                {preguntas.indice <= preguntas.pregunta.length - 1 &&
                     <div className="progress-bar">
-                        {preguntas.pregunta.map((pregunta, index) => {
-                            if(index >= preguntas.indice){
-                                return (<div className="progress-bar-item" key={index} style={{backgroundColor: "rgb(173,178,171)"}}></div>)
-                            }else{
-                                return (<div className="progress-bar-item" key={index} style={{backgroundColor: "rgb(166,155,222)"}}></div>)
-                            }
-                        })}
+                        <ProgressBar now={progress} className="custom-progress-bar " variant="danger" />
                     </div>
                 }
                 <div className="wizard">
                     <div className="wizard-mascota">
-                        <img src={howieImg} alt="" className="howie-img"/>
+                        <img src={howieImg} alt="" className="howie-img" />
                     </div>
                     <div className="register-form">
-                        {preguntas.indice <= preguntas.pregunta.length-1 ? (
+                        {preguntas.indice <= preguntas.pregunta.length - 1 ? (
                             <div className="">
                                 <div className="wizard-pregunta">
                                     <p>{preguntas.dispPregunta}</p>
                                 </div>
                                 <div className="wizard-respuestas">
-                                    <div>
-                                        <button 
-                                            className="wizard-respuesta"
-                                            onClick={()=>{handlePregunta(1)}}
-                                            >{preguntas.dispRespuesta1}
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button className="wizard-respuesta"
-                                            onClick={()=>{handlePregunta(2)}}>
-                                            {preguntas.dispRespuesta2}
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button className="wizard-respuesta"
-                                            onClick={()=>{handlePregunta(3)}}>
-                                            {preguntas.dispRespuesta3}
-                                        </button>
-                                    </div>
+                                    {preguntas.dispRespuestas.map((respuesta, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {preguntas.pregunta[preguntas.indice].tipo ===
+                                                    "justificacion" ? (
+                                                    <input
+                                                        type="text"
+                                                        placeholder={respuesta}
+                                                        className="wizard-respuesta"
+                                                        onChange={(e) =>
+                                                            handleJustificacionChange(e, index)
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <button
+                                                        className="wizard-respuesta"
+                                                        onClick={() => handlePregunta(index)}
+                                                    >
+                                                        {respuesta}
+                                                    </button>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
-                        ):(
+                        ) : (
                             <div className="containerReg">
-                                <label className="label-reg-form">Nombre Completo</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={regData.name}
-                                    onChange={(e) => handleRegChange(e)}
-                                    className="input-reg"
-                                    required={true}
-                                />
-                                <label className="label-reg-form">Fecha de Nacimiento</label>
-                                <input
-                                    type="date"
-                                    name="date"
-                                    value={regData.date}
-                                    onChange={(e) => handleRegChange(e)}
-                                    className="input-reg"
-                                    required={true}
-                                />
-                                <label className="label-reg-form">Numero de Teléfono</label>
-                                <input
-                                    type="text"
-                                    name="phoneNum"
-                                    value={regData.phoneNum}
-                                    onChange={(e) => handleRegChange(e)}
-                                    onBlur={() => 
-                                        setValidations({
-                                            ...validations,
-                                            isPhoneNumValid: valideData("phoneNum")
-                                        })
-                                    }
-                                    className="input-reg"
-                                    required={true}
-                                />
-                                {!validations.isPhoneNumValid && regData.phoneNum.length > 0 &&
-                                    <p className="error-message-reg">El número de teléfono debe tener 8 dígitos</p>}
-                                <label className="label-reg-form">Correo Eléctronico</label>
-                                <input
-                                    type="text"
-                                    name="email"
-                                    value={regData.email}
-                                    onChange={(e) => handleRegChange(e)}
-                                    onBlur={() => 
-                                        setValidations({
-                                            ...validations,
-                                            isEmailValid: valideData("email")
-                                        })
-                                    }
-                                    className="input-reg"
-                                    required={true}
-                                />
-                                {!validations.isEmailValid && regData.email.length > 0 &&
-                                    <p className="error-message-reg">El correo electrónico debe ser válido</p>}
-                                <label className="label-reg-form">Contraseña</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder="Contraseña"
-                                    value={regData.password}
-                                    onChange={(e) => handleRegChange(e)}
-                                    onBlur={() => 
-                                        setValidations({
-                                            ...validations,
-                                            isPasswordValid: valideData("password")
-                                        })
-                                    }
-                                    className="input-reg"
-                                    required={true}
-                                />
-                                {!validations.isPasswordValid && regData.password.length > 0 && <p className="error-message-reg">La contraseña
-                                    debe tener al menos 8 caracteres y contener al menos una letra y un número</p>}
-                                <button className="button-reg" type="submit">
-                                    Crear cuenta
-                                </button>
+                                <Form>
+                                    <Form.Group controlId="formName" className="mb-3">
+                                        <Form.Label>Nombre Completo</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="name"
+                                            value={regData.name}
+                                            onChange={(e) => handleRegChange(e)}
+                                            placeholder="Ingrese su nombre completo"
+                                            isInvalid={!regData.name.length > 0}
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            El nombre no puede estar vacío.
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Form.Group controlId="formDate" className="mb-3">
+                                        <Form.Label>Fecha de Nacimiento</Form.Label>
+                                        <Form.Control
+                                            type="date"
+                                            name="date"
+                                            value={regData.date}
+                                            onChange={(e) => handleRegChange(e)}
+                                            required
+                                        />
+                                    </Form.Group>
+                                    <Form.Group controlId="formPhone" className="mb-3">
+                                        <Form.Label>Numero de Teléfono</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="phoneNum"
+                                            value={regData.phoneNum}
+                                            onChange={(e) => handleRegChange(e)}
+                                            onBlur={() =>
+                                                setValidations({
+                                                    ...validations,
+                                                    isPhoneNumValid: valideData("phoneNum")
+                                                })
+                                            }
+                                            isInvalid={!validations.isPhoneNumValid && !regData.phoneNum.length > 0}
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            El número de teléfono debe tener 8 dígitos.
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Form.Group controlId="formEmail" className="mb-3">
+                                        <Form.Label>Correo Eléctronico</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="email"
+                                            value={regData.email}
+                                            onChange={(e) => handleRegChange(e)}
+                                            onBlur={() =>
+                                                setValidations({
+                                                    ...validations,
+                                                    isEmailValid: valideData("email")
+                                                })
+                                            }
+                                            isInvalid={!validations.isEmailValid && !regData.email.length > 0}
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            El correo electrónico debe ser válido.
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Form.Group controlId="formPassword" className="mb-3">
+                                        <Form.Label>Contraseña</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            name="password"
+                                            placeholder="Contraseña"
+                                            value={regData.password}
+                                            onChange={(e) => handleRegChange(e)}
+                                            onBlur={() =>
+                                                setValidations({
+                                                    ...validations,
+                                                    isPasswordValid: valideData("password")
+                                                })
+                                            }
+                                            isInvalid={!validations.isPasswordValid && !regData.password.length > 0}
+                                            required
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            La contraseña debe tener al menos 8 caracteres y contener al menos una letra y un número.
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    <Button className="button-reg" type="submit">
+                                        Crear cuenta
+                                    </Button>
+                                </Form>
                                 <Link className="forgot-passwordR" to="/InicioSesion">
                                     ¿Ya tienes una cuenta?
                                 </Link>
@@ -249,7 +276,8 @@ function Wizard(props) {
                 </div>
             </div>
         </>
-    )
+    );
+
 }
 
 export default Wizard;

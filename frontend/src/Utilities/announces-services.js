@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 export async function loadAnnounces() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/all",
+    url: host + "/announce/all",
   };
 
   const response = await axios.request(options);
@@ -14,7 +16,7 @@ export async function loadAnnounces() {
 export async function DeleteAnnounces(id_announces) {
   const options = {
     method: "DELETE",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/delete",
+    url: host + "/announce/delete",
     params: {
       id: id_announces,
     },
@@ -33,7 +35,7 @@ export async function DeleteAnnounces(id_announces) {
 export async function CreateAnnounce(info) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/create",
+    url: host + "/announce/create",
     data: {
       message: info.message,
       title: info.title,
@@ -55,7 +57,7 @@ export async function CreateAnnounce(info) {
 export async function UpdateAnnouncesTitle(id, title) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/update/title",
+    url: host + "/announce/update/title",
     data: {
       id: id,
       title_new: title,
@@ -75,7 +77,7 @@ export async function UpdateAnnouncesTitle(id, title) {
 export async function UpdateAnnouncesDecription(id, message) {
   const options = {
     method: "POST",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/announce/update/Descrip",
+    url: host + "/announce/update/Descrip",
     data: {
       id: id,
       description_new: message,

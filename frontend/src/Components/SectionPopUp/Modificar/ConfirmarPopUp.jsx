@@ -1,8 +1,10 @@
 import "../../../Styles/CSS/SectionPopUp/Modificar/ConfirmarPopUp.css";
 import propsTypes from "prop-types";
+import { Button } from "react-bootstrap";
 
 const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
   const overlayStyle = {
+    opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
   };
 
@@ -11,8 +13,11 @@ const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
   };
 
   const buttonContainerStyle = {
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '1rem',
+    width: '100%',
+    marginTop: '10%'
   };
 
   return (
@@ -20,20 +25,17 @@ const ModificarConfirmPopUp = ({ isOpen, onClose, onConfirm, sectionId }) => {
       <div className="popup" style={popupStyle}>
         <div className="popup-content">
           <h2>¿Está seguro que desea modificar la sección {sectionId}?</h2>
-          <div style={buttonContainerStyle}>
-            <button
-              className="btn btn-danger"
-              onClick={() => {
-                // Aquí llamamos a la función onConfirm para ejecutar handleConfirm en SectionsPage
-                onConfirm();
-              }}
+          <div className="buttonContainerStyle">
+            <Button
+              className="confirmar-popup"
+              onClick={onConfirm}
               style={{ marginRight: "10px" }}
             >
               Sí, deseo modificar sección {sectionId}
-            </button>
-            <button className="btn btn-danger" onClick={onClose}>
+            </Button>
+            <Button className="cancelar-popup" onClick={onClose}>
               Cancelar
-            </button>
+            </Button>
           </div>
         </div>
       </div>

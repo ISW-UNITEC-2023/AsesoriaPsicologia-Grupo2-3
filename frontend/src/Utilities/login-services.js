@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/admins/login",
+    url: host + "/admins/login",
     data: { email, password },
     withCredentials: true, // Esto es para que axios envíe las cookies
   };
@@ -14,7 +16,7 @@ async function postLogin(email, password) {
 async function getUsers() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/list",
+    url: host + "/user/list",
   };
 
   try {
@@ -28,7 +30,7 @@ async function getUsers() {
 async function getModulesAll() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/modulos/all",
+    url: host + "/modulos/all",
   };
 
   axios
@@ -44,7 +46,7 @@ async function getModulesAll() {
 async function getSeccionbyModu() {
   const options = {
     method: "GET",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/list",
+    url: host + "/user/list",
   };
 
   try {
@@ -58,7 +60,7 @@ async function getSeccionbyModu() {
 async function registerUser(id_account, role, name, email, password, active) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/user/register",
+    url: host + "/user/register",
     data: { id_account, role, name, email, password, active },
   };
 
@@ -73,7 +75,7 @@ async function registerUser(id_account, role, name, email, password, active) {
 async function updateUser(id_account, role, active) {
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/update",
+    url: host + "/user/update",
     data: { id_account, role, active },
   };
 
@@ -88,7 +90,7 @@ async function updateUser(id_account, role, active) {
 async function deleteUser(id_account) {
   const options = {
     method: "DELETE",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/delete",
+    url: host + "/user/delete",
     data: { id_account },
   };
 
@@ -103,7 +105,7 @@ async function deleteUser(id_account) {
 async function updateUserPassword(id_account, password) {
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updatePassword",
+    url: host + "/user/updatePassword",
     data: { id_account, password },
   };
 
@@ -118,7 +120,7 @@ async function updateUserPassword(id_account, password) {
 async function updateUserEmail(id_account, email) {
   const options = {
     method: "PUT",
-    url: "https://asesoria-isw-be-a2c92def0737.herokuapp.com/user/updateEmail",
+    url: host + "/user/updateEmail",
     data: { id_account, email },
   };
 
@@ -134,7 +136,7 @@ export async function getCookies() {
   try {
     const options = {
       method: "GET",
-      url: "http://localhost:8000/admins/getCookies",
+      url: host + "/admins/getCookies",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -149,7 +151,7 @@ export async function deleteCookies() {
   try {
     const options = {
       method: "GET",
-      url: "http://localhost:8000/admins/deletecookie",
+      url: host + "/admins/deletecookie",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -162,7 +164,7 @@ export async function deleteCookies() {
 async function getAdmins() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/admins",
+    url: host + "/user/admins",
   };
 
   try {
@@ -176,7 +178,7 @@ async function getAdmins() {
 async function getTeachers() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/teachers",
+    url: host + "/user/teachers",
   };
 
   try {
@@ -190,7 +192,7 @@ async function getTeachers() {
 async function getStudents() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/students",
+    url: host + "/user/students",
   };
 
   try {
@@ -204,7 +206,7 @@ async function getStudents() {
 async function getPatients() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/patients",
+    url: host + "/user/patients",
   };
 
   try {
