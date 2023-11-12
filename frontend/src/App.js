@@ -176,24 +176,11 @@ function App() {
           }
         />
 
-        <Route
-          path="/Dashboard"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<DashBoard />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
+        <Route path="/Dashboard" element={<DashBoard />} />
 
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
-        <Route path="/Cuentas" element={<Accounts/>} />
+        <Route path="/Cuentas" element={<Accounts />} />
         <Route
           path="/Crearanuncios"
           element={
