@@ -1,0 +1,95 @@
+.container-header {
+    display: flex;
+    min-height: 50px;
+    align-items: center;
+    border-bottom: 2px solid #000;
+  }
+
+  .container-controls {
+    min-height: 50px;
+    padding-left: 50px;
+    padding-right: 5px;
+    
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .column {
+    flex: 1;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  /* Ajusta los estilos según tus preferencias */
+  select, input, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .title-pacientes {
+    font-size: 40px;
+    margin-left: 3%;
+    padding: 20px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+
+/*Viñetas de la lista*/
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  
+  
+
+  .icon-persona {
+    margin-right: 15px;
+    margin-left: 15px;
+    font-size: 30px;
+    color: #5281ce;
+  }
+  
+  .titulo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.descripcion {
+  font-size: 14px;
+  color: #555;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+  }
+.anuncios-container {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+  }
+
+.dropdown-item {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+ .ml-align {
+  
+ }
+
+
+ /*Estilos para el menu de opciones*/
