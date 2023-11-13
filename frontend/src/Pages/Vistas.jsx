@@ -2,7 +2,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/tempprofile.png";
 import logoUnitec from "../Styles/Images/unitec-logo.png";
-import html2pdf from "html2pdf.js";
+import { DocuPDF } from "./DocuPDF.jsx";
 import { useEffect } from "react";
 import { useState } from "react";
 

@@ -83,47 +83,30 @@ function PacientesForm() {
                                     <span className="nombre" style={{width: "400%"}}>
                   <Link to={"/sesiones"}>{nombre.nombre}</Link>
                 </span>
-                {/* Agrega el evento onClick para abrir el popup de edición */}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <ul>
-        {nombres.map((nombre) => (
-          <li key={nombre.email}>
-            <div className="nombre-box">
-              <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
-              <span className="nombre" style={{ width: "400%" }}>
-                <Link to={"/Sesiones"}>{nombre.nombre}</Link>
-              </span>
-              {/* Agrega el evento onClick para abrir el popup de edición */}
-              <button
-                className="editar-button"
-                onClick={() => openEditarPopup(nombre)}
-              >
-                Editar
-              </button>
+                                    {/* Agrega el evento onClick para abrir el popup de edición */}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {showCrearPopup && (
+                    <CrearUser
+                        onClose={closeCrearPopup}
+                        isOpen={showCrearPopup}
+                        onUpdatePacientesList={addPacienteAndUpdateList} // Pasa la función aquí
+                    />
+                )}
+                {showEditarPopup && selectedUser && (
+                    <EditarUser
+                        onClose={closeEditarPopup}
+                        isOpen={showEditarPopup}
+                        user={selectedUser} // Pasa el usuario seleccionado para la edición
+                    />
+                )}
             </div>
-          </li>
-        ))}
-      </ul>
-      {showCrearPopup && (
-        <CrearUser
-          onClose={closeCrearPopup}
-          isOpen={showCrearPopup}
-          onUpdatePacientesList={addPacienteAndUpdateList} // Pasa la función aquí
-        />
-      )}
-      {showEditarPopup && selectedUser && (
-        <EditarUser
-          onClose={closeEditarPopup}
-          isOpen={showEditarPopup}
-          user={selectedUser} // Pasa el usuario seleccionado para la edición
-        />
-      )}
-    </div>
-  );
+        </PacientesLayout>
+    );
 }
 
 export default PacientesForm;
