@@ -16,6 +16,8 @@ import AnunciosCrear from "./Pages/AnunciosCrear";
 import ProfilesPage from "./Pages/Profiles";
 import VistasPDF from "./Pages/DocuPDF";
 import { PDFViewer } from "@react-pdf/renderer";
+import MyZoomPat from "./Components/Zoom/zoomPat";
+import MyZoom from "./Components/Zoom/Zoom";
 
 function App() {
   return (
@@ -40,6 +42,9 @@ function App() {
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Crearanuncios" element={<AnunciosCrear />} />
         <Route path="/Profiles" element={<ProfilesPage/>} />
+        
+        <Route path="/ZoomC" element={<MyZoom/>} />
+        <Route path="/ZoomV" element={<MyZoomPat/>} />
       </Routes>
     </Router>
   );
