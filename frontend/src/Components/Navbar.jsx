@@ -15,11 +15,9 @@ import {
   faVideo,
   faBullhorn,
   faGaugeHigh,
-  faArrowLeft,
   faAddressCard,
   faBookOpen
 } from "@fortawesome/free-solid-svg-icons";
-import backIcon from "../Styles/Images/back-icon-nb.png";
 import { deleteCookies } from "../Utilities/login-services";
 function MyNavbar() {
   const [isOpen, setIsOpen] = useState(false);
