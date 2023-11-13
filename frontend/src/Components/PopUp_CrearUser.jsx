@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../Styles/CSS/PopUp_CrearUser.css";
 import userServices from "../Utilities/user-services";
+import validatorServices from "../Utilities/validator"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -19,6 +20,8 @@ const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
   };
 
   const [showPassword, setShowPassword] = useState(false);
+  const [validPassword, setValidPassword] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -32,11 +35,23 @@ const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
     setShowPassword(!showPassword);
   };
 
-  const handleCreateUser = (event) => {
+  const handleCreateUser = async (event) => {
     event.preventDefault();
-    userServices.createUser(credentials)
-    refreshUsers();
-    onClose();
+    if(validatorServices.isPassword(credentials.password) === false){
+      setValidPassword(false)
+    }else{
+      setValidPassword(true)
+    }
+    if(validatorServices.isEmail(credentials.email) === false){
+      setValidEmail(false)
+    }else{
+      setValidEmail(true)
+    }
+    if(validatorServices.isPassword(credentials.password) && validatorServices.isEmail(credentials.email)){
+      const response = await userServices.createUser(credentials);
+      refreshUsers();
+      onClose();
+    }
   };
 
   return (
@@ -78,6 +93,7 @@ const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
                 })
               }
             />
+            {validEmail === false && <span className="error-crear-popup">El correo ingresado no es valido</span>}
           </div>
           <div className="form-group-cu">
             <label className="form-label-cu">Contraseña</label>
@@ -107,6 +123,7 @@ const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
                 />
               )}
             </div>
+            {validPassword === false && <span className="error-crear-popup">La contraseña ingresada no es valida</span>}
           </div>
           <div className="form-group-double-cu">
             <div className="form-group-cu">

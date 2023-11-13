@@ -389,7 +389,6 @@ function Accounts() {
       fetchedUsers.forEach((user) => {
         user.roles = [];
         fetchedRoles.forEach((role) => {
-          console.log(user);
           if (user.id_user === role.id_user) {
             user.roles.push(role.name_role);
           }

@@ -154,3 +154,10 @@
   color: #fff;
   border: 1px solid #c00000;
 }
+
+.error-crear-popup {
+  color: red;
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 5px;
+}
