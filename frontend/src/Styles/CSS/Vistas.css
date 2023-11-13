@@ -1,10 +1,12 @@
-.list-container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin: 0 0 0 0 !important;
-  padding: 0 !important;
-  background-color: rgb(255, 255, 255);
+
+.page-container {
+  max-width: 800px; /* Tamaño máximo del contenedor */
+  margin: 20px auto; /* Centrar horizontalmente en la página */
+  padding: 20px; /* Espacio interno alrededor del contenido */
+  background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
+  border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
+  box-shadow: 0 0 10px rgba(141, 141, 141, 0.529) ; /* Sombra (opcional) */
+  
 }
 
 .profile-container {
@@ -16,21 +18,21 @@
   width: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
   height: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
   border-radius: 50%; /* Hace que la imagen sea circular */
-  /* Borde alrededor de la imagen (opcional) */
+   /* Borde alrededor de la imagen (opcional) */
   margin-right: 20px;
 }
 
 .image-container {
-  position: relative;
+position: relative;
 }
 
 /* Estilos para la imagen */
 .unitec-image {
-  position: relative;
-  top: 0;
-  right: 0;
-  height: 50px;
-  /* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
+position:relative;
+top: 0;
+right: 0;
+height: 50px;
+/* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
 }
 
 .profile-text {
@@ -41,92 +43,91 @@
   font-weight: bold;
 }
 
-.columna {
-  border: 2px solid red;
+.columna{
+border:2px solid red;
 }
 
 .with-underline {
-  text-decoration: underline;
+text-decoration: underline;
 }
 
 .text-container {
-  display: grid;
-  grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
-  gap: 10px; /* Espacio entre las columnas */
-  align-items: center; /* Centrar verticalmente */
+display: grid;
+grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
+gap: 10px; /* Espacio entre las columnas */
+align-items: center; /* Centrar verticalmente */
+
 }
 
 .fs-5 {
-  align-self: center;
+align-self: center; 
 }
 
 .fs-5-alignment {
-  text-align: right;
-  margin: 5;
+text-align: right; 
+margin: 5;
 }
 
-.h3 {
-  margin-top: 20px;
+.h3{
+margin-top: 20px;
 }
 
-.text-center {
-  text-align: center;
+.text-center{
+text-align: center;
 }
 
 .card-container {
-  display: flex;
-  justify-content: flex-end;
-  background-color: rgb(255, 255, 255);
-  width: 100%;
-  height: 100%;
-  margin-left: 20%;
-  margin-top: 7%;
+display: flex;
+justify-content: flex-end;
+background-color: rgb(255, 255, 255);
+width: 100%;
+height: 100%;
 }
 
-.card-vistas {
-  width: 80rem;
-  margin-left: 60px;
+.card {
+width: 80rem;
+margin-left: 60px;
 }
 
 .card-header {
-  background-color: #0b5ed7;
-  color: white;
-  text-align: center;
+background-color: #0b5ed7;
+color: white;
+text-align: center;
 }
 
 .card-title {
-  font-weight: bold;
+font-weight: bold;
 }
 
 .card-text {
-  font-size: 14px;
+font-size: 14px;
 }
 
 .card-link {
-  display: block;
-  margin-top: 10px;
-  color: #0b5ed7;
-  text-decoration: none;
-  font-weight: bold;
+display: block;
+margin-top: 10px;
+color: #0b5ed7;
+text-decoration: none;
+font-weight: bold;
 }
 
 .card-link:hover {
-  text-decoration: underline;
+text-decoration: underline;
 }
+
 
 .fixed-download-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+position: fixed;
+bottom: 20px; 
+right: 20px; 
+z-index: 1000;
 }
 .fixed-clear-button {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-  z-index: 1000;
+position: fixed;
+bottom: 70px; 
+right: 20px; 
+z-index: 1000; 
 }
-
 
 .fixed-buttons-container {
   position: fixed;
@@ -142,5 +143,3 @@
 .fixed-clear-button {
   width: 150px; 
 }
-
-

@@ -2,8 +2,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/tempprofile.png";
 import logoUnitec from "../Styles/Images/unitec-logo.png";
-import { DocuPDF } from "./DocuPDF.jsx";
-import { useEffect } from "react";
 import { useState } from "react";
 
 function Vistas() {
@@ -314,21 +312,17 @@ function Vistas() {
                 </div>
               </Container>
             </Container>
-            <button
-              className="btn btn-primary fixed-download-button"
-              onClick={downloadPDF}
-            >
-              Descargar PDF
-            </button>
-            <button
-              className="btn btn-secondary fixed-clear-button"
-              onClick={clearCasillas}
-            >
-              Limpiar Casillas
-            </button>
           </Col>
         </Row>
       </Container>
+      <div className="fixed-buttons-container">
+        <button className="btn btn-primary fixed-download-button" onClick={downloadPDF}>
+          Descargar PDF
+        </button>
+        <button className="btn btn-secondary fixed-clear-button" onClick={clearCasillas}>
+          Limpiar Casillas
+        </button>
+      </div>
     </div>
   );
 }
