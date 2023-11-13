@@ -17,6 +17,7 @@ import {
   faGaugeHigh,
   faArrowLeft,
   faAddressCard,
+  faBookOpen
 } from "@fortawesome/free-solid-svg-icons";
 import backIcon from "../Styles/Images/back-icon-nb.png";
 import { deleteCookies } from "../Utilities/login-services";
@@ -34,6 +35,11 @@ function MyNavbar() {
 
     navigate("/InicioSesion");
   };
+
+  const logs = () => {
+    navigate("/AuditLogs");
+  };
+  
 
   return (
     <div className="background">
@@ -58,6 +64,19 @@ function MyNavbar() {
                 Mi Perfil
               </div>
 
+              <div
+                className="nb-dropdown-item"
+                onClick={() => {
+                  logs();
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faBookOpen}
+                  className="nb-dropdown-icon"
+                />
+                Admin Logs
+              </div>
+              
               <div
                 className="nb-dropdown-item"
                 onClick={() => {

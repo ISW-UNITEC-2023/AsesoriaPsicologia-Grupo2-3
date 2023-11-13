@@ -61,45 +61,87 @@ function App() {
         />
         <Route
           path="/Anuncios"
-
-
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<Anuncios />}
-
-
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/Modulos"
-
-
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<Modulos />}
-
-
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/Expedientes"
-
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<Vistas />}
-
-        />
-        <Route
-          path="/ExpedientesPDF"
-
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/Secciones"
-
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<Sections />}
-
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/Sesiones"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<Sesiones />}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/Pacientes"
-
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<Pacientes />}
-
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/InicioSesion"
@@ -111,21 +153,56 @@ function App() {
             />
           }
         />
+
         <Route
           path="/Dashboard"
-
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
                 element={<DashBoard />}
-
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
+
+        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
+        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route
+          path="/Crearanuncios"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<AnunciosCrear />}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        {/* <Route
+          path="/Profiles"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<ProfilesPage />}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        /> */}
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Cuentas" element={<Accounts />} />
-        <Route
-          path="/Crearanuncios"
-
-                element={<AnunciosCrear />}
-
-        />
+        
         {/* <Route
           path="/Profiles"
 
@@ -134,7 +211,6 @@ function App() {
         /> */}
       
         <Route path="/AuditLogs" element={<AuditLogs />} />
-        <Route path="/Crearanuncios" element={<AnunciosCrear />} />
         
         <Route path="/ZoomC" element={<MyZoom/>} />
         <Route path="/ZoomV" element={<MyZoomPat/>} />
