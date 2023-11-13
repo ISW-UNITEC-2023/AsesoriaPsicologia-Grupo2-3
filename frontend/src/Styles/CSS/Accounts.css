@@ -1,15 +1,12 @@
 .account-container {
   display: flex;
   flex-direction: row;
-    width: 100%;
-    height: auto;
 }
 
 .account-box {
   display: flex;
   flex-direction: column;
-  width: auto;
-  height: auto;
+  width: 100%;
 }
 
 .account-header {
@@ -25,7 +22,7 @@
 }
 
 .remove-filter-button{
-  background-color: transparent;
+  background-color: none;
   color: #003b88;
   border: 1px solid #003b88;
   border-radius: 5px;

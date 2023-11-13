@@ -4,7 +4,6 @@ import tempImage from "../Styles/Images/tempprofile.png";
 import logoUnitec from "../Styles/Images/unitec-logo.png";
 import { DocuPDF } from "./DocuPDF.jsx";
 import { useEffect } from "react";
-import html2pdf from "html2pdf.js";
 import { useState } from "react";
 
 function Vistas() {
