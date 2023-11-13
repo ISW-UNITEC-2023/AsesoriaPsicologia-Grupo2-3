@@ -128,3 +128,19 @@
 }
 
 
+.fixed-buttons-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.fixed-download-button,
+.fixed-clear-button {
+  width: 150px; 
+}
+
+

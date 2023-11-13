@@ -1,33 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import NavigationB from "../Components/Navbar";
 import "../Styles/CSS/Vistas.css";
 
 function Sesiones() {
-  const [sessions, setSessions] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
-
-  // const handleCreateSession = () => {
-  //   // Find the maximum session number
-  //   const maxSessionNumber = Math.max(...sessions);
-    
-  //   // Generate a new session number by adding 1 to the maximum session number
-  //   const newSession = maxSessionNumber + 1;
-  
-  //   setSessions([...sessions, newSession]);
-  // };
-
-  const handleDeleteSession = (sessionNumber) => {
-    const updatedSessions = sessions.filter(session => session !== sessionNumber);
-    setSessions(updatedSessions);
-  };
-
   return (
-      <Container className="list-container">
+    <>
+      <Container className="card-container">
         <NavigationB />
         <Row>
           <Col>
-            <Card className="card-container">
+            <Card className="card">
               <Card.Header as="h5" className="card-header">
                 Información de la Tarjeta
               </Card.Header>
@@ -46,6 +30,7 @@ function Sesiones() {
           </Col>
         </Row>
       </Container>
+    </>
   );
 }
 
