@@ -2,10 +2,10 @@
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
-import EmailPopUp from "../Components/EmailPopUp";
+import EmailPopUp from "../Components/emailPopUp";
 
 //Functions
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import user_services from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
 
@@ -13,44 +13,45 @@ import role_services from "../Utilities/roles-services";
 import "../Styles/CSS/Accounts.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
-  faFilter,
-  faArrowUp,
-  faArrowDown,
-  faFilterCircleXmark,
-  faPenToSquare,
-  faEnvelope,
+    faArrowDown,
+    faArrowUp,
+    faEnvelope,
+    faFilter,
+    faFilterCircleXmark,
+    faPenToSquare,
+    faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CuentasLayout from "../Layout/CuentasLayout";
 
 function Accounts() {
-  const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
-  const [originalUsers, setOriginalUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [matchingNames, setMatchingNames] = useState([]);
-  const [displayResults, setDisplayResults] = useState(false);
-  const [sorted, setSorted] = useState(false);
-  const [selectedRoles, setSelectedRoles] = useState([]);
-  const [selectedState, setSelectedState] = useState([]);
-  const [openCreate, setOpenCreate] = useState(0);
-  const [openEdit, setOpenEdit] = useState({
-    open: 0,
-    userInfo: null,
-  });
-  const [openEmail, setOpenEmail] = useState({
-    open: 0,
-    userInfo: null,
-  });
+    const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [originalUsers, setOriginalUsers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [matchingNames, setMatchingNames] = useState([]);
+    const [displayResults, setDisplayResults] = useState(false);
+    const [sorted, setSorted] = useState(false);
+    const [selectedRoles, setSelectedRoles] = useState([]);
+    const [selectedState, setSelectedState] = useState([]);
+    const [openCreate, setOpenCreate] = useState(0);
+    const [openEdit, setOpenEdit] = useState({
+        open: 0,
+        userInfo: null,
+    });
+    const [openEmail, setOpenEmail] = useState({
+        open: 0,
+        userInfo: null,
+    });
 
-  //Mensajes de filtros
-  const [isHovering, setIsHovering] = useState(false);
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
+    //Mensajes de filtros
+    const [isHovering, setIsHovering] = useState(false);
+    const handleMouseOver = () => {
+        setIsHovering(true);
+    };
+    const handleMouseOut = () => {
+        setIsHovering(false);
+    };
 
     //Componentes
     const CustomBtFilter = ({type}) => {
@@ -134,7 +135,7 @@ function Accounts() {
                 <div className="dropdown-menu" aria-labelledby={`dropdownMenu${type}`}>
                     {type === "roles" ? (
                         <div className="form-check-filter">
-                            {roles.length > 0 &&roles.map((role) => {
+                            {roles.length > 0 && roles.map((role) => {
                                 return (
                                     <label className="filter-check-label" htmlFor={role.id_role}>
                                         <input
@@ -237,8 +238,7 @@ function Accounts() {
             hour: "2-digit",
             minute: "2-digit",
         };
-        var formattedDate = date.toLocaleString("es-ES", options);
-        return formattedDate;
+        return date.toLocaleString("es-ES", options);
     };
 
     //Fetch de Usuarios
@@ -378,61 +378,62 @@ function Accounts() {
     }
 
     //Recuperar usuarios para actualizar
-  async function refreshUsers() {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
+    async function refreshUsers() {
+        const fetchData = async () => {
+            const fetchedUsers = await user_services.getUsers();
+            const fetchedRoles = await user_services.getAllUsersRoles();
 
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
-        fetchedRoles.forEach((role) => {
-          console.log(user);
-          if (user.id_user === role.id_user) {
-            user.roles.push(role.name_role);
-          }
-        });
-      });
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    fetchData();
-  }return (
+            fetchedUsers.forEach((user) => {
+                user.roles = [];
+                fetchedRoles.forEach((role) => {
+                    console.log(user);
+                    if (user.id_user === role.id_user) {
+                        user.roles.push(role.name_role);
+                    }
+                });
+            });
+            setUsers(fetchedUsers);
+            setOriginalUsers(fetchedUsers);
+        };
+        fetchData();
+    }
+
+    return (
         <CuentasLayout pagina="Cuentas">
-            <div className="account-container">
+            <div className="account-container w-auto md:w-52 flex-row md:flex-col">
                 <Navbar/>
-                <div className="account-box">
-                    <div className="account-header">
-                        <span className="account-title">Administración de Cuentas</span>
-                        <div className="search-user-box">
+                <div className="account-box overflow-x-auto ml-10">
+                    <div className="account-header flex flex-col md:flex-row ">
+                        <span className="account-title text-xl md:text-2xl font-bold mb-2 md:mb-0">
+                            Administración de Cuentas
+                        </span>
+                        <div className="search-user-box w-auto  md:ml-2 md:mr-0 mt-2 md:mt-0 flex flex-col md:flex-row">
                             <FontAwesomeIcon icon={faSearch} className="iconSearch-box"/>
                             <input
                                 type="text"
                                 placeholder="Buscar nombre"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-auto"
                             />
                             {displayResults && <SearchDropdown matchingNames={matchingNames}/>}
                         </div>
                         <div
-                            className="remove-filter-button"
+                            className="remove-filter-button w-auto md:w-52 md:ml-2 md:mr-2 mt-2 md:mt-0"
                             onClick={() => {
                                 limpiarFiltros();
                             }}
-                            onMouseOver={handleMouseOver}
-                            onMouseOut={handleMouseOut}
                         >
                             <FontAwesomeIcon icon={faFilterCircleXmark}/>
                             {isHovering && sorted && (
                                 <span className="limpiar-filtro-div">Limpiar filtros</span>
                             )}
                             {isHovering && !sorted && (
-                                <span className="limpiar-filtro-div">
-                No se han aplicado filtros
-              </span>
+                                <span className="limpiar-filtro-div">No se han aplicado filtros</span>
                             )}
                         </div>
                         <button
-                            className="crear-cuenta-button"
+                            className="crear-cuenta-button w-auto bg-blue-800 text-white ml-2 md:ml-0 mt-2 md:mt-0"
                             onClick={() => {
                                 setOpenCreate(1);
                             }}
@@ -444,32 +445,33 @@ function Accounts() {
                             onClose={() => {
                                 setOpenCreate(0);
                             }}
-                        refreshUsers={() => {
-              refreshUsers();
-            }}
-          />
-          {openEdit.open === 1 && (
-            <PopUpEditUser
-              isOpen={openEdit.open}
-              onClose={() => {
-                setOpenEdit({ open: 0, userInfo: null });
-              }}
-              user={openEdit.userInfo}
-            />
-          )}
-          {openEmail.open === 1 && (
-            <EmailPopUp
-              isOpen={openEmail.open}
-              onClose={() => {
-                setOpenEmail({ open: 0, userInfo: null });
-              }}
-              user={openEmail.userInfo}
-            />
-          )}
+                            refreshUsers={() => {
+                                refreshUsers();
+                            }}
+                        />
+                        {openEdit.open === 1 && (
+                            <PopUpEditUser
+                                isOpen={openEdit.open}
+                                onClose={() => {
+                                    setOpenEdit({open: 0, userInfo: null});
+                                }}
+                                user={openEdit.userInfo}
+                            />
+                        )}
+                        {openEmail.open === 1 && (
+                            <EmailPopUp
+                                isOpen={openEmail.open}
+                                onClose={() => {
+                                    setOpenEmail({open: 0, userInfo: null});
+                                }}
+                                user={openEmail.userInfo}
+                            />
+                        )}
                     </div>
-                    <table className="table table-bordered account-table">
+                    <table className="min-w-full table-auto border-collapse md:table">
                         <thead className="accounts-table-header">
-                        <tr><th></th>
+                        <tr className="md:table-row">
+                            <th></th>
                             <th>
                                 <div className="th-div-account">
                                     <CustomBtFilter type="id_user"/>
@@ -515,44 +517,43 @@ function Accounts() {
                         </tr>
                         </thead>
                         <tbody>
-                        {users.length > 0 &&users.map((itemU) => {
-                            return (
+                        {users.length > 0 &&
+                            users.map((itemU) => (
                                 <tr className="row-table-accounts" key={itemU.id_user}>
                                     <td className="accounts-table-obj">
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        className="row-edit-user"
-                        onClick={() => {
-                          setOpenEdit({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faEnvelope}
-                        className="row-send-email"
-                        onClick={() => {
-                          setOpenEmail({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      />
-                    </td>
-                    <td className="accounts-table-id">{itemU.id_user}</td>
+                                        <FontAwesomeIcon
+                                            icon={faPenToSquare}
+                                            className="row-edit-user"
+                                            onClick={() => {
+                                                setOpenEdit({
+                                                    open: 1,
+                                                    userInfo: itemU,
+                                                });
+                                            }}
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faEnvelope}
+                                            className="row-send-email"
+                                            onClick={() => {
+                                                setOpenEmail({
+                                                    open: 1,
+                                                    userInfo: itemU,
+                                                });
+                                            }}
+                                        />
+                                    </td>
+                                    <td className="accounts-table-id">{itemU.id_user}</td>
                                     <td className="accounts-table-item">{itemU.name_user}</td>
                                     <td className="accounts-table-item">{itemU.email_user}</td>
                                     <td className="accounts-table-item">{itemU.number_user}</td>
                                     <td className="accounts-table-item">
-                                        {itemU.roles.length === 1 && (
-                        <span>{itemU.roles[0]}</span>
-                                        )}{itemU.roles.length === 0 && <span>Sin rol</span>}
+                                        {itemU.roles.length === 1 && <span>{itemU.roles[0]}</span>}
+                                        {itemU.roles.length === 0 && <span>Sin rol</span>}
                                         {itemU.roles.length > 1 && (
                                             <select className="select-role-item">
-                                                {itemU.roles.map((role) => {
-                                                    return <option>{role}</option>;
-                                                })}
+                                                {itemU.roles.map((role) => (
+                                                    <option key={role}>{role}</option>
+                                                ))}
                                             </select>
                                         )}
                                     </td>
@@ -563,8 +564,7 @@ function Accounts() {
                                         {formatDate(itemU.creation_date)}
                                     </td>
                                 </tr>
-                            );
-                        })}
+                            ))}
                         </tbody>
                     </table>
                 </div>
