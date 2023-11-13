@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
 import EmailPopUp from "../Components/EmailPopUp";
+import PopUpAdminRole from "../Components/PopUp_AdminRole";
 
 //Functions
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ import {
   faFilterCircleXmark,
   faPenToSquare,
   faEnvelope,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -39,6 +41,10 @@ function Accounts() {
     userInfo: null,
   });
   const [openEmail, setOpenEmail] = useState({
+    open: 0,
+    userInfo: null,
+  });
+  const [openRole, setOpenRole] = useState({
     open: 0,
     userInfo: null,
   });
@@ -254,7 +260,7 @@ function Accounts() {
         user.roles = [];
         fetchedRoles.forEach((role) => {
           if (user.id_user === role.id_user) {
-            user.roles.push(role.name_role);
+            user.roles.push([role.id_role, role.name_role]);
           }
         });
       });
@@ -390,7 +396,7 @@ function Accounts() {
         user.roles = [];
         fetchedRoles.forEach((role) => {
           if (user.id_user === role.id_user) {
-            user.roles.push(role.name_role);
+            user.roles.push([role.id_role, role.name_role]);
           }
         });
       });
@@ -469,6 +475,16 @@ function Accounts() {
               user={openEmail.userInfo}
             />
           )}
+          {openRole.open == 1 && (
+            <PopUpAdminRole
+              isOpen={openRole.open}
+              onClose={() => {
+                setOpenRole({ open: 0, userInfo: null });
+              }}
+              user={openRole.userInfo}
+              roles={roles}
+            />
+          )}
         </div>
         <table className="table table-bordered account-table">
           <thead className="accounts-table-header">
@@ -544,6 +560,16 @@ function Accounts() {
                           });
                         }}
                       />
+                      <FontAwesomeIcon
+                        icon={faUserGear}
+                        className="row-user-role"
+                        onClick={() => {
+                          setOpenRole({
+                            open: 1,
+                            userInfo: itemU,
+                          });
+                        }}
+                      />
                     </td>
                     <td className="accounts-table-id">{itemU.id_user}</td>
                     <td className="accounts-table-item">{itemU.name_user}</td>
@@ -551,13 +577,13 @@ function Accounts() {
                     <td className="accounts-table-item">{itemU.number_user}</td>
                     <td className="accounts-table-item">
                       {itemU.roles.length === 1 && (
-                        <span>{itemU.roles[0]}</span>
+                        <span>{itemU.roles[0][1]}</span>
                       )}
                       {itemU.roles.length === 0 && <span>Sin rol</span>}
                       {itemU.roles.length > 1 && (
                         <select className="select-role-item">
                           {itemU.roles.map((role) => {
-                            return <option>{role}</option>;
+                            return <option>{role[1]}</option>;
                           })}
                         </select>
                       )}
