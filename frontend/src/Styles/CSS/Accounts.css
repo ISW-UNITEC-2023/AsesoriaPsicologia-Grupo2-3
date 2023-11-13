@@ -132,18 +132,28 @@
   background-color: #f0f0f0;
 }
 
+.row-edit-user{
+  font-size: 16px;
+  margin-right: 10px;
+}
+
 .row-edit-user:hover{
   cursor: pointer;
   color: #717171;
 }
 
 .row-send-email{
-  margin-left: 15px;
+  font-size: 16px;
+  margin-right: 10px;
 }
 
 .row-send-email:hover{
   cursor: pointer;
   color: #717171;
+}
+
+.row-user-role{
+  font-size: 16px;
 }
 
 .row-table-accounts:hover {
@@ -156,6 +166,7 @@
 
 .accounts-table-obj{
   text-align: center;
+  width: 90px;
 }
 
 .th-div-account{

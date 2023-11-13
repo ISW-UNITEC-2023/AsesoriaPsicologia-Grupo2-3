@@ -1,6 +1,6 @@
 /* PopUp_CrearUser.css */
 
-.popup-overlay-eu {
+.popup-overlay-ar {
   position: fixed;
   top: 0;
   left: 0;
@@ -14,19 +14,19 @@
   transition: opacity 0.3s ease;
 }
 
-.popup-eu {
+.popup-ar {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   max-width: 90%;
-  width: 500px;
+  width: 400px;
   text-align: center;
   position: relative;
   transform-origin: center;
   transition: transform 0.3s ease;
 }
 
-.form-header-eu {
+.form-header-ar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,94 +38,20 @@
   font-family: sans-serif;
 }
 
-.form-title-eu{
+.form-title-ar {
   max-width: 70%;
   text-align: left;
 }
 
-.form-body-eu {
+.form-body-ar {
   padding: 40px;
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
+  align-items:center;
 }
 
-.form-group-eu {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.form-group-double-eu {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  align-items: center;
-  width: 100%;
-}
-
-.form-control-eu {
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.5s ease;
-}
-
-.form-label-eu {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.form-div-input-eu {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-div-input-eu:focus-within {
-  border-color: #003b88;
-  transition: border-color 0.5s ease;
-}
-
-.form-active-input-eu {
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.5s ease;
-}
-
-.form-input-eu {
-  width: 100%;
-  outline: none;
-  padding: 10px;
-  transition: border-color 0.5s ease;
-  border-radius: 5px;
-}
-
-.pencil-icon-eu {
-  cursor: pointer;
-  padding: 10px;
-  width: 5%;
-}
-
-.form-control-eu:focus {
-  border-color: #003b88;
-}
-
-.form-buttons-eu {
+.form-buttons-ar {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -133,7 +59,7 @@
   width: 100%;
 }
 
-.form-actualizar-eu {
+.form-guardar-ar {
   background: none;
   color: #003b88;
   border: 1px solid #003b88;
@@ -145,13 +71,13 @@
   transition: background 0.5s ease;
 }
 
-.form-actualizar-eu:hover {
+.form-guardar-ar:hover {
   background: #003b88;
   color: #fff;
   border: 1px solid #003b88;
 }
 
-.form-cancel-eu {
+.form-cancel-ar {
   background: none;
   color: #003b88;
   border: 1px solid #003b88;
@@ -164,16 +90,54 @@
   margin-right: 10px;
 }
 
-.form-cancel-eu:hover {
+.form-cancel-ar:hover {
   background: #c00000;
   color: #fff;
   border: 1px solid #c00000;
 }
 
-.close-icon-eu{
+.close-icon-ar {
   cursor: pointer;
 }
 
-.close-icon-eu:hover{
-  color: rgb(206, 206, 206)
+.close-icon-ar:hover {
+  color: rgb(206, 206, 206);
+}
+
+.row-rol-usuario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.row-rol-disponibles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.select-box-rol {
+  border: 1px solid #878787;
+  border-radius: 5px;
+  padding: 5px;
+  width: 150px;
+  margin-right: 10px;
+}
+
+.eliminar-rol-user:hover{
+    color: #727272;
+}
+
+.agregar-rol-user:hover {
+    color: #727272;
+}
+
+.admin-rol-icon {
+  margin-left: 5px;
+}
+
+.label-select-box{
+    margin-bottom: 10px;
 }
