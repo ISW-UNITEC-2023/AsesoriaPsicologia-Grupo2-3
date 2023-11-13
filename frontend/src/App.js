@@ -18,6 +18,8 @@ import LoadingSpinner from "./Pages/LoadingStyle";
 import AuditLogs from "./Pages/AuditLogs";
 import { PDFViewer } from "@react-pdf/renderer";
 import { getCookies } from "../src/Utilities/login-services";
+import MyZoomPat from "./Components/Zoom/zoomPat";
+import MyZoom from "./Components/Zoom/Zoom";
 
 function ProtectedRoute({ element, allowedRoles, userRoles }) {
     const isAuthorized =
@@ -134,6 +136,11 @@ function App() {
         /> */}
       
         <Route path="/AuditLogs" element={<AuditLogs />} />
+        <Route path="/Crearanuncios" element={<AnunciosCrear />} />
+        <Route path="/Profiles" element={<ProfilesPage/>} />
+        
+        <Route path="/ZoomC" element={<MyZoom/>} />
+        <Route path="/ZoomV" element={<MyZoomPat/>} />
       </Routes>
     </Router>
   );
