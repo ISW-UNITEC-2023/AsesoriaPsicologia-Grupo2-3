@@ -2,15 +2,143 @@ import { Container, Row, Col } from "react-bootstrap";
 import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/tempprofile.png";
 import logoUnitec from "../Styles/Images/unitec-logo.png";
+import html2pdf from "html2pdf.js";
+import { useEffect } from "react";
+import { useState } from "react";
 
 function Vistas() {
+  const [expedienteData, setExpedienteData] = useState({
+        nombre: "Fernando David Sosa Flores",
+        fechaNacimiento: "12/09/03",
+        Direccion: "San Carlos de Sula",
+        correo: "fernandososa03@untiec.edu",
+        estadoCivil: "Soltero",
+        tratamiento: "Depresion",
+        Antecedentes: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                      Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                      natoque penatibus et magnis dis parturient montes, nascetur
+                      ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                      pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                      justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                      dictum felis eu pede link mollis pretium. Integer tincidunt.
+                      Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                      eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                      vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                      viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                      metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                      ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+        medicamentos: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                       Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                       natoque penatibus et magnis dis parturient montes, nascetur
+                       ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                       pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                       justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                       dictum felis eu pede link mollis pretium. Integer tincidunt.
+                       Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                       eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                       vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                       viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                       metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                       ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+        evaluacion: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                     Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                     natoque penatibus et magnis dis parturient montes, nascetur
+                     ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                     pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                     justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                     dictum felis eu pede link mollis pretium. Integer tincidunt.
+                     Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                     eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                     vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                     viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                     metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                     ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+        Objetivos: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                    Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                    natoque penatibus et magnis dis parturient montes, nascetur
+                    ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                    pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                    justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                    dictum felis eu pede link mollis pretium. Integer tincidunt.
+                    Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                    eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                    vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                    viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                    metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                    ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+            Notas: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                dictum felis eu pede link mollis pretium. Integer tincidunt.
+                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+          Progreso: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                   Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                   natoque penatibus et magnis dis parturient montes, nascetur
+                   ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                   pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                   justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                   dictum felis eu pede link mollis pretium. Integer tincidunt.
+                   Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                   eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                   vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                   viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                   metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                   ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+        apoyo: `Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis
+                natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
+                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
+                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
+                dictum felis eu pede link mollis pretium. Integer tincidunt.
+                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
+                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
+                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
+                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.`,
+
+  });
+
+  const downloadPDF = () => {
+    const element = document.getElementById("pdf-container");
+    html2pdf(element);
+  };
+
+  const clearCasillas = () => {
+    setExpedienteData({
+      nombre: "",
+      fechaNacimiento: "",
+      Direccion: "",
+      correo: "",
+      estadoCivil: "",
+      tratamiento: "",
+      Antecedentes: "",
+      medicamentos:"",
+      evaluacion:"",
+      Objetivos:"",
+      Notas:"",
+      Progreso:"",
+      apoyo:"",
+
+    });
+  };
   return (
+    
     <div className="page-container">
-      <Container>
+     <Container id="pdf-container">
         <Row>
           <Col md={3}>
             <img
-              src={tempImage} /* Agrega la ruta de la imagen aquí */
+              src={tempImage} 
               alt="Perfil del paciente"
               className="profile-image"
             />
@@ -28,7 +156,7 @@ function Vistas() {
             }}
           >
             <img
-              src={logoUnitec} /* Agrega la ruta de la imagen aquí */
+              src={logoUnitec} 
               alt="Logo Unitex"
               className="unitec-image"
             />
@@ -36,184 +164,82 @@ function Vistas() {
         </Row>
         <Row>
           <Col>
+          <Container id="pdf-container">
             <h1 className="text-center">Expediente</h1>
 
             <p className="h3">Datos personales</p>
 
             <div className="text-container">
-              <p className="fs-5 with-underline">Nombre: </p>
-              <p className="fs-5-alignment">Fernando David Sosa Flores</p>
+            <p className="fs-5 with-underline">Nombre: </p>
+            <p className="fs-5-alignment">{expedienteData.nombre}</p>
             </div>
 
             <div className="text-container">
-              <p className="fs-5 with-underline">Fecha de nacimiento: </p>
-              <p className="fs-5-alignment">12/09/03</p>
+            <p className="fs-5 with-underline">Fecha de nacimiento: </p>
+            <p className="fs-5-alignment">{expedienteData.fechaNacimiento}</p>
             </div>
 
             <div className="text-container">
               <p className="fs-5 with-underline">Direccion: </p>
-              <p className="fs-5-alignment">San Carlos de Sula</p>
+              <p className="fs-5-alignment">{expedienteData.Direccion}</p>
             </div>
 
             <div className="text-container">
               <p className="fs-5 with-underline">Correo Electronico: </p>
-              <p className="fs-5-alignment">fernandososa03@untiec.edu</p>
+             
+              <p className="fs-5-alignment">{expedienteData.correo}</p>
             </div>
 
             <div className="text-container">
               <p className="fs-5 with-underline">Estado Civil: </p>
-              <p className="fs-5-alignment">Soltero</p>
+              <p className="fs-5-alignment">{expedienteData.estadoCivil}</p>
             </div>
 
             <p className="h3">Historial Clinico</p>
 
             <div className="text-container">
-              <p className="fs-5 with-underline">
-                Modula de Participacion Inicial:{" "}
-              </p>
-              <p className="fs-5-alignment">Depresion</p>
+            <p className="fs-5 with-underline">Modula de Participacion Inicial: </p>
+              <p className="fs-5-alignment">{expedienteData.tratamiento}</p>
             </div>
 
             <Container text>
-              <p className="fs-5 with-underline">Antecedentes Medicos: </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-              </p>
+              <p className="h3">Antecedentes Medicos: </p>
+              <p className="fs-5-alignment">{expedienteData.Antecedentes}</p>
+              
             </Container>
 
             <Container text>
-              <p className="fs-5 with-underline">Uso de medicamentos: </p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
+              <p className="h3">Uso de medicamentos: </p>
+              <p className="fs-5-alignment">{expedienteData.medicamentos}
               </p>
             </Container>
 
             <p className="h3">Evaluacion Inicial</p>
             <Container text>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-              </p>
+            <p className="fs-5-alignment">{expedienteData.evaluacion}</p>
             </Container>
 
             <p className="h3">Objetivos y plan de tratamiento</p>
             <Container text>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-              </p>
+            <p className="fs-5-alignment">{expedienteData.Objetivos}</p>
             </Container>
 
             <p className="h3">Notas de Sesion</p>
             <Container text>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-              </p>
+            <p className="fs-5-alignment">{expedienteData.Notas}</p>
             </Container>
 
             <p className="h3">Progreso del Paciente</p>
             <Container text>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-              </p>
+            <p className="fs-5-alignment">{expedienteData.Progreso}</p>
             </Container>
 
             <p className="h3">Apoyo Profesional Externo</p>
             <Container text>
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula eget dolor. Aenean massa strong. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu,
-                pretium quis, sem. Nulla consequat massa quis enim. Donec pede
-                justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam
-                dictum felis eu pede link mollis pretium. Integer tincidunt.
-                Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-              </p>
+            <p className="fs-5-alignment">{expedienteData.apoyo}</p>
             </Container>
-            <h4 className="text-center">Nota de concentimiento</h4>
+
+            <p className="h3">Nota de Concetimiento</p>
             <Container text>
               <p>
                 Yo, <span className="patient-name">[Nombre del Paciente]</span>,
@@ -280,6 +306,7 @@ function Vistas() {
               </ul>
 
               <div className="signature-section">
+                
                 <div className="patient-signature">
                   Firma del Paciente: ____________________________ Fecha:
                   ______________
@@ -289,12 +316,21 @@ function Vistas() {
                   ______________
                 </div>
               </div>
-            </Container>
+              </Container>
+              </Container>
+              <button className="btn btn-primary fixed-download-button" onClick={downloadPDF}>
+          Descargar PDF
+        </button>
+        <button className="btn btn-secondary fixed-clear-button" onClick={clearCasillas}>
+          Limpiar Casillas
+        </button>
           </Col>
         </Row>
       </Container>
     </div>
+      
   );
 }
+
 
 export default Vistas;

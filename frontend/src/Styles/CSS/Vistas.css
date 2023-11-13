@@ -60,12 +60,12 @@
 }
 
 .fs-5 {
-  align-self: center; /* Alinear verticalmente el texto "Nombre:" y otros con subrayado */
+  align-self: center; 
 }
 
 .fs-5-alignment {
-  text-align: right; /* Alinear el texto a la izquierda en los elementos fs-6 sin subrayado */
-  margin: 5; /* Eliminar el margen predeterminado de los elementos p */
+  text-align: right; 
+  margin: 5;
 }
 
 .h3{
@@ -76,5 +76,55 @@
   text-align: center;
 }
 
+.card-container {
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  width: 80rem;
+  margin-left: 60px;
+}
+
+.card-header {
+  background-color: #0b5ed7;
+  color: white;
+  text-align: center;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 14px;
+}
+
+.card-link {
+  display: block;
+  margin-top: 10px;
+  color: #0b5ed7;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
 
 
+.fixed-download-button {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 1000;
+}
+.fixed-clear-button {
+  position: fixed;
+  bottom: 70px; 
+  right: 20px; 
+  z-index: 1000; 
+}

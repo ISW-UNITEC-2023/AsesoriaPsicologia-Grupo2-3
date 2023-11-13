@@ -14,9 +14,7 @@ import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
 import Accounts from "./Pages/Accounts";
-import VistasPDF from "./Pages/DocuPDF";
 import LoadingSpinner from "./Pages/LoadingStyle";
-import {PDFViewer} from "@react-pdf/renderer";
 import {getCookies} from "./Utilities/login-services";
 
 function ProtectedRoute({ element, allowedRoles, userRoles }) {
@@ -81,12 +79,6 @@ function App() {
         />
         <Route
           path="/ExpedientesPDF"
-
-                element={
-                  <PDFViewer style={{ width: "100%", height: "90vh" }}>
-                    <VistasPDF />
-                  </PDFViewer>
-                }
 
         />
         <Route
