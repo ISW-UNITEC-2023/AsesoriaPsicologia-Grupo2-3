@@ -43,8 +43,8 @@ div.card-title.h5:is(:active, :focus, :hover) {
 }
 
 .modulo-card {
-  width: 20rem; /* Ancho fijo */
-  height: 27rem; /* Alto fijo */
+  width: 10%; /* Ancho fijo */
+  height: 10%; /* Alto fijo */
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
