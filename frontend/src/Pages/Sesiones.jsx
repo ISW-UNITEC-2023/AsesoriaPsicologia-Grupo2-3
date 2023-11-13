@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import ListGroup from 'react-bootstrap/ListGroup';
-import "../Styles/CSS/Sesiones.css";
+import NavigationB from "../Components/Navbar";
+import "../Styles/CSS/Vistas.css";
 
 function Sesiones() {
   const [sessions, setSessions] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
@@ -22,53 +23,31 @@ function Sesiones() {
   };
 
   return (
-    <div style={{ width: "90%" }}>
-      <div className="container-header">
-        <h1 className="title-sesiones" style={{ width: "100%", textAlign: "center", color: "#3498db" }}>
-          Sesiones
-        </h1>
-        <button
-          onClick={handleCreateSession}
-          style={{
-            padding: "10px",
-            backgroundColor: "#2ecc71",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Create Session
-        </button>
-      </div>
-      <ul>
-        {sessions.map(sessionNumber => (
-          <div className="nombre-box" key={sessionNumber}>
-            <span className="nombre" style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-              <Link
-                to={`/Expedientes/${sessionNumber}`}
-                style={{ color: "#2980b9", textDecoration: "none" }}
-              >
-                Sesion {sessionNumber}
-              </Link>
-              <button
-                onClick={() => handleDeleteSession(sessionNumber)}
-                style={{
-                  padding: "5px",
-                  backgroundColor: "#e74c3c",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "3px",
-                  cursor: "pointer",
-                }}
-              >
-                Delete Session
-              </button>
-            </span>
-          </div>
-        ))}
-      </ul>
-    </div>
+    <>
+      <Container className="card-container">
+        <NavigationB />
+        <Row>
+          <Col>
+            <Card className="card">
+              <Card.Header as="h5" className="card-header">
+                Información de la Tarjeta
+              </Card.Header>
+              <Card.Body>
+                <Card.Title className="card-title">Autor: Alex Pereira</Card.Title>
+                <Card.Text className="card-text">
+                  Fecha: 11 de noviembre de 2023
+                  <br />
+                  Hora: 10:30 AM
+                </Card.Text>
+                <Link to="/Expedientes" className="card-link">
+                  Ir a la sesión
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 

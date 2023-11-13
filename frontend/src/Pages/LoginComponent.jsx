@@ -99,14 +99,14 @@ function Login(props) {
           <div className="navigation-bar">
             <NavigationBar {...props} />
           </div>
-          <div className="elementos-rotativos">
+          <div className="elementos-rotativos hidden md:flex lg:flex">
             <span className="frase-rotativo">{frases.dispFrase}</span>
             <span className="autor-rotativo">{frases.dispAutor}</span>
           </div>
           <form
             className="login-form"
             onSubmit={(e) => {
-              handleSubmit(e);
+              handleSubmit(e).then(r => r);
             }}
           >
             <div className="containerL">

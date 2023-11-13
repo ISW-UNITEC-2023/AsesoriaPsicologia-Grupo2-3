@@ -5,6 +5,7 @@ import {HelmetProvider} from "react-helmet-async";
 import './global.css';
 import 'normalize.css/normalize.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDom.createRoot(document.getElementById('root'));
 root.render(
