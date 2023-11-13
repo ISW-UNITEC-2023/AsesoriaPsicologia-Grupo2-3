@@ -1,50 +1,48 @@
-
 .page-container {
-    max-width: 800px; /* Tamaño máximo del contenedor */
-    margin: 20px auto; /* Centrar horizontalmente en la página */
-    padding: 20px; /* Espacio interno alrededor del contenido */
-    background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
-    border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
-    box-shadow: 0 0 10px rgba(141, 141, 141, 0.529) ; /* Sombra (opcional) */
-    
+  max-width: 800px; /* Tamaño máximo del contenedor */
+  margin: 20px auto; /* Centrar horizontalmente en la página */
+  padding: 20px; /* Espacio interno alrededor del contenido */
+  background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
+  border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
+  box-shadow: 0 0 10px rgba(141, 141, 141, 0.529); /* Sombra (opcional) */
 }
 
 .profile-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-image {
-    width: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
-    height: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
-    border-radius: 50%; /* Hace que la imagen sea circular */
-     /* Borde alrededor de la imagen (opcional) */
-    margin-right: 20px;
+  display: flex;
+  align-items: center;
 }
- 
+
+.profile-image {
+  width: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  height: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
+  border-radius: 50%; /* Hace que la imagen sea circular */
+  /* Borde alrededor de la imagen (opcional) */
+  margin-right: 20px;
+}
+
 .image-container {
   position: relative;
 }
 
 /* Estilos para la imagen */
 .unitec-image {
-  position:relative;
+  position: relative;
   top: 0;
   right: 0;
   height: 50px;
   /* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
 }
 
-  .profile-text {
-    margin-top: 50px;
-    text-align: center;
-    font-style: Times normal;
-    font-size: 15px;
-    font-weight: bold;
-  }
+.profile-text {
+  margin-top: 50px;
+  text-align: center;
+  font-style: Times normal;
+  font-size: 15px;
+  font-weight: bold;
+}
 
-.columna{
-  border:2px solid red;
+.columna {
+  border: 2px solid red;
 }
 
 .with-underline {
@@ -56,23 +54,22 @@
   grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
   gap: 10px; /* Espacio entre las columnas */
   align-items: center; /* Centrar verticalmente */
-  
 }
 
 .fs-5 {
-  align-self: center; 
+  align-self: center;
 }
 
 .fs-5-alignment {
-  text-align: right; 
+  text-align: right;
   margin: 5;
 }
 
-.h3{
+.h3 {
   margin-top: 20px;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
@@ -84,7 +81,7 @@
   height: 100%;
 }
 
-.card {
+.card-vistas {
   width: 80rem;
   margin-left: 60px;
 }
@@ -115,16 +112,15 @@
   text-decoration: underline;
 }
 
-
 .fixed-download-button {
   position: fixed;
-  bottom: 20px; 
-  right: 20px; 
+  bottom: 20px;
+  right: 20px;
   z-index: 1000;
 }
 .fixed-clear-button {
   position: fixed;
-  bottom: 70px; 
-  right: 20px; 
-  z-index: 1000; 
+  bottom: 70px;
+  right: 20px;
+  z-index: 1000;
 }

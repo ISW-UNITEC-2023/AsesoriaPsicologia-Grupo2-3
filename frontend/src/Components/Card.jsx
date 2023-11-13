@@ -67,7 +67,7 @@ function MyCard({ props, handleReload }) {
 
   return (
     <div>
-      <Card className="modulo-card">
+      <Card className="modulo-card card">
         <Card.Img
           variant="center"
           className="card-image-module"
