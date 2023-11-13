@@ -93,9 +93,7 @@ function App() {
         />
         <Route
           path="/Sesiones"
-
                 element={<Sesiones />}
-
         />
         <Route
           path="/Pacientes"
@@ -137,7 +135,6 @@ function App() {
       
         <Route path="/AuditLogs" element={<AuditLogs />} />
         <Route path="/Crearanuncios" element={<AnunciosCrear />} />
-        <Route path="/Profiles" element={<ProfilesPage/>} />
         
         <Route path="/ZoomC" element={<MyZoom/>} />
         <Route path="/ZoomV" element={<MyZoomPat/>} />

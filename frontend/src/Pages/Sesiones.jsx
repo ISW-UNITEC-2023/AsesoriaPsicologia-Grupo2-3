@@ -1,6 +1,6 @@
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import NavigationB from "../Components/Navbar";
 import "../Styles/CSS/Vistas.css";
 
@@ -23,8 +23,7 @@ function Sesiones() {
   };
 
   return (
-    <>
-      <Container className="card-container">
+      <Container className="list-container">
         <NavigationB />
         <Row>
           <Col>
@@ -47,7 +46,6 @@ function Sesiones() {
           </Col>
         </Row>
       </Container>
-    </>
   );
 }
 

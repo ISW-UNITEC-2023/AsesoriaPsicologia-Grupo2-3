@@ -1,10 +1,9 @@
-.page-container {
-  max-width: 800px; /* Tamaño máximo del contenedor */
-  margin: 20px auto; /* Centrar horizontalmente en la página */
-  padding: 20px; /* Espacio interno alrededor del contenido */
-  background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
-  border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
-  box-shadow: 0 0 10px rgba(141, 141, 141, 0.529); /* Sombra (opcional) */
+.list-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 0 0 0;
+  background-color: rgb(255, 255, 255);
 }
 
 .profile-container {

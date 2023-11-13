@@ -21,6 +21,14 @@ function PacientesForm() {
         const arregloUsuarios = await Services.getUsers();
         const arregloMandar = [];
 
+        arregloUsuarios.map((usuario) => {
+            return arregloMandar.push({
+                    nombre: usuario.name_user,
+                    email: usuario.email_user,
+                    id_account: usuario.id_user,
+            });
+        })
+
         // arregloUsuarios.credentials.usersCredentials.map((usuario) => {
         //   return arregloMandar.push({
         //     nombre: usuario.name,
@@ -29,6 +37,7 @@ function PacientesForm() {
         //   });
         // });
 
+        console.log(arregloUsuarios);
         setNombres(arregloMandar);
     }
 
