@@ -175,7 +175,6 @@ function App() {
             />
           }
         />
-        {console.log("USER DATA:",userData)}
         <Route
           path="/Dashboard"
           element={
