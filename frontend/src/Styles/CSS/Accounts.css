@@ -156,6 +156,11 @@
   font-size: 16px;
 }
 
+.row-user-role:hover{
+  cursor:pointer;
+  color: #717171;
+}
+
 .row-table-accounts:hover {
   cursor: default;
 }
