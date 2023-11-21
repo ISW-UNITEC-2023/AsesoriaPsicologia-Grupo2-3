@@ -5,12 +5,22 @@ const clinicControllers = require("../Controller/clinics-controllers");
 
 //Post
 router.post("/create", clinicControllers.createClinic);
-router.post("/setActive", clinicControllers.setActiveClinic);
+//Put
+router.put("/setActive", clinicControllers.setActiveClinic);
+//Get
+router.get("existClinic", clinicControllers.existClinic);
+router.get("/viewAll", clinicControllers.viewAllClinics);
+router.get("/viewAllAppointments", clinicControllers.viewAllAppointments);
+
+//delete
+router.delete("/delete", clinicControllers.deleteClinic);
+
+//marcados para borrar
 router.post("/changePsychologist", clinicControllers.changePsychologist);
 router.post("/viewAllSectionClinics", clinicControllers.viewAllSectionClinics);
-router.post("/viewAllPsychologistClinics",clinicControllers.viewAllPsychologistClinics);
-
-//Get
-router.get("/viewAll", clinicControllers.viewAllClinics)
+router.post(
+  "/viewAllPsychologistClinics",
+  clinicControllers.viewAllPsychologistClinics
+);
 
 module.exports = router;
