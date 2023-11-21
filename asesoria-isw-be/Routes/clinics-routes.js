@@ -9,8 +9,11 @@ router.post("/create", clinicControllers.createClinic);
 router.put("/setActive", clinicControllers.setActiveClinic);
 //Get
 router.get("existClinic", clinicControllers.existClinic);
+
 router.get("/viewAll", clinicControllers.viewAllClinics);
+//obtiene las citas de la clinica
 router.get("/viewAllAppointments", clinicControllers.viewAllAppointments);
+//obtiene la clinica del usuario
 router.get("/viewAllUser", clinicControllers.viewAllUserClinics);
 
 //delete
