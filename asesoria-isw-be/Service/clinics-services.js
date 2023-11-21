@@ -58,6 +58,24 @@ async function deleteClinic(id) {
   await knex("clinics").where("id_clinic", id).del();
 }
 
+async function viewAllUserClinics(id) {
+  let clinics = await knex("users")
+    .join("clinics", "clinics.id_clinic", "=", "users.id_clinic")
+    .select(
+      "users.id_user",
+      "users.name_user",
+      "users.email_user",
+      "users.number_user",
+      "users.active_user",
+      "clinics.id_clinic",
+      "clinics.active_clinic"
+    )
+    .where("users.id_user", id);
+
+  clinics = JSON.stringify(clinics);
+  return JSON.parse(clinics);
+}
+
 //Marcados para borrar
 async function changePsychologist(clinic) {
   await knex("clinics")
@@ -91,4 +109,5 @@ module.exports = {
   existClinic,
   viewAllAppointments,
   deleteClinic,
+  viewAllUserClinics,
 };

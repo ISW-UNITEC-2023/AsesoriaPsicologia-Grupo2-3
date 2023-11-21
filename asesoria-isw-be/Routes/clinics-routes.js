@@ -11,6 +11,7 @@ router.put("/setActive", clinicControllers.setActiveClinic);
 router.get("existClinic", clinicControllers.existClinic);
 router.get("/viewAll", clinicControllers.viewAllClinics);
 router.get("/viewAllAppointments", clinicControllers.viewAllAppointments);
+router.get("/viewAllUser", clinicControllers.viewAllUserClinics);
 
 //delete
 router.delete("/delete", clinicControllers.deleteClinic);

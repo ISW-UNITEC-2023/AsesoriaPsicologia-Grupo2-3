@@ -159,6 +159,30 @@ async function deleteClinic(req, res) {
   }
 }
 
+async function viewAllUserClinics(req, res) {
+  const { id } = req.query;
+
+  const errors = [];
+
+  const numericId = parseInt(id, 10);
+
+  if (isNaN(numericId) || !Number.isInteger(numericId)) {
+    errors.push("Falta el id_user del usuario");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
+  try {
+    const clinics = await clinicServices.viewAllUserClinics(id);
+    res.send({ clinicsInfo: clinics });
+  } catch (err) {
+    res.send({ message: err.message });
+  }
+}
+
 //marcados para borrar
 async function changePsychologist(req, res) {
   const { id, psychologist, editor } = req.body;
@@ -204,4 +228,5 @@ module.exports = {
   existClinic,
   viewAllAppointments,
   deleteClinic,
+  viewAllUserClinics,
 };
