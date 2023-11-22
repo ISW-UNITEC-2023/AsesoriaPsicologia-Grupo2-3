@@ -12,8 +12,9 @@ router.post("/updateMedicalHistory", fileControllers.updateMedicalHistory)
 router.post("/updateFirstImpresions", fileControllers.updateFirstImpressions)
 router.post("/updateSubstanceUsage", fileControllers.updateSubstanceUsage)
 router.post("/updateTreatment", fileControllers.updateTreatment)
-router.post("/getFileById", fileControllers.getFileById)
-router.post("/getPatientFiles", fileControllers.getPatientFiles)
+
+router.get("/getFileById", fileControllers.getFileById)
+router.get("/getClinicFiles", fileControllers.getClinicFiles)
 
 //Delete
 router.delete("/delete", fileControllers.deleteFile)

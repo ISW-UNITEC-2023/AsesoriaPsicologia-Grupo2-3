@@ -12,10 +12,22 @@ const knex = require("knex")({
 //Post
 async function createFile(file) {
   return await knex("files").insert({
-    id_patient: file.patient,
-    birthday: file.birthday,
+    first_name: file.first_name,
+    middle_name: file.middle_name,
+    last_name: file.last_name,
+    second_surname: file.second_surname,
+    birthdate: file.birthdate,
     address: file.address,
-    user_creator: file.creator,
+    civil_status: file.civil_status,
+    medical_history: file.medical_history,
+    substance_usage: file.substance_usage,
+    first_impressions: file.first_impressions,
+    treatment_plan: file.treatment_plan,
+    filescol: file.filescol,
+    id_clinic: file.id_clinic,
+    active: file.active,
+    user_editor:file.user_editor,
+    user_creator: file.user_creator,
   });
 }
 
@@ -76,13 +88,15 @@ async function updateTreatment(file) {
 }
 
 async function getFileById(id) {
-  let file = await knex("files").where("id_file", id).select("*");
+  let file = await knex.select()
+  .from('files').where("id_file", id)
   file = JSON.stringify(file);
   return JSON.parse(file);
 }
 
-async function getPatientFiles(id){
-  let file = await knex("files").where("id_patient", id).select("*");
+async function getClinicFiles(id){
+  let file = await knex.select().from('files').where("id_clinic", id)
+  
   file = JSON.stringify(file);
   return JSON.parse(file);
 }
@@ -102,6 +116,6 @@ module.exports = {
   updateFirstImpressions,
   updateTreatment,
   getFileById,
-  getPatientFiles,
+  getClinicFiles,
   deleteFile
 };
