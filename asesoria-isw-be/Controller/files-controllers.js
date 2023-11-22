@@ -17,6 +17,7 @@ async function createFile(req, res) {
   const lengFimpressions = first_impressions.toString();
   const lengTreatment = treatment_plan.toString();
   const lengFiles = filescol.toString();
+  const lengactive = active.toString();
   
   
 
@@ -73,6 +74,11 @@ async function createFile(req, res) {
   if(lengFiles.length > 45 ||lengFiles.length == 0 || typeof filescol != "string")
   {
     errorMessages.push("El campo de \"filescol\" es invalido, debe contener mas de 1 caracter pero menos de 45 caracteres")
+  }
+
+  if(lengactive > 1)
+  {
+    errorMessages.push("El campo de activo debe ser un numero 1 o 0")
   }
   
   if(errorMessages.length){
