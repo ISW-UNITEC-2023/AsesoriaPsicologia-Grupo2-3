@@ -22,8 +22,6 @@ router.put("/updateFilescol", fileControllers.updateFilescol);
 router.put("/updateAcive", fileControllers.updateActive);
 router.put("/updateIdClinic", fileControllers.updateIdClinic);
 
-router.post("/getPatientFiles", fileControllers.getPatientFiles);
-
 //Get
 router.get("/existFile", fileControllers.existFile);
 router.get("/getFileById", fileControllers.getFileById);

@@ -777,23 +777,6 @@ async function getFileById(req, res) {
   }
 }
 
-async function getPatientFiles(req, res) {
-  const { id } = req.body;
-
-  try {
-    const file = await fileServices.getPatientFiles(id);
-    res.send({
-      fileInfo: file,
-      message: "Se han recuperado los archivos del paciente",
-    });
-  } catch (error) {
-    res.send({
-      message: "No fue posible recuperar los archivos del paciente",
-      error: error.message,
-    });
-  }
-}
-
 async function deleteFile(req, res) {
   const { id } = req.body;
 
@@ -858,7 +841,7 @@ module.exports = {
   getFileById,
   getClinicFiles,
   deleteFile,
-  getPatientFiles,
+
   updateFirstName,
   updateMiddleName,
   existFile,

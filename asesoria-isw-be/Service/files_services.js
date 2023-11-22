@@ -161,12 +161,6 @@ async function getClinicFiles(id) {
   return JSON.parse(file);
 }
 
-async function getPatientFiles(id) {
-  let file = await knex("files").where("id_patient", id).select("*");
-  file = JSON.stringify(file);
-  return JSON.parse(file);
-}
-
 //Delete
 async function deleteFile(id) {
   return await knex("files").where("id_file", id).del();
@@ -184,7 +178,7 @@ module.exports = {
   getFileById,
   getClinicFiles,
   deleteFile,
-  getPatientFiles,
+
   updateFirstName,
   updateMiddleName,
   existFile,
