@@ -11,9 +11,9 @@ async function createFile(req, res) {
     civil_status,
     medical_history,
     substance_usage,
-    first_impressions,
-    treatment_plan,
-    filescol,
+    // first_impressions,
+    // treatment_plan,
+    // filescol,
     id_clinic,
     active,
     user_editor,
@@ -30,9 +30,9 @@ async function createFile(req, res) {
   const lengCstatus = civil_status.toString();
   const lengMedical = medical_history.toString();
   const lengSubtance = substance_usage.toString();
-  const lengFimpressions = first_impressions.toString();
-  const lengTreatment = treatment_plan.toString();
-  const lengFiles = filescol.toString();
+  // const lengFimpressions = first_impressions.toString();
+  // const lengTreatment = treatment_plan.toString();
+  // const lengFiles = filescol.toString();
   const lengactive = active.toString();
 
   if (
@@ -115,35 +115,35 @@ async function createFile(req, res) {
     );
   }
 
-  if (
-    lengFimpressions.length > 500 ||
-    lengFimpressions.length == 0 ||
-    typeof first_impressions != "string"
-  ) {
-    errorMessages.push(
-      'El campo de "primeras impresiones" es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres'
-    );
-  }
+  // if (
+  //   lengFimpressions.length > 500 ||
+  //   lengFimpressions.length == 0 ||
+  //   typeof first_impressions != "string"
+  // ) {
+  //   errorMessages.push(
+  //     'El campo de "primeras impresiones" es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres'
+  //   );
+  // }
 
-  if (
-    lengTreatment.length > 500 ||
-    lengTreatment.length == 0 ||
-    typeof treatment_plan != "string"
-  ) {
-    errorMessages.push(
-      'El campo de "plan de tratamiento" es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres'
-    );
-  }
+  // if (
+  //   lengTreatment.length > 500 ||
+  //   lengTreatment.length == 0 ||
+  //   typeof treatment_plan != "string"
+  // ) {
+  //   errorMessages.push(
+  //     'El campo de "plan de tratamiento" es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres'
+  //   );
+  // }
 
-  if (
-    lengFiles.length > 45 ||
-    lengFiles.length == 0 ||
-    typeof filescol != "string"
-  ) {
-    errorMessages.push(
-      'El campo de "filescol" es invalido, debe contener mas de 1 caracter pero menos de 45 caracteres'
-    );
-  }
+  // if (
+  //   lengFiles.length > 45 ||
+  //   lengFiles.length == 0 ||
+  //   typeof filescol != "string"
+  // ) {
+  //   errorMessages.push(
+  //     'El campo de "filescol" es invalido, debe contener mas de 1 caracter pero menos de 45 caracteres'
+  //   );
+  // }
 
   if (lengactive > 1) {
     errorMessages.push("El campo de activo debe ser un numero 1 o 0");
@@ -163,9 +163,9 @@ async function createFile(req, res) {
         civil_status,
         medical_history,
         substance_usage,
-        first_impressions,
-        treatment_plan,
-        filescol,
+        // first_impressions,
+        // treatment_plan,
+        // filescol,
         id_clinic,
         active,
         user_editor,
@@ -752,23 +752,6 @@ async function updateActive(req, res) {
   try {
     await fileServices.updateActive({ id, active, editor });
     res.send({ message: "Se ha actualizado el estado del expediente" });
-  } catch (error) {
-    res.send({
-      message: "Error",
-      error: error.message,
-    });
-  }
-}
-
-async function getFileById(req, res) {
-  const { id } = req.body;
-
-  try {
-    const file = await fileServices.getFileById(id);
-    res.send({
-      fileInfo: file,
-      message: "Se ha recuperado la información del archivo",
-    });
   } catch (error) {
     res.send({
       message: "Error",
