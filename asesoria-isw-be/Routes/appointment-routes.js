@@ -4,15 +4,6 @@ const router = express.Router();
 const appointmentControllers = require("../Controller/appointment-controller");
 
 //POST
-/*
-router.post("/create", appointmentControllers.createPatient);
-router.post("/updateStatus", appointmentControllers.updateStatus);
-router.post("/updateColor", appointmentControllers.updateColor);
-router.post("/changeClinic", appointmentControllers.changeClinic);
-router.post("/getClinics", appointmentControllers.getClinicsForPatient);
-router.post("/getPatients", appointmentControllers.viewClinicPatients);
-*/
-
 router.post("/create", appointmentControllers.createAppointment);
 
 //PUT
