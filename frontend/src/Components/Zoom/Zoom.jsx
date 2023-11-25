@@ -56,41 +56,41 @@ function MyZoom()
         <>
             <div className="dashboard-container">
                 <NavigationB/>
-                <div style={{ width: "90%" }}>
+                <div style={{ width: "70%", justifyItems:"center" }}>
                     
-                    <div className="container-header">
-                        <h1 className="title-pacientes">Zoom</h1>
+                    <div >
+                        <h1 className="title-pacientes">Crear Sesiones </h1>
 
                     </div>
                     <div className="container-controls">
                     
-                        <Container fluid="md">
+                        <Container fluid="md" className="zoomscroll-content">
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-end", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{display:"flex", alignItems:"flex-end",borderBottom: "1px solid #360404d5",padding:"15px"}} xs="4">
                                     <Form.Label>Tema</Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-end", borderBottom: "1px solid #360404d5", padding:"15px"}} >
+                                <Col style={{display:"flex", alignItems:"flex-end" ,borderBottom: "1px solid #360404d5",padding:"15px"}} >
                                     <Form.Control type="Topic" placeholder="Insertar Tema" value={topic} onChange={ev=> setTopic(ev.target.value)} />
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{display:"flex", alignItems:"flex-start" ,borderBottom: "1px solid #360404d5", padding:"15px"}} xs="4">
                                     <Form.Label>Descripción(opcional)</Form.Label>
                                 </Col>
 
-                                <Col style={{borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5", padding:"15px"}} >
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Control as="textarea" placeholder="Insertar Descripción" rows={3} value={description} onChange={ev=> setdescription(ev.target.value)}/>
                                     </Form.Group>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start" , padding:"15px"}} xs="4">
                                     <Form.Label>Cuando</Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"row", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"row" , padding:"15px"}} >
                                     <Form.Control
                                     type="datetime-local" 
                                     placeholder="" 
@@ -102,11 +102,11 @@ function MyZoom()
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start" , padding:"15px"}} xs="4">
                                     <Form.Label>Duración</Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"row", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"row" , padding:"15px"}} >
                                     <Form.Control
                                     required
                                     type="number"
@@ -136,11 +136,11 @@ function MyZoom()
                             
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start", padding:"15px"}} xs="4">
                                     <Form.Label>Zona Horaria</Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"column", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"column" , padding:"15px"}} >
                                     <Form.Select aria-label="Default select example" onChange={ev=> setTimeZone( ev.target.value)} >
                                         <option value="na">Open this select menu</option>
                                         <option value="Z">(GMT-7:00)Pacific Time (US and Canada)</option>
@@ -164,11 +164,11 @@ function MyZoom()
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start", padding:"15px"}} xs="4">
                                     <Form.Label>Registro</Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5", display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
                                     <Form >
                                         {['checkbox'].map((type) => (
                                             <div key={`default-${type}`} className="mb-3">
@@ -185,11 +185,11 @@ function MyZoom()
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start", padding:"15px"}} xs="4">
                                     <Form.Label>Seguridad</Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"column", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"column",  padding:"15px"}} >
                                         <div style={{ display:"flex",alignItems:"flex-start"}}>
                                             <Form >
                                             {['checkbox'].map((type) => (
@@ -209,13 +209,13 @@ function MyZoom()
                                                 
                                             ))}
                                             </Form>
-                                            <Form.Control  style={{marginLeft:"10px", width: "100px", marginBottom:"0px"}} onChange={ev=> setSecurityPasscode( ev.target.value)} type="email" defaultValue="289399" />
+                                            <Form.Control  style={{borderBottom: "1px solid #360404d5",marginLeft:"10px", width: "100px"}} onChange={ev=> setSecurityPasscode( ev.target.value)} type="email" defaultValue="289399" />
                                     </div>
                                     <Form.Text className="text-muted" >
                                         Solo los usuarios con el link de invitacion o el passcode podran entrar a la reunion
                                     </Form.Text>
                                     
-                                    <Form style={{marginTop:"35px", marginBottom:"0px"}}>
+                                    <Form style={{borderBottom: "1px solid #360404d5",marginTop:"35px"}}>
                                         {['checkbox'].map((type) => (
                                             <div key={`default-${type}`} className="mb-3">
                                             <Form.Check onChange={ev=> setSecurityWaitroom( ev.target.checked)}
@@ -254,16 +254,16 @@ function MyZoom()
                                 
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start", padding:"15px"}} xs="4">
                                     <Form.Label>Video</Form.Label>
                                 </Col>
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"column", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="1">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"column", padding:"15px"}} xs="1">
                                     <div >
                                     <Form.Label style={{ marginBottom:"26px"}}>Host</Form.Label>
                                     <Form.Label >Paticipante</Form.Label>
                                     </div>
                                 </Col>
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"column", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"column", padding:"15px"}} >
                                 
                                         <Form >
                                         {['checkbox'].map((type) => (
@@ -303,11 +303,11 @@ function MyZoom()
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start" , padding:"15px"}} xs="4">
                                     <Form.Label>Audio</Form.Label>
                                 </Col>
                                 
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start", padding:"15px"}} >
                                 <Form >
                                         {['radio'].map((type) => (
                                             <div key={`inline-${type}`} className="mb-3" style={{display: "flex"}}>
@@ -350,11 +350,11 @@ function MyZoom()
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",borderBottom: "1px solid #360404d5", padding:"15px"}} xs="4">
                                     <Form.Label>Opciones de la reunión </Form.Label>
                                 </Col>
 
-                                <Col style={{display:"flex", alignItems:"flex-start",flexDirection:"column", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{borderBottom: "1px solid #360404d5",display:"flex", alignItems:"flex-start",flexDirection:"column", borderBottom: "1px solid #360404d5",padding:"15px"}} >
                                 <Form >
                                         {['checkbox'].map((type) => (
                                             <div key={`default-${type}`} className="mb-3" >
@@ -411,11 +411,11 @@ function MyZoom()
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{display:"flex", alignItems:"flex-start", borderBottom: "1px solid #360404d5" , padding:"15px"}} xs="4">
+                                <Col style={{borderBottom: "1px solid #360404d5",isplay:"flex", alignItems:"flex-start",borderBottom: "1px solid #360404d5", padding:"15px"}} xs="4">
                                     <Form.Label>Host alternativo</Form.Label>
                                 </Col>
 
-                                <Col style={{ borderBottom: "1px solid #360404d5" , padding:"15px"}} >
+                                <Col style={{ borderBottom: "1px solid #360404d5",padding:"15px"}} >
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                         <Form.Label>Correo electronico</Form.Label>
                                         <Form.Control type="email" placeholder="name@example.com" onChange={ev=> setAlternative( ev.target.value)}/>
@@ -425,10 +425,11 @@ function MyZoom()
 
                             <Row>
                                 <Col style={{display:"flex", justifyContent:"space-evenly", borderBottom: "1px solid #360404d5" , padding:"15px"}} >
-                                    <Button variant="outline-primary"  href="/ZoomV" onClick={()=>{CreateMeet(topic,description,`${fechaHora}:00Z`,`${+(duracionHour*60)+(+duracionMin)}`, videoHost,videoPaticipant,meetingHost,meetingMute,meetingRecord,registration, securityWaitroom,securityPasscode,securityUserAuth, audio, meetingPersonalId, alternative)}} style={{width:"10%"}}>Crear</Button>
-                                    <Button variant="outline-primary" href="/ZoomV"  onClick={()=>{
+                                <Button variant="outline-primary" href="/ZoomV"  onClick={()=>{
                                     
-                                    }} style={{width:"10%"}}>Cancelar</Button>
+                                }} style={{width:"100px"}}>Cancelar</Button>
+                                    <Button variant="outline-primary"  href="/ZoomV" onClick={()=>{CreateMeet(topic,description,`${fechaHora}:00Z`,`${+(duracionHour*60)+(+duracionMin)}`, videoHost,videoPaticipant,meetingHost,meetingMute,meetingRecord,registration, securityWaitroom,securityPasscode,securityUserAuth, audio, meetingPersonalId, alternative)}} style={{width:"100px"}} >Crear</Button>
+                                    
                                 </Col>
                             </Row>
 

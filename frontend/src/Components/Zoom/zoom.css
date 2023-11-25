@@ -2,13 +2,13 @@
     display: flex;
     min-height: 50px;
     align-items: center;
-    border-bottom: 2px solid #000;
   }
 
   .container-controls {
-    min-height: 50px;
+    min-height: 60px;
+    
     padding-left: 50px;
-    padding-right: 5px;
+    padding-right: 50px;
     
     flex-wrap: wrap;
     width: 100%;
@@ -26,7 +26,13 @@
     padding: 10px;
     margin-bottom: 10px;
   }
-
+  .zoomscroll-content {
+    max-height: 425px;
+    overflow-y: auto; 
+    overflow-x: auto;
+    width: 75%;
+  
+  }
   .title-pacientes {
     font-size: 40px;
     margin-left: 3%;
