@@ -18,6 +18,7 @@ async function createUser(user) {
     password_user: user.encryptedPassword,
     salt_user: user.salt,
     active_user: user.active,
+    user_creator: user.creator,
   });
 }
 

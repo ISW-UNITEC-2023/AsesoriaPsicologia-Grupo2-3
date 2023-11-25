@@ -17,19 +17,42 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
     transform: isOpen ? "scale(1)" : "scale(0.8)",
   };
 
-  const [newRoles, setNewRoles] = useState([])
-  const [removedRoles, setRemovedRoles] = useState([])
+  const [newRoles, setNewRoles] = useState({
+    current: roles.length > 0 ? roles[0].id_role : null,
+    new: [],
+  });
+  const [removedRoles, setRemovedRoles] = useState({
+    current: user.roles.length > 0 ? user.roles[0][0] : null,
+    removed: [],
+  });
+  const [defaultData, setDefaultData] = useState({
+    userRoles: user.roles.length > 0 ? user.roles : null,
+    availableRoles: roles.length > 0 ? roles : null,
+  });
 
-  function handleAddRole(){
-
+  function handleAddRole() {
+    let newRole = defaultData.availableRoles.find((element)=>{
+      return element.id_role === newRoles.current;
+    })
+    let newAvailableRoles = defaultData.availableRoles.filter((element)=>{
+      return element.id_role !== newRoles.current;
+    })
+    setDefaultData({
+      ...defaultData,
+      userRoles: [...defaultData.userRoles, newRole],
+      availableRoles: newAvailableRoles
+    })
+    setNewRoles({
+      ...newRoles,
+      current: newAvailableRoles.length > 0 ? newAvailableRoles[0].id_role : null,
+      new: [...newRoles.new, newRole]
+    })
   }
 
-  function handleRemoveRole(){
-
-  }
+  function handleRemoveRole() {}
 
   async function guardarRoles() {
-    onClose();
+    console.log(newRoles.new)
   }
 
   return (
@@ -46,46 +69,83 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
         <div className="form-body-ar">
           <div className="row-rol-usuario">
             <label className="label-select-box">Roles de Usuario</label>
-            <div>
+            <div className="row-select-button">
               <select className="select-box-rol">
-                {user.roles.length > 0 ? (
-                  user.roles.map((item) => {
-                    return <option value={item[0]}>{item[1]}</option>;
+                {defaultData.userRoles > 0 ? (
+                  defaultData.userRoles.map((item) => {
+                    return (
+                      <option
+                        onSelect={setNewRoles({
+                          current: item,
+                        })}
+                        value={item[0]}
+                      >
+                        {item[1]}
+                      </option>
+                    );
                   })
                 ) : (
                   <option>Ninguno</option>
                 )}
               </select>
-              {user.roles.length > 0 ? (
-                <button className="eliminar-rol-user">
+              {defaultData.userRoles > 0 ? (
+                <button
+                  className="eliminar-rol-user"
+                  onClick={() => {
+                    handleRemoveRole();
+                  }}
+                >
                   Eliminar Rol
-                  <FontAwesomeIcon icon={faTrash} className="admin-rol-icon"/>
+                  <FontAwesomeIcon icon={faTrash} className="admin-rol-icon" />
                 </button>
-              ):(
+              ) : (
                 <button className="eliminar-rol-user" disabled>
                   Eliminar Rol
-                  <FontAwesomeIcon icon={faTrash} className="admin-rol-icon"/>
+                  <FontAwesomeIcon icon={faTrash} className="admin-rol-icon" />
                 </button>
               )}
             </div>
           </div>
           <div className="row-rol-disponibles">
             <label className="label-select-box">Roles disponibles</label>
-            <div>
-              <select className="select-box-rol">
-                {roles.map((item) => {
-                  return <option value={item.id_role}>{item.name_role}</option>;
+            <div className="row-select-button">
+              <select
+                value={newRoles.current}
+                className="select-box-rol"
+                onChange={(e) => {
+                  setNewRoles({
+                    ...newRoles,
+                    current: parseInt(e.target.value),
+                  });
+                }}
+              >
+                {defaultData.availableRoles.map((item) => {
+                  return (
+                    <option key={item.id_role} value={item.id_role}>
+                      {item.name_role}
+                    </option>
+                  );
                 })}
               </select>
-              <button className="agregar-rol-user">
-                Agregar Rol
-                <FontAwesomeIcon icon={faPlus} className="admin-rol-icon"/>
-              </button>
+              {defaultData.availableRoles.length > 0 ? (
+                <button className="agregar-rol-user" onClick={handleAddRole}>
+                  Agregar Rol
+                  <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
+                </button>
+              ) : (
+                <button className="agregar-rol-user" disabled>
+                  Agregar Rol
+                  <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
+                </button>
+              )}
             </div>
           </div>
           <div className="form-buttons-ar">
             <button className="form-cancel-ar" onClick={onClose}>
               Cancelar
+            </button>
+            <button className="form-submit-ar" onClick={guardarRoles}>
+              Guardar
             </button>
           </div>
         </div>

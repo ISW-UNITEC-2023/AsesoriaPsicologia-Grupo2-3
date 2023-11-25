@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
-  const { name, email, phone, password, type, active } = req.body;
+  const { name, email, phone, password, type, active, creator } = req.body;
 
   try {
     const errorMessages = [];
@@ -54,6 +54,7 @@ async function registerUser(req, res) {
           encryptedPassword: encryptedPassword,
           salt: salt,
           active: active,
+          creator: creator,
         });
         console.log("sin rol");
       }
