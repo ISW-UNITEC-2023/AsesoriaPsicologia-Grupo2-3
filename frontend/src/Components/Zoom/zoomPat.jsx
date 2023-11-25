@@ -24,20 +24,25 @@ function MyZoomPat() {
     <div className='dashboard-container'>
 
         <NavigationB/>
-        <div style={{marginRight:"10px", marginLeft: "10px", width: "90%" }}>
-        <Row style={{ marginBottom:"2%",alignItems:"center"}}>
+        <div style={{ width: "1400px", justifyItems:"center" }}>
+                <Row style={{ marginBottom:"2%",alignItems:"center"}}>
         <Col>
-            <h1 className="title-pacientes"  style={{marginBottom:"-2%",marginLeft:"36%"}} >Zoom</h1>
-            <Form.Label className='titulo'style={{marginLeft:"40%"}}>Sesiones Programadas</Form.Label>
+            <h1 className="title-pacientes"  style={{marginBottom:"-2%",marginLeft:"22%"}} >Zoom</h1>
+            <Form.Label className='titulo'style={{marginLeft:"26%"}}>Sesiones Programadas</Form.Label>
             </Col>
             <Col></Col>
             <Col>
-            <Button className='buttons' variant="outline-primary"  href="/ZoomC" onClick={()=>{}} style={{marginLeft:"90px"}}>Crear Sesion</Button>
+            <Button className='buttons' variant="outline-primary"  href="/ZoomC" onClick={()=>{}} style={{marginLeft:"235px"}}>Crear Sesion</Button>
             </Col>
             </Row>
 
-            <div>
-            <Container className='zoomscroll-content'>
+            <div >
+            <Container fluid="md" className="zoomscroll-content" style={{
+    paddingRight: '20px',
+    width: '90%', 
+    margin: '0 auto', 
+    marginBottom: '30px', 
+   }}>
                 <Row>
                     <div></div>
                 <Col>
