@@ -65,7 +65,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Anuncios />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -79,7 +79,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Modulos />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -93,7 +93,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Vistas />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -107,7 +107,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Sections />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -121,7 +121,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Sesiones />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -135,7 +135,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Pacientes />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -160,7 +160,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<DashBoard />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -177,7 +177,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<AnunciosCrear />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (
@@ -191,7 +191,7 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<ProfilesPage />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                allowedRoles={["administrador","paciente","doctor","auditor"]}
                 userRoles={userData}
               />
             ) : (

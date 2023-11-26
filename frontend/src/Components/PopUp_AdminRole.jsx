@@ -6,6 +6,7 @@ import {
   faTrash,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import userServices from "../Utilities/user-services";
 
 const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
   const overlayStyle = {
@@ -18,41 +19,114 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
   };
 
   const [newRoles, setNewRoles] = useState({
-    current: roles.length > 0 ? roles[0].id_role : null,
-    new: [],
+    current:
+      roles.length > 0
+        ? roles.filter((element) => {
+            return !user.roles.some((item) => {
+              return item[0] === element.id_role;
+            });
+          })[0].id_role
+        : null,
   });
+
   const [removedRoles, setRemovedRoles] = useState({
     current: user.roles.length > 0 ? user.roles[0][0] : null,
-    removed: [],
   });
+
   const [defaultData, setDefaultData] = useState({
-    userRoles: user.roles.length > 0 ? user.roles : null,
-    availableRoles: roles.length > 0 ? roles : null,
+    userRoles:
+      user.roles.length > 0
+        ? user.roles.map((item) => {
+            return { id_role: item[0], name_role: item[1] };
+          }, [])
+        : [],
+    availableRoles:
+      roles.length > 0
+        ? roles.filter((element) => {
+            return !user.roles.some((item) => {
+              return item[0] === element.id_role;
+            });
+          })
+        : [],
   });
 
   function handleAddRole() {
-    let newRole = defaultData.availableRoles.find((element)=>{
+    let newRole = defaultData.availableRoles.filter((element) => {
       return element.id_role === newRoles.current;
-    })
-    let newAvailableRoles = defaultData.availableRoles.filter((element)=>{
+    });
+    let newAvailableRoles = defaultData.availableRoles.filter((element) => {
       return element.id_role !== newRoles.current;
-    })
+    });
+    let newUserRoles = [
+      ...defaultData.userRoles,
+      { id_role: newRole[0].id_role, name_role: newRole[0].name_role },
+    ];
     setDefaultData({
       ...defaultData,
-      userRoles: [...defaultData.userRoles, newRole],
-      availableRoles: newAvailableRoles
-    })
+      userRoles: newUserRoles,
+      availableRoles: newAvailableRoles,
+    });
     setNewRoles({
-      ...newRoles,
-      current: newAvailableRoles.length > 0 ? newAvailableRoles[0].id_role : null,
-      new: [...newRoles.new, newRole]
-    })
+      current:
+        newAvailableRoles.length > 0 ? newAvailableRoles[0].id_role : null,
+    });
+    setRemovedRoles({
+      current: newUserRoles.length > 0 ? newUserRoles[0].id_role : null,
+    });
   }
 
-  function handleRemoveRole() {}
+  function handleRemoveRole() {
+    let removedRole = roles.filter((element) => {
+      return element.id_role === removedRoles.current;
+    });
+    let newUserRoles = defaultData.userRoles.filter((element) => {
+      return element.id_role !== removedRoles.current;
+    });
+    let newAvailableRoles = [
+      ...defaultData.availableRoles,
+      {
+        id_role: removedRole[0].id_role,
+        name_role: removedRole[0].name_role,
+      },
+    ];
+    setDefaultData({
+      ...defaultData,
+      userRoles: newUserRoles,
+      availableRoles: newAvailableRoles,
+    });
+    setRemovedRoles({
+      current: newUserRoles.length > 0 ? newUserRoles[0].id_role : null,
+    });
+    setNewRoles({
+      current:
+        newAvailableRoles.length > 0 ? newAvailableRoles[0].id_role : null,
+    });
+  }
 
   async function guardarRoles() {
-    console.log(newRoles.new)
+    let userRolesData = user.roles.length > 0
+    ? user.roles.map((item) => {
+        return { id_role: item[0], name_role: item[1] };
+      }, [])
+    : [];
+    let toAdd = defaultData.userRoles.filter((element) => {
+      return !userRolesData.some((item) => {
+        return item.id_role === element.id_role;
+      });
+    });
+    let toRemove = userRolesData.filter((element) => {
+      return !defaultData.userRoles.some((item) => {
+        return item.id_role === element.id_role;
+      });
+    });
+    //Asignar y Remover Roles
+    for(let i = 0; i < toAdd.length; i++){
+      await userServices.assignRole({id: user.id_user, role: toAdd[i].id_role});
+    }
+    for(let i = 0; i < toRemove.length; i++){
+      await userServices.removeRole({id: user.id_user, role: toRemove[i].id_role});
+    }
+    onClose();
   }
 
   return (
@@ -70,25 +144,27 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
           <div className="row-rol-usuario">
             <label className="label-select-box">Roles de Usuario</label>
             <div className="row-select-button">
-              <select className="select-box-rol">
-                {defaultData.userRoles > 0 ? (
+              <select
+                className="select-box-rol"
+                value={removedRoles.current}
+                onChange={(e) => {
+                  setRemovedRoles({
+                    ...removedRoles,
+                    current: parseInt(e.target.value),
+                  });
+                }}
+              >
+                {defaultData.userRoles.length > 0 ? (
                   defaultData.userRoles.map((item) => {
                     return (
-                      <option
-                        onSelect={setNewRoles({
-                          current: item,
-                        })}
-                        value={item[0]}
-                      >
-                        {item[1]}
-                      </option>
+                      <option value={item.id_role}>{item.name_role}</option>
                     );
                   })
                 ) : (
                   <option>Ninguno</option>
                 )}
               </select>
-              {defaultData.userRoles > 0 ? (
+              {defaultData.userRoles.length > 0 ? (
                 <button
                   className="eliminar-rol-user"
                   onClick={() => {
@@ -119,13 +195,17 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
                   });
                 }}
               >
-                {defaultData.availableRoles.map((item) => {
-                  return (
-                    <option key={item.id_role} value={item.id_role}>
-                      {item.name_role}
-                    </option>
-                  );
-                })}
+                {defaultData.availableRoles.length > 0 ? (
+                  defaultData.availableRoles.map((item) => {
+                    return (
+                      <option key={item.id_role} value={item.id_role}>
+                        {item.name_role}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option>Ninguno</option>
+                )}
               </select>
               {defaultData.availableRoles.length > 0 ? (
                 <button className="agregar-rol-user" onClick={handleAddRole}>
