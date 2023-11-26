@@ -1,28 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Form } from 'react-bootstrap';
 import "../Styles/CSS/AuditLogs.css";
+import Services from "../Utilities/actions-services";
 
-const datosAPI = [
-  { Fecha_Hora: "2022-11-25 22:30", ID: 1, Usuario: "Pancho", Accion: 'AGREGAR', Tabla: "20", Valor_anterior: "11", Valor_actualizado: "13", Comentarios: "..." },
-  { Fecha_Hora: "2022-12-21 17:45", ID: 2, Usuario: "Lucas", Accion: 'ELIMINAR', Tabla: "7", Valor_anterior: "231", Valor_actualizado: "0", Comentarios: "..." },
-  { Fecha_Hora: "2022-12-25 08:00", ID: 3, Usuario: "Sancho", Accion: 'ACTUALIZAR', Tabla: "50", Valor_anterior: "243211", Valor_actualizado: "10124", Comentarios: "..." },
-  { Fecha_Hora: "2023-1-03 21:30", ID: 4, Usuario: "Juan", Accion: 'ACTUALIZAR', Tabla: "8", Valor_anterior: "242", Valor_actualizado: "1214", Comentarios: "..." },
-  { Fecha_Hora: "2023-2-09 19:30", ID: 5, Usuario: "Luis", Accion: 'ELIMINAR', Tabla: "28", Valor_anterior: "25125", Valor_actualizado: "5442", Comentarios: "..." },
-  { Fecha_Hora: "2023-3-11 10:30", ID: 6, Usuario: "Alejandro", Accion: 'AGREGAR', Tabla: "47", Valor_anterior: "235", Valor_actualizado: "6345", Comentarios: "..." },
-  { Fecha_Hora: "2023-3-11 14:10", ID: 7, Usuario: "Jose", Accion: 'AGREGAR', Tabla: "65", Valor_anterior: "31314", Valor_actualizado: "463", Comentarios: "..." },
-  { Fecha_Hora: "2023-3-25 22:30", ID: 8, Usuario: "Carlos", Accion: 'ELIMNAR', Tabla: "101", Valor_anterior: "53462", Valor_actualizado: "6363", Comentarios: "..." },
-  { Fecha_Hora: "2023-4-29 20:30", ID: 9, Usuario: "Marcos", Accion: 'AGREGAR', Tabla: "11", Valor_anterior: "2352", Valor_actualizado: "753", Comentarios: "..." },
-  { Fecha_Hora: "2023-5-5 07:30", ID: 10, Usuario: "Diego", Accion: 'ACTUALIZAR', Tabla: "78", Valor_anterior: "123414", Valor_actualizado: "64232", Comentarios: "..." },
-];
-
-const AuditLogs = () => {
+function AuditLogs () {
   const [datos, setDatos] = useState([]);
   const [campoFiltrado, setCampoFiltrado] = useState('Fecha_Hora');
   const [filtro, setFiltro] = useState('');
 
+  async function initialList() {
+    const arregloActions = await Services.getActions();
+    const arregloMandar = [];
+
+    arregloActions.map((action) => {
+      let fecha = new Date(action.datetime_action);
+      let fechaFormateada = fecha.toLocaleString();
+
+      let accionFormeatada = "";
+      if(action.type_action === "CREACION")
+        accionFormeatada = "CREACIÓN";
+      else if(action.type_action === "MODIFICACION")
+        accionFormeatada = "MODIFICACIÓN";
+
+      return arregloMandar.push({
+        Fecha_Hora: fechaFormateada,
+        ID: action.idactions,
+        Usuario: action.user_name,
+        Accion: accionFormeatada,
+        Tabla: action.table_action,
+        Info_Accion: action.info_action,
+      })
+    })
+
+    setDatos(arregloMandar);
+  }
+
   useEffect(() => {
-    //Backend
-    setDatos(datosAPI);
+        initialList();
   }, []);
 
   const handleInputChange = (id, columna, valor) => {
@@ -80,9 +94,9 @@ const AuditLogs = () => {
               <th style={{ border: '2px solid black' }}>Fecha y Hora</th>
               <th style={{ border: '2px solid black' }}>ID</th>
               <th style={{ border: '2px solid black' }}>Usuario</th>
-              <th style={{ border: '2px solid black' }}>Accion</th>
+              <th style={{ border: '2px solid black' }}>Acción</th>
               <th style={{ border: '2px solid black' }}>Tabla</th>
-              <th style={{ border: '2px solid black' }}>Info de accion</th>
+              <th style={{ border: '2px solid black' }}>Info de Acción</th>
             </tr>
         </thead>
         <tbody>
@@ -93,7 +107,7 @@ const AuditLogs = () => {
               <td style={{ border: '2px solid black' }}>{dato.Usuario}</td>
               <td style={{ border: '2px solid black' }}>{dato.Accion}</td>
               <td style={{ border: '2px solid black' }}>{dato.Tabla}</td>
-              <td style={{ border: '2px solid black' }}>{dato.Valor_anterior}</td>
+              <td style={{ border: '2px solid black' }}>{dato.Info_Accion}</td>
               
             </tr>
           ))}

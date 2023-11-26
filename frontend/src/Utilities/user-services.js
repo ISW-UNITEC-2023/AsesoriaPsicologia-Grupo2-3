@@ -177,7 +177,7 @@ export async function deleteCookies() {
 }
 
 
-export async function getNameUserById(id) {
+export async function getUserById(id) {
   try {
     let config = {
       method: 'get',
@@ -208,5 +208,5 @@ export default {
   assignRole,
   removeRole,
   postLogin,
-  getNameUserById,
+  getUserById,
 };

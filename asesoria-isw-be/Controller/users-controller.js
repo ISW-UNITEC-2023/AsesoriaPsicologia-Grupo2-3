@@ -442,6 +442,7 @@ async function getUserByID(req, res){
     });
   }
 }
+
 async function getAllUsersRoles(req, res){
   try{
     const roles = await userServices.getAllUsersRoles();
