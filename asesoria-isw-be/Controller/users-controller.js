@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
-  const { name, email, phone, password, type, active } = req.body;
+  const { name, email, phone, password, type, active , creator} = req.body;
 
   try {
     const errorMessages = [];
@@ -54,6 +54,7 @@ async function registerUser(req, res) {
           encryptedPassword: encryptedPassword,
           salt: salt,
           active: active,
+          creator: creator,
         });
         console.log("sin rol");
       }
@@ -214,7 +215,7 @@ async function updateUserName(req, res) {
     });
   } catch (e) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo cambiar el nombre.",
+      error: e,
     });
   }
 }
@@ -428,6 +429,19 @@ async function getRoles(req, res) {
   }
 }
 
+async function getUserByID(req, res){
+  const {id}  = req.query;
+  
+  try{
+    const name = await userServices.getUserCredentialsByid(id);
+    res.send(name);
+
+  } catch (error) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener el nombre del usuario",
+    });
+  }
+}
 async function getAllUsersRoles(req, res){
   try{
     const roles = await userServices.getAllUsersRoles();
@@ -467,6 +481,7 @@ module.exports = {
   getTeachers,
   getCookie,
   getRoles,
+  getUserByID,
   removeCookie,
   getUserRoles,
   getAllUsersRoles,

@@ -176,6 +176,26 @@ export async function deleteCookies() {
   }
 }
 
+
+export async function getNameUserById(id) {
+  try {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url:host +  `/users/getUserById?id=${id}`,
+      headers: { }
+    };
+    const response = await axios.request(config);
+    return JSON.stringify(response.data);
+  } catch (error) {
+    console.error("Error al obtener nombre de usuario:", error);
+    return null; // O maneja el error de otra manera
+  }
+}
+
+
+
+
 export default {
   getUsers,
   getAllUsersRoles,
@@ -188,4 +208,5 @@ export default {
   assignRole,
   removeRole,
   postLogin,
+  getNameUserById,
 };

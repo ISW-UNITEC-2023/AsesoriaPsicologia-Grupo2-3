@@ -46,67 +46,62 @@ const AuditLogs = () => {
   );
 
   return (
-    <div style={{ width: "90%" }}>
+    <div className="dashboard-container">
+      <div style={{width: "90%"}}>
       <div className="container-header">
         <h1 className="title-historial" style={{ width: "400%" }}>
           Historial Administrativo
         </h1>
       </div>
-      <Form>
-        <Form.Group controlId="campoFiltrado">
-          <Form.Label>Filtrar por:</Form.Label>
-          <Form.Control as="select" value={campoFiltrado} onChange={handleCampoFiltradoChange}>
-            <option value="Fecha_Hora">Fecha y Hora</option>
-            <option value="Usuario">Usuario</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="filtro">
-          <Form.Label>Valor de Filtro:</Form.Label>
-          <Form.Control
-            type="text"
-            value={filtro}
-            onChange={handleFiltroChange}
-            placeholder={`Filtrar por ${campoFiltrado}`}
-          />
-        </Form.Group>
-      </Form>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    <Table striped bordered hover style={{ border: '2px solid black' }}>
-      <thead style={{ background: 'lightgreen' }}>
-        <tr>
-          <th style={{ border: '2px solid black' }}>Fecha y Hora</th>
-          <th style={{ border: '2px solid black' }}>ID</th>
-          <th style={{ border: '2px solid black' }}>Usuario</th>
-          <th style={{ border: '2px solid black' }}>Accion</th>
-          <th style={{ border: '2px solid black' }}>Tabla</th>
-          <th style={{ border: '2px solid black' }}>Valor anterior</th>
-          <th style={{ border: '2px solid black' }}>Valor actualizado</th>
-          <th style={{ border: '2px solid black' }}>Comentarios</th>
-        </tr>
-      </thead>
-      <tbody>
-        {datosFiltrados.map((dato) => (
-          <tr key={dato.ID}>
-            <td style={{ border: '2px solid black' }}>{dato.Fecha_Hora}</td>
-            <td style={{ border: '2px solid black' }}>{dato.ID}</td>
-            <td style={{ border: '2px solid black' }}>{dato.Usuario}</td>
-            <td style={{ border: '2px solid black' }}>{dato.Accion}</td>
-            <td style={{ border: '2px solid black' }}>{dato.Tabla}</td>
-            <td style={{ border: '2px solid black' }}>{dato.Valor_anterior}</td>
-            <td style={{ border: '2px solid black' }}>{dato.Valor_actualizado}</td>
-            <td style={{ border: '2px solid black' }}>
-              <input
+      <div className="container-flitros">
+        <Form style={{display:"flex", flexdirection: "row" }}>
+          <Form.Group controlId="campoFiltrado" style={{marginRight:"30px"}}>
+            <Form.Label>Filtrar por:</Form.Label>
+            <Form.Control as="select" value={campoFiltrado} onChange={handleCampoFiltradoChange}>
+              <option value="Fecha_Hora">Fecha y Hora</option>
+              <option value="Usuario">Usuario</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group controlId="filtro">
+            <Form.Label>Valor de Filtro:</Form.Label>
+            <Form.Control
               type="text"
-              value={dato.Comentarios}
-              onChange={(e) => handleInputChange(dato.ID, 'Comentarios', e.target.value)}
-              style={{ width: '87%' }}
-              />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-    </div>
+              value={filtro}
+              onChange={handleFiltroChange}
+              placeholder={`Filtrar por ${campoFiltrado}`}
+            />
+          </Form.Group>
+        </Form>
+        </div>
+        <div className="container-table ">
+          <Table striped bordered hover style={{ border: '2px solid black' }}>
+          <thead style={{ background: 'lightgreen' }}>
+            <tr>
+              <th style={{ border: '2px solid black' }}>Fecha y Hora</th>
+              <th style={{ border: '2px solid black' }}>ID</th>
+              <th style={{ border: '2px solid black' }}>Usuario</th>
+              <th style={{ border: '2px solid black' }}>Accion</th>
+              <th style={{ border: '2px solid black' }}>Tabla</th>
+              <th style={{ border: '2px solid black' }}>Info de accion</th>
+            </tr>
+        </thead>
+        <tbody>
+          {datosFiltrados.map((dato) => (
+            <tr key={dato.ID}>
+              <td style={{ border: '2px solid black' }}>{dato.Fecha_Hora}</td>
+              <td style={{ border: '2px solid black' }}>{dato.ID}</td>
+              <td style={{ border: '2px solid black' }}>{dato.Usuario}</td>
+              <td style={{ border: '2px solid black' }}>{dato.Accion}</td>
+              <td style={{ border: '2px solid black' }}>{dato.Tabla}</td>
+              <td style={{ border: '2px solid black' }}>{dato.Valor_anterior}</td>
+              
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      </div>
+      
+      </div>
     </div>
   );
 };

@@ -9,8 +9,35 @@
 
 .container-header {
     display: flex;
+    
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #000;
     margin-bottom: 20px;
 }
+
+
+.container-table {
+    min-height: 50px;
+    padding: 0%;
+    display: flex;
+
+    width: 100%;
+  }
+
+  .container-flitros {
+    min-height: 50px;
+    display: flex;
+    margin-bottom: 20px;
+    
+    width: 100%;
+  }
+  
+  
+
+  .dashboard-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+  }
