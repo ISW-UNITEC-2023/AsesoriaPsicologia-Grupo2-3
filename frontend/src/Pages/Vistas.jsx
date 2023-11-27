@@ -3,6 +3,8 @@ import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/tempprofile.png";
 import logoUnitec from "../Styles/Images/unitec-logo.png";
 import { useState } from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 function Vistas() {
   const [expedienteData, setExpedienteData] = useState({
@@ -106,8 +108,17 @@ function Vistas() {
   });
 
   const downloadPDF = () => {
-    const element = document.getElementById("pdf-container");
-    html2pdf(element);
+    const input = document.getElementById("pdf-container");
+
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("expediente.pdf");
+    });
   };
 
   const clearCasillas = () => {
@@ -316,9 +327,10 @@ function Vistas() {
         </Row>
       </Container>
       <div className="fixed-buttons-container">
-        <button className="btn btn-primary fixed-download-button" onClick={downloadPDF}>
-          Descargar PDF
-        </button>
+      <button className="btn btn-primary fixed-download-button" onClick={downloadPDF}>
+        Descargar PDF
+      </button>
+
         <button className="btn btn-secondary fixed-clear-button" onClick={clearCasillas}>
           Limpiar Casillas
         </button>

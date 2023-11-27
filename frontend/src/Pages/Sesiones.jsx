@@ -5,8 +5,6 @@ import NavigationB from "../Components/Navbar";
 import "../Styles/CSS/Session.css";
 import "../Styles/CSS/PopIniciarConsulta.css";
 
-
-
 function Sesiones() {
   const [showModal, setShowModal] = useState(false);
 
@@ -15,10 +13,13 @@ function Sesiones() {
 
   return (
     <>
+   
       <Container className="card-container">
         <NavigationB />
         <Row>
+          
           <Col className="position-relative">
+            <h1 className="sesiones-title">Historial de Consulta</h1>
             <Button
               variant="success"
               size="sm"

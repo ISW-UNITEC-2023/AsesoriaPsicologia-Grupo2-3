@@ -43,9 +43,15 @@
   }
 
   .custom-green-button {
-    margin-left: 580px;
+    margin-left: 1080px;
     width: 15rem;
     height: 3rem;
+  }
+  .sesiones-title{
+    margin-left: 560px;
+    margin-top: 5px;
+    font-size: 30px;
+    font-weight: bold;
   }
 
   
