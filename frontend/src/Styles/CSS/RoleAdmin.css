@@ -1,0 +1,223 @@
+.popup-overlay-ra {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+
+.popup-ra {
+  background-color: #fff;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  max-width: 90%;
+  width: 60%;
+  text-align: center;
+  position: relative;
+  top: -50px;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+  height: 500px;
+}
+
+.form-header-ra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #003b88;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.3rem;
+  font-family: sans-serif;
+}
+
+.form-title-ra {
+  max-width: 70%;
+  text-align: left;
+}
+
+.close-icon-ra {
+  cursor: pointer;
+}
+
+.close-icon-ra:hover {
+  color: #ababab;
+}
+
+.form-body-ra {
+  padding: 40px;
+  gap: 40px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.editar-rol-pencil-ra{
+  margin-left: 5px;
+  font-size: 0.9rem;
+}
+
+.editar-rol-pencil-ra:hover{
+  color: #ababab;
+}
+
+.editar-rol-label-ra{
+  color: #555555;
+  cursor: pointer;
+}
+
+.editar-rol-label-ra:hover{
+  color: #ababab;
+}
+
+.crud-botones-roles{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  margin: 0 auto 0 5%;
+  justify-content: flex-start;
+}
+
+.container-select-roles{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.title-columns-ra {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  color:#373737;
+}
+
+.title-descripcion-ra {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  align-self: flex-start;
+  color: #6b6b6b;
+}
+
+.span-descripcion-ra {
+  font-size: 1rem;
+  color: #6b6b6b;
+  text-align: justify;
+  width: 90%;
+  text-wrap: wrap;
+}
+
+.column-ra-1 {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.column-ra-2 {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.privilege-container-ra {
+  border: 1px solid #ababab;
+  width: 100%;
+  height: 220px;
+  overflow-y: scroll;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.row-privilege-ra {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid #ababab;
+}
+
+.privilege-checkbox-ra {
+  width: 20px;
+}
+
+.privilege-crud {
+  margin-left: 5px;
+  margin-right: 8px;
+  padding-left: 8px;
+  border-left: 1px solid #ababab;
+}
+
+.select-roles-box {
+  border: 1px solid #ababab;
+  border-radius: 5px;
+  width: 200px;
+  padding: 7px;
+}
+
+.crud-titles {
+  grid: 1fr / 1fr 1fr;
+  display: grid;
+  text-align: left;
+}
+
+.crud-data {
+  margin-bottom: 10px;
+}
+
+.form-footer-ra {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 5% 20px 0;
+  border-radius: 0 0 10px 10px;
+  background-color: #fff;
+}
+
+.ra-guardar-button {
+  background-color: none;
+  color: #003b88;
+  border: #003b88 1px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 20%;
+  margin-left: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ra-cancelar-button {
+  background-color: none;
+  color: #003b88;
+  border: #003b88 1px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 20%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ra-guardar-button:hover {
+  background-color: #003b88;
+  color: #fff;
+  border: #003b88 1px solid;
+}
+
+.ra-cancelar-button:hover {
+  background-color: #bd0000;
+  color: #fff;
+  border: #bd0000 1px solid;
+}

@@ -224,7 +224,7 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
             <button className="form-cancel-ar" onClick={onClose}>
               Cancelar
             </button>
-            <button className="form-submit-ar" onClick={guardarRoles}>
+            <button className="form-guardar-ar" onClick={guardarRoles}>
               Guardar
             </button>
           </div>

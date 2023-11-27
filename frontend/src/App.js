@@ -1,5 +1,5 @@
-import {BrowserRouter as Router, Route, Routes,} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -22,33 +22,33 @@ import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 
 function ProtectedRoute({ element, allowedRoles, userRoles }) {
-    const isAuthorized =
-        userRoles && userRoles.some((role) => allowedRoles.includes(role));
+  const isAuthorized =
+    userRoles && userRoles.some((role) => allowedRoles.includes(role));
 
-    return isAuthorized ? element : null;
+  return isAuthorized ? element : null;
 }
 
 function App() {
-    const [userData, setUserData] = useState(null);
-    const [userDataLoaded, setUserDataLoaded] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-    const fetchUserData = async () => {
-        const userData = await getCookies();
-    console.log("Fetching data")
-        if (userData && userData.user_data && userData.user_data.roles) {
-            setUserData(userData.user_data.roles);
-            setUserDataLoaded(true);
-        }
-    };
+  const fetchUserData = async () => {
+    const userData = await getCookies();
+    console.log("Fetching data");
+    if (userData && userData.user_data && userData.user_data.roles) {
+      setUserData(userData.user_data.roles);
+      setUserDataLoaded(true);
+    }
+  };
 
-    const handleLoginSuccess = (e) => {
-        e.preventDefault();
-        fetchUserData();
-    };
+  const handleLoginSuccess = (e) => {
+    e.preventDefault();
+    fetchUserData();
+  };
 
-    useEffect(() => {
-        fetchUserData();
-    }, []);
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <Router>
@@ -65,7 +65,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Anuncios />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -79,7 +84,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Modulos />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -93,7 +103,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Vistas />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -107,7 +122,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Sections />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -121,7 +141,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Sesiones />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -135,7 +160,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<Pacientes />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -160,7 +190,12 @@ function App() {
             userDataLoaded ? (
               <ProtectedRoute
                 element={<DashBoard />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -168,16 +203,18 @@ function App() {
             )
           }
         />
-
-        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route
           path="/Crearanuncios"
           element={
             userDataLoaded ? (
               <ProtectedRoute
                 element={<AnunciosCrear />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
+                allowedRoles={[
+                  "administrador",
+                  "paciente",
+                  "doctor",
+                  "auditor",
+                ]}
                 userRoles={userData}
               />
             ) : (
@@ -185,35 +222,12 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/Profiles"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<ProfilesPage />}
-                allowedRoles={["administrador","paciente","doctor","auditor"]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        /> */}
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Cuentas" element={<Accounts />} />
-        
-        {/* <Route
-          path="/Profiles"
-
-                element={<ProfilesPage />}
-
-        /> */}
-      
         <Route path="/AuditLogs" element={<AuditLogs />} />
-        
-        <Route path="/ZoomC" element={<MyZoom/>} />
-        <Route path="/ZoomV" element={<MyZoomPat/>} />
+        <Route path="/ZoomC" element={<MyZoom />} />
+        <Route path="/ZoomV" element={<MyZoomPat />} />
       </Routes>
     </Router>
   );
@@ -223,30 +237,30 @@ export default App;
 //Aqui se importan las imagenes necesarias para el proyecto
 //Ejemplo const logo = require('./assets/logo.png');
 const wizardData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
-    howieImg: require("./Styles/Images/howie-wizard.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
+  howieImg: require("./Styles/Images/howie-wizard.png"),
 };
 
 const forgotData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
 };
 
 const homedata = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
 };
 
 const aboutData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
-    misionIcon: require("./Styles/Images/fondoAU1.png"),
-    visionIcon: require("./Styles/Images/fondoAU2.jpg"),
-    historyIcon: require("./Styles/Images/fondoAU3.jpeg"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
+  misionIcon: require("./Styles/Images/fondoAU1.png"),
+  visionIcon: require("./Styles/Images/fondoAU2.jpg"),
+  historyIcon: require("./Styles/Images/fondoAU3.jpeg"),
 };
 
 const loginData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
 };

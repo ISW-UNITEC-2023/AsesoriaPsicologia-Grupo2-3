@@ -5,8 +5,10 @@ const rolesController = require("../Controller/roles-controller");
 
 //Post
 router.post("/create", rolesController.createRole);
-router.post("/assignPrivileges", rolesController.assignPrivilegesToRole);
+router.post("/assignPrivilege", rolesController.assignPrivilegesToRole);
+router.post("/removePrivilege", rolesController.removePrivilegeFromRole);
 router.post("/updateName", rolesController.updateRoleName);
+router.post("/updateDescription", rolesController.updateRoleDescription);
 router.post("/viewPrivileges", rolesController.getRolePrivileges);
 
 //Get

@@ -2,8 +2,8 @@ const rolesServices = require("../Service/roles-services");
 
 async function createRole(req, res) {
   try {
-    const { name, creator } = req.body;
-    await rolesServices.createRole({ name: name, creator: creator });
+    const { name, description, creator } = req.body;
+    await rolesServices.createRole({ name: name, description: description, creator: creator });
     res.send({ message: "Role created successfully" });
   } catch (error) {
     res.send({ error: error.message });
@@ -49,6 +49,16 @@ async function updateRoleName(req, res) {
   }
 }
 
+async function updateRoleDescription(req, res) {
+  try {
+    const { id_role, description, editor } = req.body;
+    await rolesServices.updateRoleDescription(id_role, description, editor);
+    res.send({ message: "Role description updated successfully" });
+  } catch (error) {
+    res.send({ error: error.message });
+  }
+}
+
 async function deleteRole(req, res) {
   try {
     const { id_role } = req.params;
@@ -75,6 +85,7 @@ module.exports = {
   getRoles,
   getRolePrivileges,
   updateRoleName,
+  updateRoleDescription,
   deleteRole,
   removePrivilegeFromRole,
 };
