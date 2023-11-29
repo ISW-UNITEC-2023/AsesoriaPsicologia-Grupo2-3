@@ -40,6 +40,11 @@
     align-items: center;
     width: 150px;
   }
+  .buttons2
+  {
+    align-items: center;
+    width: 150px;
+  }
 
   .container-controls {
     padding-top: 20px;
@@ -50,8 +55,21 @@
   .column {
     display:flex;
     align-items:center;
+    margin-left: 8px;
+  }
+
+  .column2
+  {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
   }
   
+  .form
+  {
+    margin-left: 8px;
+    margin-bottom: -2px;
+  }
   .title-pacientes {
     font-size: 40px;
     margin-left: 30px;
@@ -67,6 +85,14 @@
   margin-left:8px;
   margin-bottom:-2px;
 }
+.titulo2 {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+  margin-left:26%;
+  
+}
+
 
 .descripcion {
   font-size: 15px;
@@ -79,4 +105,13 @@
   display: flex;
   align-items: center;
 
+}
+
+
+@media (width: 1280px) and (height: 800px){
+  .buttons
+  {
+   align-items: 200px;
+    width: 150px;
+  }
 }

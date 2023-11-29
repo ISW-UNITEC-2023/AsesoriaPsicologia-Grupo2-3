@@ -28,7 +28,7 @@ function MyZoomPat() {
                 <Row style={{ marginBottom:"2%",alignItems:"center"}}>
         <Col>
             <h1 className="title-pacientes"  style={{marginBottom:"-2%",marginLeft:"22%"}} >Zoom</h1>
-            <Form.Label className='titulo'style={{marginLeft:"26%"}}>Sesiones Programadas</Form.Label>
+            <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>
             </Col>
             <Col></Col>
             <Col>
@@ -61,7 +61,7 @@ function MyZoomPat() {
                 <Row key={meeting.id}>
                     <Col className='column'>
                 </Col>
-                    <Form.Label style={{marginLeft:"8px", marginBottom:"-2px"}}>{new Date(meeting.start_time).toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</Form.Label>
+                    <Form.Label className='form'>{new Date(meeting.start_time).toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</Form.Label>
                     <Col className='column'>
                     <Form.Label>{new Date(meeting.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</Form.Label>
                     </Col>
@@ -71,8 +71,8 @@ function MyZoomPat() {
                     <Col className='column'>
                     <Form.Label>{meeting.id}</Form.Label>
                     </Col>
-                    <Col  style={{display:"flex", alignItems:"center", paddingBottom:"10px"}}>
-                    <Button className='buttons' variant="outline-primary"  href={meeting.join_url} target="_blank">
+                    <Col className='column2'>
+                    <Button className='buttons2' variant="outline-primary"  href={meeting.join_url} target="_blank">
                     Entrar
                 </Button>
                     </Col>

@@ -13,24 +13,15 @@
     flex-wrap: wrap;
     width: 100%;
   }
-  
-  .column {
-    flex: 1;
-    margin: 10px;
-    text-align: center;
-  }
-  
-  /* Ajusta los estilos según tus preferencias */
-  select, input, button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+
   .zoomscroll-content {
     max-height: 425px;
     overflow-y: auto; 
     overflow-x: auto;
-    width: 75%;
+    width: 95%;
+    padding-right: 20px;
+    margin: auto;
+    margin-bottom: 30px;
   
   }
   .title-pacientes {
@@ -39,24 +30,8 @@
     padding: 20px;
     color: #388afc !important;
     font-weight: bold;
-  }
-  
-
-/*Viñetas de la lista*/
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  
-  
-
-  .icon-persona {
-    margin-right: 15px;
-    margin-left: 15px;
-    font-size: 30px;
-    color: #5281ce;
+    margin-bottom: -2%;
+    margin-left: 37%;
   }
   
   .titulo {
@@ -64,38 +39,51 @@
   font-weight: bold;
 }
 
-.descripcion {
-  font-size: 14px;
-  color: #555;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  z-index: 1;
-}
-
 .dashboard-container {
     display: flex;
     flex-direction: row;
     background-color: rgb(255, 255, 255);
   }
-.anuncios-container {
-    display: flex;
-    flex-direction: row;
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-  }
 
-.dropdown-item {
-  padding: 5px 10px;
-  cursor: pointer;
+.style-btn-cancelar{
+  width: 150px;
+  margin: 40px;
 }
- .ml-align {
-  
- }
 
+.style-btn-crear
+{
+  width: 200px;
+}
 
- /*Estilos para el menu de opciones*/
+.style-column
+{
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+}
+
+.style-column1
+{
+border-bottom: 1px solid #ccc;
+padding: 15px;
+}
+
+.style-column2
+{
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+}
+.form-control
+{
+  margin-left: 100px;
+  width: 70%;
+}
+
+.form-control1
+{
+  margin-left: 4px;
+  width: 78%;
+}
