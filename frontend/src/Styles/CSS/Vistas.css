@@ -1,12 +1,24 @@
-
 .page-container {
-  max-width: 800px; /* Tamaño máximo del contenedor */
-  margin: 20px auto; /* Centrar horizontalmente en la página */
-  padding: 20px; /* Espacio interno alrededor del contenido */
-  background-color: hsl(0, 0%, 100%); /* Color de fondo del contenedor */
-  border: 1px solid #ccc; /* Borde alrededor del contenedor (opcional) */
-  box-shadow: 0 0 10px rgba(141, 141, 141, 0.529) ; /* Sombra (opcional) */
-  
+  max-width: 816px;
+  max-height: 1056px;
+  margin: 10px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(141, 141, 141, 0.529);
+}
+
+.encabezado-image {
+  width: auto; 
+  height: auto; 
+  display: flex;
+}
+
+.Titulo h1{
+  font-size: 2em;
+  color: #000000;
+  text-align: center;
+  margin-top:30px;
 }
 
 .profile-container {
@@ -14,99 +26,73 @@
   align-items: center;
 }
 
+
+
 .profile-image {
-  width: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
-  height: 120px; /* Ajusta el tamaño de la imagen según tus necesidades */
-  border-radius: 50%; /* Hace que la imagen sea circular */
-   /* Borde alrededor de la imagen (opcional) */
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
   margin-right: 20px;
+  margin-bottom: 50px;
 }
 
-.image-container {
-position: relative;
-}
+.title-margin {
 
-/* Estilos para la imagen */
-.unitec-image {
-position:relative;
-top: 0;
-right: 0;
-height: 50px;
-/* Puedes ajustar la distancia desde el borde superior y derecho según tus necesidades */
-}
+  margin-bottom: 100px;
+  font-size: 1.3em;
 
-.profile-text {
-  margin-top: 50px;
-  text-align: center;
-  font-style: Times normal;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.columna{
-border:2px solid red;
-}
-
-.with-underline {
-text-decoration: underline;
-}
-
-.text-container {
-display: grid;
-grid-template-columns: max-content 1fr; /* La primera columna con ancho automático y el resto del espacio disponible */
-gap: 10px; /* Espacio entre las columnas */
-align-items: center; /* Centrar verticalmente */
 
 }
 
-.fs-5 {
-align-self: center; 
-}
-
-.fs-5-alignment {
-text-align: right; 
-margin: 5;
-}
-
-.h3{
-margin-top: 20px;
-}
-
-.text-center{
-text-align: center;
+.paragraph-margin {
+  margin-bottom: 100px; 
+  font-size: 1.3em;
 }
 
 
-
-
-.fixed-download-button {
-position: fixed;
-bottom: 20px; 
-right: 20px; 
-z-index: 1000;
-}
-.fixed-clear-button {
-position: fixed;
-bottom: 70px; 
-right: 20px; 
-z-index: 1000; 
-}
-
-.fixed-buttons-container {
+.fixed-download-button{
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
+  width: 150px;
 }
 
-.fixed-download-button,
 .fixed-clear-button {
-  width: 150px; 
+  bottom: 70px;
 }
 
+.fixed-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
+.patient-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
 
+.patient-info-table td {
+  border: 1px solid #dddddd;
+}
 
+.patient-info-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.patient-info-table tr:hover {
+  background-color: #ddd;
+}
+
+.left-column {
+  width: 40%; 
+  font-weight: bold;
+  padding: 12px;
+}
+
+.right-column {
+  width: 60%; 
+  padding: 12px; 
+}
