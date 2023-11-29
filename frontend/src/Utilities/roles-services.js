@@ -39,7 +39,7 @@ async function assignPrivilegesToRole(id_role, id_privilege, creator){
         data: {
             id_role: id_role,
             id_privilege: id_privilege,
-            creator: creator
+            creator: parseInt(localStorage.getItem("user_id"))
         }
     }
     let response = await axios.request(options);
@@ -59,10 +59,25 @@ async function removePrivilegeFromRole(id_role, id_privilege){
     return response.data
 }
 
+async function createRole(name, description){
+    const options = {
+        method: "POST",
+        url: "http://localhost:8000/roles/create",
+        data: {
+            name: name,
+            description: description,
+            creator: parseInt(localStorage.getItem("user_id"))
+        }
+    }
+    let response = await axios.request(options);
+    return response.data
+}
+
 export default {
     getAllRoles,
     getAllPrivileges,
     getAllRolesPrivileges,
     assignPrivilegesToRole,
-    removePrivilegeFromRole
+    removePrivilegeFromRole,
+    createRole
 }

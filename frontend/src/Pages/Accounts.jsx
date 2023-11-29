@@ -345,11 +345,13 @@ function Accounts() {
       setSelectedRoles(newRoles);
       originalUsers.filter((user) => {
         newRoles.forEach((role) => {
-          if (user.roles.includes(role)) {
-            if (!filteredUsers.includes(user)) {
-              filteredUsers.push(user);
+          user.roles.map((item) => {
+            if (item.includes(role)) {
+              if (!filteredUsers.includes(user)) {
+                filteredUsers.push(user);
+              }
             }
-          }
+          });
           if (user.roles.length === 0 && role === "Sin rol") {
             if (!filteredUsers.includes(user)) {
               filteredUsers.push(user);
@@ -494,7 +496,7 @@ function Accounts() {
                 setOpenRole({ open: 0, userInfo: null });
               }}
               user={openRole.userInfo}
-              roles={roles}
+              dataRoles={roles}
             />
           )}
           {openRoleAdmin.open == 1 && (
@@ -503,7 +505,7 @@ function Accounts() {
               onClose={() => {
                 setOpenRoleAdmin({ open: 0 });
               }}
-              roles={roles}
+              dataRoles={roles}
             />
           )}
         </div>

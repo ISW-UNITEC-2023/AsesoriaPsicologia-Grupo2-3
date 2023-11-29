@@ -33,6 +33,7 @@ async function createUser(user) {
       password: user.password,
       type: user.type,
       active: user.active,
+      creator: parseInt(localStorage.getItem("user_id"))
     },
   };
   let users = await axios.request(options);
@@ -46,7 +47,7 @@ async function editName(user) {
     data: {
       id: user.id,
       name: user.name,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -60,7 +61,7 @@ async function editPhone(user) {
     data: {
       id: user.id,
       phone: user.phone,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -74,7 +75,7 @@ async function editEmail(user) {
     data: {
       id: user.id,
       newEmail: user.email,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -88,7 +89,7 @@ async function editActive(user) {
     data: {
       id: user.id,
       active: user.active,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -102,7 +103,7 @@ async function editPassword(user) {
     data: {
       id: user.id,
       newPassword: user.password,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);

@@ -11,11 +11,12 @@ const knex = require("knex")({
 
 //Post
 async function createRole(role) {
-  return await knex("roles").insert({
+  const [id_role] = await knex("roles").insert({
     name_role: role.name,
     description_role: role.description,
     user_creator: role.creator,
   });
+  return id_role;
 }
 
 async function assignPrivilegesToRole(roleId, privilegeId, creator) {

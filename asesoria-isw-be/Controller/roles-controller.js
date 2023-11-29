@@ -3,8 +3,8 @@ const rolesServices = require("../Service/roles-services");
 async function createRole(req, res) {
   try {
     const { name, description, creator } = req.body;
-    await rolesServices.createRole({ name: name, description: description, creator: creator });
-    res.send({ message: "Role created successfully" });
+    const response = await rolesServices.createRole({ name: name, description: description, creator: creator });
+    res.send({ message: "Role created successfully", id_role: response });
   } catch (error) {
     res.send({ error: error.message });
   }

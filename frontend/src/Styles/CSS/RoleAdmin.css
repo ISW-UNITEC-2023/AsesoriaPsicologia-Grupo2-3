@@ -14,16 +14,15 @@
 
 .popup-ra {
   background-color: #fff;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   max-width: 90%;
   width: 60%;
   text-align: center;
   position: relative;
-  top: -50px;
-  transform-origin: center;
+  transform: scale(0);
   transition: transform 0.3s ease;
-  height: 500px;
+  height: auto;
 }
 
 .form-header-ra {
@@ -36,6 +35,14 @@
   border-radius: 10px 10px 0 0;
   font-size: 1.3rem;
   font-family: sans-serif;
+}
+
+.column-row-ra{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .form-title-ra {
@@ -52,12 +59,13 @@
 }
 
 .form-body-ra {
-  padding: 40px;
-  gap: 40px;
+  padding: 40px 40px 20px 40px;
+  gap: 20px;
   font-family: sans-serif;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  border-radius: 0 0 10px 10px;
 }
 
 .editar-rol-pencil-ra{
@@ -83,8 +91,6 @@
   flex-direction: row;
   align-items: center;
   gap: 15px;
-  margin: 0 auto 0 5%;
-  justify-content: flex-start;
 }
 
 .container-select-roles{
@@ -114,6 +120,7 @@
   text-align: justify;
   width: 90%;
   text-wrap: wrap;
+  height: 70px;
 }
 
 .column-ra-1 {
@@ -133,7 +140,7 @@
 .privilege-container-ra {
   border: 1px solid #ababab;
   width: 100%;
-  height: 220px;
+  height: 310px;
   overflow-y: scroll;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -142,7 +149,7 @@
 .row-privilege-ra {
   display: flex;
   width: 100%;
-  padding: 5px;
+  padding: 6px;
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid #ababab;
@@ -170,6 +177,7 @@
   grid: 1fr / 1fr 1fr;
   display: grid;
   text-align: left;
+  margin-top: 10px;
 }
 
 .crud-data {
@@ -178,11 +186,8 @@
 
 .form-footer-ra {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 20px 5% 20px 0;
-  border-radius: 0 0 10px 10px;
   background-color: #fff;
+  width: 100%;
 }
 
 .ra-guardar-button {
@@ -191,7 +196,7 @@
   border: #003b88 1px solid;
   border-radius: 5px;
   padding: 10px 20px;
-  width: 20%;
+  width: 150px;
   margin-left: 10px;
   font-size: 1rem;
   cursor: pointer;
@@ -204,10 +209,12 @@
   border: #003b88 1px solid;
   border-radius: 5px;
   padding: 10px 20px;
-  width: 20%;
+  width: 150px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-left: auto;
+  align-self: flex-end;
 }
 
 .ra-guardar-button:hover {
@@ -220,4 +227,79 @@
   background-color: #bd0000;
   color: #fff;
   border: #bd0000 1px solid;
+}
+
+.create-role-form{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap:10px;
+  margin-top: 20px;
+}
+
+.create-role-input{
+  width: 80%;
+  border-radius: 5px;
+  border: 1px solid #ababab;
+  padding: 10px;
+}
+
+.create-role-area{
+  width: 80%;
+  border-radius: 5px;
+  border: 1px solid #ababab;
+  padding: 10px;
+  resize: none;
+}
+
+.label-create-ra{
+  font-size: 1rem;
+  color: #6b6b6b;
+  text-align: justify;
+}
+
+.botones-crear-role{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cancelar-role-ra{
+  background-color: none;
+  color: #003b88;
+  border: #003b88 1px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  width: 150px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+.cancelar-role-ra:hover{
+  background-color: #bd0000;
+  color: #fff;
+  border: #bd0000 1px solid;
+}
+
+.crear-role-ra{
+  background-color: none;
+  color: #003b88;
+  border: #003b88 1px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 150px;
+  font-size: 1rem;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.crear-role-ra:hover{
+  background-color: #00882b;
+  color: #fff;
+  border: #00882b 1px solid;
 }
