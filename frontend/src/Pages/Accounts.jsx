@@ -2,25 +2,25 @@
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
-import EmailPopUp from "../Components/EmailPopUp";
+import EmailPopUp from "../Components/emailPopUp";
 import PopUpAdminRole from "../Components/PopUp_AdminRole";
 
 //Functions
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import user_services from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
 
 //Styles and Icons
 import "../Styles/CSS/Accounts.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
-  faFilter,
-  faArrowUp,
   faArrowDown,
+  faArrowUp,
+  faEnvelope,
+  faFilter,
   faFilterCircleXmark,
   faPenToSquare,
-  faEnvelope,
+  faSearch,
   faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -246,8 +246,7 @@ function Accounts() {
       hour: "2-digit",
       minute: "2-digit",
     };
-    var formattedDate = date.toLocaleString("es-ES", options);
-    return formattedDate;
+    return date.toLocaleString("es-ES", options);
   };
 
   //Fetch de Usuarios
@@ -475,7 +474,7 @@ function Accounts() {
               user={openEmail.userInfo}
             />
           )}
-          {openRole.open == 1 && (
+          {openRole.open === 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
               onClose={() => {
