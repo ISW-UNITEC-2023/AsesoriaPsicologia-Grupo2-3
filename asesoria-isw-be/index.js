@@ -82,7 +82,7 @@ app.use("/announcements", announcementRouter);
 app.use("/files", fileRouter);
 app.use("/mail", mailRouter);
 
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 app.listen(PORT, () => {
   console.log("Server started!");
 });

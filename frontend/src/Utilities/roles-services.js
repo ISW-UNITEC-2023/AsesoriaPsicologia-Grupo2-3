@@ -32,7 +32,7 @@ async function getAllRolesPrivileges(id){
     return rolesPrivileges.data
 }
 
-async function assignPrivilegesToRole(id_role, id_privilege, creator){
+async function assignPrivilegesToRole(id_role, id_privilege){
     const options = {
         method: "POST",
         url: "http://localhost:8000/roles/assignPrivilege",
@@ -73,11 +73,54 @@ async function createRole(name, description){
     return response.data
 }
 
+async function deleteRole(idRol){
+    const options = {
+        method: "DELETE",
+        url: "http://localhost:8000/roles/delete",
+        data: {
+            id_role: idRol
+        }
+    }
+    let response = await axios.request(options);
+    return response.data
+}
+
+async function updateName(id_role, name){
+    const options = {
+        method: "POST",
+        url: "http://loclahost:8000/roles/updateName",
+        data: {
+            id_role: id_role, 
+            name: name, 
+            editor: parseInt(localStorage.getItem("user_id"))
+        }
+    }
+    let response = await axios.request(options);
+    return response.data;
+}
+
+async function updateDescription(id_role, description){
+    const options = {
+        method: "POST",
+        url: "http://loclahost:8000/roles/updateDescription",
+        data: {
+            id_role: id_role, 
+            description: description, 
+            editor: parseInt(localStorage.getItem("user_id"))
+        }
+    }
+    let response = await axios.request(options);
+    return response.data;
+}
+
 export default {
     getAllRoles,
     getAllPrivileges,
     getAllRolesPrivileges,
     assignPrivilegesToRole,
     removePrivilegeFromRole,
-    createRole
+    createRole,
+    deleteRole,
+    updateDescription,
+    updateName
 }
