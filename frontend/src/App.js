@@ -16,10 +16,10 @@ import AnunciosCrear from "./Pages/AnunciosCrear";
 import Accounts from "./Pages/Accounts";
 import LoadingSpinner from "./Pages/LoadingStyle";
 import AuditLogs from "./Pages/AuditLogs";
-import { PDFViewer } from "@react-pdf/renderer";
-import { getCookies } from "../src/Utilities/login-services";
+import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
+import {Citas} from "./Pages/Citas";
 
 function ProtectedRoute({ element, allowedRoles, userRoles }) {
   const isAuthorized =
@@ -50,187 +50,187 @@ function App() {
     fetchUserData();
   }, []);
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage {...homedata} />} />
-        <Route path="/Inicio" element={<LandingPage {...homedata} />} />
-        <Route
-          path="/ResetPassword"
-          element={<ForgotPassword {...forgotData} />}
-        />
-        <Route
-          path="/Anuncios"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Anuncios />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Modulos"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Modulos />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Expedientes"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Vistas />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Secciones"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Sections />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Sesiones"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Sesiones />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Pacientes"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Pacientes />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/InicioSesion"
-          element={
-            <Login
-              {...loginData}
-              onLoginSuccess={handleLoginSuccess}
-              setUserDataLoaded={setUserDataLoaded}
-            />
-          }
-        />
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<LandingPage {...homedata} />}/>
+                <Route path="/Inicio" element={<LandingPage {...homedata} />}/>
+                <Route
+                    path="/ResetPassword"
+                    element={<ForgotPassword {...forgotData} />}
+                />
+                <Route
+                    path="/Anuncios"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Anuncios/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/Modulos"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Modulos/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/Expedientes"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Vistas/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/Secciones"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Sections/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/Sesiones"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Sesiones/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/Pacientes"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Pacientes/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/InicioSesion"
+                    element={
+                        <Login
+                            {...loginData}
+                            onLoginSuccess={handleLoginSuccess}
+                            setUserDataLoaded={setUserDataLoaded}
+                        />
+                    }
+                />
 
-        <Route
-          path="/Dashboard"
+                <Route
+                    path="/Dashboard"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<DashBoard/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                <Route
+                    path="/citas"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<Citas/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+
+                <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
+                <Route path="/Cuestionario" element={<Wizard {...wizardData} />}/>
+                <Route
+                    path="/Crearanuncios"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<AnunciosCrear/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
+                {/* <Route
+          path="/Profiles"
           element={
             userDataLoaded ? (
               <ProtectedRoute
-                element={<DashBoard />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
+                element={<ProfilesPage />}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
                 userRoles={userData}
               />
             ) : (
               <LoadingSpinner />
             )
           }
-        />
-        <Route
-          path="/Crearanuncios"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<AnunciosCrear />}
-                allowedRoles={[
-                  "admin",
-                  "paciente",
-                  "doctor",
-                  "auditor",
-                ]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
-        <Route path="/Cuentas" element={<Accounts />} />
-        <Route path="/AuditLogs" element={<AuditLogs />} />
-        <Route path="/ZoomC" element={<MyZoom />} />
-        <Route path="/ZoomV" element={<MyZoomPat />} />
-      </Routes>
-    </Router>
-  );
+        /> */}
+                <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
+                <Route path="/Cuestionario" element={<Wizard {...wizardData} />}/>
+                <Route path="/Cuentas" element={<Accounts/>}/>
+
+                {/* <Route
+          path="/Profiles"
+
+                element={<ProfilesPage />}
+
+        /> */}
+
+                <Route path="/AuditLogs" element={<AuditLogs/>}/>
+
+                <Route path="/ZoomC" element={<MyZoom/>}/>
+                <Route path="/ZoomV" element={<MyZoomPat/>}/>
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
