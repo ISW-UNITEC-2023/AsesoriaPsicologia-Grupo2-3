@@ -66,7 +66,7 @@ function App() {
               <ProtectedRoute
                 element={<Anuncios />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -85,7 +85,7 @@ function App() {
               <ProtectedRoute
                 element={<Modulos />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -104,7 +104,7 @@ function App() {
               <ProtectedRoute
                 element={<Vistas />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -123,7 +123,7 @@ function App() {
               <ProtectedRoute
                 element={<Sections />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -142,7 +142,7 @@ function App() {
               <ProtectedRoute
                 element={<Sesiones />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -161,7 +161,7 @@ function App() {
               <ProtectedRoute
                 element={<Pacientes />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -191,7 +191,7 @@ function App() {
               <ProtectedRoute
                 element={<DashBoard />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",
@@ -210,7 +210,7 @@ function App() {
               <ProtectedRoute
                 element={<AnunciosCrear />}
                 allowedRoles={[
-                  "administrador",
+                  "admin",
                   "paciente",
                   "doctor",
                   "auditor",

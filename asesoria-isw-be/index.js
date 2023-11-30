@@ -9,7 +9,7 @@ const secretKey = process.env.SECRETKEY;
 app.use(cookieParser(secretKey));
 
 // REDIS
-// const redis = require("./configs/redis");
+const redis = require("./configs/redis");
 const { tokenCheck } = require("./middlewares/tokenCheck");
 // (async () => {
 //   try {
@@ -19,10 +19,10 @@ const { tokenCheck } = require("./middlewares/tokenCheck");
 //   }
 // })();
 
-// redis.on('connect', () => console.log("Connected to redis succesfully"))
-// redis.on('error', (err) => console.log("Redis Client Error", err));
+redis.on('connect', () => console.log("Connected to redis succesfully"))
+redis.on('error', (err) => console.log("Redis Client Error", err));
 
-// redis.connect();
+redis.connect();
 
 // redis.on("connect", (err) => {
 //   if (err) {
@@ -87,14 +87,14 @@ app.listen(PORT, () => {
   console.log("Server started!");
 });
 
-// const cleanup = async () => {
-//   debug("\nClosing HTTP server");
-//   await redis.del("access_token");
-//   server.close(() => {
-//     debug("\nHTTP server closed");
-//     redis.quit(() => process.exit());
-//   });
-// };
+const cleanup = async () => {
+  debug("\nClosing HTTP server");
+  await redis.del("access_token");
+  server.close(() => {
+    debug("\nHTTP server closed");
+    redis.quit(() => process.exit());
+  });
+};
 
-// process.on("SIGTERM", cleanup);
-// process.on("SIGINT", cleanup);
+process.on("SIGTERM", cleanup);
+process.on("SIGINT", cleanup);
