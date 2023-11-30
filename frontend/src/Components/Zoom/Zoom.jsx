@@ -56,11 +56,11 @@ function MyZoom()
         <>
             <div className="dashboard-container">
                 <NavigationB/>
-                <div style={{ width: "1400px", justifyItems:"center" }}>
-                <Row style={{ marginBottom:"2%",alignItems:"center"}}>
+                <div className="zoom-crear-div">
+                <Row className="zoom-crear-row">
                 <Col>
-                    <h1 className="title-pacientes" >Zoom</h1>
-                    <Form.Label className='titulo'style={{marginLeft:"44%"}}>Crear Sesiones</Form.Label>
+                    <h1 className="zoom-crear-title" >Zoom</h1>
+                    <Form.Label className="zoom-crear-title2">Crear Sesiones</Form.Label>
                 </Col>
                 <Col></Col>
                 <Col></Col>

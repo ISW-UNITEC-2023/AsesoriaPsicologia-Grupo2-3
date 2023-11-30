@@ -1,16 +1,30 @@
 
-  .dashboard-container {
+  .zoom-container {
     display: flex;
     flex-direction: row;
     background-color: rgb(255, 255, 255);
   }
   
+  .zoom-div
+  {
+    width: 1400px;
+    justify-items: center;
+
+  }
+  .zoom-row{
+    margin-bottom: 20px;
+    align-items: center;
+  }
   .zoomscroll-content {
+    
     margin-left: 125px;
+    margin-bottom: 30px;
+    padding-right: 20px;
     padding-left: 40px;
-  overflow-x: hidden !important;
+    overflow-x: hidden !important;
     direction: ltr; 
     overflow-y: scroll; 
+    width: 90%;
   }
 
 .zoomscroll-content::-webkit-scrollbar {
@@ -37,6 +51,7 @@
 }
   .buttons
   {
+    margin-left: 270px !important;
     align-items: center;
     width: 150px;
   }
@@ -72,11 +87,11 @@
   }
   .title-pacientes {
     font-size: 40px;
-    margin-left: 30px;
+    margin-left: 70px !important;
     padding: 20px;
     color: #388afc !important;
     font-weight: bold;
-    
+    margin-bottom: 2px;
   }
   .titulo {
   font-size: 18px;
@@ -89,8 +104,8 @@
   font-size: 18px;
   font-weight: bold;
   font-family: 'Franklin Gothic Medium', Arial, sans-serif;
-  margin-left:26%;
-  
+  margin-left:90px;
+
 }
 
 
@@ -108,10 +123,37 @@
 }
 
 
-@media (width: 1280px) and (height: 800px){
+@media (width: 1280px) and (height: 700px){
   .buttons
   {
+    margin-left:170px !important;
    align-items: 200px;
     width: 150px;
+  }
+  .titulo2 {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+    margin-left:110px;
+  
+  }
+  .title-pacientes {
+    font-size: 40px;
+    margin-left: 90px !important;
+    padding: 20px;
+    color: #388afc !important;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .zoomscroll-content {
+    
+    margin-left: 125px;
+    margin-bottom: 30px;
+    padding-right: 10px;
+    padding-left: 40px;
+    overflow-x: hidden !important;
+    direction: ltr; 
+    overflow-y: scroll; 
+    width: 90% !important;
   }
 }

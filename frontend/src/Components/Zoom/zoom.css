@@ -4,6 +4,16 @@
     align-items: center;
   }
 
+  .zoom-crear-div
+  {
+    width: 1400px;
+    justify-items: center;
+  }
+  .zoom-crear-row
+  {
+    margin-bottom: 2%;
+    align-items: center;
+  }
   .container-controls {
     min-height: 60px;
     
@@ -24,7 +34,7 @@
     margin-bottom: 30px;
   
   }
-  .title-pacientes {
+  .zoom-crear-title {
     font-size: 40px;
     margin-left: 30px;
     padding: 20px;
@@ -34,9 +44,11 @@
     margin-left: 37%;
   }
   
-  .titulo {
+  .zoom-crear-title2 {
+    font-family: 'Franklin Gothic Medium', Arial, sans-serif;
   font-size: 18px;
   font-weight: bold;
+  margin-left: 120px;
 }
 
 .dashboard-container {
@@ -86,4 +98,40 @@ padding: 15px;
 {
   margin-left: 4px;
   width: 78%;
+}
+
+@media (width: 1280px) and (height: 700px){
+  .style-btn-cancelar{
+    width: 150px;
+    margin: 40px;
+    margin-left: -30px;
+  }
+
+  .zoom-crear-title {
+    font-size: 40px;
+    margin-left: 30px;
+    padding: 20px;
+    color: #388afc !important;
+    font-weight: bold;
+    margin-bottom: -2%;
+    margin-left: 35%;
+  }
+  
+  .zoom-crear-title2 {
+    font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 100px;
+}
+
+.zoomscroll-content {
+  max-height: 425px;
+  overflow-y: auto; 
+  overflow-x: auto;
+  width: 90% !;
+  padding-right: 20px;
+  margin: auto;
+  margin-bottom: 30px;
+
+}
 }

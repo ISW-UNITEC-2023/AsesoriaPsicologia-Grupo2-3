@@ -21,13 +21,13 @@ function MyZoomPat() {
     []);
 
     return (
-    <div className='dashboard-container'>
+    <div className='zoom-container'>
 
         <NavigationB/>
-        <div style={{ width: "1400px", justifyItems:"center" }}>
-                <Row style={{ marginBottom:"2%",alignItems:"center"}}>
+        <div className='zoom-div'>
+                <Row className='zoom-row'>
         <Col>
-            <h1 className="title-pacientes"  style={{marginBottom:"-2%",marginLeft:"22%"}} >Zoom</h1>
+            <h1 className="title-pacientes">Zoom</h1>
             <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>
             </Col>
             <Col></Col>
@@ -37,12 +37,7 @@ function MyZoomPat() {
             </Row>
 
             <div >
-            <Container fluid="md" className="zoomscroll-content" style={{
-    paddingRight: '20px',
-    width: '90%', 
-    margin: '0 auto', 
-    marginBottom: '30px', 
-   }}>
+            <Container fluid="md" className="zoomscroll-content">
                 <Row>
                     <div></div>
                 <Col>
