@@ -104,7 +104,7 @@ function MyNavbar() {
           />
           Anuncios
         </Link>
-        <Link to="/ZoomC" className="link-navbar-plataforma">
+        <Link to="/Zoomv" className="link-navbar-plataforma">
           <FontAwesomeIcon icon={faVideo} className="navbar-plataforma-icon" />
           Zoom
         </Link>

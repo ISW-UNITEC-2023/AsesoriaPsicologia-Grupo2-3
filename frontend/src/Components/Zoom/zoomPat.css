@@ -1,87 +1,159 @@
-.container-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #000;
-  }
 
-  .dashboard-container {
+  .zoom-container {
     display: flex;
     flex-direction: row;
     background-color: rgb(255, 255, 255);
   }
+  
+  .zoom-div
+  {
+    width: 1400px;
+    justify-items: center;
+
+  }
+  .zoom-row{
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .zoomscroll-content {
+    
+    margin-left: 125px;
+    margin-bottom: 30px;
+    padding-right: 20px;
+    padding-left: 40px;
+    overflow-x: hidden !important;
+    direction: ltr; 
+    overflow-y: scroll; 
+    width: 90%;
+  }
+
+.zoomscroll-content::-webkit-scrollbar {
+  width: 10px; 
+  height: 10px; 
+}
+
+
+.zoomscroll-content::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 5px; 
+}
+
+.zoomscroll-content::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+.zoomscroll-content::-webkit-scrollbar-thumb:hover {
+  background-color: #555; 
+}
+.zoomscroll-content {
+  direction: ltr; 
+  overflow-y: scroll; 
+}
+  .buttons
+  {
+    margin-left: 270px !important;
+    align-items: center;
+    width: 150px;
+  }
+  .buttons2
+  {
+    align-items: center;
+    width: 150px;
+  }
 
   .container-controls {
-    min-height: 50px;
-    padding-left: 3%;
+    padding-top: 20px;
+    padding-left: 5%;
     width: 100%;
   }
   
   .column {
-    flex: 1;
-    margin: 10px;
-    text-align: center;
+    display:flex;
+    align-items:center;
+    margin-left: 8px;
+  }
+
+  .column2
+  {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
   }
   
-  /* Ajusta los estilos según tus preferencias */
-  select, input, button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
+  .form
+  {
+    margin-left: 8px;
+    margin-bottom: -2px;
   }
   .title-pacientes {
     font-size: 40px;
-    margin-left: 3%;
+    margin-left: 70px !important;
     padding: 20px;
-    color: #333;
+    color: #388afc !important;
     font-weight: bold;
+    margin-bottom: 2px;
   }
-
-/*Viñetas de la lista*/
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  
-  
-  .anuncios-container {
-    display: flex;
-    flex-direction: row;
-    background-color: rgb(255, 255, 255);
-    width: 100%;
-  }
-  
-  .icon-persona {
-    margin-right: 15px;
-    margin-left: 15px;
-    font-size: 30px;
-    color: #5281ce;
-  }
-  
   .titulo {
   font-size: 18px;
   font-weight: bold;
+  font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+  margin-left:8px;
+  margin-bottom:-2px;
 }
+.titulo2 {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+  margin-left:90px;
+
+}
+
 
 .descripcion {
-  font-size: 14px;
+  font-size: 15px;
   color: #555;
+  font-family: 'Franklin Gothic Medium', Arial, sans-serif;  
 }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  z-index: 1;
+
+.container-header {
+  display: flex;
+  align-items: center;
+
 }
 
-.dropdown-item {
-  padding: 5px 10px;
-  cursor: pointer;
+
+@media (width: 1280px) and (height: 700px){
+  .buttons
+  {
+    margin-left:170px !important;
+   align-items: 200px;
+    width: 150px;
+  }
+  .titulo2 {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+    margin-left:110px;
+  
+  }
+  .title-pacientes {
+    font-size: 40px;
+    margin-left: 90px !important;
+    padding: 20px;
+    color: #388afc !important;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .zoomscroll-content {
+    
+    margin-left: 125px;
+    margin-bottom: 30px;
+    padding-right: 10px;
+    padding-left: 40px;
+    overflow-x: hidden !important;
+    direction: ltr; 
+    overflow-y: scroll; 
+    width: 90% !important;
+  }
 }
-
-/*Estilos para el menu de opciones*/
-
