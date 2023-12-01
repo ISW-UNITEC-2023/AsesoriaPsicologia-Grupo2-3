@@ -488,6 +488,7 @@ function Accounts() {
               user={openEmail.userInfo}
             />
           )}
+          {console.log("Data Roles", roles)}
           {openRole.open === 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
@@ -495,7 +496,7 @@ function Accounts() {
                 setOpenRole({ open: 0, userInfo: null });
               }}
               user={openRole.userInfo}
-              dataRoles={roles}
+              roles={roles}
             />
           )}
           {openRoleAdmin.open == 1 && (

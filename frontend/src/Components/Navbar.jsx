@@ -90,7 +90,7 @@ function MyNavbar() {
             </div>
           )}
         </div>
-        <Link to="/Dashboard" className="link-navbar-plataforma">
+        {/* <Link to="/Dashboard" className="link-navbar-plataforma">
           <FontAwesomeIcon
             icon={faGaugeHigh}
             className="navbar-plataforma-icon"
@@ -103,7 +103,7 @@ function MyNavbar() {
             className="navbar-plataforma-icon"
           />
           Anuncios
-        </Link>
+        </Link> */}
         <Link to="/Zoomv" className="link-navbar-plataforma">
           <FontAwesomeIcon icon={faVideo} className="navbar-plataforma-icon" />
           Zoom

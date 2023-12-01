@@ -14,6 +14,8 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
     pointerEvents: isOpen ? "auto" : "none",
   };
 
+  console.log("Roles son", roles)
+
   const popupStyle = {
     transform: isOpen ? "scale(1)" : "scale(0.8)",
   };
