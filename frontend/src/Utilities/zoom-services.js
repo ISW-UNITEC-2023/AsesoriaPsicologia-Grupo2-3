@@ -53,7 +53,7 @@ export async function cMeeting(topic,description, estarttime,duration,videohost,
 
 export async function gMeeting(userId) {
   try {
-    const response = await axios.get('http://localhost:8000/api/users/i0W0G-ymQ1qTNGqwHH5pag/meetings');
+    const response = await axios.get('http://localhost:8000/api/users/6KUo64WFSiOt8Xhltqol-w/meetings');
     return response.data;
   } catch (error) {
     console.error("Error al obtener reuniones:", error);
