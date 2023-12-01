@@ -63,14 +63,16 @@ async function getRoles() {
 }
 
 async function getRolePrivileges(id) {
+  // , p.id_elemento, p.privilege, p.user_creator, p.user_editor, p.creation_date, p.last_modification
   let rolesPrivileges = await knex.raw(
-    `SELECT p.id_privilege, p.id_elemento, p.privilege, p.user_creator, p.user_editor, p.creation_date, p.last_modification 
+    `SELECT p.id_privilege 
       FROM roles_privileges rp 
         INNER JOIN privileges p 
           ON rp.id_privilege = p.id_privilege 
             WHERE rp.id_role = ?`, [id]
   );
   rolesPrivileges = JSON.stringify(rolesPrivileges[0]);
+  console.log("Roles Service Response", rolesPrivileges);
   return JSON.parse(rolesPrivileges);
 }
 

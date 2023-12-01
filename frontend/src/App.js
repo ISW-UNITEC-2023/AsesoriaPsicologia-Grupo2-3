@@ -21,11 +21,16 @@ import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import {Citas} from "./Pages/Citas";
 
-function ProtectedRoute({ element, allowedRoles, userRoles }) {
+function ProtectedRoute({ element, allowedRoles, userData, allowedPrivileges }) {
   const isAuthorized =
-    userRoles && userRoles.some((role) => allowedRoles.includes(role));
+    userData.roles && userData.roles.some((role) => allowedRoles.includes(role));
+  
+  if (allowedPrivileges != undefined) {
+    const Authorized =
+    userData.privileges && userData.privileges.some((privilege) => allowedPrivileges.includes(privilege));
+  }
 
-  return isAuthorized ? element : null;
+  return isAuthorized || Authorized ? element : null;
 }
 
 function App() {
@@ -34,11 +39,12 @@ function App() {
 
   const fetchUserData = async () => {
     const userData = await getCookies();
-    console.log("Fetching data");
     if (userData && userData.user_data && userData.user_data.roles) {
-      setUserData(userData.user_data.roles);
+      setUserData(userData.user_data);
       setUserDataLoaded(true);
     }
+    setUserData(userData.user_data);
+    console.log("Fetching data", userData);
   };
 
   const handleLoginSuccess = (e) => {
@@ -227,7 +233,21 @@ function App() {
                 <Route path="/AuditLogs" element={<AuditLogs/>}/>
 
                 <Route path="/ZoomC" element={<MyZoom/>}/>
-                <Route path="/ZoomV" element={<MyZoomPat/>}/>
+                <Route
+                    path="/ZoomV"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<MyZoomPat/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedPrivileges={2}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
             </Routes>
         </Router>
     );

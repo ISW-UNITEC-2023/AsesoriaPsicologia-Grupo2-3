@@ -323,14 +323,20 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
                     )}
                     <label className="privilege-crud">
                       {privilege.privilege === 1
-                        ? "C"
+                        ? "Crear"
                         : privilege.privilege === 2
-                        ? "R"
+                        ? "Visualizar"
                         : privilege.privilege === 3
-                        ? "U"
-                        : "D"}
+                        ? "Actualizar"
+                        : "Eliminar"}
                     </label>
-                    <label>{privilege.id_elemento}</label>
+                    <label>{privilege.id_elemento === 1
+                        ? "Crear"
+                        : privilege.id_elemento === 2
+                        ? "Visualizar"
+                        : privilege.id_elemento === 3
+                        ? "Actualizar"
+                        : "Eliminar"}</label>
                   </div>
                 ))}
               </div>

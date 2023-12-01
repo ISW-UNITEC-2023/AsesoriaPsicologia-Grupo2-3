@@ -2,6 +2,7 @@ const HTTPCodes = require("../Utils/HTTPCodes");
 const userServices = require("../Service/users-services");
 
 const { isEmail, isPassword } = require("../Utils/validator");
+const rolesServices = require("../Service/roles-services")
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
@@ -93,11 +94,16 @@ async function loginUser(req, res) {
       return res;
     }
     const roles = await userServices.getUserRoles(email_exists[0].id_user);
+    console.log("Roles", roles[0]);
+    const privileges = await rolesServices.getRolePrivileges(roles[0][0].id_role);
+    
+    console.log("Privilegios retornados", privileges);
     const roleNames = roles[0].map((role) => role.name_role);
 
     const userData = {
       email: email,
       roles: roleNames,
+      privileges: privileges
     };
     if (errorMessage.length) {
       res.send({
