@@ -5,7 +5,7 @@ import "./PopUpAction.css";
 
 const PopUpActionConfirm = ({ isOpen, actionType, pageName, itemId, itemName, onConfirm }) => {
     return (
-        <>
+        <div id={`popup_action_confirm_${pageName}`}>
             <Modal
                 show={isOpen}
                 onHide={onConfirm}
@@ -25,6 +25,7 @@ const PopUpActionConfirm = ({ isOpen, actionType, pageName, itemId, itemName, on
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
+                        id={`popup_action_confirm_${pageName}_ok_${actionType}_btn`}
                         className="cancel-button"
                         variant="secondary-outlined"
                         style={{ border: "2px solid #5c636a" }}
@@ -34,7 +35,7 @@ const PopUpActionConfirm = ({ isOpen, actionType, pageName, itemId, itemName, on
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </>
+        </div>
     );
 };
 

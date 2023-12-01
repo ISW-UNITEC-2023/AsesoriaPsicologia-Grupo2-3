@@ -13,8 +13,9 @@ const PopUpAction = ({ isOpen, actionType, pageName, itemId, itemName, onCancel,
     }
 
     return (
-        <>
+        <div id={`popup_action_${pageName}`}>
             <Modal
+                id
                 show={isOpen}
                 onHide={onCancel}
                 centered
@@ -35,6 +36,7 @@ const PopUpAction = ({ isOpen, actionType, pageName, itemId, itemName, onCancel,
 
                 <Modal.Footer className="buttons-container">
                     <Button
+                        id={`popup_action_${pageName}_ok_${actionType}_btn`}
                         className="confirm-button"
                         variant="danger"
                         style={{ backgroundColor: "#c6161c" }}
@@ -44,6 +46,7 @@ const PopUpAction = ({ isOpen, actionType, pageName, itemId, itemName, onCancel,
                     </Button>
 
                     <Button
+                        id={`popup_action_${pageName}_cancel_${actionType}_btn`}
                         className="cancel-button"
                         variant="secondary-outlined"
                         style={{ border: "2px solid #5c636a" }}
@@ -62,7 +65,7 @@ const PopUpAction = ({ isOpen, actionType, pageName, itemId, itemName, onCancel,
                 itemId={itemId}
                 onConfirm={() => setDisplayConfirmPopUp(false)}
             />
-        </>
+        </div>
     );
 };
 

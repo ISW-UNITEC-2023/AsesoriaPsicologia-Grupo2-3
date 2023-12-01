@@ -1,13 +1,10 @@
 import "../Styles/CSS/DashBoard.css";
-import {useEffect, useState} from "react";
-import Popup from "../Components/PopUp";
+import { useEffect, useState } from "react";
+//import Popup from "../Components/PopUp";
 import NavigationB from "../Components/Navbar";
-import SectionCard from "../Components/Card";
-import {loadModules} from "../Utilities/course-services";
-import {Button, Accordion} from "react-bootstrap";
-import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {getCookies} from "../Utilities/login-services.js";
+//import SectionCard from "../Components/Card";
+import { loadModules } from "../Utilities/course-services";
+import { Button, Accordion } from "react-bootstrap";
 import DashboardLayout from "../Layout/DashboardLayout";
 
 function DashBoard() {
@@ -32,14 +29,16 @@ function DashBoard() {
     };
 
     return (
-        <DashboardLayout pagina="Dashboard">
+        <DashboardLayout id="dashboard" pagina="Dashboard">
             <div className="dashboard-container">
-                <NavigationB/>
+                <NavigationB />
+
                 <div className="dashboard-box">
                     <div className="dashboard-header flex flex-col md:flex-row justify-between">
                         <h1 className="dashboard-titulo">Bienvenido !</h1>
                         <div className="dashboard-buttons flex flex-row gap-2 justify-end mb-2 lg:mb-0">
                             <Button
+                                id="dashboard_nueva_clase_btn"
                                 className="button-create"
                                 onClick={() => setIsPopupOpen(true)}
 
@@ -48,12 +47,14 @@ function DashBoard() {
                                 Nueva clase
                             </Button>
                         </div>
+                        {/*
                         <Popup
                             isOpen={isPopupOpen}
                             onClose={() => setIsPopupOpen(false)}
                             selectedButtonInfo={selectedButtonInfo}
                             onUpdateModuleList={updateModuleList}
                         />
+                        */}
                     </div>
                     <div className="dashboard-body" disabled>
                         <div className="information-container">
@@ -62,19 +63,20 @@ function DashBoard() {
                                 de cualquier tarjeta o dando click en el nombre del curso.
                             </p>
 
-                            <br/>
-                            <br/>
-                            <div className="section-card-container flex flex-row flex-wrap gap-3 center">
-                                {Array.isArray(displayedModules) ? (
+                            <br />
+                            <br />
+                            <div id="dashboard_seccion_card_container" className="section-card-container flex flex-row flex-wrap gap-3 center">
+                                {/*Array.isArray(displayedModules) ? (
                                     displayedModules.map((module) => (
                                         <SectionCard
+                                            id="dashboard_seccion_card"
                                             props={module}
                                             handleReload={() => setState(true)}
                                         />
                                     ))
                                 ) : (
                                     <p>No hay módulos para mostrar</p>
-                                )}
+                                )*/}
                             </div>
                         </div>
                     </div>

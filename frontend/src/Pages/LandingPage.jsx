@@ -34,7 +34,7 @@ function LandingPage(props) {
     const howieImage = isHowieHovered ? HOWIEHovered : HOWIE;
 
     return (
-        <LandingLayout pagina="Inicio">
+        <LandingLayout id="landing_page" pagina="Inicio">
             <div className="Home">
                 <div className="navigation-bar">
                     <NavigationBar {...props} />
