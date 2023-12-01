@@ -150,7 +150,7 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
       privileges: privs,
     });
   };
-  
+
   async function refreshPrivileges(rolesData) {
     const rolesprivileges = [];
     const id_roles = [];
@@ -207,25 +207,21 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
 
     for (let i = 0; i < rolesData.length; i++) {
       for (let j = 0; j < checks[i].length; j++) {
-        console.log(data[i][j] + " cambio en " + checks[i][j]);
         if (data[i][j] !== checks[i][j]) {
           if (checks[i][j] === true) {
-            // await rolesServices.addPrivilegeToRole(
-            //   id_roles[i],
-            //   privileges[j].id_privilege
-            // );
-            console.log("Agregado");
+            await rolesServices.assignPrivilegesToRole(
+              id_roles[i],
+              privileges[j].id_privilege
+            );
           } else {
-            // await rolesServices.deletePrivilegeToRole(
-            //   id_roles[i],
-            //   privileges[j].id_privilege
-            // );
-            console.log("Eliminado");
+            await rolesServices.removePrivilegeFromRole(
+              id_roles[i],
+              privileges[j].id_privilege
+            );
           }
         }
       }
     }
-    await refreshPrivileges(roles);
   }
 
   return (

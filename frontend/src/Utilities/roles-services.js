@@ -48,7 +48,7 @@ async function assignPrivilegesToRole(id_role, id_privilege){
 
 async function removePrivilegeFromRole(id_role, id_privilege){
     const options = {
-        method: "DELETE",
+        method: "POST",
         url: "http://localhost:8000/roles/removePrivilege",
         data: {
             id_role: id_role,

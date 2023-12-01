@@ -496,7 +496,7 @@ function Accounts() {
                 setOpenRole({ open: 0, userInfo: null });
               }}
               user={openRole.userInfo}
-              dataRoles={roles}
+              roles={roles}
             />
           )}
           {openRoleAdmin.open == 1 && (
