@@ -76,6 +76,20 @@ async function getRolePrivileges(id) {
   return JSON.parse(rolesPrivileges);
 }
 
+async function getRolePrivilegesByElement(id_user, id_element) {
+  // , p.id_elemento, p.privilege, p.user_creator, p.user_editor, p.creation_date, p.last_modification
+  let rolesPrivileges = await knex.raw(
+    `SELECT p.description 
+      FROM roles_privileges rp 
+        INNER JOIN privileges p 
+          ON rp.id_privilege = p.id_privilege 
+            WHERE rp.id_role = ? AND p.id_element = ?`, [id_user], [id_element]
+  );
+  rolesPrivileges = JSON.stringify(rolesPrivileges[0]);
+  console.log("Roles Service Response", rolesPrivileges);
+  return JSON.parse(rolesPrivileges);
+}
+
 //Delete
 async function deleteRole(id) {
   try {
@@ -114,4 +128,5 @@ module.exports = {
   updateRoleDescription,
   deleteRole,
   removePrivilegeFromRole,
+  getRolePrivilegesByElement
 };

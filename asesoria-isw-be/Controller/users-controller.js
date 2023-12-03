@@ -442,6 +442,19 @@ async function getRoles(req, res) {
   }
 }
 
+async function getPrivilegesById(req, res) {
+  const { id_user, id_element } = req.query;
+  try {
+    const user_role = await userServices.getRoleId(id_user);
+    const privileges = await rolesServices.getRolePrivilegesByElement(user_role, id_element);
+    res.send(privileges);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "Error al obtener los privilegios.",
+    });
+  }
+}
+
 async function getAllUsersRoles(req, res){
   try{
     const roles = await userServices.getAllUsersRoles();
@@ -485,4 +498,5 @@ module.exports = {
   getUserRoles,
   getAllUsersRoles,
   deleteCookies,
+  getPrivilegesById
 };
