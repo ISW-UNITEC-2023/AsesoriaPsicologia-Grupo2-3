@@ -20,17 +20,12 @@ import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import {Citas} from "./Pages/Citas";
+import { Zoom } from "react-toastify";
 
-function ProtectedRoute({ element, allowedRoles, userData, allowedPrivileges }) {
-  const isAuthorized =
-    userData.roles && userData.roles.some((role) => allowedRoles.includes(role));
-  
-  if (allowedPrivileges != undefined) {
-    const Authorized =
-    userData.privileges && userData.privileges.some((privilege) => allowedPrivileges.includes(privilege));
-  }
+function ProtectedRoute({ element, allowedRoles, userRoles, allowedPrivileges }) {
+  const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
 
-  return isAuthorized || Authorized ? element : null;
+  return  isAuthorized ? element : null;
 }
 
 function App() {
@@ -166,7 +161,7 @@ function App() {
                         userDataLoaded ? (
                             <ProtectedRoute
                                 element={<DashBoard/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedRoles={["admin", "asesor","patient", "teacher", "psychologist"]}
                                 userRoles={userData}
                             />
                         ) : (
@@ -232,7 +227,9 @@ function App() {
 
                 <Route path="/AuditLogs" element={<AuditLogs/>}/>
 
-                <Route path="/ZoomC" element={<MyZoom/>}/>
+                <Route path="/ZoomC" element={<Zoom/>}/>
+                {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
+                
                 <Route
                     path="/ZoomV"
                     element={
@@ -240,7 +237,6 @@ function App() {
                             <ProtectedRoute
                                 element={<MyZoomPat/>}
                                 allowedRoles={["admin", "patient", "teacher", "psychologist"]}
-                                allowedPrivileges={2}
                                 userRoles={userData}
                             />
                         ) : (

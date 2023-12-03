@@ -19,8 +19,8 @@ const { tokenCheck } = require("./middlewares/tokenCheck");
 //   }
 // })();
 
-redis.on('connect', () => console.log("Connected to redis succesfully"))
-redis.on('error', (err) => console.log("Redis Client Error", err));
+redis.on("connect", () => console.log("Connected to redis succesfully"));
+redis.on("error", (err) => console.log("Redis Client Error", err));
 
 redis.connect();
 
@@ -44,7 +44,7 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true
+  credentials: true,
 };
 
 app.use(cors(corsOptions));

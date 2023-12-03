@@ -94,16 +94,23 @@ async function loginUser(req, res) {
       return res;
     }
     const roles = await userServices.getUserRoles(email_exists[0].id_user);
-    console.log("Roles", roles[0]);
-    const privileges = await rolesServices.getRolePrivileges(roles[0][0].id_role);
+    //console.log("Roles", roles[0]);
     
-    console.log("Privilegios retornados", privileges);
+    let privileges = await Promise.all(
+      roles[0].map(async (role) => {
+        return await rolesServices.getRolePrivileges(role.id_role);
+      })
+    );
+
+    const privilegios = privileges[0].map((privilege) => privilege.id_privilege);
+    
+    //console.log("Privilegios retornados", privilegios);
     const roleNames = roles[0].map((role) => role.name_role);
 
     const userData = {
       email: email,
       roles: roleNames,
-      privileges: privileges
+      privileges: privilegios
     };
     if (errorMessage.length) {
       res.send({
