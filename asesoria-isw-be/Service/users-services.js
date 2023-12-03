@@ -184,7 +184,7 @@ async function getAllUsersRoles(){
   
   async function getRoleId(id) {
     let roles = await knex
-      .select("id_role")
+      .select("user_role.id_role")
       .from("user_role")
       .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
       .where("id_user", "=", id);
