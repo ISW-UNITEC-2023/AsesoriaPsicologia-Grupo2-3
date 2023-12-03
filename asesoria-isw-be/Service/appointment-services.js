@@ -108,17 +108,54 @@ async function updateState(appo)
 
 async function getAppo()
 {
+   
     return JSON.parse(JSON.stringify(await knex("appointments").select("*")));
 }
 
-async function getAppoById(id_appointment)
-{
-    return JSON.parse(JSON.stringify(await knex("appointments").select().where("id_appointment", id_appointment)));
+async function getById(id) {
+
+    let App = await knex.select().from("appointments").where("id_", id);
+    App = JSON.stringify(App);
+    return JSON.parse(App);
+
+
 }
+
+
+async function getCreator(id) {
+    return JSON.parse(
+        JSON.stringify(
+            await knex("appointments")
+                .select()
+                .where("user_creator", id)
+        )
+    );
+}
+
+async function getDoctor(doctorId) {
+    return JSON.parse(
+        JSON.stringify(
+            await knex("appointments")
+                .select()
+                .where("id_doctor", doctorId)
+        )
+    );
+}
+
+async function getClinic(id) {
+    return JSON.parse(
+        JSON.stringify(
+            await knex("appointments")
+                .select()
+                .where("id_clinic", id)
+        )
+    );
+}
+
 
 module.exports = {
     getAppo,
-    getAppoById,
+    getById,
     createAppo,
     deleteAppo,
     updateMedicOrder,
@@ -126,4 +163,8 @@ module.exports = {
     updateObservation,
     updateAppo,
     updateState,
+    getDoctor,
+    getClinic,
+    getCreator
+
 };
