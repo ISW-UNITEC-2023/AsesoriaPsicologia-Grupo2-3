@@ -1,63 +1,54 @@
-import {PencilIcon} from "@heroicons/react/20/solid";
-import {Button, Card, CardBody, CardHeader, Chip, Typography,} from "@material-tailwind/react";
-import {EyeIcon} from "@heroicons/react/24/solid";
+import {PencilIcon} from "@heroicons/react/24/solid";
+import {Button, Card, CardBody, CardHeader, IconButton, Spinner, Typography,} from "@material-tailwind/react";
+import {EyeIcon} from "@heroicons/react/20/solid";
 import BreadCrumbsC from "./BreadCrumbsC";
 import {useEffect, useState} from "react";
 import DialogCitas from "./DialogCitas";
+import axios from "axios";
+import useSWR from "swr";
+import user_services from "../../Utilities/user-services";
 
 const TABLE_HEAD = [" ", "Fecha de Consulta", "Doctor Responsable", "Observaciones", ""];
 
-const TABLE_ROWS = [
-    {
-        name: "Spotify",
-        amount: "12/11/2021",
-        date: "Dr. Juan Perez",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        name: "Amazon",
-        amount: "14/11/2021",
-        date: "Dr. Juan Perez",
-        status: "paid",
-        account: "master-card",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        name: "Pinterest",
-        amount: "15/11/2021",
-        date: "Dr. Juan Perez",
-        status: "pending",
-        account: "master-card",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        name: "Google",
-        amount: "16/11/2021",
-        date: "Dr. Juan Perez",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        name: "netflix",
-        amount: "17/11/2021",
-        date: "Dr. Juan Perez",
-        status: "cancelled",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-];
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-export function TableConsultas() {
+export function TableConsultas({page}) {
     const [open, setOpen] = useState(false);
     const [titulo, setTitulo] = useState("");
+    const [nombreDoctor, setNombreDoctor] = useState("");
+    const [fecha, setFecha] = useState("");
+    const [hora, setHora] = useState("");
+    const [nombrePaciente, setNombrePaciente] = useState("");
+    const {data: data, error, isLoading} = useSWR('http://localhost:8000/appointment/getall', fetcher,
+        {refreshInterval: 1000});
+    const {
+        data: fetchedUsers,
+        error: usersError,
+        isLoading: usersLoading
+    } = useSWR('http://localhost:8000/users/viewUsers', user_services.getUsers);
+
+    // Obtiene el nombre del paciente del localStorage
+    const nombre = localStorage.getItem("namePatient");
+
+    const formatDate = (date) => {
+        const d = new Date(date);
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + d.getDate();
+        const year = d.getFullYear();
+        let hour = '' + d.getHours();
+        let minutes = '' + d.getMinutes();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        if (hour.length < 2)
+            hour = '0' + hour;
+        if (minutes.length < 2)
+            minutes = '0' + minutes;
+
+        return [day, month, year].join('/') + " " + [hour, minutes].join(':');
+    }
 
     const handleOpen = () => {
         setOpen(true);
@@ -65,8 +56,22 @@ export function TableConsultas() {
     }
 
     const handleOpenE = () => {
-        setOpen(true);
-        setTitulo("Modificar Cita");
+        data.data.map(
+            (
+                {
+                    appointment_date,
+                    id_file,
+                    id_doctor,
+                },
+                index,
+            ) => {
+                setNombreDoctor(getDoctorName(id_doctor));
+                setFecha(appointment_date);
+
+                setOpen(true);
+                setTitulo("Modificar Cita");
+            }
+        );
     }
 
     const updateIsOpen = (isOpen) => {
@@ -77,46 +82,62 @@ export function TableConsultas() {
         updateIsOpen(open);
     }, [open]);
 
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spinner/>
+            </div>
+        )
+    }
+
+    if (error || usersError) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p>Ha ocurrido un error al cargar las citas</p>
+            </div>
+        )
+    }
+
+    const getDoctorName = (id) => {
+        if (usersLoading) {
+            return <Spinner/>
+        }
+
+        const doctor = fetchedUsers.find((user) => user.id_user === id);
+        return doctor.name_user;
+    }
+
     return (
         <Card className="h-auto w-auto ml-2 mr-2 md:ml-20 md:mr-20">
             <CardHeader floated={false} shadow={false} className="rounded-none">
                 <div className="flex flex-row justify-between items-center w-full">
-                    <div className="flex flex-row gap-2 items-center">
-                        <BreadCrumbsC nombrePaciente={"Juan Perez"}/>
-                    </div>
-                    <div className="flex flex-row gap-2 items-center">
-                        <Button variant={"gradient"} onClick={handleOpen}>
-                            Agendar Cita
-                        </Button>
-                    </div>
+                    {page === "Cita" && (
+                        <div className="flex flex-row gap-2 items-center">
+                            <BreadCrumbsC nombrePaciente={"Juan Perez"}/>
+                        </div>
+                    )}
                 </div>
-                <div className="mt-4 mb-4 p-4 flex flex-col justify-between gap-8 md:flex-row md:items-center bg-white
-                rounded-md border border-black">
-                    <div className="flex flex-col gap-4">
-                        <Typography color="blue-gray" variant="h6">
-                            Paciente: Juan Perez
-                        </Typography>
-                        <Typography color="blue-gray" variant="h6">
-                            Doctor: Dr. Juan Perez
-                        </Typography>
-                        <Typography color="blue-gray" variant="h6">
-                            Fecha y Hora de Cita: 11/11/2021 10:30 AM
-                        </Typography>
-                    </div>
-                    <div className="flex flex-row gap-4">
-                        <div className="flex flex-row gap-2">
-                            <Button variant="gradient" type="button" onClick={handleOpenE}>Modificar</Button>
+                {page === "Cita" && (
+                    <div className="flex flex-row justify-between gap-4 mt-4 mb-4">
+                        <div className="flex flex-row justify-between gap-2">
+                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpen}>
+                                Agendar Cita
+                            </Button>
+                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpenE}>
+                                Modificar Cita
+                            </Button>
+                        </div>
+                        <div className="flex flex-row justify-between gap-2">
+                            <Button style={{background: "#113946"}} variant="gradient" type="button">Ver
+                                expediente</Button>
                         </div>
                     </div>
-                </div>
+                )}
                 <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex flex-row gap-2">
-                        <Typography color="blue-gray" variant="h6">
+                        <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
                             Historial de Consultas
                         </Typography>
-                    </div>
-                    <div className="flex flex-row gap-2">
-                        <Button variant="gradient" type="button">Agregar Consulta</Button>
                     </div>
                 </div>
             </CardHeader>
@@ -141,31 +162,30 @@ export function TableConsultas() {
                     </tr>
                     </thead>
                     <tbody>
-                    {TABLE_ROWS.map(
+                    {data.data.map(
                         (
                             {
-                                img,
-                                name,
-                                amount,
-                                date,
-                                status,
-                                account,
-                                accountNumber,
-                                expiry,
+                                appointment_date,
+                                id_file,
+                                id_doctor,
                             },
                             index,
                         ) => {
-                            const isLast = index === TABLE_ROWS.length - 1;
+                            const isLast = index === data.data.length - 1;
                             const classes = isLast
                                 ? "p-4"
                                 : "p-4 border-b border-blue-gray-50";
 
                             return (
-                                <tr key={name}>
+                                <tr key={id_file}>
                                     <td className={classes}>
                                         <div className="flex items-center">
-                                            <EyeIcon/>
-                                            <PencilIcon/>
+                                            <IconButton variant="text">
+                                                <EyeIcon className="w-5 h-5"/>
+                                            </IconButton>
+                                            <IconButton variant="text">
+                                                <PencilIcon className="w-5 h-5"/>
+                                            </IconButton>
                                         </div>
                                     </td>
                                     <td className={classes}>
@@ -174,7 +194,7 @@ export function TableConsultas() {
                                             color="blue-gray"
                                             className="font-normal"
                                         >
-                                            {amount}
+                                            {formatDate(appointment_date)}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
@@ -183,30 +203,24 @@ export function TableConsultas() {
                                             color="blue-gray"
                                             className="font-normal"
                                         >
-                                            {date}
+                                            {getDoctorName(id_doctor)}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
-                                        <div className="w-max">
-                                            <Chip
-                                                size="sm"
-                                                variant="ghost"
-                                                value={status}
-                                                color={
-                                                    status === "paid"
-                                                        ? "green"
-                                                        : status === "pending"
-                                                            ? "amber"
-                                                            : "red"
-                                                }
-                                            />
-                                        </div>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-normal"
+                                        >
+                                            {id_file}
+                                        </Typography>
                                     </td>
                                 </tr>
                             );
                         },
                     )}
-                    {open && <DialogCitas titulo={titulo} open={open} updateOpen={updateIsOpen}/>}
+                    {open && <DialogCitas nombreDoctor={nombreDoctor} fecha={fecha} titulo={titulo} open={open}
+                                          updateOpen={updateIsOpen}/>}
                     </tbody>
                 </table>
             </CardBody>

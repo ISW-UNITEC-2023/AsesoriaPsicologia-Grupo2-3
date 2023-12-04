@@ -16,7 +16,7 @@ async function createAppointment(req, res)
 
 async function updateOrder(req,res)
 {
-    
+
     try{
         const { medic_orders, editor, id, id_clinic, id_doctor, id_file} = req.body;
         await appointmentServices.updateMedicOrder({ medic_orders, editor, id, id_clinic, id_doctor, id_file});
@@ -83,7 +83,7 @@ async function deleteAppointment(req, res)
 
         await appointmentServices.deleteAppo(id);
         res.send({message: "Cita eliminada!"});
-        
+
     }catch(error)
     {
         res.send({
@@ -98,7 +98,7 @@ async function getAppointments(req,res)
         try{
         res.send({
             message: "Citas recuperadas",
-            appointmentsInfo: await appointmentServices.getAppo()
+            data: await appointmentServices.getAppo()
         })
     }catch(error)
     {

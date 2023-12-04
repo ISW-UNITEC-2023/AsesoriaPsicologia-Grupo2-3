@@ -133,7 +133,7 @@ function LandingPage(props) {
                         </div>
                     </div>
                 </main>
-                <footer className="bg-blue-900 text-white text-center py-10"></footer>
+                <footer className="text-white text-center py-10" style={{backgroundColor:"#113946"}}></footer>
             </div>
         </LandingLayout>
     );
