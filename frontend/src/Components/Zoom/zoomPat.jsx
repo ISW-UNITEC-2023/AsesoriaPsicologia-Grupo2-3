@@ -12,6 +12,7 @@ import { getCookies } from "../../Utilities/login-services";
 
 
 function MyZoomPat() {
+    //Privilegios del usuario logueado
     const [userPrivileges, setUserPrivileges] = useState({});
 
     const fetchUserData = async () => {
