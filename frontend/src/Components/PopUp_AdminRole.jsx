@@ -21,19 +21,15 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
   };
 
   const [newRoles, setNewRoles] = useState({
-    current:
-      roles.length > 0
-        ? roles.filter((element) => {
-            return !user.roles.some((item) => {
-              return item[0] === element.id_role;
-            });
-          })[0].id_role
-        : null,
+    current: roles.length > 0 ? roles[0].id_role : null,
+    new: [],
   });
-
   const [removedRoles, setRemovedRoles] = useState({
     current: user.roles.length > 0 ? user.roles[0][0] : null,
+    removed: [],
   });
+
+  function handleAddRole() {
 
   const [defaultData, setDefaultData] = useState({
     userRoles:
@@ -78,31 +74,18 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
   }
 
   function handleRemoveRole() {
-    let removedRole = roles.filter((element) => {
-      return element.id_role === removedRoles.current;
-    });
-    let newUserRoles = defaultData.userRoles.filter((element) => {
-      return element.id_role !== removedRoles.current;
-    });
-    let newAvailableRoles = [
-      ...defaultData.availableRoles,
-      {
-        id_role: removedRole[0].id_role,
-        name_role: removedRole[0].name_role,
-      },
-    ];
-    setDefaultData({
-      ...defaultData,
-      userRoles: newUserRoles,
-      availableRoles: newAvailableRoles,
-    });
-    setRemovedRoles({
-      current: newUserRoles.length > 0 ? newUserRoles[0].id_role : null,
-    });
-    setNewRoles({
-      current:
-        newAvailableRoles.length > 0 ? newAvailableRoles[0].id_role : null,
-    });
+    let infoRoles = removedRoles.removed;
+    infoRoles.push(removedRoles.current);
+    for (let i = 0 ; i < user.roles.length ; i++) {
+      if (user.roles[i][0] === removedRoles.current) {
+        user.roles.splice(i, 1);
+        break;
+      }
+    }
+    // setRemovedRoles({
+    //   removed: infoRoles,
+    //   current: user.roles.length > 0 ? user.roles[0][0] : null,
+    // });
   }
 
   async function guardarRoles() {
@@ -145,28 +128,26 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
         <div className="form-body-ar">
           <div className="row-rol-usuario">
             <label className="label-select-box">Roles de Usuario</label>
-            <div className="row-select-button">
+            <label>Current {removedRoles.current}</label>
+            <div>
               <select
                 className="select-box-rol"
-                value={removedRoles.current}
                 onChange={(e) => {
                   setRemovedRoles({
                     ...removedRoles,
-                    current: parseInt(e.target.value),
+                    current: e.target.value,
                   });
                 }}
               >
-                {defaultData.userRoles.length > 0 ? (
-                  defaultData.userRoles.map((item) => {
-                    return (
-                      <option value={item.id_role}>{item.name_role}</option>
-                    );
+                {user.roles.length > 0 ? (
+                  user.roles.map((item) => {
+                    return <option value={item[0]}>{item[1]}</option>;
                   })
                 ) : (
                   <option>Ninguno</option>
                 )}
               </select>
-              {defaultData.userRoles.length > 0 ? (
+              {user.roles.length > 0 ? (
                 <button
                   className="eliminar-rol-user"
                   onClick={() => {
@@ -186,40 +167,41 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
           </div>
           <div className="row-rol-disponibles">
             <label className="label-select-box">Roles disponibles</label>
-            <div className="row-select-button">
+            <label>
+              Current {newRoles.current}
+            </label>
+            <div>
               <select
-                value={newRoles.current}
                 className="select-box-rol"
                 onChange={(e) => {
                   setNewRoles({
                     ...newRoles,
-                    current: parseInt(e.target.value),
+                    current: e.target.value,
                   });
                 }}
               >
-                {defaultData.availableRoles.length > 0 ? (
-                  defaultData.availableRoles.map((item) => {
+                {roles
+                  .filter(
+                    (role) =>
+                      !user.roles.some(
+                        (userRole) => userRole[0] === role.id_role
+                      )
+                  )
+                  .map((item) => {
                     return (
-                      <option key={item.id_role} value={item.id_role}>
-                        {item.name_role}
-                      </option>
+                      <option value={item.id_role}>{item.name_role}</option>
                     );
-                  })
-                ) : (
-                  <option>Ninguno</option>
-                )}
+                  })}
               </select>
-              {defaultData.availableRoles.length > 0 ? (
-                <button className="agregar-rol-user" onClick={handleAddRole}>
-                  Agregar Rol
-                  <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
-                </button>
-              ) : (
-                <button className="agregar-rol-user" disabled>
-                  Agregar Rol
-                  <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
-                </button>
-              )}
+              <button
+                className="agregar-rol-user"
+                onClick={() => {
+                  handleAddRole();
+                }}
+              >
+                Agregar Rol
+                <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
+              </button>
             </div>
           </div>
           <div className="form-buttons-ar">
