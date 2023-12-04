@@ -25,7 +25,7 @@ async function createAppo(new_appo)
 
 async function createConsultation(new_appo)
 {
-    await knex("appointments").insert({
+    await knex("appointments").update({
         id_file: new_appo.id_file,
         id_doctor: new_appo.id_doctor,
         id_clinic: new_appo.id_clinic,
@@ -122,7 +122,7 @@ async function updateState(appo)
 
 async function getAppo()
 {
-   
+
     return JSON.parse(JSON.stringify(await knex("appointments").select("*")));
 }
 
