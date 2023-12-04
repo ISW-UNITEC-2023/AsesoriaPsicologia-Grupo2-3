@@ -4,7 +4,6 @@ import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
 import EmailPopUp from "../Components/emailPopUp";
 import PopUpAdminRole from "../Components/PopUp_AdminRole";
-import RoleAdmin from "../Components/RoleAdmin";
 
 //Functions
 import { useEffect, useState } from "react";
@@ -48,9 +47,6 @@ function Accounts() {
   const [openRole, setOpenRole] = useState({
     open: 0,
     userInfo: null,
-  });
-  const [openRoleAdmin, setOpenRoleAdmin] = useState({
-    open: 0,
   });
 
   //Mensajes de filtros
@@ -454,14 +450,6 @@ function Accounts() {
           >
             Crear cuenta
           </button>
-          <button
-            className="administrar-roles-button"
-            onClick={() => {
-              setOpenRoleAdmin({ open: 1 });
-            }}
-          >
-            Administrar Roles
-          </button>
           <PopUpCrearUser
             isOpen={openCreate}
             onClose={() => {
@@ -497,15 +485,6 @@ function Accounts() {
               }}
               user={openRole.userInfo}
               roles={roles}
-            />
-          )}
-          {openRoleAdmin.open == 1 && (
-            <RoleAdmin
-              isOpen={openRoleAdmin.open}
-              onClose={() => {
-                setOpenRoleAdmin({ open: 0 });
-              }}
-              dataRoles={roles}
             />
           )}
         </div>

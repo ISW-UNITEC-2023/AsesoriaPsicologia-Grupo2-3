@@ -9,7 +9,7 @@ router.get("/viewAll", privilegesControllers.getPrivileges);
 //Post
 router.post("/create", privilegesControllers.createPrivilege);
 router.post("/updateElement", privilegesControllers.updatePrivilegeElement);
-router.post("/updatePrivilege", privilegesControllers.updatePrivilege);
+router.post("/updateDescription", privilegesControllers.updateDescription);
 
 //Delete
 router.delete("/delete", privilegesControllers.deletePrivilege);

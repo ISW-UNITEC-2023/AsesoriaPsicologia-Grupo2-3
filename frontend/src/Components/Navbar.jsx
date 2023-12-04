@@ -16,7 +16,8 @@ import {
   faBullhorn,
   faGaugeHigh,
   faAddressCard,
-  faBookOpen
+  faBookOpen,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
 function MyNavbar() {
@@ -37,7 +38,6 @@ function MyNavbar() {
   const logs = () => {
     navigate("/AuditLogs");
   };
-  
 
   return (
     <div className="background">
@@ -74,7 +74,7 @@ function MyNavbar() {
                 />
                 Admin Logs
               </div>
-              
+
               <div
                 className="nb-dropdown-item"
                 onClick={() => {
@@ -129,10 +129,13 @@ function MyNavbar() {
           />
           Cuentas
         </Link>
-        {/**<FontAwesomeIcon
-          icon={faArrowLeft}
-          className="navbar-plataforma-icon"
-        /> */}
+        <Link to="/Roles" className="link-navbar-plataforma">
+          <FontAwesomeIcon
+            icon={faUserGear}
+            className="navbar-plataforma-icon"
+          />
+          Roles
+        </Link>
       </div>
     </div>
   );

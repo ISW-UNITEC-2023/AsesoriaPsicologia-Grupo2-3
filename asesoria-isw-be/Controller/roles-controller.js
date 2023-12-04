@@ -61,7 +61,7 @@ async function updateRoleDescription(req, res) {
 
 async function deleteRole(req, res) {
   try {
-    const { id_role } = req.params;
+    const { id_role } = req.body;
     await rolesServices.deleteRole(id_role);
     res.send({ message: "Rol deleted successfully" });
   } catch (error) {

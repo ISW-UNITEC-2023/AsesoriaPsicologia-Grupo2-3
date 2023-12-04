@@ -20,6 +20,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { getCookies } from "../src/Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
+import RoleAdmin from "./Pages/RoleAdmin";
 
 function ProtectedRoute({ element, allowedRoles, userRoles }) {
   const isAuthorized =
@@ -183,7 +184,12 @@ function App() {
             />
           }
         />
-
+        <Route
+          path="/Roles"
+          element={
+            <RoleAdmin/>
+          }
+        />
         <Route
           path="/Dashboard"
           element={

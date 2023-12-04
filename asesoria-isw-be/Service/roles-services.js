@@ -64,7 +64,7 @@ async function getRoles() {
 
 async function getRolePrivileges(id) {
   let rolesPrivileges = await knex.raw(
-    `SELECT p.id_privilege, p.id_elemento, p.privilege, p.user_creator, p.user_editor, p.creation_date, p.last_modification 
+    `SELECT p.id_privilege, p.id_elemento, p.description, p.user_creator, p.user_editor, p.creation_date, p.last_modification 
       FROM roles_privileges rp 
         INNER JOIN privileges p 
           ON rp.id_privilege = p.id_privilege 
@@ -77,13 +77,7 @@ async function getRolePrivileges(id) {
 //Delete
 async function deleteRole(id) {
   try {
-    const role = await knex("roles").select().where("id_role", id).first();
-    if (!role) {
-      throw new Error("Role not found");
-    }
-
     await knex("roles").where("id_role", id).del();
-    console.log("Role deleted successfully");
   } catch (error) {
     throw new Error(error.message);
   }
