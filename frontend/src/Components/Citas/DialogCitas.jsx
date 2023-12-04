@@ -1,23 +1,90 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
-import {Button, Input, Typography} from "@material-tailwind/react";
+import {Button, Input, Select, Spinner, Typography} from "@material-tailwind/react";
 import {toast} from "react-toastify";
+import axios from "axios";
+import useSWR from "swr";
+import user_services from "../../Utilities/user-services";
 
 export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, updateOpen}) {
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
+    const {
+        data: fetchedUsers,
+        error: usersError,
+        isLoading: usersLoading
+    } = useSWR('http://localhost:8000/users/viewUsers', user_services.getUsers);
+    const {
+        data: fetchedRoles,
+        error: rolesError,
+        isLoading: rolesLoading
+    } = useSWR('http://localhost:8000/roles/viewAll', user_services.getAllUsersRoles);
+
+    if (usersLoading || rolesLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spinner/>
+            </div>
+        )
+    }
+
+    if (usersError || rolesError) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p>Ha ocurrido un error al cargar los usuarios</p>
+            </div>
+        )
+    }
+
+
+    const usersWithRoles = fetchedUsers.map(user => {
+        const userRoles = fetchedRoles
+            .filter(role => user.id_user === role.id_user)
+            .map(role => [role.id_role, role.name_role]);
+        return {...user, roles: userRoles};
+    });
+
+    const doctores = Array.isArray(usersWithRoles)
+        ? usersWithRoles.filter(user => user.roles.some(role => role[0] === 3))
+        : [];
 
     const handleOpen = () => {
         updateOpen(!open);
     };
 
+    const namePaciente = localStorage.getItem("namePatient");
+
+    const idPaciente = async (name) => {
+        return await axios.get(`http://localhost:8000/patients/getPatient/${name}`);
+    }
+
     const handleConfirmC = () => {
-        handleOpen();
-        toast("Cita Agendada Correctamente", {
-            type: "success",
-            bodyStyle: {width: "1000%"}
-        });
+        // combinar los iso de fecha y hora
+        const fechaHora = fechaN + "T" + horaN + ":00.000Z";
+        // Obtener él, id del doctor seleccionado
+        const id_doctor = doctores.filter(doctor => doctor.id_user === nombreDoctorN)[0].id_user;
+
+        try {
+            axios.post(`http://localhost:8000/appointment/create`, {
+                id_user: localStorage.getItem("user_id"),
+                appointment_date: fechaHora,
+                id_clinic: 8,
+                id_doctor: id_doctor,
+                id_file: idPaciente(namePaciente),
+                user_creator: localStorage.getItem("user_id")
+            }).then(() => {
+                handleOpen();
+                toast("Cita Agendada Correctamente", {
+                    type: "success",
+                    bodyStyle: {width: "1000%"}
+                });
+            }).catch((error) => {
+                toast("Ha ocurrido un error al agendar la cita: " + error.message, {type: "error"})
+            })
+        } catch (error) {
+            toast("Ha ocurrido un error al agendar la cita: " + error.message, {type: "error"})
+        }
     };
 
     const handleConfirmM = () => {
@@ -71,13 +138,14 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                                                                     color="blue-gray">
                                                             Nombre Doctor:
                                                         </Typography>
-                                                        <Input
-                                                            type="search"
-                                                            variant="standard"
-                                                            label="Nombre del Doctor"
-                                                            value={nombreDoctorN}
-                                                            onChange={(e) => setNombreDoctorN(e.target.value)}
-                                                        />
+                                                        <Select value={nombreDoctorN}
+                                                                onChange={(e) => setNombreDoctorN(e)}>
+                                                            {doctores.map((doctor) => (
+                                                                <Select.Option value={doctor.id_user}>
+                                                                    {doctor.name_user}
+                                                                </Select.Option>
+                                                            ))}
+                                                        </Select>
                                                     </div>
                                                     <div className="flex flex-row gap-2 items-center">
                                                         <Typography

@@ -14,7 +14,6 @@ function Sesiones() {
 
     return (
         <>
-
             <Container className="card-container">
                 <NavigationB/>
                 <Row>
@@ -22,7 +21,7 @@ function Sesiones() {
                     <Col className="position-relative">
                         <h1 className="sesiones-title">Historial de Consulta</h1>
                         <Button
-                            variant="success"
+                            variant="filled"
                             size="sm"
                             className="custom-green-button mr-3 mt-2"
                             style={{backgroundColor: "green", borderColor: "green"}}
@@ -30,16 +29,16 @@ function Sesiones() {
                         >
                             Iniciar consulta
                         </Button>
-                        <Button
-                            variant="dark"
-                            size="sm"
-                            className="custom-green-button mr-3 mt-2"
-                            style={{backgroundColor: "black", borderColor: "black"}}
-                        >
-                            <Link to="/citas">
+                        <Link to="/citas">
+                            <Button
+                                variant="filled"
+                                size="sm"
+                                className="custom-green-button mr-3 mt-2"
+                                style={{backgroundColor: "black", borderColor: "black"}}
+                            >
                                 Cita
-                            </Link>
-                        </Button>
+                            </Button>
+                        </Link>
                         <Card className="card">
                             <Card.Header as="h5" className="card-header">
                                 Información de la Tarjeta

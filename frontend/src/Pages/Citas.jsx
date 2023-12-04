@@ -5,7 +5,7 @@ import CitasLayout from "../Layout/CitasLayout";
 export const Citas = () => {
     return (
         <CitasLayout pagina="Citas">
-            <div className="w-auto min-h-screen flex flex-row ">
+            <div className="w-auto min-h-screen flex flex-row">
                 <Navbar/>
                 <div className="flex-grow flex flex-col ">
                     <div className="px-0 md:px-20">

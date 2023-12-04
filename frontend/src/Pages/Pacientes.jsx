@@ -16,6 +16,7 @@ function PacientesForm() {
     const [showEditarPopup, setShowEditarPopup] = useState(false); // Estado para mostrar el popup de edición
 
     const [selectedUser, setSelectedUser] = useState(null); // Estado para almacenar el usuario seleccionado para la edición
+    const [nombre, setNombre] = useState("");
 
     async function initialList() {
         const arregloUsuarios = await Services.getUsers();
@@ -23,9 +24,9 @@ function PacientesForm() {
 
         arregloUsuarios.map((usuario) => {
             return arregloMandar.push({
-                    nombre: usuario.name_user,
-                    email: usuario.email_user,
-                    id_account: usuario.id_user,
+                nombre: usuario.name_user,
+                email: usuario.email_user,
+                id_account: usuario.id_user,
             });
         })
 
@@ -75,6 +76,12 @@ function PacientesForm() {
         setSelectedUser(null); // Limpia el usuario seleccionado cuando se cierra el popup de edición
     };
 
+
+    const handleClick = (nombre) => {
+        // Guardar el nombre en el localStorage
+        localStorage.setItem('namePatient', nombre);
+    };
+
     return (
         <PacientesLayout pagina="Pacientes">
             <div className="pacientes-container">
@@ -90,7 +97,9 @@ function PacientesForm() {
                                 <div className="nombre-box">
                                     <FontAwesomeIcon icon={faUserCircle} className="icon-persona"/>
                                     <span className="nombre" style={{width: "400%"}}>
-                  <Link to={"/sesiones"}>{nombre.nombre}</Link>
+                   <Link to="/sesiones" onClick={() => handleClick(nombre.nombre)}>
+                {nombre.nombre}
+              </Link>
                 </span>
                                     {/* Agrega el evento onClick para abrir el popup de edición */}
                                 </div>
