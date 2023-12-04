@@ -10,7 +10,6 @@ import { cMeeting } from "../../Utilities/zoom-services";
 import { getCookies } from "../../Utilities/login-services";
 
 function MyZoom() {
-    //hola mundo
     const [userPrivileges, setUserPrivileges] = useState({});
 
     const fetchUserData = async () => {
