@@ -9,7 +9,7 @@ export const Citas = () => {
                 <Navbar/>
                 <div className="flex-grow flex flex-col ">
                     <div className="px-0 md:px-20">
-                        <TableConsultas/>
+                        <TableConsultas page={"Cita"}/>
                     </div>
                 </div>
             </div>

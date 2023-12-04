@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import NavigationB from "../Components/Navbar";
 import "../Styles/CSS/Session.css";
 import "../Styles/CSS/PopIniciarConsulta.css";
+import TableConsultas from "../Components/Citas/TableConsultas";
 
 function Sesiones() {
     const [showModal, setShowModal] = useState(false);
@@ -14,50 +15,40 @@ function Sesiones() {
 
     return (
         <>
-            <Container className="card-container">
+            <div className="flex-grow flex flex-row items-center">
                 <NavigationB/>
-                <Row>
-
-                    <Col className="position-relative">
-                        <h1 className="sesiones-title">Historial de Consulta</h1>
-                        <Button
-                            variant="filled"
-                            size="sm"
-                            className="custom-green-button mr-3 mt-2"
-                            style={{backgroundColor: "green", borderColor: "green"}}
-                            onClick={handleShow}
-                        >
-                            Iniciar consulta
-                        </Button>
-                        <Link to="/citas">
+                <div className="flex-1 flex flex-col w-80">
+                    <Row>
+                        <Col className="flex flex-col items-center">
+                            <h1 className="sesiones-title">Historial de Consulta</h1>
+                            <div className="justify-between">
                             <Button
                                 variant="filled"
                                 size="sm"
                                 className="custom-green-button mr-3 mt-2"
-                                style={{backgroundColor: "black", borderColor: "black"}}
+                                style={{backgroundColor: "green", borderColor: "green"}}
+                                onClick={handleShow}
                             >
-                                Cita
+                                Iniciar consulta
                             </Button>
-                        </Link>
-                        <Card className="card">
-                            <Card.Header as="h5" className="card-header">
-                                Información de la Tarjeta
-                            </Card.Header>
-                            <Card.Body>
-                                <Card.Title className="card-title">Autor: Alex Pereira</Card.Title>
-                                <Card.Text className="card-text">
-                                    Fecha: 11 de noviembre de 2023
-                                    <br/>
-                                    Hora: 10:30 AM
-                                </Card.Text>
-                                <Link to="/Expedientes" className="card-link">
-                                    Ir a la sesión
-                                </Link>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+                            <Link to="/citas">
+                                <Button
+                                    variant="filled"
+                                    size="sm"
+                                    className="custom-green-button mr-3 mt-2"
+                                    style={{backgroundColor: "black", borderColor: "black"}}
+                                >
+                                    Cita
+                                </Button>
+                            </Link>
+                            </div>
+                        </Col>
+                    </Row>
+                    <div className="mt-4">
+                        <TableConsultas page={"Sesiones"}/>
+                    </div>
+                </div>
+            </div>
 
             <div className={`pop-iniciar-consulta ${showModal ? 'show' : ''}`}>
                 <div className="pop-iniciar-consulta-content">

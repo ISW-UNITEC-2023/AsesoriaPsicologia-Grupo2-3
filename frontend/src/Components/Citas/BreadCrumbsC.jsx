@@ -7,7 +7,7 @@ const BreadCrumbsC = ({nombrePaciente}) => {
                 Pacientes
             </a>
             <a href="#" className="opacity-60">
-                {nombrePaciente}
+                {localStorage.getItem("namePatient")}
             </a>
             <a href="/citas" className="opacity-60">
                 Agendar Cita

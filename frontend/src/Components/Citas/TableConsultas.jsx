@@ -1,6 +1,6 @@
-import {PencilIcon} from "@heroicons/react/20/solid";
-import {Button, Card, CardBody, CardHeader, Spinner, Typography,} from "@material-tailwind/react";
-import {EyeIcon} from "@heroicons/react/24/solid";
+import {PencilIcon} from "@heroicons/react/24/solid";
+import {Button, Card, CardBody, CardHeader, IconButton, Spinner, Typography,} from "@material-tailwind/react";
+import {EyeIcon} from "@heroicons/react/20/solid";
 import BreadCrumbsC from "./BreadCrumbsC";
 import {useEffect, useState} from "react";
 import DialogCitas from "./DialogCitas";
@@ -12,7 +12,7 @@ const TABLE_HEAD = [" ", "Fecha de Consulta", "Doctor Responsable", "Observacion
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-export function TableConsultas() {
+export function TableConsultas({page}) {
     const [open, setOpen] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [nombreDoctor, setNombreDoctor] = useState("");
@@ -111,31 +111,34 @@ export function TableConsultas() {
         <Card className="h-auto w-auto ml-2 mr-2 md:ml-20 md:mr-20">
             <CardHeader floated={false} shadow={false} className="rounded-none">
                 <div className="flex flex-row justify-between items-center w-full">
-                    <div className="flex flex-row gap-2 items-center">
-                        <BreadCrumbsC nombrePaciente={"Juan Perez"}/>
-                    </div>
-                    <div className="flex flex-row gap-2 items-center">
-
-                    </div>
+                    {page === "Cita" && (
+                        <div className="flex flex-row gap-2 items-center">
+                            <BreadCrumbsC nombrePaciente={"Juan Perez"}/>
+                        </div>
+                    )}
                 </div>
-                <div className="flex flex-row justify-between gap-4 mt-2 mb-2">
-                    <div className="flex flex-row justify-between gap-2">
-                        <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpen}>
-                            Agendar Cita
-                        </Button>
+                {page === "Cita" && (
+                    <div className="flex flex-row justify-between gap-4 mt-4 mb-4">
+                        <div className="flex flex-row justify-between gap-2">
+                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpen}>
+                                Agendar Cita
+                            </Button>
+                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpenE}>
+                                Modificar Cita
+                            </Button>
+                        </div>
+                        <div className="flex flex-row justify-between gap-2">
+                            <Button style={{background: "#113946"}} variant="gradient" type="button">Ver
+                                expediente</Button>
+                        </div>
                     </div>
-                    <div className="flex flex-row justify-between gap-2">
-                        <Button style={{background: "#113946"}} variant="gradient" type="button">Ver expediente</Button>
-                    </div>
-
-                </div>
+                )}
                 <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex flex-row gap-2">
                         <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
                             Historial de Consultas
                         </Typography>
                     </div>
-
                 </div>
             </CardHeader>
             <CardBody className="overflow-x-auto px-0" style={{maxHeight: "calc(100vh - 350px)"}}>
@@ -177,8 +180,12 @@ export function TableConsultas() {
                                 <tr key={id_file}>
                                     <td className={classes}>
                                         <div className="flex items-center">
-                                            <EyeIcon/>
-                                            <PencilIcon/>
+                                            <IconButton variant="text">
+                                                <EyeIcon className="w-5 h-5"/>
+                                            </IconButton>
+                                            <IconButton variant="text">
+                                                <PencilIcon className="w-5 h-5"/>
+                                            </IconButton>
                                         </div>
                                     </td>
                                     <td className={classes}>
