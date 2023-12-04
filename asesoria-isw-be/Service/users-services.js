@@ -125,6 +125,15 @@ async function getUserCredentials(email) {
   return JSON.parse(usersCredentials);
 }
 
+async function getUserCredentialsByid(id) {
+  let usersCredentials = await knex
+    .select("name_user")
+    .from("users")
+    .where("id_user", id);
+  usersCredentials = JSON.stringify(usersCredentials);
+  return JSON.parse(usersCredentials);
+}
+
 async function findExistingEmail(email) {
   let emailExists = await knex("users").select("*").where("email_user", email);
   emailExists = JSON.stringify(emailExists);
@@ -219,6 +228,7 @@ module.exports = {
   getPatients,
   getUserRoles,
   getAllUsersRoles,
+  getUserCredentialsByid,
   getRoles,
   getRoleId
 };
