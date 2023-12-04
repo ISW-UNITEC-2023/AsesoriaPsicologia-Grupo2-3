@@ -123,55 +123,11 @@ function Wizard(props) {
     };
 
     return (
-        <>
-            <div className={"bodyR"}>
-                <div className="navigation-bar">
-                    <NavigationBar {...props} />
-                </div>
-                {preguntas.indice <= preguntas.pregunta.length - 1 &&
-                    <div className="progress-bar">
-                        <ProgressBar now={progress} className="custom-progress-bar " variant="danger" />
-                    </div>
-                }
-                <div className="wizard">
-                    <div className="wizard-mascota">
-                        <img src={howieImg} alt="" className="howie-img" />
-                    </div>
-                    <div className="register-form">
-                        {preguntas.indice <= preguntas.pregunta.length - 1 ? (
-                            <div className="">
-                                <div className="wizard-pregunta">
-                                    <p>{preguntas.dispPregunta}</p>
-                                </div>
-                                <div className="wizard-respuestas">
-                                    {preguntas.dispRespuestas.map((respuesta, index) => {
-                                        return (
-                                            <div key={index}>
-                                                {preguntas.pregunta[preguntas.indice].tipo ===
-                                                    "justificacion" ? (
-                                                    <input
-                                                        type="text"
-                                                        placeholder={respuesta}
-                                                        className="wizard-respuesta"
-                                                        onChange={(e) =>
-                                                            handleJustificacionChange(e, index)
-                                                        }
-                                                    />
-                                                ) : (
-                                                    <button
-                                                        className="wizard-respuesta"
-                                                        onClick={() => handlePregunta(index)}
-                                                    >
-                                                        {respuesta}
-                                                    </button>
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        ) : (
+
                             <div className="containerReg">
+                                <div className="navigation-bar">
+                    <NavigationBar {...props} />
+                        </div>
                                 <Form>
                                     <Form.Group controlId="formName" className="mb-3">
                                         <Form.Label>Nombre Completo</Form.Label>
@@ -266,16 +222,15 @@ function Wizard(props) {
                                 <Link className="forgot-passwordR" to="/InicioSesion">
                                     ¿Ya tienes una cuenta?
                                 </Link>
-                            </div>
-                        )}
-                    </div>
-                </div>
-                <div className="footer-general">
+
+                                <div className="footer-general">
                     <p className="footerL">FUNDAEMPRESA UNITEC</p>
                     <p className="footerL">© 2023 - Todos los derechos reservados</p>
                 </div>
             </div>
-        </>
+                    
+               
+            
     );
 
 }

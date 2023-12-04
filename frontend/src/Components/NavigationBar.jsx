@@ -18,7 +18,7 @@ function NavigationBar(props) {
           <img className="navigation-bar__logo" src={unitecLogo} alt="" />
         </Navbar.Brand>
         <Navbar.Toggle
-          className="navbar-toggle"
+          className="navbar-toggle" 
           onClick={handleToggleMenu}
           aria-controls="basic-navbar-nav"
         />
@@ -48,16 +48,6 @@ function NavigationBar(props) {
               to="/InicioSesion"
             >
               Iniciar Sesión
-            </Link>
-            <Link
-              className={
-                menuOpen
-                  ? "item-bar comienza-ya-navbar"
-                  : "link-navbar comienza-ya-navbar"
-              }
-              to="/Cuestionario"
-            >
-              Comienza Ya
             </Link>
           </Nav>
         </Navbar.Collapse>
