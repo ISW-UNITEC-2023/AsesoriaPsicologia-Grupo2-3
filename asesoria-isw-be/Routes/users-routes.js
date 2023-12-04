@@ -25,14 +25,11 @@ router.get("/viewRoles", userController.getAllUsersRoles);
 router.get("/getUserById", userController.getUserByID);
 //COOKIES
 
-router.get("/getCookies", userController.getCookie);
 router.post("/getRoles", userController.getUserRoles)
 router.get("/getPrivileges", userController.getPrivilegesById);
 
 
 //COOKIES
-
-router.get("/getCookies", userController.getCookie);
 router.delete("/removeCookie", userController.removeCookie);
 
 //obtener los roles de usuario por id

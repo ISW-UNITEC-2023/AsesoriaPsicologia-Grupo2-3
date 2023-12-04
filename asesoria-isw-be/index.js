@@ -61,6 +61,7 @@ const announcementRouter = require("./Routes/announcement-routes");
 const fileRouter = require("./Routes/files-routes");
 const mailRouter = require("./Routes/mail-routes");
 const appointmentRouter = require("./Routes/appointment-routes");
+const actionsRoutes = require("./Routes/actions-routes");
 
 //Rutas de Zoom
 const zoomUsersRouter = require("./Routes/zoom/users");
@@ -77,6 +78,7 @@ app.use("/roles", rolesRouter);
 app.use("/privileges", privilegesRouter);
 app.use("/patients", patientsRouter);
 app.use("/sections", sectionRouter);
+app.use("/actions", actionsRoutes);
 app.use("/courses", courseRouter);
 app.use("/clinics", clinicRouter);
 app.use("/announcements", announcementRouter);

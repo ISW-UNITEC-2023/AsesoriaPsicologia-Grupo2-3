@@ -227,7 +227,7 @@ function App() {
 
         /> */}
 
-                <Route path="/AuditLogs" element={<AuditLogs />}/>
+                <Route path="/AuditLogs" element={<AuditLogs userData={userData}/>}/>
 
                 <Route path="/ZoomC" element={<MyZoom userData={userData}/>}/>
                 {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}

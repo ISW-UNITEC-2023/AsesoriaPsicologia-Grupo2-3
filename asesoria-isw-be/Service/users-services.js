@@ -228,6 +228,7 @@ module.exports = {
   getPatients,
   getUserRoles,
   getAllUsersRoles,
+  getUserCredentialsByid,
   getRoles,
   getRoleId
 };

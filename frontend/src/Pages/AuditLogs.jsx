@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Table, Form } from 'react-bootstrap';
 import "../Styles/CSS/AuditLogs.css";
 import Services from "../Utilities/actions-services";
+import Navbar from "../Components/Navbar";
 
-function AuditLogs () {
+function AuditLogs (props) {
   const [datos, setDatos] = useState([]);
   const [campoFiltrado, setCampoFiltrado] = useState('Fecha_Hora');
   const [filtro, setFiltro] = useState('');
@@ -61,6 +62,7 @@ function AuditLogs () {
 
   return (
     <div className="dashboard-container">
+      <Navbar userData={props.userData} />
       <div style={{width: "90%"}}>
       <div className="container-header">
         <h1 className="title-historial" style={{ width: "400%" }}>
@@ -68,6 +70,7 @@ function AuditLogs () {
         </h1>
       </div>
       <div className="container-flitros">
+        
         <Form style={{display:"flex", flexdirection: "row" }}>
           <Form.Group controlId="campoFiltrado" style={{marginRight:"30px"}}>
             <Form.Label>Filtrar por:</Form.Label>
@@ -88,33 +91,32 @@ function AuditLogs () {
         </Form>
         </div>
         <div className="container-table ">
-          <Table striped bordered hover style={{ border: '2px solid black' }}>
-          <thead style={{ background: 'lightgreen' }}>
-            <tr>
-              <th style={{ border: '2px solid black' }}>Fecha y Hora</th>
-              <th style={{ border: '2px solid black' }}>ID</th>
-              <th style={{ border: '2px solid black' }}>Usuario</th>
-              <th style={{ border: '2px solid black' }}>Acción</th>
-              <th style={{ border: '2px solid black' }}>Tabla</th>
-              <th style={{ border: '2px solid black' }}>Info de Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-          {datosFiltrados.map((dato) => (
-            <tr key={dato.ID}>
-              <td style={{ border: '2px solid black' }}>{dato.Fecha_Hora}</td>
-              <td style={{ border: '2px solid black' }}>{dato.ID}</td>
-              <td style={{ border: '2px solid black' }}>{dato.Usuario}</td>
-              <td style={{ border: '2px solid black' }}>{dato.Accion}</td>
-              <td style={{ border: '2px solid black' }}>{dato.Tabla}</td>
-              <td style={{ border: '2px solid black' }}>{dato.Info_Accion}</td>
-              
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      </div>
-      
+          <Table  striped bordered hover style={{ border: '2px solid black' }} >
+              <thead style={{ background: 'lightgreen' }}>
+                <tr>
+                  <th style={{ border: '2px solid black' }}>Fecha y Hora</th>
+                  <th style={{ border: '2px solid black' }}>ID</th>
+                  <th style={{ border: '2px solid black' }}>Usuario</th>
+                  <th style={{ border: '2px solid black' }}>Acción</th>
+                  <th style={{ border: '2px solid black' }}>Tabla</th>
+                  <th style={{ border: '2px solid black' }}>Info de Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {datosFiltrados.map((dato) => (
+                  <tr key={dato.ID} >
+                    <td style={{ border: '2px solid black' }}>{dato.Fecha_Hora}</td>
+                    <td style={{ border: '2px solid black' }}>{dato.ID}</td>
+                    <td style={{ border: '2px solid black' }}>{dato.Usuario}</td>
+                    <td style={{ border: '2px solid black' }}>{dato.Accion}</td>
+                    <td style={{ border: '2px solid black' }}>{dato.Tabla}</td>
+                    <td style={{ border: '2px solid black' }}>{dato.Info_Accion}</td>
+                    
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
       </div>
     </div>
   );

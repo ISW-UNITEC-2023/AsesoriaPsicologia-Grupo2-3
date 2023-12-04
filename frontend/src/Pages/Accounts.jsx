@@ -2,7 +2,7 @@
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
-import EmailPopUp from "../Components/EmailPopUp";
+import EmailPopUp from "../Components/emailPopUp";
 import PopUpAdminRole from "../Components/PopUp_AdminRole";
 import RoleAdmin from "../Components/RoleAdmin";
 

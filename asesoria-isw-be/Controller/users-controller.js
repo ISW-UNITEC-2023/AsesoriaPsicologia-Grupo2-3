@@ -487,6 +487,20 @@ async function getAllUsersRoles(req, res){
   }
 }
 
+async function getUserByID(req, res){
+  const {id}  = req.query;
+  
+  try{
+    const name = await userServices.getUserCredentialsByid(id);
+    res.send(name);
+
+  } catch (error) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener el nombre del usuario",
+    });
+  }
+}
+
 async function deleteCookies(req, res) {
   try {
     res.clearCookie("email");
@@ -517,5 +531,6 @@ module.exports = {
   getUserRoles,
   getAllUsersRoles,
   deleteCookies,
-  getPrivilegesById
+  getPrivilegesById,
+  getUserByID
 };
