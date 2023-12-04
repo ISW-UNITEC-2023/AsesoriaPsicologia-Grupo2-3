@@ -23,6 +23,20 @@ async function createAppo(new_appo)
     });
 }
 
+async function createConsultation(new_appo)
+{
+    await knex("appointments").insert({
+        id_file: new_appo.id_file,
+        id_doctor: new_appo.id_doctor,
+        id_clinic: new_appo.id_clinic,
+        user_creator: new_appo.user_creator,
+        last_modification: new Date(),
+        observations: new_appo.observations,
+        payment_amount: new_appo.amount,
+        medic_orders: new_appo.medic_orders,
+    });
+}
+
 //DELETE
 
 async function deleteAppo(id_appointment)
@@ -120,6 +134,7 @@ module.exports = {
     getAppo,
     getAppoById,
     createAppo,
+    createConsultation,
     deleteAppo,
     updateMedicOrder,
     updatePayment,
