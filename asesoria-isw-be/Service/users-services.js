@@ -182,15 +182,25 @@ async function getAllUsersRoles(){
   return JSON.parse(roles);
   }
   
-async function getRoles(id) {
-  let roles = await knex
-    .select("name_role")
-    .from("user_role")
-    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
-    .where("id_user", "=", id);
-  roles = JSON.stringify(roles);
-  return JSON.parse(roles);
-}
+  async function getRoles(id) {
+    let roles = await knex
+      .select("name_role")
+      .from("user_role")
+      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+      .where("id_user", "=", id);
+    roles = JSON.stringify(roles);
+    return JSON.parse(roles);
+  }
+  
+  async function getRoleId(id) {
+    let roles = await knex
+      .select("user_role.id_role")
+      .from("user_role")
+      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+      .where("id_user", "=", id);
+    roles = JSON.stringify(roles);
+    return JSON.parse(roles);
+  }
 
 module.exports = {
   createUser,
@@ -209,5 +219,6 @@ module.exports = {
   getPatients,
   getUserRoles,
   getAllUsersRoles,
-  getRoles
+  getRoles,
+  getRoleId
 };
