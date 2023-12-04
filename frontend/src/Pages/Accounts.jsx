@@ -412,227 +412,35 @@ function Accounts(props) {
     }
 
     return (
-      <div
-        className="dropdown-menu show mt-2.5"
-        aria-labelledby="searchDropdownMenu"
-        style={{ maxHeight: "200px", overflowY: "auto" }}
-      >
-        {matchingNames.length > 0 ? (
-          matchingNames.map((name) => (
-            <button className="dropdown-item" type="button" key={name}>
-              {name}
-            </button>
-          ))
-        ) : (
-          <button className="dropdown-item" type="button" disabled>
-            No se encontraron resultados
-          </button>
-        )}
-      </div>
-    );
-  };
-
-  //Formato de fecha
-  const formatDate = (announceDate) => {
-    var date = new Date(announceDate);
-    var options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return date.toLocaleString("es-ES", options);
-  };
-
-  //Fetch de Usuarios
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
-
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
-        fetchedRoles.forEach((role) => {
-          if (user.id_user === role.id_user) {
-            user.roles.push([role.id_role, role.name_role]);
-          }
-        });
-      });
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    fetchData();
-  }, []);
-
-  //Fetch de Roles
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedRoles = await role_services.getAllRoles();
-      setRoles(fetchedRoles);
-    };
-    fetchData();
-  }, []);
-
-  //Filtrado de Nombre
-  useEffect(() => {
-    // Filter names that match the search term
-    const names = users
-      .filter((user) =>
-        user.name_user.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .map((user) => user.name_user);
-
-    setMatchingNames(names);
-  }, [searchTerm, users]);
-
-  //Dropdown search
-  useEffect(() => {
-    const handleInputFocus = () => {
-      setDisplayResults(true);
-    };
-
-    const handleInputBlur = () => {
-      setDisplayResults(false);
-    };
-
-    const inputElement = document.querySelector(".search-user-box input");
-
-    inputElement.addEventListener("focus", handleInputFocus);
-    inputElement.addEventListener("blur", handleInputBlur);
-
-    return () => {
-      inputElement.removeEventListener("focus", handleInputFocus);
-      inputElement.removeEventListener("blur", handleInputBlur);
-    };
-  }, []);
-
-  //Limpiar filtros
-  function limpiarFiltros() {
-    if (sorted) {
-      setSelectedRoles([]);
-      setSelectedState([]);
-      setSorted(false);
-      setUsers(originalUsers);
-    }
-  }
-
-  function filterSelectedItem(e) {
-    let selectedItem = e.target.value;
-    let filteredUsers = [];
-    if (e.target.name === "roles") {
-      const newRoles = [...selectedRoles];
-      if (selectedRoles.includes(selectedItem)) {
-        const index = newRoles.indexOf(selectedItem);
-        newRoles.splice(index, 1);
-      } else {
-        if (selectedItem === "Sin rol") {
-          newRoles.push("Sin rol");
-        }
-        if (!newRoles.includes(selectedItem)) {
-          newRoles.push(selectedItem);
-        }
-      }
-      setSelectedRoles(newRoles);
-      originalUsers.filter((user) => {
-        newRoles.forEach((role) => {
-          user.roles.map((item) => {
-            if (item.includes(role)) {
-              if (!filteredUsers.includes(user)) {
-                filteredUsers.push(user);
-              }
-            }
-          });
-          if (user.roles.length === 0 && role === "Sin rol") {
-            if (!filteredUsers.includes(user)) {
-              filteredUsers.push(user);
-            }
-          }
-        });
-      });
-      setSorted(true);
-      setUsers(filteredUsers);
-      if (newRoles.length === 0) {
-        limpiarFiltros();
-      }
-    } else if (e.target.name === "state") {
-      const states = [...selectedState];
-      selectedItem === "1" ? (selectedItem = 1) : (selectedItem = 0);
-      if (selectedState.includes(selectedItem)) {
-        const index = states.indexOf(selectedItem);
-        states.splice(index, 1);
-      } else {
-        states.push(selectedItem);
-      }
-      setSelectedState(states);
-      originalUsers.filter((user) => {
-        states.forEach((state) => {
-          if (user.active_user === state) {
-            if (!filteredUsers.includes(user)) {
-              filteredUsers.push(user);
-            }
-          }
-        });
-      });
-      setSorted(true);
-      setUsers(filteredUsers);
-      if (states.length === 0) {
-        console.log("limpiar filtros");
-        limpiarFiltros();
-      }
-    }
-  }
-
-  //Recuperar usuarios para actualizar
-  async function refreshUsers() {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
-
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
-        fetchedRoles.forEach((role) => {
-          if (user.id_user === role.id_user) {
-            user.roles.push([role.id_role, role.name_role]);
-          }
-        });
-      });
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    fetchData();
-  }
-
-  return (
-    <div className="account-container">
-      <Navbar userData={props.userData}/>
-      <div className="account-box">
-        <div className="account-header">
-          <span className="account-title">Administración de Cuentas</span>
-          <div className="search-user-box">
-            <FontAwesomeIcon icon={faSearch} className="iconSearch-box" />
-            <input
-              type="text"
-              placeholder="Buscar nombre"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            {displayResults && <SearchDropdown matchingNames={matchingNames} />}
-          </div>
-          <div
-            className="remove-filter-button"
-            onClick={() => {
-              limpiarFiltros();
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-          >
-            <FontAwesomeIcon icon={faFilterCircleXmark} />
-            {isHovering && sorted && (
-              <span className="limpiar-filtro-div">Limpiar filtros</span>
-            )}
-            {isHovering && !sorted && (
-              <span className="limpiar-filtro-div">
+        <div className="account-container">
+            <Navbar/>
+            <div className="account-box">
+                <div className="account-header">
+                    <span className="account-title">Administración de Cuentas</span>
+                    <div className="search-user-box">
+                        <FontAwesomeIcon icon={faSearch} className="iconSearch-box"/>
+                        <input
+                            type="text"
+                            placeholder="Buscar nombre"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        {displayResults && <SearchDropdown matchingNames={matchingNames}/>}
+                    </div>
+                    <div
+                        className="remove-filter-button"
+                        onClick={() => {
+                            limpiarFiltros();
+                        }}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                    >
+                        <FontAwesomeIcon icon={faFilterCircleXmark}/>
+                        {isHovering && sorted && (
+                            <span className="limpiar-filtro-div">Limpiar filtros</span>
+                        )}
+                        {isHovering && !sorted && (
+                            <span className="limpiar-filtro-div">
                 No se han aplicado filtros
               </span>
                         )}
