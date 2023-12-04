@@ -115,16 +115,19 @@ export function TableConsultas() {
                         <BreadCrumbsC nombrePaciente={"Juan Perez"}/>
                     </div>
                     <div className="flex flex-row gap-2 items-center">
+
+                    </div>
+                </div>
+                <div className="flex flex-row justify-between gap-4 mt-2 mb-2">
+                    <div className="flex flex-row justify-between gap-2">
                         <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpen}>
                             Agendar Cita
                         </Button>
                     </div>
-                </div>
-                <div className="flex flex-row justify-end gap-4 mt-2 mb-2">
-                    <div className="flex flex-row gap-2">
-                        <Button style={{background: "#113946"}} variant="gradient" type="button"
-                                onClick={handleOpenE}>Modificar</Button>
+                    <div className="flex flex-row justify-between gap-2">
+                        <Button style={{background: "#113946"}} variant="gradient" type="button">Ver expediente</Button>
                     </div>
+
                 </div>
                 <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex flex-row gap-2">
@@ -132,10 +135,7 @@ export function TableConsultas() {
                             Historial de Consultas
                         </Typography>
                     </div>
-                    <div className="flex flex-row gap-2">
-                        <Button style={{background: "#113946"}} variant="gradient" type="button">Agregar
-                            Consulta</Button>
-                    </div>
+
                 </div>
             </CardHeader>
             <CardBody className="overflow-x-auto px-0" style={{maxHeight: "calc(100vh - 350px)"}}>
