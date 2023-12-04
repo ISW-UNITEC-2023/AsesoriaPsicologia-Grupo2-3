@@ -147,6 +147,16 @@ async function getTeachers() {
   return JSON.parse(users);
 }
 
+async function getPatients() {
+  let users = await knex
+    .select("*")
+    .from("users")
+    .innerJoin("user_role", "users.id_user", "=", "user_role.id_user")
+    .where("id_role", 2);
+  users = JSON.stringify(users);
+  return JSON.parse(users);
+}
+
 async function getUserRoles(idUser){
   let roles = await knex.raw(
     `
@@ -206,6 +216,7 @@ module.exports = {
   findExistingEmail,
   getAllusers,
   getTeachers,
+  getPatients,
   getUserRoles,
   getAllUsersRoles,
   getRoles,

@@ -1,8 +1,8 @@
 const HTTPCodes = require("../Utils/HTTPCodes");
 const userServices = require("../Service/users-services");
+const rolesServices = require("../Service/roles-services");
 
 const { isEmail, isPassword } = require("../Utils/validator");
-const rolesServices = require("../Service/roles-services")
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
@@ -13,6 +13,7 @@ async function registerUser(req, res) {
     const errorMessages = [];
     if (!isEmail(email)) {
       errorMessages.push("Este correo electrónico no es valido");
+      
     }
 
     if (!isPassword(password)) {
@@ -46,7 +47,7 @@ async function registerUser(req, res) {
           encryptedPassword: encryptedPassword,
           salt: salt,
         });
-        console.log("es paciente");
+        //console.log("es paciente");
       } else {
         newUserId = userServices.createUser({
           name: name,
@@ -57,8 +58,9 @@ async function registerUser(req, res) {
           active: active,
           creator: creator,
         });
-        console.log("sin rol");
+        //console.log("sin rol");
       }
+
 
       res.send({
         success: true,
@@ -95,7 +97,10 @@ async function loginUser(req, res) {
     }
     const roles = await userServices.getUserRoles(email_exists[0].id_user);
     //console.log("Roles", roles[0]);
+    const allroles = await rolesServices.getRoles();
     
+    const allroles2= allroles.map((roles) => roles.name_role);
+
     let privileges = await Promise.all(
       roles[0].map(async (role) => {
         return await rolesServices.getRolePrivileges(role.id_role);
@@ -110,7 +115,8 @@ async function loginUser(req, res) {
     const userData = {
       email: email,
       roles: roleNames,
-      privileges: privilegios
+      privileges: privilegios,
+      allRoles: allroles2,
     };
     if (errorMessage.length) {
       res.send({
@@ -360,6 +366,17 @@ async function getAllusers(req, res) {
   }
 }
 
+async function getPatients(req, res) {
+  try {
+    const users = await userServices.getPatients();
+    res.send(users);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los usuarios.",
+    });
+  }
+}
+
 async function getTeachers(req, res) {
   try {
     const users = await userServices.getTeachers();
@@ -495,6 +512,7 @@ module.exports = {
   getTeachers,
   getCookie,
   getRoles,
+  getPatients,
   removeCookie,
   getUserRoles,
   getAllUsersRoles,

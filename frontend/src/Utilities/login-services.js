@@ -205,7 +205,7 @@ async function getStudents() {
 async function getPatients() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/patients",
+    url: "http://localhost:8000/users/viewPatients",
   };
 
   try {

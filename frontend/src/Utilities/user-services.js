@@ -12,6 +12,19 @@ async function getUsers() {
   return users.data;
 }
 
+async function getPatients() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/users/viewPatients",
+    data: {},
+  };
+  let users = await axios.request(options);
+  return users.data;
+}
+
+
+
+
 async function getAllUsersRoles() {
   const options = {
     method: "GET",
@@ -179,6 +192,7 @@ export async function deleteCookies() {
 
 export default {
   getUsers,
+  getPatients,
   getAllUsersRoles,
   createUser,
   editName,

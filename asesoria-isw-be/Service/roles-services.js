@@ -72,7 +72,7 @@ async function getRolePrivileges(id) {
             WHERE rp.id_role = ?`, [id]
   );
   rolesPrivileges = JSON.stringify(rolesPrivileges[0]);
-  console.log("Roles Service Response", rolesPrivileges);
+  //console.log("Roles Service Response", rolesPrivileges);
   return JSON.parse(rolesPrivileges);
 }
 

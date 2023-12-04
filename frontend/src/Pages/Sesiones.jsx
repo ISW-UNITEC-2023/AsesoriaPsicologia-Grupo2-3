@@ -6,7 +6,7 @@ import NavigationB from "../Components/Navbar";
 import "../Styles/CSS/Session.css";
 import "../Styles/CSS/PopIniciarConsulta.css";
 
-function Sesiones() {
+function Sesiones(props) {
     const [showModal, setShowModal] = useState(false);
 
     const handleClose = () => setShowModal(false);
@@ -14,9 +14,9 @@ function Sesiones() {
 
     return (
         <>
-
+            
             <Container className="card-container">
-                <NavigationB/>
+                <NavigationB userData={props.userData}/>
                 <Row>
 
                     <Col className="position-relative">

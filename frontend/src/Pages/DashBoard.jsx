@@ -10,7 +10,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getCookies} from "../Utilities/login-services.js";
 import DashboardLayout from "../Layout/DashboardLayout";
 
-function DashBoard() {
+
+function DashBoard(props) {
+    
     const [displayedModules, setModules] = useState([]);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -34,7 +36,7 @@ function DashBoard() {
     return (
         <DashboardLayout pagina="Dashboard">
             <div className="dashboard-container">
-                <NavigationB/>
+                <NavigationB userData={props.userData}/>
                 <div className="dashboard-box">
                     <div className="dashboard-header flex flex-col md:flex-row justify-between">
                         <h1 className="dashboard-titulo">Bienvenido !</h1>
