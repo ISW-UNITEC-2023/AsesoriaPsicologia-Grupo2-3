@@ -46,7 +46,12 @@ function MyZoomPat() {
                 <Row className='zoom-row'>
                     <Col>
                         <h1 className="title-pacientes">Zoom</h1>
-                        {havePrivilege(31) && <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>}
+                        {
+                            havePrivilege(31) ?
+                                <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>
+                                :
+                                <Form.Label className='titulo2'>No tienes los permisos necesarios para ver las sesiones programadas.</Form.Label>
+                        }
                     </Col>
                     <Col></Col>
                     <Col>
@@ -86,7 +91,7 @@ function MyZoomPat() {
                                         <Form.Label>{meeting.id}</Form.Label>
                                     </Col>
                                     <Col className='column2'>
-                                        { havePrivilege(31) &&
+                                        {havePrivilege(31) &&
                                             <Button className='buttons2' variant="outline-primary" href={meeting.join_url} target="_blank">
                                                 Entrar
                                             </Button>
