@@ -234,7 +234,7 @@ async function updateUserName(req, res) {
     });
   } catch (e) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo cambiar el nombre.",
+      error: e,
     });
   }
 }

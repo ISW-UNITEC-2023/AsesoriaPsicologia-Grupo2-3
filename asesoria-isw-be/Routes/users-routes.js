@@ -16,11 +16,13 @@ router.post("/assignRole", userController.assignRole);
 //Cookies
 router.get("/getCookies", userController.getCookie);
 
+
 //Get
 router.get("/viewUsers", userController.getAllusers);
 router.get("/viewTeachers", userController.getTeachers);
 router.get("/viewPatients", userController.getPatients);
 router.get("/viewRoles", userController.getAllUsersRoles);
+router.get("/getUserById", userController.getUserByID);
 //COOKIES
 
 router.get("/getCookies", userController.getCookie);
