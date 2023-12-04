@@ -148,8 +148,6 @@ function Login(props) {
             </div>
           </form>
           <div className="footer-general">
-            <p className="footerL">FUNDAEMPRESA UNITEC</p>
-            <p className="footerL">© 2023 - Todos los derechos reservados</p>
           </div>
         </div>
       </LoginLayout>

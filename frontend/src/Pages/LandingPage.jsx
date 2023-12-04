@@ -11,6 +11,7 @@ import iconomujer from "../Styles/Images/icono mujer.jpg";
 import iconohombre from "../Styles/Images/icono Hombre.jpg";
 import LandingLayout from "../Layout/LandingLayout";
 
+
 function LandingPage(props) {
     const navigate = useNavigate();
     const images = [imagen1, imagen2];
@@ -53,43 +54,21 @@ function LandingPage(props) {
                         </Slide>
                     </div>
                     <h1 className="text-center text-2xl lg:text-4xl">
-                        Atención Psicológica
+                       Clinica Virtual
                     </h1>
                     <hr className="w-4/5 mx-auto border-b-2 border-red-600"/>
-                    <div
-                        className="video-and-box-container flex flex-col items-center justify-center lg:flex-row sm:flex-col
-                sm:items-center sm:space-x-10 sm:mb-10 md:flex md:items-center md:justify-center md:flex-row"
-                    >
-                        <div className="youtube-video text-center mt-4 sm:h-64 sm:w-64 md:h-96 md:w-96 lg:h-96 lg:w-96">
+                    <div>
+                        <div className="flex justify-center">
                             <iframe
-                                width="360"
+                                width="560"
                                 height="315"
-                                src="https://www.youtube.com/embed/m5lK6e3oWQo"
+                                src="https://www.youtube.com/embed/R8I0c4mmj3g?si=gWvUJErYBT02pDDb"
                                 title="Video de YouTube"
                                 allowFullScreen
-                                className="rounded-lg shadow-lg sm:w-52 sm:h-64 md:w-96 md:h-96 lg:w-96 lg:h-96 xl:w-96 xl:h-96"
+                                
                             ></iframe>
                         </div>
-                        <div className="relative w-96 h-96 bg-blue-900 rounded-lg mt-10">
-                            <img
-                                src={howieImage}
-                                alt="Howie"
-                                className="overlay-image absolute bottom-0 left-0 w-72 h-96 transition-transform transform scale-55 ml-12"
-                                onMouseOver={handleMouseOverHowie}
-                                onMouseOut={handleMouseOutHowie}
-                                onClick={() => {
-                                    navigate("/Preguntas");
-                                }}
-                            />
-                            <div
-                                className="rounded-box2 w-80 h-24 bg-red-600 rounded-lg mt-64 absolute flex items-center justify-center ml-8">
-                                <p className="text-white text-center font-bold text-sm">
-                                    La incorporación de esta nueva plataforma permitirá fortalecer
-                                    el esquema de atención Psicológica y ayudará a mejorar tu salud
-                                    Mental.
-                                </p>
-                            </div>
-                        </div>
+                      
                     </div>
                     <h1 className="text-center text-3xl lg:text-4xl mt-4">
                         Palabras Sobre la Pagina
@@ -109,10 +88,7 @@ function LandingPage(props) {
                         <div
                             className="lg:w-1/2 text-mujer text-center text-gray-700 mt-4 mb-4 md:mt-0 md:mb-0 lg:mt-0 lg:mb-0">
                             <p>
-                                En tiempos de desafíos y cambios, la salud mental es primordial.
-                                En UNITEC, estamos comprometidos a proporcionarte un espacio
-                                seguro donde puedas explorar tus pensamientos y emociones, y
-                                trabajar juntos en el fortalecimiento de tu bienestar psicológico.
+                            Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
                             </p>
                         </div>
                         <div className="lg:w-1/2 flex items-center justify-center">
@@ -124,11 +100,7 @@ function LandingPage(props) {
                         </div>
                         <div className="lg:w-1/2 text-hombre text-center text-gray-700 mt-4 mb-4 lg:mt-0 lg:mb-0">
                             <p>
-                                La asistencia psicológica en UNITEC no solo se trata de afrontar
-                                dificultades, sino también de potenciar tus fortalezas. Te
-                                invitamos a aprovechar nuestros recursos para desarrollar
-                                habilidades emocionales y enfrentar los desafíos de la vida
-                                universitaria y más allá.
+                            Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
                             </p>
                         </div>
                     </div>
