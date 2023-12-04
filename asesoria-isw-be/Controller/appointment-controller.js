@@ -120,25 +120,77 @@ async function getAppointments(req,res)
     }
 }
 
-async function getAppointmentById(req,res)
-{
-        try{
-        const {id} = req.body;
+async function getById(req, res) {
 
-        res.send({message: "Cita por id recuperada", appointment: await appointmentServices.getAppoById(id)});
+    const id_appointment = req.query.id;
 
-    }catch(error)
-    {
+  try {
+    const App = await appointmentServices.getById(id_appointment);
+    res.send({
+      appInfo: App,
+      message: "Se ha recuperado la información del app",
+    });
+  } catch (error) {
+    res.send({ message: "Error", error: error.message });
+  }
+}
+
+async function getCreator(req, res) {
+
+    const { id } = req.query.id;
+    try {
+       
         res.send({
-            message: "No fue posible recuperar la cita especifica",
+            message: "Citas recuperadas por creador de usuario",
+            appointmentsInfo: await appointmentServices.getCreator(id)
+        });
+    } catch (error) {
+        res.send({
+            message: "No fue posible recuperar las citas por creador de usuario",
             err: error.message
-        })
+        });
     }
 }
 
+async function getDoctor(req, res) {
+    const { id } = req.body;
+    try {
+        console.log(id); 
+
+        res.send({
+            message: "Citas recuperadas por médico",
+            appointmentsInfo: await appointmentServices.getDoctor(id) // Use the correct function name
+        });
+    } catch (error) {
+        res.send({
+            message: "No fue posible recuperar las citas por médico",
+            err: error.message
+        });
+    }
+}
+
+
+async function getClinic(req, res) {
+
+    const id = req.query.id;
+
+    try {
+      const App = await appointmentServices.getClinic(id)
+      res.send({
+        appInfo: App,
+        message: "Se ha recuperado la información del app",
+      });
+    } catch (error) {
+      res.send({ message: "Error", error: error.message });
+    }
+  }
+
+
+
+
 module.exports = {
     getAppointments,
-    getAppointmentById,
+    getById,
     createAppointment,
     createConsultation,
     deleteAppointment,
@@ -146,5 +198,8 @@ module.exports = {
     updatePaymentMedic,
     updateObservations,
     updateAppointment,
-    updateStateMedic
+    updateStateMedic,
+    getDoctor,
+    getClinic,
+    getCreator
 };

@@ -12,6 +12,19 @@ async function getUsers() {
   return users.data;
 }
 
+async function getPatients() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/users/viewPatients",
+    data: {},
+  };
+  let users = await axios.request(options);
+  return users.data;
+}
+
+
+
+
 async function getAllUsersRoles() {
   const options = {
     method: "GET",
@@ -177,8 +190,29 @@ export async function deleteCookies() {
   }
 }
 
+
+export async function getUserById(id) {
+  try {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url:host +  `/users/getUserById?id=${id}`,
+      headers: { }
+    };
+    const response = await axios.request(config);
+    return JSON.stringify(response.data);
+  } catch (error) {
+    console.error("Error al obtener nombre de usuario:", error);
+    return null; // O maneja el error de otra manera
+  }
+}
+
+
+
+
 export default {
   getUsers,
+  getPatients,
   getAllUsersRoles,
   createUser,
   editName,
@@ -189,4 +223,5 @@ export default {
   assignRole,
   removeRole,
   postLogin,
+  getUserById,
 };

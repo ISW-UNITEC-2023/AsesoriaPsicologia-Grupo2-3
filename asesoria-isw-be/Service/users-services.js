@@ -125,6 +125,15 @@ async function getUserCredentials(email) {
   return JSON.parse(usersCredentials);
 }
 
+async function getUserCredentialsByid(id) {
+  let usersCredentials = await knex
+    .select("name_user")
+    .from("users")
+    .where("id_user", id);
+  usersCredentials = JSON.stringify(usersCredentials);
+  return JSON.parse(usersCredentials);
+}
+
 async function findExistingEmail(email) {
   let emailExists = await knex("users").select("*").where("email_user", email);
   emailExists = JSON.stringify(emailExists);
@@ -143,6 +152,16 @@ async function getTeachers() {
     .from("users")
     .innerJoin("user_role", "users.id_user", "=", "user_role.id_user")
     .where("id_role", 5);
+  users = JSON.stringify(users);
+  return JSON.parse(users);
+}
+
+async function getPatients() {
+  let users = await knex
+    .select("*")
+    .from("users")
+    .innerJoin("user_role", "users.id_user", "=", "user_role.id_user")
+    .where("id_role", 2);
   users = JSON.stringify(users);
   return JSON.parse(users);
 }
@@ -172,15 +191,25 @@ async function getAllUsersRoles(){
   return JSON.parse(roles);
   }
   
-async function getRoles(id) {
-  let roles = await knex
-    .select("name_role")
-    .from("user_role")
-    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
-    .where("id_user", "=", id);
-  roles = JSON.stringify(roles);
-  return JSON.parse(roles);
-}
+  async function getRoles(id) {
+    let roles = await knex
+      .select("name_role")
+      .from("user_role")
+      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+      .where("id_user", "=", id);
+    roles = JSON.stringify(roles);
+    return JSON.parse(roles);
+  }
+  
+  async function getRoleId(id) {
+    let roles = await knex
+      .select("user_role.id_role")
+      .from("user_role")
+      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+      .where("id_user", "=", id);
+    roles = JSON.stringify(roles);
+    return JSON.parse(roles);
+  }
 
 module.exports = {
   createUser,
@@ -196,7 +225,10 @@ module.exports = {
   findExistingEmail,
   getAllusers,
   getTeachers,
+  getPatients,
   getUserRoles,
   getAllUsersRoles,
-  getRoles
+  getUserCredentialsByid,
+  getRoles,
+  getRoleId
 };

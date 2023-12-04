@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import NavigationB from "../Navbar";
 import {cMeeting} from "../../Utilities/zoom-services";
 
-function MyZoom()
+function MyZoom(props)
 {
     const [topic , setTopic] = useState("");
     const [description, setdescription] = useState("");
@@ -55,7 +55,7 @@ function MyZoom()
     return(
         <>
             <div className="dashboard-container">
-                <NavigationB/>
+                <NavigationB userData={props.userData}/>
                 <div className="zoom-crear-div">
                 <Row className="zoom-crear-row">
                 <Col>

@@ -26,32 +26,32 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Accounts() {
-    const [users, setUsers] = useState([]);
-    const [roles, setRoles] = useState([]);
-    const [originalUsers, setOriginalUsers] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [matchingNames, setMatchingNames] = useState([]);
-    const [displayResults, setDisplayResults] = useState(false);
-    const [sorted, setSorted] = useState(false);
-    const [selectedRoles, setSelectedRoles] = useState([]);
-    const [selectedState, setSelectedState] = useState([]);
-    const [openCreate, setOpenCreate] = useState(0);
-    const [openEdit, setOpenEdit] = useState({
-        open: 0,
-        userInfo: null,
-    });
-    const [openEmail, setOpenEmail] = useState({
-        open: 0,
-        userInfo: null,
-    });
-    const [openRole, setOpenRole] = useState({
-        open: 0,
-        userInfo: null,
-    });
-    const [openRoleAdmin, setOpenRoleAdmin] = useState({
-        open: 0,
-    });
+function Accounts(props) {
+  const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [originalUsers, setOriginalUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [matchingNames, setMatchingNames] = useState([]);
+  const [displayResults, setDisplayResults] = useState(false);
+  const [sorted, setSorted] = useState(false);
+  const [selectedRoles, setSelectedRoles] = useState([]);
+  const [selectedState, setSelectedState] = useState([]);
+  const [openCreate, setOpenCreate] = useState(0);
+  const [openEdit, setOpenEdit] = useState({
+    open: 0,
+    userInfo: null,
+  });
+  const [openEmail, setOpenEmail] = useState({
+    open: 0,
+    userInfo: null,
+  });
+  const [openRole, setOpenRole] = useState({
+    open: 0,
+    userInfo: null,
+  });
+  const [openRoleAdmin, setOpenRoleAdmin] = useState({
+    open: 0,
+  });
 
     //Mensajes de filtros
     const [isHovering, setIsHovering] = useState(false);

@@ -72,8 +72,25 @@ async function getRolePrivileges(id) {
             WHERE rp.id_role = ?`, [id]
   );
   rolesPrivileges = JSON.stringify(rolesPrivileges[0]);
-  console.log("Roles Service Response", rolesPrivileges);
+  //console.log("Roles Service Response", rolesPrivileges);
   return JSON.parse(rolesPrivileges);
+}
+
+async function getRolePrivilegesByElement(id_role, id_element) {
+  // , p.id_elemento, p.privilege, p.user_creator, p.user_editor, p.creation_date, p.last_modification
+  try {
+    console.log(id_role, id_element);
+    let rolesPrivileges = await knex.select("roles_privileges.id_privilege")
+    .from("roles_privileges")
+    .innerJoin("privileges", "roles_privileges.id_privilege", "=", "privileges.id_privilege")
+    .where("roles_privileges.id_role", "=", id_role).andWhere("id_elemento", "=", 'zoom');
+    console.log("Roles Service Response", rolesPrivileges);
+    rolesPrivileges = JSON.stringify(rolesPrivileges);
+    return JSON.parse(rolesPrivileges);
+  } catch (e) {
+    console.log(e);
+    return("Error al cargar los privilegios");
+  }
 }
 
 //Delete
@@ -114,4 +131,5 @@ module.exports = {
   updateRoleDescription,
   deleteRole,
   removePrivilegeFromRole,
+  getRolePrivilegesByElement
 };

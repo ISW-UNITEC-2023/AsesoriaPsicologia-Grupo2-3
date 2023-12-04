@@ -7,7 +7,7 @@ import "../Styles/CSS/Session.css";
 import "../Styles/CSS/PopIniciarConsulta.css";
 import TableConsultas from "../Components/Citas/TableConsultas";
 
-function Sesiones() {
+function Sesiones(props) {
     const [showModal, setShowModal] = useState(false);
 
     const handleClose = () => setShowModal(false);

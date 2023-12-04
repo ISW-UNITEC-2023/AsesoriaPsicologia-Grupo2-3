@@ -23,7 +23,8 @@ import {Citas} from "./Pages/Citas";
 import { Zoom } from "react-toastify";
 
 function ProtectedRoute({ element, allowedRoles, userRoles, allowedPrivileges }) {
-  const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
+    //console.log("Roles: ",allowedRoles );
+    const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
 
   return  isAuthorized ? element : null;
 }
@@ -65,8 +66,8 @@ function App() {
                     element={
                         userDataLoaded ? (
                             <ProtectedRoute
-                                element={<Anuncios/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                element={<Anuncios />}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -80,7 +81,7 @@ function App() {
                         userDataLoaded ? (
                             <ProtectedRoute
                                 element={<Modulos/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -94,7 +95,7 @@ function App() {
                         userDataLoaded ? (
                             <ProtectedRoute
                                 element={<Vistas/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -108,7 +109,7 @@ function App() {
                         userDataLoaded ? (
                             <ProtectedRoute
                                 element={<Sections/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -121,8 +122,8 @@ function App() {
                     element={
                         userDataLoaded ? (
                             <ProtectedRoute
-                                element={<Sesiones/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                element={<Sesiones userData={userData}/>}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -135,8 +136,8 @@ function App() {
                     element={
                         userDataLoaded ? (
                             <ProtectedRoute
-                                element={<Pacientes/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                element={<Pacientes userData={userData}  />}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -160,8 +161,8 @@ function App() {
                     element={
                         userDataLoaded ? (
                             <ProtectedRoute
-                                element={<DashBoard/>}
-                                allowedRoles={["admin", "asesor","patient", "teacher", "psychologist"]}
+                                element={<DashBoard userData={userData} />}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -175,7 +176,7 @@ function App() {
                         userDataLoaded ? (
                             <ProtectedRoute
                                 element={<Citas/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (
@@ -193,6 +194,7 @@ function App() {
                             <ProtectedRoute
                                 element={<AnunciosCrear/>}
                                 allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+
                                 userRoles={userData}
                             />
                         ) : (
@@ -216,7 +218,7 @@ function App() {
         /> */}
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
                 <Route path="/Cuestionario" element={<Wizard {...wizardData} />}/>
-                <Route path="/Cuentas" element={<Accounts/>}/>
+                <Route path="/Cuentas" element={<Accounts userData={userData}/>}/>
 
                 {/* <Route
           path="/Profiles"
@@ -225,9 +227,9 @@ function App() {
 
         /> */}
 
-                <Route path="/AuditLogs" element={<AuditLogs/>}/>
+                <Route path="/AuditLogs" element={<AuditLogs userData={userData}/>}/>
 
-                <Route path="/ZoomC" element={<Zoom/>}/>
+                <Route path="/ZoomC" element={<MyZoom userData={userData}/>}/>
                 {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
                 
                 <Route
@@ -235,8 +237,8 @@ function App() {
                     element={
                         userDataLoaded ? (
                             <ProtectedRoute
-                                element={<MyZoomPat/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                element={<MyZoomPat userData={userData}/>}
+                                allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />
                         ) : (

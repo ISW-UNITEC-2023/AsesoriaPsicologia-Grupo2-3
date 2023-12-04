@@ -50,7 +50,6 @@ export async function cMeeting(topic,description, estarttime,duration,videohost,
 }
 
 
-
 export async function gMeeting(userId) {
   try {
     const response = await axios.get('http://localhost:8000/api/users/i0W0G-ymQ1qTNGqwHH5pag/meetings');
