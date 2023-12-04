@@ -217,5 +217,6 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
     </div>
   );
 };
+};
 
 export default PopUpAdminRole;
