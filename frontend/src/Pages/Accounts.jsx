@@ -413,7 +413,7 @@ function Accounts(props) {
 
     return (
         <div className="account-container">
-            <Navbar/>
+            <Navbar userData={props.userData}/>
             <div className="account-box">
                 <div className="account-header">
                     <span className="account-title">Administración de Cuentas</span>

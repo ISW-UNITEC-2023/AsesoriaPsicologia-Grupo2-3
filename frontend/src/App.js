@@ -33,6 +33,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
 
+
   const fetchUserData = async () => {
     const userData = await getCookies();
     if (userData && userData.user_data && userData.user_data.roles) {
@@ -175,7 +176,7 @@ function App() {
                     element={
                         userDataLoaded ? (
                             <ProtectedRoute
-                                element={<Citas/>}
+                                element={<Citas userData={userData}/>}
                                 allowedRoles={userData.allRoles}
                                 userRoles={userData}
                             />

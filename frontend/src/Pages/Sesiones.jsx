@@ -16,7 +16,7 @@ function Sesiones(props) {
     return (
         <>
             <div className="flex-grow flex flex-row items-center">
-                <NavigationB/>
+                <NavigationB userData={props.userData}/>
                 <div className="flex-1 flex flex-col w-80">
                     <Row>
                         <Col className="flex flex-col items-center">
