@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
 
-  align-items: center;
+  align-items: flex-end;
   background-color: rgb(0, 38, 89);
   z-index: 9999;
   background-image: url("../Images/navbar.png");
@@ -40,7 +40,7 @@
 }
 
 .item-bar {
-  text-decoration: none;
+  text-decoration: auto;
   color: white;
   font-size: 1rem;
   margin-right: 30px !important;
@@ -96,7 +96,7 @@
   .itemshow.navbar-nav {
     margin-top: 10vh;
     width: auto;
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .item-bar {

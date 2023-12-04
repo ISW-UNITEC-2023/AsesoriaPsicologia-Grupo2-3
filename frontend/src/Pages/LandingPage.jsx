@@ -35,7 +35,7 @@ function LandingPage(props) {
 
     return (
         <LandingLayout pagina="Inicio">
-            <div className="Home">
+            <div className="Home overflow-hidden">
                 <div className="navigation-bar">
                     <NavigationBar {...props} />
                 </div>
@@ -97,7 +97,7 @@ function LandingPage(props) {
                     <hr className="w-4/5 mx-auto border-b-1 border-red-600 mb-4"/>
                     <div
                         className="image-container lg:flex lg:flex-row lg:justify-between lg:items-center lg:space-x-10
-                lg:mb-10 mr-5 ml-5 sm:flex sm:flex-col sm:justify-center sm:items-center"
+                lg:mb-10 mr-8 ml-5 sm:flex sm:flex-col sm:justify-center sm:items-center"
                     >
                         <div className="lg:w-1/2 flex items-center justify-center">
                             <img

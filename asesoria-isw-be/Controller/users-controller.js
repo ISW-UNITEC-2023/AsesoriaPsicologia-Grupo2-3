@@ -2,6 +2,7 @@ const HTTPCodes = require("../Utils/HTTPCodes");
 const userServices = require("../Service/users-services");
 
 const { isEmail, isPassword } = require("../Utils/validator");
+const rolesServices = require("../Service/roles-services")
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
@@ -93,11 +94,23 @@ async function loginUser(req, res) {
       return res;
     }
     const roles = await userServices.getUserRoles(email_exists[0].id_user);
+    //console.log("Roles", roles[0]);
+    
+    let privileges = await Promise.all(
+      roles[0].map(async (role) => {
+        return await rolesServices.getRolePrivileges(role.id_role);
+      })
+    );
+
+    const privilegios = privileges[0].map((privilege) => privilege.id_privilege);
+    
+    //console.log("Privilegios retornados", privilegios);
     const roleNames = roles[0].map((role) => role.name_role);
 
     const userData = {
       email: email,
       roles: roleNames,
+      privileges: privilegios
     };
     if (errorMessage.length) {
       res.send({
@@ -429,6 +442,20 @@ async function getRoles(req, res) {
   }
 }
 
+async function getPrivilegesById(req, res) {
+  const { id_user, id_element } = req.body;
+  try {
+    const user_role = await userServices.getRoleId(id_user);
+    console.log(user_role[0].id_role);
+    const privileges = await rolesServices.getRolePrivilegesByElement(user_role[0].id_role, id_element);
+    res.send(privileges);
+  } catch (e) {
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "Error al obtener los privilegios.",
+    });
+  }
+}
+
 async function getAllUsersRoles(req, res){
   try{
     const roles = await userServices.getAllUsersRoles();
@@ -472,4 +499,5 @@ module.exports = {
   getUserRoles,
   getAllUsersRoles,
   deleteCookies,
+  getPrivilegesById
 };

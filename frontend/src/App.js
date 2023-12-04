@@ -20,12 +20,12 @@ import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import {Citas} from "./Pages/Citas";
+import { Zoom } from "react-toastify";
 
-function ProtectedRoute({ element, allowedRoles, userRoles }) {
-  const isAuthorized =
-    userRoles && userRoles.some((role) => allowedRoles.includes(role));
+function ProtectedRoute({ element, allowedRoles, userRoles, allowedPrivileges }) {
+  const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
 
-  return isAuthorized ? element : null;
+  return  isAuthorized ? element : null;
 }
 
 function App() {
@@ -34,11 +34,12 @@ function App() {
 
   const fetchUserData = async () => {
     const userData = await getCookies();
-    console.log("Fetching data");
     if (userData && userData.user_data && userData.user_data.roles) {
-      setUserData(userData.user_data.roles);
+      setUserData(userData.user_data);
       setUserDataLoaded(true);
     }
+    setUserData(userData.user_data);
+    console.log("Fetching data", userData);
   };
 
   const handleLoginSuccess = (e) => {
@@ -160,7 +161,7 @@ function App() {
                         userDataLoaded ? (
                             <ProtectedRoute
                                 element={<DashBoard/>}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                allowedRoles={["admin", "asesor","patient", "teacher", "psychologist"]}
                                 userRoles={userData}
                             />
                         ) : (
@@ -226,8 +227,23 @@ function App() {
 
                 <Route path="/AuditLogs" element={<AuditLogs/>}/>
 
-                <Route path="/ZoomC" element={<MyZoom/>}/>
-                <Route path="/ZoomV" element={<MyZoomPat/>}/>
+                <Route path="/ZoomC" element={<Zoom/>}/>
+                {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
+                
+                <Route
+                    path="/ZoomV"
+                    element={
+                        userDataLoaded ? (
+                            <ProtectedRoute
+                                element={<MyZoomPat/>}
+                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                                userRoles={userData}
+                            />
+                        ) : (
+                            <LoadingSpinner/>
+                        )
+                    }
+                />
             </Routes>
         </Router>
     );

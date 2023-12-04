@@ -16,8 +16,10 @@ router.put("/updateState", appointmentControllers.updateStateMedic);
 //Get
 
 router.get("/getAll", appointmentControllers.getAppointments);
-router.get("/getById", appointmentControllers.getAppointmentById);
-
+router.get("/getById", appointmentControllers.getById);
+ router.get("/getCreator", appointmentControllers.getCreator);
+ router.get("/getDoctor", appointmentControllers.getDoctor);
+ router.get("/getClinic", appointmentControllers.getClinic);
 //Delete
 router.delete("/deleteById", appointmentControllers.deleteAppointment);
 

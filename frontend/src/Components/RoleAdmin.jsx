@@ -1,5 +1,5 @@
 //Functions
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import rolesServices from "../Utilities/roles-services";
 
 //Styles and Icons
@@ -16,13 +16,19 @@ import {
 const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
   const [privileges, setPrivileges] = useState([]);
   const [roles, setRoles] = useState(dataRoles);
+
   const [rolesPrivileges, setRolesPrivileges] = useState({
     id_role: [],
     current: roles.length ? roles[0].id_role : null,
     privileges: [],
     checkedPrivileges: [],
-    originalChecks: [],
   });
+
+  const [dataOriginal, setDataOriginal] = useState({
+    data: [],
+    filled: 0,
+  });
+
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -31,11 +37,62 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
   const popupStyle = {
     transform: isOpen ? "scale(1)" : "scale(0.8)",
   };
+
   const [openCreate, setOpenCreate] = useState({
     open: 0,
     name: "",
     description: "",
   });
+
+  useEffect(() => {
+    let data = [];
+    async function extractData() {
+      data = await rolesServices.getAllPrivileges();
+      setPrivileges(data);
+    }
+    extractData();
+    async function getPrivileges() {
+      const rolesprivileges = [];
+      const id_roles = [];
+      const checks = [];
+
+      for (let i = 0; i < roles.length; i++) {
+        const data2 = await rolesServices.getAllRolesPrivileges(
+          roles[i].id_role
+        );
+        rolesprivileges.push(data2.roleInfo);
+        id_roles.push(roles[i].id_role);
+      }
+
+      roles.map((role) => {
+        const check = [];
+        data.map((privilege) => {
+          check.push(
+            evaluatePrivileges(
+              rolesprivileges,
+              id_roles,
+              privilege.id_privilege,
+              role.id_role
+            )
+          );
+        });
+        checks.push(check);
+      });
+      setRolesPrivileges({
+        current: roles[0].id_role,
+        id_role: id_roles,
+        privileges: rolesprivileges,
+        checkedPrivileges: checks,
+      });
+      if (dataOriginal.filled === 0) {
+        setDataOriginal({
+          data: checks,
+          filled: 1,
+        });
+      }
+    }
+    getPrivileges();
+  }, []);
 
   const evaluatePrivileges = (rolesprivileges, id_roles, idPriv, idRole) => {
     for (let i = 0; i < rolesprivileges[id_roles.indexOf(idRole)].length; i++) {
@@ -67,41 +124,30 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
     }
   };
 
-  const handleCheck = (e) => {
-    const idPriv = parseInt(e.target.value);
-    const idRole = parseInt(e.target.name);
+  const handleCheck = (idP, idR, index2) => {
+    const idPriv = idP;
+    const idRole = idR;
     const checks = rolesPrivileges.checkedPrivileges;
     const id_roles = rolesPrivileges.id_role;
-    const privileges = rolesPrivileges.privileges;
+    const privs = rolesPrivileges.privileges;
     const index = id_roles.indexOf(idRole);
-    const index2 = privileges[index].findIndex(
-      (privilege) => privilege.id_privilege === idPriv
-    );
 
-    if (e.target.checked) {
-      if (index2 === -1) {
-        privileges[index].push({
-          id_privilege: idPriv,
-          privilege: 1,
-        });
-      } else {
-        privileges[index][index2].privilege = 1;
-      }
+    if (checks[index][index2] === true) {
+      checks[index][index2] = false;
+      privs[index] = privs[index].filter(
+        (privilege) => privilege.id_privilege !== idPriv
+      );
     } else {
-      if (index2 === -1) {
-        privileges[index].push({
-          id_privilege: idPriv,
-          privilege: 0,
-        });
-      } else {
-        privileges[index][index2].privilege = 0;
-      }
+      checks[index][index2] = true;
+      privs[index].push({
+        id_privilege: idPriv,
+        privilege: 1,
+      });
     }
-    checks[index] = privileges[index].map((privilege) => privilege.privilege);
     setRolesPrivileges({
       ...rolesPrivileges,
       checkedPrivileges: checks,
-      privileges: privileges,
+      privileges: privs,
     });
   };
 
@@ -138,7 +184,6 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
       id_role: id_roles,
       privileges: rolesprivileges,
       checkedPrivileges: checks,
-      originalChecks: checks,
     });
   }
 
@@ -154,53 +199,30 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
     });
   }
 
-  useEffect(() => {
-    async function extractData() {
-      const data = await rolesServices.getAllPrivileges();
-      setPrivileges(data);
-    }
-    extractData();
-  }, []);
+  async function guardarCambios() {
+    const rolesData = rolesPrivileges.id_role;
+    const checks = rolesPrivileges.checkedPrivileges;
+    const data = dataOriginal.data;
+    const id_roles = rolesPrivileges.id_role;
 
-  useEffect(() => {
-    async function getPrivileges() {
-      const rolesprivileges = [];
-      const id_roles = [];
-      const checks = [];
-
-      for (let i = 0; i < roles.length; i++) {
-        const data2 = await rolesServices.getAllRolesPrivileges(
-          roles[i].id_role
-        );
-        rolesprivileges.push(data2.roleInfo);
-        id_roles.push(roles[i].id_role);
+    for (let i = 0; i < rolesData.length; i++) {
+      for (let j = 0; j < checks[i].length; j++) {
+        if (data[i][j] !== checks[i][j]) {
+          if (checks[i][j] === true) {
+            await rolesServices.assignPrivilegesToRole(
+              id_roles[i],
+              privileges[j].id_privilege
+            );
+          } else {
+            await rolesServices.removePrivilegeFromRole(
+              id_roles[i],
+              privileges[j].id_privilege
+            );
+          }
+        }
       }
-
-      roles.map((role) => {
-        const check = [];
-        privileges.map((privilege) => {
-          check.push(
-            evaluatePrivileges(
-              rolesprivileges,
-              id_roles,
-              privilege.id_privilege,
-              role.id_role
-            )
-          );
-        });
-        checks.push(check);
-      });
-
-      setRolesPrivileges({
-        current: roles[0].id_role,
-        id_role: id_roles,
-        privileges: rolesprivileges,
-        checkedPrivileges: checks,
-        originalChecks: checks,
-      });
     }
-    getPrivileges();
-  }, []);
+  }
 
   return (
     <div className="popup-overlay-ra" style={overlayStyle}>
@@ -284,27 +306,37 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
                         id_role === rolesPrivileges.current && (
                           <input
                             type="checkbox"
-                            name={id_role}
                             className="privilege-checkbox-ra"
-                            value={privilege.id_privilege}
                             checked={getCheckedPrivilege(
                               privilege.id_privilege,
                               id_role
                             )}
-                            onChange={(e) => handleCheck(e)}
+                            onChange={() =>
+                              handleCheck(
+                                privilege.id_privilege,
+                                id_role,
+                                privileges.indexOf(privilege)
+                              )
+                            }
                           />
                         )
                     )}
                     <label className="privilege-crud">
                       {privilege.privilege === 1
-                        ? "C"
+                        ? "Crear"
                         : privilege.privilege === 2
-                        ? "R"
+                        ? "Visualizar"
                         : privilege.privilege === 3
-                        ? "U"
-                        : "D"}
+                        ? "Actualizar"
+                        : "Eliminar"}
                     </label>
-                    <label>{privilege.id_elemento}</label>
+                    <label>{privilege.id_elemento === 1
+                        ? "Crear"
+                        : privilege.id_elemento === 2
+                        ? "Visualizar"
+                        : privilege.id_elemento === 3
+                        ? "Actualizar"
+                        : "Eliminar"}</label>
                   </div>
                 ))}
               </div>
@@ -379,7 +411,14 @@ const RoleAdmin = ({ isOpen, onClose, dataRoles }) => {
                 <button className="ra-cancelar-button" onClick={onClose}>
                   Cancelar
                 </button>
-                <button className="ra-guardar-button">Guardar</button>
+                <button
+                  className="ra-guardar-button"
+                  onClick={() => {
+                    guardarCambios();
+                  }}
+                >
+                  Guardar
+                </button>
               </>
             ) : null}
           </div>
