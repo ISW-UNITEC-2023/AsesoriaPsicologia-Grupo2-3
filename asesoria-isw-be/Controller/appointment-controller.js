@@ -14,6 +14,17 @@ async function createAppointment(req, res)
     }
 }
 
+async function createConsultation(req, res) {
+    try{
+        const {id_file, id_doctor, id_clinic, user_creator, observations, amount, medic_orders} = req.body;
+        await appointmentServices.createConsultation({id_file, id_doctor, id_clinic, user_creator, observations, amount, medic_orders});
+        res.send({ message: "Se ha creado una nueva consulta" })
+    }catch(error)
+    {
+        res.send({ message: "No se pudo crear la consulta", err: error.message });
+    }
+}
+
 async function updateOrder(req,res)
 {
 
@@ -181,6 +192,7 @@ module.exports = {
     getAppointments,
     getById,
     createAppointment,
+    createConsultation,
     deleteAppointment,
     updateOrder,
     updatePaymentMedic,

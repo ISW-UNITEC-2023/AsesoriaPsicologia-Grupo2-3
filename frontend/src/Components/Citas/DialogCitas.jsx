@@ -10,6 +10,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
+    const [idPacienteN, setIdPacienteN] = useState(0);
     const {
         data: fetchedUsers,
         error: usersError,
@@ -53,15 +54,30 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         updateOpen(!open);
     };
 
-    const namePaciente = localStorage.getItem("namePatient");
+    const namePaciente = encodeURIComponent(localStorage.getItem("namePatient"));
 
     const idPaciente = async (name) => {
-        return await axios.get(`http://localhost:8000/patients/getPatient/${name}`);
-    }
+        try {
+            const response = await axios.get(`http://localhost:8000/patients/getPatient/${name}`);
+            setIdPacienteN(response.data.data)
+            return response.data.data;
+        } catch (error) {
+            toast("Ha ocurrido un error al obtener el ID del paciente: " + error.message, {type: "error"});
+            throw error;
+        }
+    };
 
-    const handleConfirmC = () => {
+
+    useEffect(() => {
+        setNombreDoctorN(nombreDoctor);
+        setFechaN(fecha);
+        setHoraN(hora);
+        idPaciente(namePaciente).then(r => r);
+    }, [idPacienteN]);
+
+    const handleConfirmC = async () => {
         // combinar los iso de fecha y hora
-        const fechaHora = fechaN + "T" + horaN + ":00.000Z";
+        const fechaHora = fechaN + " " + horaN + ":00.000Z";
         // Obtener él, id del doctor seleccionado
         const id_doctor = doctores.filter(doctor => doctor.id_user === nombreDoctorN)[0].id_user;
 
@@ -71,9 +87,10 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                 appointment_date: fechaHora,
                 id_clinic: 8,
                 id_doctor: id_doctor,
-                id_file: idPaciente(namePaciente),
+                id_file: idPacienteN,
                 user_creator: localStorage.getItem("user_id")
             }).then(() => {
+                console.log(fechaHora);
                 handleOpen();
                 toast("Cita Agendada Correctamente", {
                     type: "success",
