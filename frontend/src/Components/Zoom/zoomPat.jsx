@@ -13,7 +13,7 @@ import {gMeeting} from "../../Utilities/zoom-services";
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons';
 
 
-function MyZoomPat() {
+function MyZoomPat(props) {
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {gMeeting().then(meetingsData => {  setMeetings(meetingsData.meetings || []); 
@@ -23,7 +23,7 @@ function MyZoomPat() {
     return (
     <div className='zoom-container'>
 
-        <NavigationB/>
+        <NavigationB userData={props.userData}/>
         <div className='zoom-div'>
                 <Row className='zoom-row'>
         <Col>

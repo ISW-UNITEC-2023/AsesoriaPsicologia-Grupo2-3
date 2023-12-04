@@ -19,7 +19,17 @@ import {
   faBookOpen
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
-function MyNavbar() {
+
+function ProtectedRoute(  userRoles , allowedPrivileges ) {
+  const isAuthorized = userRoles && userRoles.privileges.some((role) => allowedPrivileges.includes(role));
+  
+  return  isAuthorized ;
+}
+
+
+function MyNavbar(props) {
+
+ 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -61,19 +71,27 @@ function MyNavbar() {
                 />
                 Mi Perfil
               </div>
-
-              <div
+              {ProtectedRoute(props.userData, [54])?(
+                <div
                 className="nb-dropdown-item"
                 onClick={() => {
                   logs();
                 }}
-              >
-                <FontAwesomeIcon
+                
+                >
+                  <FontAwesomeIcon
                   icon={faBookOpen}
                   className="nb-dropdown-icon"
                 />
                 Admin Logs
-              </div>
+                </div>
+              ):(
+                <>
+
+                </>
+              )}
+              
+                
               
               <div
                 className="nb-dropdown-item"
@@ -104,31 +122,61 @@ function MyNavbar() {
           />
           Anuncios
         </Link> */}
-        <Link to="/Zoomv" className="link-navbar-plataforma">
-          <FontAwesomeIcon icon={faVideo} className="navbar-plataforma-icon" />
-          Zoom
-        </Link>
-        <Link to="/Calendario" className="link-navbar-plataforma">
-          <FontAwesomeIcon
-            icon={faCalendarDays}
-            className="navbar-plataforma-icon"
-          />
-          Calendario
-        </Link>
-        <Link to="/Pacientes" className="link-navbar-plataforma">
-          <FontAwesomeIcon
-            icon={faUserGroup}
-            className="navbar-plataforma-icon"
-          />
-          Pacientes
-        </Link>
-        <Link to="/Cuentas" className="link-navbar-plataforma">
-          <FontAwesomeIcon
-            icon={faAddressCard}
-            className="navbar-plataforma-icon"
-          />
-          Cuentas
-        </Link>
+        {ProtectedRoute(props.userData, [31])?(
+          <Link to="/Zoomv" className="link-navbar-plataforma">
+            <FontAwesomeIcon icon={faVideo} className="navbar-plataforma-icon" />
+            Zoom
+          </Link>
+        ):(
+          <>
+
+          </>
+        )}
+        
+        {ProtectedRoute(props.userData, [31])?(
+          <Link to="/Calendario" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              className="navbar-plataforma-icon"
+            />
+            Calendario
+          </Link>
+        ):(
+          <>
+          
+          </>
+        )}
+
+        {ProtectedRoute(props.userData, [56])?(
+          <Link to="/Pacientes" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faUserGroup}
+              className="navbar-plataforma-icon"
+            />
+            Pacientes
+          </Link>
+        ):(
+          <>
+          
+          </>
+        )}  
+        
+        {ProtectedRoute(props.userData, [45])?(
+          <Link to="/Cuentas" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faAddressCard}
+              className="navbar-plataforma-icon"
+            />
+            Cuentas
+          </Link>
+        ):(
+          <>
+          
+          </>
+        )}  
+        
+        
+        
         {/**<FontAwesomeIcon
           icon={faArrowLeft}
           className="navbar-plataforma-icon"

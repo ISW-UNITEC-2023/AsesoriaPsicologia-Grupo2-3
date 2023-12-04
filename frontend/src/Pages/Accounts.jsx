@@ -26,7 +26,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Accounts() {
+function Accounts(props) {
   const [users, setUsers] = useState([]);
   const [roles, setRoles] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
@@ -413,7 +413,7 @@ function Accounts() {
 
   return (
     <div className="account-container">
-      <Navbar />
+      <Navbar userData={props.userData}/>
       <div className="account-box">
         <div className="account-header">
           <span className="account-title">Administración de Cuentas</span>
