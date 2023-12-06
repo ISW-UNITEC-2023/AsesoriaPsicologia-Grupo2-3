@@ -40,7 +40,7 @@ function App() {
       setUserDataLoaded(true);
     }
     setUserData(userData.user_data);
-    console.log("Fetching data", userData);
+    //console.log("Fetching data", userData);
   };
 
     const handleLoginSuccess = (e) => {

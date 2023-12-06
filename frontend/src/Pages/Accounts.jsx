@@ -488,7 +488,7 @@ function Accounts(props) {
                             user={openEmail.userInfo}
                         />
                     )}
-                    {console.log("Data Roles", roles)}
+                    
                     {openRole.open === 1 && (
                         <PopUpAdminRole
                             isOpen={openRole.open}

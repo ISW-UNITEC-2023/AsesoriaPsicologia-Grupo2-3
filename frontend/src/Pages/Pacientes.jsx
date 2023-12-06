@@ -32,7 +32,7 @@ function PacientesForm(props) {
             });
         })
 
-        console.log("pacientes",arregloUsuarios);
+        //console.log("pacientes",arregloUsuarios);
         setNombres(arregloMandar);
     }
 
