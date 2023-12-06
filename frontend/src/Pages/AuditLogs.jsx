@@ -11,6 +11,7 @@ function AuditLogs (props) {
 
   async function initialList() {
     const arregloActions = await Services.getActions();
+    console.log("actions", arregloActions);
     const arregloMandar = [];
 
     arregloActions.map((action) => {

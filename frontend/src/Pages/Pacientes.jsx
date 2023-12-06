@@ -20,26 +20,19 @@ function PacientesForm(props) {
 
     async function initialList() {
         const arregloUsuarios = await Services.getPatients();
-        console.log("pacientes",arregloUsuarios);
+        //console.log("pacientes",arregloUsuarios);
         const arregloMandar = [];
 
         arregloUsuarios.map((usuario) => {
+            let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
             return arregloMandar.push({
-                nombre: usuario.name_user,
-                email: usuario.email_user,
-                id_account: usuario.id_user,
+                nombre: nombre_user,
+                email: usuario.email,
+                id_account: usuario.id_file,
             });
         })
 
-        // arregloUsuarios.credentials.usersCredentials.map((usuario) => {
-        //   return arregloMandar.push({
-        //     nombre: usuario.name,
-        //     email: usuario.email,
-        //     id_account: usuario.id_account,
-        //   });
-        // });
-
-        console.log(arregloUsuarios);
+        console.log("pacientes",arregloUsuarios);
         setNombres(arregloMandar);
     }
 
@@ -78,9 +71,9 @@ function PacientesForm(props) {
     };
 
 
-    const handleClick = (nombre) => {
+    const handleClick = (id) => {
         // Guardar el nombre en el localStorage
-        localStorage.setItem('namePatient', nombre);
+        localStorage.setItem('id_patient', id);
     };
 
     return (
@@ -98,7 +91,7 @@ function PacientesForm(props) {
                                 <div className="nombre-box">
                                     <FontAwesomeIcon icon={faUserCircle} className="icon-persona"/>
                                     <span className="nombre" style={{width: "400%"}}>
-                   <Link to="/sesiones" onClick={() => handleClick(nombre.nombre)}>
+                   <Link to="/sesiones" onClick={() => handleClick(nombre.id_account)}>
                 {nombre.nombre}
               </Link>
                 </span>

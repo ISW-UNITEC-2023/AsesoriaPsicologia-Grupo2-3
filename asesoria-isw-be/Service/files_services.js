@@ -17,13 +17,12 @@ async function createFile(file) {
     last_name: file.last_name,
     second_surname: file.second_surname,
     birthdate: file.birthdate,
+    email: file.email,
+    phone_number: file.phone_number,
     address: file.address,
     civil_status: file.civil_status,
     medical_history: file.medical_history,
     substance_usage: file.substance_usage,
-    // first_impressions: file.first_impressions,
-    // treatment_plan: file.treatment_plan,
-    // filescol: file.filescol,
     id_clinic: file.id_clinic,
     active: file.active,
     user_editor: file.user_editor,
@@ -155,6 +154,12 @@ async function getFileById(id) {
   return JSON.parse(file);
 }
 
+async function getAllFiles() {
+  let file = await knex.select().from("files");
+  file = JSON.stringify(file);
+  return JSON.parse(file);
+}
+
 async function getClinicFiles(id) {
   let file = await knex.select().from("files").where("id_clinic", id);
   file = JSON.stringify(file);
@@ -178,7 +183,7 @@ module.exports = {
   getFileById,
   getClinicFiles,
   deleteFile,
-
+  getAllFiles,
   updateFirstName,
   updateMiddleName,
   existFile,

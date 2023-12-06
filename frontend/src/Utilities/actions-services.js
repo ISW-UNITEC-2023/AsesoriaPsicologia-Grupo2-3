@@ -6,13 +6,14 @@ async function getActions() {
     try {
         const options = {
             method: 'GET', 
-            url: host + "/actions"
+            url: "http://localhost:8000/actions"
         };
 
         const response = await axios.request(options);
+        console.log("actions", response);
         return response.data;
     } catch (e) {
-        console.error("Error al obtener acciones:", error);
+        console.error("Error al obtener acciones:", e);
         return null;
     }   
 }
