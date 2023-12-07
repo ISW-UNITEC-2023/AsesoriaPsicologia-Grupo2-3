@@ -21,7 +21,7 @@ import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import { Citas } from "./Pages/Citas";
 import { Zoom } from "react-toastify";
-
+import Calendar from "./Pages/Calendar";
 function ProtectedRoute({
   element,
   allowedRoles,
@@ -65,6 +65,20 @@ function App() {
         <Route
           path="/ResetPassword"
           element={<ForgotPassword {...forgotData} />}
+        />
+        <Route
+          path="/Calendar"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Calendar userData={userData}/>}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
         />
         <Route
           path="/Anuncios"

@@ -1,0 +1,19 @@
+
+.style-header {
+    font-size: 40px;
+    color: #333;
+    font-weight: bold;
+}
+
+.style-header-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 50px;
+    border-bottom: 2px solid #000;
+}
+  
+.style-db-container {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+  }
