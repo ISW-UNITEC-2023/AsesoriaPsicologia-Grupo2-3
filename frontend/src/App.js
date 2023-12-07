@@ -22,16 +22,21 @@ import MyZoom from "./Components/Zoom/Zoom";
 import { Citas } from "./Pages/Citas";
 import { Zoom } from "react-toastify";
 
-function ProtectedRoute({ element, allowedRoles, userRoles, allowedPrivileges }) {
-    const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
+function ProtectedRoute({
+  element,
+  allowedRoles,
+  userRoles,
+  allowedPrivileges,
+}) {
+  const isAuthorized =
+    userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
 
-    return isAuthorized ? element : null;
+  return isAuthorized ? element : null;
 }
 
 function App() {
-    const [userData, setUserData] = useState(null);
-    const [userDataLoaded, setUserDataLoaded] = useState(false);
-
+  const [userData, setUserData] = useState(null);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
   const fetchUserData = async () => {
     const userData = await getCookies();
@@ -43,166 +48,165 @@ function App() {
     console.log("Fetching data", userData);
   };
 
-    const handleLoginSuccess = (e) => {
-        e.preventDefault();
-        fetchUserData();
-    };
+  const handleLoginSuccess = (e) => {
+    e.preventDefault();
+    fetchUserData();
+  };
 
-    useEffect(() => {
-        fetchUserData();
-    }, []);
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<LandingPage {...homedata} />} />
-                <Route path="/Inicio" element={<LandingPage {...homedata} />} />
-                <Route
-                    path="/ResetPassword"
-                    element={<ForgotPassword {...forgotData} />}
-                />
-                <Route
-                    path="/Anuncios"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Anuncios />}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Modulos"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Modulos/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Expedientes"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Vistas/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Secciones"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Sections/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Sesiones"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Sesiones userData={userData}/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Pacientes"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Pacientes userData={userData}  />}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/InicioSesion"
-                    element={
-                        <Login
-                            {...loginData}
-                            onLoginSuccess={handleLoginSuccess}
-                            setUserDataLoaded={setUserDataLoaded}
-                        />
-                    }
-                />
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage {...homedata} />} />
+        <Route path="/Inicio" element={<LandingPage {...homedata} />} />
+        <Route
+          path="/ResetPassword"
+          element={<ForgotPassword {...forgotData} />}
+        />
+        <Route
+          path="/Anuncios"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Anuncios />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Modulos"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Modulos />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Expedientes"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Vistas />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Secciones"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Sections />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Sesiones"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Sesiones userData={userData} />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/Pacientes"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Pacientes userData={userData} />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/InicioSesion"
+          element={
+            <Login
+              {...loginData}
+              onLoginSuccess={handleLoginSuccess}
+              setUserDataLoaded={setUserDataLoaded}
+            />
+          }
+        />
 
-                <Route
-                    path="/Dashboard"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<DashBoard userData={userData} />}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/citas"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Citas userData={userData}/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
+        <Route
+          path="/Dashboard"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<DashBoard userData={userData} />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
+          path="/citas"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<Citas userData={userData} />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
 
-                <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-                <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
-                <Route
-                    path="/Crearanuncios"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<AnunciosCrear />}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
-
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                {/* <Route
+        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
+        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route
+          path="/Crearanuncios"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<AnunciosCrear />}
+                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        {/* <Route
           path="/Profiles"
           element={
             userDataLoaded ? (
@@ -216,69 +220,69 @@ function App() {
             )
           }
         /> */}
-                <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
-                <Route path="/Cuestionario" element={<Wizard {...wizardData} />}/>
-                <Route path="/Cuentas" element={<Accounts userData={userData}/>}/>
+        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
+        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route path="/Cuentas" element={<Accounts userData={userData} />} />
 
-                {/* <Route
+        {/* <Route
           path="/Profiles"
 
                 element={<ProfilesPage />}
 
         /> */}
 
-                <Route path="/AuditLogs" element={<AuditLogs userData={userData}/>}/>
+        <Route path="/AuditLogs" element={<AuditLogs userData={userData} />} />
 
-                <Route path="/ZoomC" element={<MyZoom userData={userData}/>}/>
-                {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
+        <Route path="/ZoomC" element={<MyZoom userData={userData} />} />
+        {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
 
-                <Route
-                    path="/ZoomV"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<MyZoomPat userData={userData}/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-            </Routes>
-        </Router>
-    );
+        <Route
+          path="/ZoomV"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<MyZoomPat userData={userData} />}
+                allowedRoles={userData.allRoles}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
 //Aqui se importan las imagenes necesarias para el proyecto
 //Ejemplo const logo = require('./assets/logo.png');
 const wizardData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
-    howieImg: require("./Styles/Images/howie-wizard.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
+  howieImg: require("./Styles/Images/howie-wizard.png"),
 };
 
 const forgotData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
 };
 
 const homedata = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
 };
 
 const aboutData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
-    misionIcon: require("./Styles/Images/fondoAU1.png"),
-    visionIcon: require("./Styles/Images/fondoAU2.jpg"),
-    historyIcon: require("./Styles/Images/fondoAU3.jpeg"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
+  misionIcon: require("./Styles/Images/fondoAU1.png"),
+  visionIcon: require("./Styles/Images/fondoAU2.jpg"),
+  historyIcon: require("./Styles/Images/fondoAU3.jpeg"),
 };
 
 const loginData = {
-    unitecLogo: require("./Styles/Images/unitec-logo.png"),
-    navbarBg: require("./Styles/Images/navbar.png"),
+  unitecLogo: require("./Styles/Images/unitec-logo.png"),
+  navbarBg: require("./Styles/Images/navbar.png"),
 };
