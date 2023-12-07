@@ -133,19 +133,14 @@ function MyNavbar(props) {
           </>
         )}
         
-        {ProtectedRoute(props.userData, [31])?(
-          <Link to="/Calendario" className="link-navbar-plataforma">
+      
+          <Link to="/Calendar" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faCalendarDays}
               className="navbar-plataforma-icon"
             />
             Calendario
           </Link>
-        ):(
-          <>
-          
-          </>
-        )}
 
         {ProtectedRoute(props.userData, [56])?(
           <Link to="/Pacientes" className="link-navbar-plataforma">
