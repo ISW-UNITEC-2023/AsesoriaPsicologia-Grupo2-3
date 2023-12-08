@@ -1,5 +1,6 @@
-.background {
+.background-navbar {
   background-color: rgb(250, 250, 250);
+  display: flex;
 }
 
 .body-navbar-plataforma > :last-child {

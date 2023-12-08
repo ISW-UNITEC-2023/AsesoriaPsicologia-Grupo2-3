@@ -43,7 +43,7 @@ function MyNavbar(props) {
   };
 
   return (
-    <div className="background">
+    <div className="background-navbar">
       <div className="body-navbar-plataforma">
         <FontAwesomeIcon icon={faUserCircle} className="nb-navbar-user-icon" />
         <div className="nb-custom-dropdown">

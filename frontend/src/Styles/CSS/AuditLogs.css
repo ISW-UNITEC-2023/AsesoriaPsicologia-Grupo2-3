@@ -26,7 +26,7 @@ body {
 }
 
 .historial-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -35,8 +35,7 @@ body {
   margin-left: 3%;
   margin-right: 3%;
   overflow-y: scroll;
-  font-size: 1rem;
-  text-align: center;
+  font-size:1rem;
 }
 
 .historial-table-header th {
@@ -48,12 +47,17 @@ body {
   border: 1px solid #000;
 }
 
+.row-table-historial:hover td {
+  background-color: #f0f0f0;
+}
+
 .td-items-historial {
   width: 10px;
   border: 1px solid #bbbbbb;
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 }
 
 .td-info-accion {
@@ -63,4 +67,83 @@ body {
   border: 1px solid #bbbbbb;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.th-div-historial{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.boton-descargar-log{
+  justify-self: flex-end;
+  margin-right: 3%;
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: auto;
+}
+
+.remove-filter-historial{
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-right: 1%;
+  margin-left: auto;
+  justify-self: flex-end;
+  position: relative;
+}
+
+.limpiar-filtro-div{
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 10%);
+  color: #113946;
+  border: 1px solid #113946;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  padding: 4px 8px;
+  width: 8rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin: auto 3% 10px 0;
+}
+
+.pagination button {
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  width: 40px;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background-color: #fff;
+  color: #113946;
+  border: #113946 1px solid;
+}
+
+.pagination button:nth-child(-n + 2),
+.pagination button:nth-last-child(-n + 2) {
+  display: inline-block;
 }

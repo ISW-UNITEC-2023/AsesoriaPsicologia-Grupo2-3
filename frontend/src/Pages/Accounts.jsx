@@ -382,7 +382,6 @@ function Accounts(props) {
       setSorted(true);
       setUsers(filteredUsers);
       if (states.length === 0) {
-        console.log("limpiar filtros");
         limpiarFiltros();
       }
     }
