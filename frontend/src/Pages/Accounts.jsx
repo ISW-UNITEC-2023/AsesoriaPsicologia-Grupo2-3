@@ -26,28 +26,28 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Accounts(props) {
-  const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
-  const [originalUsers, setOriginalUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [matchingNames, setMatchingNames] = useState([]);
-  const [displayResults, setDisplayResults] = useState(false);
-  const [sorted, setSorted] = useState(false);
-  const [selectedRoles, setSelectedRoles] = useState([]);
-  const [selectedState, setSelectedState] = useState([]);
-  const [openCreate, setOpenCreate] = useState(0);
-  const [openEdit, setOpenEdit] = useState({
-    open: 0,
-    userInfo: null,
-  });
-  const [openEmail, setOpenEmail] = useState({
-    open: 0,
-    userInfo: null,
-  });
-  const [openRole, setOpenRole] = useState({
-    open: 0,
-    userInfo: null,
-  });
+    const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [originalUsers, setOriginalUsers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [matchingNames, setMatchingNames] = useState([]);
+    const [displayResults, setDisplayResults] = useState(false);
+    const [sorted, setSorted] = useState(false);
+    const [selectedRoles, setSelectedRoles] = useState([]);
+    const [selectedState, setSelectedState] = useState([]);
+    const [openCreate, setOpenCreate] = useState(0);
+    const [openEdit, setOpenEdit] = useState({
+        open: 0,
+        userInfo: null,
+    });
+    const [openEmail, setOpenEmail] = useState({
+        open: 0,
+        userInfo: null,
+    });
+    const [openRole, setOpenRole] = useState({
+        open: 0,
+        userInfo: null,
+    });
 
     //Mensajes de filtros
     const [isHovering, setIsHovering] = useState(false);
@@ -238,8 +238,8 @@ function Accounts(props) {
 
     //Formato de fecha
     const formatDate = (announceDate) => {
-        var date = new Date(announceDate);
-        var options = {
+        const date = new Date(announceDate);
+        const options = {
             year: "numeric",
             month: "short",
             day: "numeric",
@@ -266,7 +266,7 @@ function Accounts(props) {
             setUsers(fetchedUsers);
             setOriginalUsers(fetchedUsers);
         };
-        fetchData();
+        fetchData().then(r => r);
     }, []);
 
     //Fetch de Roles
@@ -275,7 +275,7 @@ function Accounts(props) {
             const fetchedRoles = await role_services.getAllRoles();
             setRoles(fetchedRoles);
         };
-        fetchData();
+        fetchData().then(r => r);
     }, []);
 
     //Filtrado de Nombre
@@ -404,7 +404,7 @@ function Accounts(props) {
             setUsers(fetchedUsers);
             setOriginalUsers(fetchedUsers);
         };
-        fetchData();
+        await fetchData();
     }
 
     return (
@@ -439,53 +439,55 @@ function Accounts(props) {
                             <span className="limpiar-filtro-div">
                 No se han aplicado filtros
               </span>
-            )}
-          </div>
-          <button
-            className="crear-cuenta-button"
-            onClick={() => {
-              setOpenCreate(1);
-            }}
-          >
-            Crear cuenta
-          </button>
-          <PopUpCrearUser
-            isOpen={openCreate}
-            onClose={() => {
-              setOpenCreate(0);
-            }}
-            refreshUsers={() => {
-              refreshUsers();
-            }}
-          />
-          {openEdit.open === 1 && (
-            <PopUpEditUser
-              isOpen={openEdit.open}
-              onClose={() => {
-                setOpenEdit({ open: 0, userInfo: null });
-              }}
-              user={openEdit.userInfo}
-            />
-          )}
-          {openEmail.open === 1 && (
-            <EmailPopUp
-              isOpen={openEmail.open}
-              onClose={() => {
-                setOpenEmail({ open: 0, userInfo: null });
-              }}
-              user={openEmail.userInfo}
-            />
-          )}
-          {openRole.open == 1 && (
-            <PopUpAdminRole
-              isOpen={openRole.open}
-              onClose={() => {
-                setOpenRole({ open: 0, userInfo: null });
-              }}
-              user={openRole.userInfo}
-              roles={roles}
-            />
-          )}
+                        )}
+                    </div>
+                    <button
+                        className="crear-cuenta-button"
+                        onClick={() => {
+                            setOpenCreate(1);
+                        }}
+                    >
+                        Crear cuenta
+                    </button>
+                    <PopUpCrearUser
+                        isOpen={openCreate}
+                        onClose={() => {
+                            setOpenCreate(0);
+                        }}
+                        refreshUsers={() => {
+                            refreshUsers().then(r => r);
+                        }}
+                    />
+                    {openEdit.open === 1 && (
+                        <PopUpEditUser
+                            isOpen={openEdit.open}
+                            onClose={() => {
+                                setOpenEdit({open: 0, userInfo: null});
+                            }}
+                            user={openEdit.userInfo}
+                        />
+                    )}
+                    {openEmail.open === 1 && (
+                        <EmailPopUp
+                            isOpen={openEmail.open}
+                            onClose={() => {
+                                setOpenEmail({open: 0, userInfo: null});
+                            }}
+                            user={openEmail.userInfo}
+                        />
+                    )}
+                    {openRole.open === 1 && (
+                        <PopUpAdminRole
+                            isOpen={openRole.open}
+                            onClose={() => {
+                                setOpenRole({open: 0, userInfo: null});
+                            }}
+                            user={openRole.userInfo}
+                            roles={roles}
+                        />
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

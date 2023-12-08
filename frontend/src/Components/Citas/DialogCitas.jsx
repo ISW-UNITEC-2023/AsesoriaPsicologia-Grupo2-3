@@ -22,23 +22,6 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         isLoading: rolesLoading
     } = useSWR('http://localhost:8000/roles/viewAll', user_services.getAllUsersRoles);
 
-    if (usersLoading || rolesLoading) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <Spinner/>
-            </div>
-        )
-    }
-
-    if (usersError || rolesError) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <p>Ha ocurrido un error al cargar los usuarios</p>
-            </div>
-        )
-    }
-
-
     const usersWithRoles = fetchedUsers.map(user => {
         const userRoles = fetchedRoles
             .filter(role => user.id_user === role.id_user)
@@ -110,6 +93,22 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
             type: "success",
             bodyStyle: {width: "1000%"}
         });
+    }
+
+    if (usersLoading || rolesLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spinner/>
+            </div>
+        )
+    }
+
+    if (usersError || rolesError) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p>Ha ocurrido un error al cargar los usuarios</p>
+            </div>
+        )
     }
 
     return (

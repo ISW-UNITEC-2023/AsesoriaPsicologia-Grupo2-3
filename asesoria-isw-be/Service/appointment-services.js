@@ -23,7 +23,7 @@ async function createAppo(new_appo)
     });
 }
 
-async function createConsultation(new_appo)
+async function addConsultation(new_appo)
 {
     await knex("appointments").update({
         id_file: new_appo.id_file,
@@ -171,7 +171,7 @@ module.exports = {
     getAppo,
     getById,
     createAppo,
-    createConsultation,
+    addConsultation,
     deleteAppo,
     updateMedicOrder,
     updatePayment,

@@ -14,10 +14,10 @@ async function createAppointment(req, res)
     }
 }
 
-async function createConsultation(req, res) {
+async function addConsultation(req, res) {
     try{
         const {id_file, id_doctor, id_clinic, user_creator, observations, amount, medic_orders} = req.body;
-        await appointmentServices.createConsultation({id_file, id_doctor, id_clinic, user_creator, observations, amount, medic_orders});
+        await appointmentServices.addConsultation({id_file, id_doctor, id_clinic, user_creator, observations, amount, medic_orders});
         res.send({ message: "Se ha creado una nueva consulta" })
     }catch(error)
     {
@@ -139,7 +139,7 @@ async function getCreator(req, res) {
 
     const { id } = req.query.id;
     try {
-       
+
         res.send({
             message: "Citas recuperadas por creador de usuario",
             appointmentsInfo: await appointmentServices.getCreator(id)
@@ -155,7 +155,7 @@ async function getCreator(req, res) {
 async function getDoctor(req, res) {
     const { id } = req.body;
     try {
-        console.log(id); 
+        console.log(id);
 
         res.send({
             message: "Citas recuperadas por médico",
@@ -192,7 +192,7 @@ module.exports = {
     getAppointments,
     getById,
     createAppointment,
-    createConsultation,
+    addConsultation,
     deleteAppointment,
     updateOrder,
     updatePaymentMedic,
