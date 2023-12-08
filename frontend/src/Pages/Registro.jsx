@@ -1,134 +1,56 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { ProgressBar, Button, Form } from 'react-bootstrap';
-import "../Styles/CSS/WizardStyle.css";
+import React, { useState } from "react";
+import { Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; 
+import "../Styles/CSS/Registro.css";
 import NavigationBar from "../Components/NavigationBar";
-import quesData from "../Styles/Extras/preguntas.json";
 
 function Wizard(props) {
-    const navigate = useNavigate();
-    const { howieImg } = props;
-    const [progress, setProgress] = useState(0);
-
-    //Componentes de Registro
     const [regData, setRegData] = useState({
         name: "",
         date: "",
         phoneNum: "",
         email: "",
         password: "",
-    })
-
+        image: null,
+    });
     const [validations, setValidations] = useState({
         isPhoneNumValid: false,
         isEmailValid: false,
         isPasswordValid: false
-    })
-
-    //Validaciones de Registro
-    const valideData = (data) => {
-        let re = "";
-        if (data === "email") {
-            re = /\S+@\S+\.\S+/;
-            return re.test(regData.email);
-        } else if (data === "phoneNum") {
-            re = /^\d{8}$/;
-            return re.test(regData.phoneNum);
-        } else if (data === "password") {
-            re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-            return re.test(regData.password);
-        }
-    }
-
-    // Valida que el dato sea válido
-    const handleRegChange = (e) => {
-        const value = e.target.value;
-        const dataName = e.target.name;
-        setRegData({
-            ...regData,
-            [e.target.name]: value,
-        })
-        if (dataName === "email") {
-            setValidations({
-                ...validations,
-                isEmailValid: valideData(dataName)
-            })
-        } else if (dataName === "phoneNum") {
-            setValidations({
-                ...validations,
-                isPhoneNumValid: valideData(dataName)
-            })
-        } else if (dataName === "password") {
-            setValidations({
-                ...validations,
-                isPasswordValid: valideData(dataName)
-            })
-        }
-    }
-
-    //Componentes de Wizard
-    const [preguntas, setPreguntas] = useState({
-        pregunta: [],
-        respuestas: [],
-        dispPregunta: "",
-        dispRespuestas: [],
-        indice: 0,
     });
 
-    //extraer preguntas del json
-    const getPreguntas = async () => {
-        try {
-            const preguntasArray = quesData.preguntas.map((pregunta) => {
-                return {
-                    pregunta: pregunta.pregunta,
-                    respuestas: pregunta.respuestas,
-                };
-            });
 
-            setPreguntas({
-                pregunta: preguntasArray,
-                dispPregunta: preguntasArray[0].pregunta,
-                dispRespuestas: preguntasArray[0].respuestas,
-                indice: 0,
-            });
-        } catch (error) {
-            console.log(error);
-        }
+    const handleRegChange = (e) => {
+        const { name, value } = e.target;
+        setRegData({
+            ...regData,
+            [name]: value,
+        });
     };
-    //Ejecutar fetch de preguntas
-    useEffect(() => {
-        if (preguntas.pregunta.length === 0) {
-            getPreguntas().then(r => r);
-        }
-    }, [])
 
-    const handlePregunta = (index) => {
-        try {
-            setPreguntas({
-                ...preguntas,
-                dispPregunta: preguntas.pregunta[preguntas.indice + 1].pregunta,
-                dispRespuestas: preguntas.pregunta[preguntas.indice + 1].respuestas,
-                indice: preguntas.indice + 1,
-            });
+    const handleImageChange = (e) => {
+        const selectedImage = e.target.files[0];
+        setRegData({
+            ...regData,
+            image: selectedImage,
+        });
+    };
 
-            setProgress((preguntas.indice + 1) * 100 / preguntas.pregunta.length);
-        } catch (e) {
-            setPreguntas({
-                ...preguntas,
-                indice: preguntas.indice + 1,
-            });
-            console.log(e);
-        }
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Aquí puedes enviar los datos del formulario, incluida la imagen, a tu backend
+        // por ejemplo, usando fetch() o tu método preferido para enviar datos.
+        console.log(regData); // Esto muestra los datos en la consola para propósitos de demostración
     };
 
     return (
+        <div className="containerReg">
+            <div className="navigation-bar">
+                <NavigationBar {...props} />
+            </div>
+            <div className="form-container">
 
-                            <div className="containerReg">
-                                <div className="navigation-bar">
-                    <NavigationBar {...props} />
-                        </div>
-                                <Form>
+            <Form>
                                     <Form.Group controlId="formName" className="mb-3">
                                         <Form.Label>Nombre Completo</Form.Label>
                                         <Form.Control
@@ -154,22 +76,16 @@ function Wizard(props) {
                                             required
                                         />
                                     </Form.Group>
-                                    <Form.Group controlId="formPhone" className="mb-3">
-                                        <Form.Label>Numero de Teléfono</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="phoneNum"
-                                            value={regData.phoneNum}
-                                            onChange={(e) => handleRegChange(e)}
-                                            onBlur={() =>
-                                                setValidations({
-                                                    ...validations,
-                                                    isPhoneNumValid: valideData("phoneNum")
-                                                })
-                                            }
-                                            isInvalid={!validations.isPhoneNumValid && !regData.phoneNum.length > 0}
-                                            required
-                                        />
+
+                                    
+                                        <Form.Group controlId="formImage" className="mb-3">
+                        <Form.Label>Subir imagen</Form.Label>
+                        <Form.Control
+                            type="file"
+                            name="image"
+                            onChange={handleImageChange}
+                            accept="image/*" // Acepta archivos de imagen
+                        />
                                         <Form.Control.Feedback type="invalid">
                                             El número de teléfono debe tener 8 dígitos.
                                         </Form.Control.Feedback>
@@ -215,24 +131,30 @@ function Wizard(props) {
                                             La contraseña debe tener al menos 8 caracteres y contener al menos una letra y un número.
                                         </Form.Control.Feedback>
                                     </Form.Group>
-                                    <Button className="button-reg" type="submit">
-                                        Crear cuenta
-                                    </Button>
-                                </Form>
-                                <Link className="forgot-passwordR" to="/InicioSesion">
-                                    ¿Ya tienes una cuenta?
-                                </Link>
+                        <Form.Group controlId="formImage" className="mb-3">
+                        <Form.Label>Subir imagen</Form.Label>
+                        <Form.Control
+                            type="file"
+                            name="image"
+                            onChange={handleImageChange}
+                            accept="image/*" // Acepta archivos de imagen
+                        />
+                    </Form.Group>
+                <Button className="button-reg" type="submit">
+                    Crear cuenta
+                </Button>
+            </Form>
+            <Link className="forgot-passwordR" to="/InicioSesion">
+                ¿Ya tienes una cuenta?
+            </Link>
 
-                                <div className="footer-general">
-                    <p className="footerL">FUNDAEMPRESA UNITEC</p>
-                    <p className="footerL">© 2023 - Todos los derechos reservados</p>
-                </div>
+            <div className="footer-general">
+                <p className="footerL">FUNDAEMPRESA UNITEC</p>
+                <p className="footerL">© 2023 - Todos los derechos reservados</p>
             </div>
-                    
-               
-            
+        </div>
+        </div>
     );
-
 }
 
 export default Wizard;
