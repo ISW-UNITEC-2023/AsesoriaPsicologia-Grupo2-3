@@ -17,33 +17,39 @@
   
   .pop-iniciar-consulta-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin-left: 25%;
+    margin-top: 1rem;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 55%;
+    height: 93% !important;
   }
   
   .pop-iniciar-consulta-header {
     display: flex;
+    
     justify-content: space-between;
-    align-items: center;
+    align-items:normal;
     margin-bottom: 10px;
   }
-  
   .pop-iniciar-consulta-body {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    margin-left: 2rem;
   }
   
   .pop-iniciar-consulta-body textarea,
   .pop-iniciar-consulta-body input,
   .pop-iniciar-consulta-form textarea,
   .pop-iniciar-consulta-form input {
-    border: 1px solid #000;
-    padding: 8px;
+    border: 1px solid #3e3d3d;
+    width: 100%;
+    padding: 5px;
   }
   
+  .pop-iniciar-consulta-form-medico input {
+    padding: 5px;
+  }
   
   .pop-iniciar-consulta-form {
     display: flex;
@@ -53,10 +59,10 @@
   
   .pop-iniciar-consulta-footer {
     display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-top: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+  
   }
   
   .save-button {
@@ -75,7 +81,7 @@
     background-color:#327434;
   }
   
-  .close-button {
+  .close-button-sesiones {
     background-color: #f44336;
     color: white;
     border: none;
@@ -84,13 +90,9 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin-left: 10px;
     cursor: pointer;
   }
   
-  .close-button:hover {
-    background-color: #d32f2f;
-  }
   
   .pop-iniciar-consulta-header {
     display: flex;
