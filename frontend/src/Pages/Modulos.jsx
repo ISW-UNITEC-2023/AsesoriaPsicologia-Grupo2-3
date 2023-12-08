@@ -1,9 +1,9 @@
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import "../Styles/CSS/Modulos.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
-import {faAdd, faTrashCan, faPen} from "@fortawesome/free-solid-svg-icons";
+import {faAdd, faPen, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 
 import Popup from "../Components/PopUp";
 import PopUpDelete from "../Components/PopUpDelete";
@@ -12,8 +12,14 @@ import Container from "react-bootstrap/Container";
 // import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ModulosLayout from "../Layout/ModulosLayout";
+import {useNavigate} from "react-router-dom";
 
-function ModulosForm() {
+function ModulosForm(props) {
+    if (!props.userData.user_data) {
+        const navigate = useNavigate();
+        navigate("/InicioSesion");
+        return null;
+    }
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
     const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado

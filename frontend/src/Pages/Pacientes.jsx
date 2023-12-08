@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "../Styles/CSS/Pacientes.css";
-import {useNavigate, Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Services from "../Utilities/login-services";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,11 @@ import PacientesLayout from "../Layout/PacientesLayout";
 
 function PacientesForm(props) {
     const navigate = useNavigate();
+    if (!props.userData.user_data) {
+        navigate("/InicioSesion");
+        return null;
+    }
+
     const [nombres, setNombres] = useState([]);
     const [showCrearPopup, setShowCrearPopup] = useState(false);
     const [showEditarPopup, setShowEditarPopup] = useState(false); // Estado para mostrar el popup de edición
@@ -20,7 +25,7 @@ function PacientesForm(props) {
 
     async function initialList() {
         const arregloUsuarios = await Services.getPatients();
-        console.log("pacientes",arregloUsuarios);
+        console.log("pacientes", arregloUsuarios);
         const arregloMandar = [];
 
         arregloUsuarios.map((usuario) => {
@@ -86,7 +91,7 @@ function PacientesForm(props) {
     return (
         <PacientesLayout pagina="Pacientes">
             <div className="pacientes-container">
-                <NavigationB userData={props.userData}/>
+                <NavigationB key="navB" userData={props.userData}/>
                 <div className="container-pacientes-title-list">
                     <h1 className="title-pacientes" style={{width: "400%"}}>
                         Pacientes

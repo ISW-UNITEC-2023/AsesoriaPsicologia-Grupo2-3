@@ -5,8 +5,14 @@ import {useState} from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import {Input} from "@material-tailwind/react";
+import {useNavigate} from "react-router-dom";
 
-function Vistas() {
+function Vistas(props) {
+    if (!props.userData.user_data) {
+        const navigate = useNavigate();
+        navigate("/InicioSesion");
+        return null;
+    }
     const [patientInfo, setPatientInfo] = useState({
         nombre: "",
         fechaNacimiento: "",

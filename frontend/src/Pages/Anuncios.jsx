@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Modal} from "reactstrap";
 import "../Styles/CSS/Anuncios.css";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -6,24 +6,14 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PopUpDelete from "../Components/PopUpDelete.jsx";
 import PopUpDeleted from "../Components/PopUpDeleted.jsx";
-import {
-    faMagnifyingGlass,
-    faPencil,
-    faSquarePlus,
-    faTrashCan,
-    faUserCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-    DeleteAnnounces,
-    loadAnnounces,
-} from "../Utilities/announces-services";
+import {faPencil, faSquarePlus, faTrashCan, faUserCircle,} from "@fortawesome/free-solid-svg-icons";
+import {loadAnnounces,} from "../Utilities/announces-services";
 
 import NavigationB from "../Components/Navbar";
-import AnuncioModal from "../Components/AnuncioModal";
-import ModalAnuncios from "../Components/ModalAnuncios";
 import PopUpCrearAnuncio from "../Components/PopUpCrearAnuncio";
 import PopUpEditarAnuncio from "../Components/PopUpEditarAnuncio";
 import AnunciosLayout from "../Layout/AnunciosLayout";
+import {useNavigate} from "react-router-dom";
 
 function SearchBar() {
     return (
@@ -58,7 +48,12 @@ function SearchBar() {
     );
 }
 
-function Anuncios() {
+function Anuncios(props) {
+    if (!props.userData.user_data) {
+        const navigate = useNavigate();
+        navigate("/InicioSesion");
+        return null;
+    }
     /**DELETE */
     const [title, setTitle] = "";
     const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
@@ -198,7 +193,7 @@ function Anuncios() {
     return (
         <AnunciosLayout pagina="Anuncios">
             <div className="anuncios-container">
-                <NavigationB/>
+                <NavigationB key="navB" userData={props.userData}/>
                 <Modal
                     isOpen={modalEliminar.estado}
                     style={{

@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "./zoomPat.css";
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -7,61 +6,76 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import NavigationB from "../Navbar";
-import { gMeeting } from "../../Utilities/zoom-services";
-import { getCookies } from "../../Utilities/login-services";
+import {gMeeting} from "../../Utilities/zoom-services";
+import {useNavigate} from "react-router-dom";
+import {getVerify} from "../../Utilities/user-services";
 
+function havePrivilege(userPrivilege, privilege) {
+    const isAuthorized = userPrivilege && userPrivilege.privileges && privilege.some((privilege) =>
+        userPrivilege.privileges.includes(privilege)
+    );
+    return isAuthorized;
+}
 
 function MyZoomPat(props) {
-    //Privilegios del usuario logueado
-    const [userPrivileges, setUserPrivileges] = useState({});
-
-    const fetchUserData = async () => {
-        const userData = await getCookies();
-        if (userData && userData.user_data && userData.user_data.roles) {
-            setUserPrivileges(userData.user_data.privileges);
-        }
-        setUserPrivileges(userData.user_data.privileges);
-    };
-
-    const havePrivilege = (privilege) => {
-        if (userPrivileges && userPrivileges.length > 0) {
-            return userPrivileges.includes(privilege);
-        }
+    if (!props.userData.user_data) {
+        const navigate = useNavigate();
+        navigate("/InicioSesion");
+        return null;
     }
+    //Privilegios del usuario logueado
+    
+    const verifyRef = useRef(null);
+    const updatePrivileges = async () => {
+        try {
+            const data = await getVerify(props.userData.user_data.id_user);
+            verifyRef.current = data;
+        } catch (error) {
+            console.error("Error updating privileges:", error);
+        }
+    };
 
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {
-        gMeeting().then(meetingsData => {
-            setMeetings(meetingsData.meetings || []);
-        })
-        fetchUserData();
-    },
-        []);
+        const fetchData = async () => {
+            try {
+                await updatePrivileges();
+                const meetingsData = await gMeeting();
+                setMeetings(meetingsData.meetings || []);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
+        fetchData();
+    }, []);
     return (
         <div className='zoom-container'>
 
-            <NavigationB userData={props.userData}/>
+            <NavigationB key="navB" userData={props.userData}/>
             <div className='zoom-div'>
                 <Row className='zoom-row'>
                     <Col>
                         <h1 className="title-pacientes">Zoom</h1>
                         {
-                            havePrivilege(31) ?
+                            havePrivilege(verifyRef.current, [31]) ?
                                 <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>
                                 :
-                                <Form.Label className='titulo2'>No tienes los permisos necesarios para ver las sesiones programadas.</Form.Label>
+                                <Form.Label className='titulo2'>No tienes los permisos necesarios para ver las sesiones
+                                    programadas.</Form.Label>
                         }
                     </Col>
                     <Col></Col>
                     <Col>
-                        {havePrivilege(32) && <Button className='buttons' variant="outline-primary" href="/ZoomC" onClick={() => { }} style={{ marginLeft: "235px" }}>Crear Sesion</Button>}
+                        {havePrivilege(verifyRef.current, [32]) &&
+                            <Button className='buttons' variant="outline-primary" href="/ZoomC" onClick={() => {
+                            }} style={{marginLeft: "235px"}}>Crear Sesion</Button>}
                     </Col>
                 </Row>
 
-                {havePrivilege(31) &&
-                    <div >
+                {havePrivilege(verifyRef.current, [31]) &&
+                    <div>
                         <Container fluid="md" className="zoomscroll-content">
                             <Row>
                                 <div></div>
@@ -81,9 +95,17 @@ function MyZoomPat(props) {
                                 <Row key={meeting.id}>
                                     <Col className='column'>
                                     </Col>
-                                    <Form.Label className='form'>{new Date(meeting.start_time).toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</Form.Label>
+                                    <Form.Label
+                                        className='form'>{new Date(meeting.start_time).toLocaleDateString('es-ES', {
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}</Form.Label>
                                     <Col className='column'>
-                                        <Form.Label>{new Date(meeting.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</Form.Label>
+                                        <Form.Label>{new Date(meeting.start_time).toLocaleTimeString([], {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            hour12: true
+                                        })}</Form.Label>
                                     </Col>
                                     <Col className='column'>
                                         <Form.Label>{meeting.topic}</Form.Label>
@@ -92,8 +114,9 @@ function MyZoomPat(props) {
                                         <Form.Label>{meeting.id}</Form.Label>
                                     </Col>
                                     <Col className='column2'>
-                                        {havePrivilege(31) &&
-                                            <Button className='buttons2' variant="outline-primary" href={meeting.join_url} target="_blank">
+                                        {havePrivilege(verifyRef.current, [31]) &&
+                                            <Button className='buttons2' variant="outline-primary"
+                                                    href={meeting.join_url} target="_blank">
                                                 Entrar
                                             </Button>
                                         }

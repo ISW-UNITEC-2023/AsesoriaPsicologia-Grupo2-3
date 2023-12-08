@@ -7,7 +7,7 @@ import PopUpAdminRole from "../Components/PopUp_AdminRole";
 import RoleAdmin from "../Components/RoleAdmin";
 
 //Functions
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import user_services from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
 
@@ -25,33 +25,39 @@ import {
     faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {useNavigate} from "react-router-dom";
 
 function Accounts(props) {
-  const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
-  const [originalUsers, setOriginalUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [matchingNames, setMatchingNames] = useState([]);
-  const [displayResults, setDisplayResults] = useState(false);
-  const [sorted, setSorted] = useState(false);
-  const [selectedRoles, setSelectedRoles] = useState([]);
-  const [selectedState, setSelectedState] = useState([]);
-  const [openCreate, setOpenCreate] = useState(0);
-  const [openEdit, setOpenEdit] = useState({
-    open: 0,
-    userInfo: null,
-  });
-  const [openEmail, setOpenEmail] = useState({
-    open: 0,
-    userInfo: null,
-  });
-  const [openRole, setOpenRole] = useState({
-    open: 0,
-    userInfo: null,
-  });
-  const [openRoleAdmin, setOpenRoleAdmin] = useState({
-    open: 0,
-  });
+    if (!props.userData.user_data) {
+        const navigate = useNavigate();
+        navigate("/InicioSesion");
+        return null;
+    }
+    const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [originalUsers, setOriginalUsers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [matchingNames, setMatchingNames] = useState([]);
+    const [displayResults, setDisplayResults] = useState(false);
+    const [sorted, setSorted] = useState(false);
+    const [selectedRoles, setSelectedRoles] = useState([]);
+    const [selectedState, setSelectedState] = useState([]);
+    const [openCreate, setOpenCreate] = useState(0);
+    const [openEdit, setOpenEdit] = useState({
+        open: 0,
+        userInfo: null,
+    });
+    const [openEmail, setOpenEmail] = useState({
+        open: 0,
+        userInfo: null,
+    });
+    const [openRole, setOpenRole] = useState({
+        open: 0,
+        userInfo: null,
+    });
+    const [openRoleAdmin, setOpenRoleAdmin] = useState({
+        open: 0,
+    });
 
     //Mensajes de filtros
     const [isHovering, setIsHovering] = useState(false);
@@ -413,7 +419,8 @@ function Accounts(props) {
 
     return (
         <div className="account-container">
-            <Navbar userData={props.userData}/>
+
+            <Navbar key="navB" userData={props.userData}/>
             <div className="account-box">
                 <div className="account-header">
                     <span className="account-title">Administración de Cuentas</span>

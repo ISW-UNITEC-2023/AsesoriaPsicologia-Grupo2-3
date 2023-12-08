@@ -1,15 +1,21 @@
 import "./zoom.css"
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavigationB from "../Navbar";
-import { cMeeting } from "../../Utilities/zoom-services";
-import { getCookies } from "../../Utilities/login-services";
+import {cMeeting} from "../../Utilities/zoom-services";
+import {getCookies} from "../../Utilities/login-services";
+import {useNavigate} from "react-router-dom";
 
 function MyZoom(props) {
+    if (!props.userData.user_data) {
+        const navigate = useNavigate();
+        navigate("/InicioSesion");
+        return null;
+    }
     //Privilegios del usuario logueado
     const [userPrivileges, setUserPrivileges] = useState({});
 
@@ -75,15 +81,17 @@ function MyZoom(props) {
     return (
         <>
             <div className="dashboard-container">
-                <NavigationB userData={props.userData}/>
+
+                <NavigationB key="navB" userData={props.userData}/>
                 <div className="zoom-crear-div">
                     <Row className="zoom-crear-row">
                         <Col>
-                            <h1 className="zoom-crear-title" >Zoom</h1>
+                            <h1 className="zoom-crear-title">Zoom</h1>
                             {havePrivilege(32) ?
                                 <Form.Label className="zoom-crear-title2">Crear Sesiones</Form.Label>
                                 :
-                                <Form.Label className="zoom-crear-title2">No tienes permiso de crear nuevas sesiones</Form.Label>
+                                <Form.Label className="zoom-crear-title2">No tienes permiso de crear nuevas
+                                    sesiones</Form.Label>
                             }
                         </Col>
                         <Col></Col>
@@ -104,7 +112,8 @@ function MyZoom(props) {
                                     </Col>
 
                                     <Col className="style-column">
-                                        <Form.Control className="form-control" type="Topic" placeholder="Insertar Tema" value={topic} onChange={ev => setTopic(ev.target.value)} />
+                                        <Form.Control className="form-control" type="Topic" placeholder="Insertar Tema"
+                                                      value={topic} onChange={ev => setTopic(ev.target.value)}/>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -112,9 +121,12 @@ function MyZoom(props) {
                                         <Form.Label>Descripción(opcional)</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column1" >
+                                    <Col className="style-column1">
                                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                            <Form.Control className="form-control1" as="textarea" placeholder="Insertar Descripción" rows={3} value={description} onChange={ev => setdescription(ev.target.value)} />
+                                            <Form.Control className="form-control1" as="textarea"
+                                                          placeholder="Insertar Descripción" rows={3}
+                                                          value={description}
+                                                          onChange={ev => setdescription(ev.target.value)}/>
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -123,13 +135,13 @@ function MyZoom(props) {
                                         <Form.Label>Cuando</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" style={{ flexDirection: "row" }} >
+                                    <Col className="style-column2" style={{flexDirection: "row"}}>
                                         <Form.Control
                                             type="datetime-local"
                                             placeholder=""
 
                                             onChange={ev => setFechaHora(ev.target.value)}
-                                            style={{ width: "34%", marginRight: "10px" }} />
+                                            style={{width: "34%", marginRight: "10px"}}/>
 
 
                                     </Col>
@@ -139,7 +151,7 @@ function MyZoom(props) {
                                         <Form.Label>Duración</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" style={{ flexDirection: "row" }} >
+                                    <Col className="style-column2" style={{flexDirection: "row"}}>
                                         <Form.Control
                                             required
                                             type="number"
@@ -148,9 +160,9 @@ function MyZoom(props) {
                                             min={0}
                                             max={5}
                                             onChange={ev => setDuracionHour(ev.target.value)}
-                                            style={{ width: "8%", marginRight: "10px" }}
+                                            style={{width: "8%", marginRight: "10px"}}
                                         />
-                                        <p style={{ paddingTop: "6px" }}>hr</p>
+                                        <p style={{paddingTop: "6px"}}>hr</p>
 
                                         <Form.Control
                                             required
@@ -161,9 +173,9 @@ function MyZoom(props) {
                                             max={59}
                                             onChange={ev => setDuracionMin(ev.target.value)}
 
-                                            style={{ width: "10%", marginRight: "10px", marginLeft: "10px" }}
+                                            style={{width: "10%", marginRight: "10px", marginLeft: "10px"}}
                                         />
-                                        <p style={{ paddingTop: "6px" }}>min</p>
+                                        <p style={{paddingTop: "6px"}}>min</p>
                                     </Col>
 
 
@@ -173,8 +185,10 @@ function MyZoom(props) {
                                         <Form.Label>Zona Horaria</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" style={{ flexDirection: "column" }} >
-                                        <Form.Select style={{ marginLeft: "3px", width: "50%" }} aria-label="Default select example" onChange={ev => setTimeZone(ev.target.value)} >
+                                    <Col className="style-column2" style={{flexDirection: "column"}}>
+                                        <Form.Select style={{marginLeft: "3px", width: "50%"}}
+                                                     aria-label="Default select example"
+                                                     onChange={ev => setTimeZone(ev.target.value)}>
                                             <option value="na">Open this select menu</option>
                                             <option value="Z">(GMT-7:00)Pacific Time (US and Canada)</option>
                                             <option value="2">(GMT-7:00)Pacific Time (US and Canada)</option>
@@ -184,10 +198,11 @@ function MyZoom(props) {
                                         <Form>
                                             {['checkbox'].map((type) => (
                                                 <div key={`default-${type}`} className="mb-3">
-                                                    <Form.Check style={{ marginTop: "5px" }} onChange={ev => setRecurring(ev.target.checked)}// prettier-ignore
-                                                        type={type}
-                                                        id={`default-${type}`}
-                                                        label={"Reunión recurrente"}
+                                                    <Form.Check style={{marginTop: "5px"}}
+                                                                onChange={ev => setRecurring(ev.target.checked)}// prettier-ignore
+                                                                type={type}
+                                                                id={`default-${type}`}
+                                                                label={"Reunión recurrente"}
                                                     />
                                                 </div>
                                             ))}
@@ -200,14 +215,14 @@ function MyZoom(props) {
                                         <Form.Label>Registro</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" >
-                                        <Form >
+                                    <Col className="style-column2">
+                                        <Form>
                                             {['checkbox'].map((type) => (
                                                 <div key={`default-${type}`} className="mb-3">
                                                     <Form.Check onChange={ev => setRegistration(ev.target.checked)}
-                                                        type={type}
-                                                        id={`default-${type}`}
-                                                        label={"Requerido"}
+                                                                type={type}
+                                                                id={`default-${type}`}
+                                                                label={"Requerido"}
                                                     />
 
 
@@ -221,9 +236,9 @@ function MyZoom(props) {
                                         <Form.Label>Seguridad</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" style={{ flexDirection: "column" }} >
-                                        <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                            <Form >
+                                    <Col className="style-column2" style={{flexDirection: "column"}}>
+                                        <div style={{display: "flex", alignItems: "flex-start"}}>
+                                            <Form>
                                                 {['checkbox'].map((type) => (
                                                     <div key={`default-${type}`} className="mb-3">
                                                         <Form.Check
@@ -233,7 +248,7 @@ function MyZoom(props) {
                                                             type={type}
                                                             label={"Passcode"}
                                                             id={`disabled-default-${type}`}
-                                                            style={{ marginTop: "5px" }}
+                                                            style={{marginTop: "5px"}}
                                                         />
 
 
@@ -241,33 +256,36 @@ function MyZoom(props) {
 
                                                 ))}
                                             </Form>
-                                            <Form.Control className="form-control" style={{ borderBottom: "1px solid #ccc" }} onChange={ev => setSecurityPasscode(ev.target.value)} type="email" defaultValue="289399" />
+                                            <Form.Control className="form-control"
+                                                          style={{borderBottom: "1px solid #ccc"}}
+                                                          onChange={ev => setSecurityPasscode(ev.target.value)}
+                                                          type="email" defaultValue="289399"/>
                                         </div>
-                                        <Form.Text className="text-muted" >
-                                            Solo los usuarios con el link de invitacion o el passcode podran entrar a la reunion
+                                        <Form.Text className="text-muted">
+                                            Solo los usuarios con el link de invitacion o el passcode podran entrar a la
+                                            reunion
                                         </Form.Text>
 
-                                        <Form style={{ marginTop: "35px" }}>
+                                        <Form style={{marginTop: "35px"}}>
                                             {['checkbox'].map((type) => (
                                                 <div key={`default-${type}`} className="mb-3">
                                                     <Form.Check onChange={ev => setSecurityWaitroom(ev.target.checked)}
-                                                        type={type}
-                                                        id={`default-${type}`}
-                                                        label={"Sala de espera"}
+                                                                type={type}
+                                                                id={`default-${type}`}
+                                                                label={"Sala de espera"}
                                                     />
 
 
                                                 </div>
                                             ))}
 
-                                            <Form.Text className="text-muted" >
+                                            <Form.Text className="text-muted">
                                                 Solo los usuarios que el host permita podran entrar a la reunion
                                             </Form.Text>
                                         </Form>
 
 
-
-                                        <Form style={{ marginTop: "35px" }}>
+                                        <Form style={{marginTop: "35px"}}>
                                             {['checkbox'].map((type) => (
                                                 <div key={`default-${type}`} className="mb-3">
                                                     <Form.Check // prettier-ignore
@@ -289,20 +307,21 @@ function MyZoom(props) {
                                     <Col className="style-column2" xs="4">
                                         <Form.Label>Video</Form.Label>
                                     </Col>
-                                    <Col className="style-column2" style={{ flexDirection: "column" }} xs="1">
-                                        <div >
-                                            <Form.Label style={{ marginBottom: "26px" }}>Host</Form.Label>
-                                            <Form.Label >Paticipante</Form.Label>
+                                    <Col className="style-column2" style={{flexDirection: "column"}} xs="1">
+                                        <div>
+                                            <Form.Label style={{marginBottom: "26px"}}>Host</Form.Label>
+                                            <Form.Label>Paticipante</Form.Label>
                                         </div>
                                     </Col>
-                                    <Col className="style-column2" style={{ flexDirection: "column" }} >
+                                    <Col className="style-column2" style={{flexDirection: "column"}}>
 
-                                        <Form >
+                                        <Form>
                                             {['checkbox'].map((type) => (
-                                                <div key={`default-${type}`} className="mb-3" style={{ marginLeft: "10%" }}>
+                                                <div key={`default-${type}`} className="mb-3"
+                                                     style={{marginLeft: "10%"}}>
                                                     <Form.Check
 
-                                                        style={{ marginRight: "20px" }}
+                                                        style={{marginRight: "20px"}}
                                                         type={type}
                                                         onChange={ev => setVideoHost(ev.target.checked)}
                                                         id={`default-${type}`}
@@ -315,12 +334,12 @@ function MyZoom(props) {
                                         </Form>
 
 
-
-                                        <Form >
+                                        <Form>
                                             {['checkbox'].map((type) => (
-                                                <div key={`default-${type}`} className="mb-3" style={{ marginLeft: "10%" }}>
+                                                <div key={`default-${type}`} className="mb-3"
+                                                     style={{marginLeft: "10%"}}>
                                                     <Form.Check
-                                                        style={{ marginRight: "20px" }}
+                                                        style={{marginRight: "20px"}}
                                                         type={type}
                                                         id={`default-${type}`}
                                                         onChange={ev => setVideoPaticipant(ev.target.checked)}
@@ -339,14 +358,14 @@ function MyZoom(props) {
                                         <Form.Label>Audio</Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" >
-                                        <Form >
+                                    <Col className="style-column2">
+                                        <Form>
                                             {['radio'].map((type) => (
-                                                <div key={`inline-${type}`} className="mb-3" style={{ display: "flex" }}>
+                                                <div key={`inline-${type}`} className="mb-3" style={{display: "flex"}}>
                                                     <Form.Check
                                                         inline
                                                         name="group1"
-                                                        style={{ marginRight: "20px" }}
+                                                        style={{marginRight: "20px"}}
                                                         type={type}
                                                         id={`inline-${type}-1`}
                                                         value="telephony"
@@ -357,7 +376,7 @@ function MyZoom(props) {
                                                     <Form.Check // prettier-ignore
                                                         inline
                                                         name="group1"
-                                                        style={{ marginRight: "20px" }}
+                                                        style={{marginRight: "20px"}}
                                                         type={type}
                                                         value="voip"
                                                         onChange={ev => setAudio(ev.target.value)}
@@ -386,12 +405,12 @@ function MyZoom(props) {
                                         <Form.Label>Opciones de la reunión </Form.Label>
                                     </Col>
 
-                                    <Col className="style-column2" style={{ flexDirection: "column" }} >
-                                        <Form >
+                                    <Col className="style-column2" style={{flexDirection: "column"}}>
+                                        <Form>
                                             {['checkbox'].map((type) => (
-                                                <div key={`default-${type}`} className="mb-3" >
+                                                <div key={`default-${type}`} className="mb-3">
                                                     <Form.Check
-                                                        style={{ marginBottom: "20px" }}
+                                                        style={{marginBottom: "20px"}}
                                                         type={type}
                                                         id={`default-${type}`}
                                                         onChange={ev => setMeetingHost(ev.target.checked)}
@@ -399,7 +418,7 @@ function MyZoom(props) {
                                                     />
 
                                                     <Form.Check // prettier-ignore
-                                                        style={{ marginBottom: "20px" }}
+                                                        style={{marginBottom: "20px"}}
                                                         type={type}
                                                         onChange={ev => setMeetingMute(ev.target.checked)}
                                                         id={`default-${type}`}
@@ -408,7 +427,7 @@ function MyZoom(props) {
 
                                                     <Form.Check // prettier-ignore
                                                         type={type}
-                                                        style={{ marginBottom: "20px" }}
+                                                        style={{marginBottom: "20px"}}
                                                         defaultChecked
                                                         onChange={ev => setMeetingAllow(ev.target.checked)}
                                                         id={`default-${type}`}
@@ -416,22 +435,27 @@ function MyZoom(props) {
                                                     />
 
                                                     <Form.Check // prettier-ignore
-                                                        style={{ marginBottom: "20px" }}
+                                                        style={{marginBottom: "20px"}}
                                                         type={type}
                                                         onChange={ev => setMeetingPersonalId(ev.target.checked)}
                                                         id={`default-${type}`}
                                                         label={"Usar ID de reunión personal -------"}
                                                     />
-                                                    <div style={{ display: "flex", flexDirection: "column" }}>
-                                                        <Form.Label style={{ marginLeft: "20px" }}>Un participante puede compartir pantalla a la vez</Form.Label>
+                                                    <div style={{display: "flex", flexDirection: "column"}}>
+                                                        <Form.Label style={{marginLeft: "20px"}}>Un participante puede
+                                                            compartir pantalla a la vez</Form.Label>
 
-                                                        <Form.Label style={{ marginLeft: "20px" }}>Quien puede compartir pantalla?: ALL Participants (Todos los participantes)</Form.Label>
+                                                        <Form.Label style={{marginLeft: "20px"}}>Quien puede compartir
+                                                            pantalla?: ALL Participants (Todos los
+                                                            participantes)</Form.Label>
 
-                                                        <Form.Label style={{ marginLeft: "20px" }}>Quien puede empezar a compartir mientras otra esta compartiendo?:Host Only (Solo el Host)</Form.Label>
+                                                        <Form.Label style={{marginLeft: "20px"}}>Quien puede empezar a
+                                                            compartir mientras otra esta compartiendo?:Host Only (Solo
+                                                            el Host)</Form.Label>
 
                                                     </div>
                                                     <Form.Check // prettier-ignore
-                                                        style={{ marginBottom: "20px" }}
+                                                        style={{marginBottom: "20px"}}
                                                         type={type}
                                                         onChange={ev => setMeetingRecord(ev.target.checked)}
                                                         id={`default-${type}`}
@@ -447,17 +471,21 @@ function MyZoom(props) {
                                         <Form.Label>Host alternativo</Form.Label>
                                     </Col>
 
-                                    <Col style={{ borderBottom: "1px solid #ccc", padding: "15px" }} >
+                                    <Col style={{borderBottom: "1px solid #ccc", padding: "15px"}}>
                                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                             <Form.Label>Correo electronico</Form.Label>
-                                            <Form.Control style={{ marginLeft: "3px", width: "70%" }} type="email" placeholder="name@example.com" onChange={ev => setAlternative(ev.target.value)} />
+                                            <Form.Control style={{marginLeft: "3px", width: "70%"}} type="email"
+                                                          placeholder="name@example.com"
+                                                          onChange={ev => setAlternative(ev.target.value)}/>
                                         </Form.Group>
                                     </Col>
                                 </Row>
 
                                 <Row>
-                                    <Col className="style-column2" style={{ justifyContent: "space-evenly" }} >
-                                        <Button variant="outline-primary" href="/ZoomV" onClick={() => { CreateMeet(topic, description, `${fechaHora}:00Z`, `${+(duracionHour * 60) + (+duracionMin)}`, videoHost, videoPaticipant, meetingHost, meetingMute, meetingRecord, registration, securityWaitroom, securityPasscode, securityUserAuth, audio, meetingPersonalId, alternative) }} className="style-btn-crear" >Crear</Button>
+                                    <Col className="style-column2" style={{justifyContent: "space-evenly"}}>
+                                        <Button variant="outline-primary" href="/ZoomV" onClick={() => {
+                                            CreateMeet(topic, description, `${fechaHora}:00Z`, `${+(duracionHour * 60) + (+duracionMin)}`, videoHost, videoPaticipant, meetingHost, meetingMute, meetingRecord, registration, securityWaitroom, securityPasscode, securityUserAuth, audio, meetingPersonalId, alternative)
+                                        }} className="style-btn-crear">Crear</Button>
 
                                     </Col>
                                 </Row>

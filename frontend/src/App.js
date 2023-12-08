@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {useEffect, useRef, useState} from "react";
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -12,139 +12,80 @@ import Sesiones from "./Pages/Sesiones";
 import Vistas from "./Pages/Vistas";
 import Wizard from "./Pages/Wizard";
 import Anuncios from "./Pages/Anuncios";
-import AnunciosCrear from "./Pages/AnunciosCrear";
 import Accounts from "./Pages/Accounts";
-import LoadingSpinner from "./Pages/LoadingStyle";
 import AuditLogs from "./Pages/AuditLogs";
-import { getCookies } from "./Utilities/login-services";
+import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
-import { Citas } from "./Pages/Citas";
-import { Zoom } from "react-toastify";
+import {Citas} from "./Pages/Citas";
 
-function ProtectedRoute({ element, allowedRoles, userRoles, allowedPrivileges }) {
-    const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
-
-    return isAuthorized ? element : null;
-}
 
 function App() {
-    const [userData, setUserData] = useState(null);
     const [userDataLoaded, setUserDataLoaded] = useState(false);
-
-
-  const fetchUserData = async () => {
-    const userData = await getCookies();
-    if (userData && userData.user_data && userData.user_data.roles) {
-      setUserData(userData.user_data);
-      setUserDataLoaded(true);
+    const verifyRef = useRef(null);
+    const getUserData = async () => {
+        try {
+            const data = await getCookies();
+            setUserDataLoaded(true);
+            verifyRef.current = data;
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
     }
-    setUserData(userData.user_data);
-    console.log("Fetching data", userData);
-  };
 
     const handleLoginSuccess = (e) => {
-        e.preventDefault();
-        fetchUserData();
+        const fetchData = async () => {
+            try {
+                e.preventDefault();
+                await getUserData();
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
     };
-
     useEffect(() => {
-        fetchUserData();
+        const fetchData = async () => {
+            try {
+                await getUserData();
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
     }, []);
 
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LandingPage {...homedata} />} />
-                <Route path="/Inicio" element={<LandingPage {...homedata} />} />
+                <Route path="/" element={<LandingPage {...homedata} />}/>
+                <Route path="/Inicio" element={<LandingPage {...homedata} />}/>
                 <Route
                     path="/ResetPassword"
                     element={<ForgotPassword {...forgotData} />}
                 />
-                <Route
-                    path="/Anuncios"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Anuncios />}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Modulos"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Modulos/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Expedientes"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Vistas/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Secciones"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Sections/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Sesiones"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Sesiones userData={userData}/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/Pacientes"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Pacientes userData={userData}  />}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
+
+
+                {userDataLoaded && (
+                    <Route path="/Anuncios" element={<Anuncios userData={verifyRef.current}/>}/>
+                )}
+                {userDataLoaded && (
+                    <Route path="/Modulos" element={<Modulos userData={verifyRef.current}/>}/>
+                )}
+                {userDataLoaded && (
+                    <Route path="/Expedientes" element={<Vistas userData={verifyRef.current}/>}/>
+                )}
+
+                {userDataLoaded && (
+                    <Route path="Secciones" element={<Sections userData={verifyRef.current}/>}/>
+                )}
+                {userDataLoaded && (
+                    <Route path="/Sesiones" element={<Sesiones userData={verifyRef.current}/>}/>
+                )}
+                {userDataLoaded && (
+                    <Route path="/Pacientes" element={<Pacientes userData={verifyRef.current}/>}/>
+                )}
+
                 <Route
                     path="/InicioSesion"
                     element={
@@ -155,98 +96,47 @@ function App() {
                         />
                     }
                 />
+                {userDataLoaded && (
+                    <Route
+                        path="/Dashboard"
+                        element={<DashBoard userData={verifyRef.current}/>}
+                    />
+                )}
 
-                <Route
-                    path="/Dashboard"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<DashBoard userData={userData} />}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                <Route
-                    path="/citas"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<Citas userData={userData}/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
+                {userDataLoaded && (
+                    <Route path="/citas" element={<Citas userData={verifyRef.current}/>}/>
+                )}
 
-                <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-                <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
-                <Route
-                    path="/Crearanuncios"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<AnunciosCrear />}
-                                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
 
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
-                {/* <Route
-          path="/Profiles"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<ProfilesPage />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        /> */}
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
                 <Route path="/Cuestionario" element={<Wizard {...wizardData} />}/>
-                <Route path="/Cuentas" element={<Accounts userData={userData}/>}/>
 
+
+                {userDataLoaded && (
+                    <Route path="/Cuentas" element={<Accounts userData={verifyRef.current}/>}/>
+                )}
                 {/* <Route
           path="/Profiles"
 
                 element={<ProfilesPage />}
 
         /> */}
+                {userDataLoaded && (
+                    <Route path="/AuditLogs" element={<AuditLogs userData={verifyRef.current}/>}/>
+                )}
 
-                <Route path="/AuditLogs" element={<AuditLogs userData={userData}/>}/>
+                {userDataLoaded && (
+                    <Route path="/ZoomC" element={<MyZoom userData={verifyRef.current}/>}/>
+                )}
 
-                <Route path="/ZoomC" element={<MyZoom userData={userData}/>}/>
                 {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
 
-                <Route
-                    path="/ZoomV"
-                    element={
-                        userDataLoaded ? (
-                            <ProtectedRoute
-                                element={<MyZoomPat userData={userData}/>}
-                                allowedRoles={userData.allRoles}
-                                userRoles={userData}
-                            />
-                        ) : (
-                            <LoadingSpinner />
-                        )
-                    }
-                />
+
+                {userDataLoaded && (
+                    <Route path="/ZoomV" element={<MyZoomPat userData={verifyRef.current}/>}/>
+                )}
             </Routes>
+
         </Router>
     );
 }
