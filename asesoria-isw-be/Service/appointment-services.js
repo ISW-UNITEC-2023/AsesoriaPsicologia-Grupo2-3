@@ -41,7 +41,7 @@ async function addConsultation(new_appo)
 
 async function deleteAppo(id_appointment)
 {
-    return await knex("appointments").where("id_appointment", id_appointment).del();
+    return knex("appointments").where("id_appointment", id_appointment).del();
 }
 
 //UPDATE
@@ -128,7 +128,7 @@ async function getAppo()
 
 async function getById(id) {
 
-    let App = await knex.select().from("appointments").where("id_", id);
+    let App = await knex.select().from("appointments").where("id_file", id);
     App = JSON.stringify(App);
     return JSON.parse(App);
 

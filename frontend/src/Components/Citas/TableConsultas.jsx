@@ -17,9 +17,8 @@ export function TableConsultas({page}) {
     const [titulo, setTitulo] = useState("");
     const [nombreDoctor, setNombreDoctor] = useState("");
     const [fecha, setFecha] = useState("");
-    const [hora, setHora] = useState("");
-    const [nombrePaciente, setNombrePaciente] = useState("");
-    const {data: data, error, isLoading} = useSWR('http://localhost:8000/appointment/getall', fetcher,
+    const id = localStorage.getItem("id_patient");
+    const {data: data, error, isLoading} = useSWR(`http://localhost:8000/appointment/getById/${id}`, fetcher,
         {refreshInterval: 1000});
     const {
         data: fetchedUsers,
@@ -82,7 +81,7 @@ export function TableConsultas({page}) {
         updateIsOpen(open);
     }, [open]);
 
-    if (isLoading) {
+    if (isLoading || usersLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <Spinner/>
@@ -168,6 +167,7 @@ export function TableConsultas({page}) {
                                 appointment_date,
                                 id_file,
                                 id_doctor,
+                                observations,
                             },
                             index,
                         ) => {
@@ -177,7 +177,7 @@ export function TableConsultas({page}) {
                                 : "p-4 border-b border-blue-gray-50";
 
                             return (
-                                <tr key={id_file}>
+                                <tr key={index}>
                                     <td className={classes}>
                                         <div className="flex items-center">
                                             <IconButton variant="text">
@@ -212,7 +212,7 @@ export function TableConsultas({page}) {
                                             color="blue-gray"
                                             className="font-normal"
                                         >
-                                            {id_file}
+                                            {observations ? observations : "Sin observaciones"}
                                         </Typography>
                                     </td>
                                 </tr>
