@@ -1,6 +1,6 @@
 import {Breadcrumbs} from "@material-tailwind/react";
 
-const BreadCrumbsC = ({nombrePaciente}) => {
+const BreadCrumbsC = () => {
     return (
         <Breadcrumbs>
             <a href="/pacientes" className="opacity-60">
