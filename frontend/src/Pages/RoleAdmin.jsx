@@ -13,6 +13,7 @@ import rolesImg from "../Styles/Images/rolesimg.png";
 
 const RoleAdmin = () => {
   const [privileges, setPrivileges] = useState([]);
+  
   const [roles, setRoles] = useState([]);
 
   const [rolesPrivileges, setRolesPrivileges] = useState({
