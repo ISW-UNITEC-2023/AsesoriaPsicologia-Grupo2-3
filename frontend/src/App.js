@@ -21,6 +21,7 @@ import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import { Citas } from "./Pages/Citas";
 import { Zoom } from "react-toastify";
+import RoleAdmin from "./Pages/RoleAdmin";
 
 function ProtectedRoute({ element, allowedRoles, userRoles, allowedPrivileges }) {
     const isAuthorized = userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));

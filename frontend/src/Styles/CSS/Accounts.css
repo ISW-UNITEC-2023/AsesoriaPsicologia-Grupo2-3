@@ -48,17 +48,6 @@
 }
 
 .crear-cuenta-button {
-  margin-right: 1%;
-  background-color: #003b88;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px;
-  cursor: pointer;
-  width: 10%;
-}
-
-.administrar-roles-button{
   margin-right: 3%;
   background-color: #003b88;
   color: white;
@@ -66,7 +55,7 @@
   border-radius: 5px;
   padding: 5px;
   cursor: pointer;
-  width: 12%;
+  width: 10%;
 }
 
 .search-user-box {

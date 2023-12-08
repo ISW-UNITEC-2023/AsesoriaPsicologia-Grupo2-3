@@ -16,7 +16,8 @@ import {
   faBullhorn,
   faGaugeHigh,
   faAddressCard,
-  faBookOpen
+  faBookOpen,
+  faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
 
@@ -47,7 +48,6 @@ function MyNavbar(props) {
   const logs = () => {
     navigate("/AuditLogs");
   };
-  
 
   return (
     <div className="background">
