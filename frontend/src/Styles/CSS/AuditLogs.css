@@ -1,45 +1,66 @@
-.title-historial {
-    font-size: 40px;
-
-    padding: 20px;
-    color: #333;
-    font-weight: bold;
-    text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-.container-header {
-    display: flex;
-    margin-left: 5%;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #000;
-    margin-bottom: 30px;
-
+.historial-container {
+  display: flex;
+  flex-direction: row;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
+.historial-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-.container-table {
-    min-height: 50px;
-    padding: 0%;
-    display: flex;
+.historial-header {
+  margin-left: 3%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  display: flex;
+}
 
-    margin-left: 2%;
-    width: 100%;
-  }
+.historial-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
 
-  .container-flitros {
-    min-height: 50px;
-    display: flex;
-    margin-bottom: 30px;
-    margin-left: 5%;
-    width: 100%;
-  }
-  
-  
+.historial-table {
+  width: 94%;
+  margin-left: 3%;
+  margin-right: 3%;
+  overflow-y: scroll;
+  font-size: 1rem;
+  text-align: center;
+}
 
-  .dashboard-container {
-    display: flex;
-    flex-direction: row;
-    
-    background-color: rgb(255, 255, 255);
-  }
+.historial-table-header th {
+  background-color: #113946;
+  color: white;
+}
+
+.historial-table-header tr {
+  border: 1px solid #000;
+}
+
+.td-items-historial {
+  width: 10px;
+  border: 1px solid #bbbbbb;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.td-info-accion {
+  max-width: 100px;
+  height: auto;
+  white-space: wrap;
+  border: 1px solid #bbbbbb;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

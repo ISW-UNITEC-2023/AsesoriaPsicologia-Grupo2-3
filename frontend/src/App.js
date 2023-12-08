@@ -207,36 +207,11 @@ function App() {
             )
           }
         />
-        {/* <Route
-          path="/Profiles"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<ProfilesPage />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        /> */}
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
         <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
         <Route path="/Cuentas" element={<Accounts userData={userData} />} />
-
-        {/* <Route
-          path="/Profiles"
-
-                element={<ProfilesPage />}
-
-        /> */}
-
         <Route path="/AuditLogs" element={<AuditLogs userData={userData} />} />
-
         <Route path="/ZoomC" element={<MyZoom userData={userData} />} />
-        {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
-
         <Route
           path="/ZoomV"
           element={

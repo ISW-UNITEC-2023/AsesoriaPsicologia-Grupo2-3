@@ -13,24 +13,21 @@ import {
   faUserGroup,
   faCalendarDays,
   faVideo,
-  faBullhorn,
-  faGaugeHigh,
   faAddressCard,
-  faBookOpen,
+  faFileLines,
   faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
 
-function ProtectedRoute(  userRoles , allowedPrivileges ) {
-  const isAuthorized = userRoles && userRoles.privileges.some((role) => allowedPrivileges.includes(role));
-  
-  return  isAuthorized ;
+function ProtectedRoute(userRoles, allowedPrivileges) {
+  const isAuthorized =
+    userRoles &&
+    userRoles.privileges.some((role) => allowedPrivileges.includes(role));
+
+  return isAuthorized;
 }
 
-
 function MyNavbar(props) {
-
- 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -43,10 +40,6 @@ function MyNavbar(props) {
     deleteCookies();
 
     navigate("/InicioSesion");
-  };
-
-  const logs = () => {
-    navigate("/AuditLogs");
   };
 
   return (
@@ -71,28 +64,7 @@ function MyNavbar(props) {
                 />
                 Mi Perfil
               </div>
-              {ProtectedRoute(props.userData, [54])?(
-                <div
-                className="nb-dropdown-item"
-                onClick={() => {
-                  logs();
-                }}
-                
-                >
-                  <FontAwesomeIcon
-                  icon={faBookOpen}
-                  className="nb-dropdown-icon"
-                />
-                Admin Logs
-                </div>
-              ):(
-                <>
 
-                </>
-              )}
-              
-                
-              
               <div
                 className="nb-dropdown-item"
                 onClick={() => {
@@ -122,18 +94,19 @@ function MyNavbar(props) {
           />
           Anuncios
         </Link> */}
-        {ProtectedRoute(props.userData, [31])?(
+        {ProtectedRoute(props.userData, [31]) ? (
           <Link to="/Zoomv" className="link-navbar-plataforma">
-            <FontAwesomeIcon icon={faVideo} className="navbar-plataforma-icon" />
+            <FontAwesomeIcon
+              icon={faVideo}
+              className="navbar-plataforma-icon"
+            />
             Zoom
           </Link>
-        ):(
-          <>
-
-          </>
+        ) : (
+          <></>
         )}
-        
-        {ProtectedRoute(props.userData, [31])?(
+
+        {ProtectedRoute(props.userData, [31]) ? (
           <Link to="/Calendario" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faCalendarDays}
@@ -141,13 +114,11 @@ function MyNavbar(props) {
             />
             Calendario
           </Link>
-        ):(
-          <>
-          
-          </>
+        ) : (
+          <></>
         )}
 
-        {ProtectedRoute(props.userData, [56])?(
+        {ProtectedRoute(props.userData, [56]) ? (
           <Link to="/Pacientes" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faUserGroup}
@@ -155,13 +126,11 @@ function MyNavbar(props) {
             />
             Pacientes
           </Link>
-        ):(
-          <>
-          
-          </>
-        )}  
-        
-        {ProtectedRoute(props.userData, [45])?(
+        ) : (
+          <></>
+        )}
+
+        {ProtectedRoute(props.userData, [45]) ? (
           <Link to="/Cuentas" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faAddressCard}
@@ -169,18 +138,28 @@ function MyNavbar(props) {
             />
             Cuentas
           </Link>
-        ):(
-          <>
-          
-          </>
-        )}  
-        
-        
-        
-        {/**<FontAwesomeIcon
-          icon={faArrowLeft}
-          className="navbar-plataforma-icon"
-        /> */}
+        ) : (
+          <></>
+        )}
+
+        {ProtectedRoute(props.userData, [54]) && (
+          <Link to="/AuditLogs" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faFileLines}
+              className="navbar-plataforma-icon"
+            />
+            Logs
+          </Link>
+        )}
+        {ProtectedRoute(props.userData, [54]) && (
+          <Link to="/Roles" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faUserGear}
+              className="navbar-plataforma-icon"
+            />
+            Roles
+          </Link>
+        )}
       </div>
     </div>
   );
