@@ -88,7 +88,7 @@ function PacientesForm(props) {
             <div className="pacientes-container">
                 <NavigationB userData={props.userData}/>
                 <div className="container-pacientes-title-list">
-                    <h1 className="title-pacientes" style={{width: "400%"}}>
+                    <h1 className="title-pacientes">
                         Pacientes
                     </h1>
 
