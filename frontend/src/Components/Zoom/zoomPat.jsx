@@ -18,11 +18,7 @@ function havePrivilege(userPrivilege, privilege) {
 }
 
 function MyZoomPat(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     //Privilegios del usuario logueado
     
     const verifyRef = useRef(null);

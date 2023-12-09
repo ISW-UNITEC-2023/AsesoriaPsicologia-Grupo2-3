@@ -13,11 +13,6 @@ import {useNavigate} from "react-router-dom";
 
 function SectionsPage(props) {
 
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
 
     const [courseList, setCourseList] = useState([]);
     const [id, setId] = useState(null);

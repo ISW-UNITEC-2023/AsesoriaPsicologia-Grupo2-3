@@ -1,5 +1,5 @@
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 import AboutUs from "./Pages/AboutUs";
 import DashBoard from "./Pages/DashBoard";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -18,43 +18,40 @@ import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import {Citas} from "./Pages/Citas";
+import ProtectedRoute from "./Utilities/ProtectedRoute";
 
 
 function App() {
+
     const [userDataLoaded, setUserDataLoaded] = useState(false);
-    const verifyRef = useRef(null);
-    const getUserData = async () => {
+    const [userData, setUserData] = useState(null);
+    const [initialRender, setInitialRender] = useState(true);
+    async function fetchData() {
         try {
             const data = await getCookies();
             setUserDataLoaded(true);
-            verifyRef.current = data;
+            setUserData(data);
+
         } catch (error) {
-            console.error('Error fetching user data:', error);
+            console.error('Error al obtener cookies:', error);
         }
     }
-
     const handleLoginSuccess = (e) => {
-        const fetchData = async () => {
-            try {
-                e.preventDefault();
-                await getUserData();
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+        e.preventDefault();
+        setInitialRender(false);
         fetchData();
+        window.location.href = '/Dashboard';
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await getUserData();
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-        fetchData();
-    }, []);
 
+
+    useEffect(() => {
+        setInitialRender(false);
+        fetchData();
+
+    }, []);
+    if (initialRender || !userDataLoaded || userData === null) {
+        return null;
+    }
     return (
         <Router>
             <Routes>
@@ -65,26 +62,24 @@ function App() {
                     element={<ForgotPassword {...forgotData} />}
                 />
 
-
-                {userDataLoaded && (
-                    <Route path="/Anuncios" element={<Anuncios userData={verifyRef.current}/>}/>
-                )}
-                {userDataLoaded && (
-                    <Route path="/Modulos" element={<Modulos userData={verifyRef.current}/>}/>
-                )}
-                {userDataLoaded && (
-                    <Route path="/Expedientes" element={<Vistas userData={verifyRef.current}/>}/>
-                )}
-
-                {userDataLoaded && (
-                    <Route path="Secciones" element={<Sections userData={verifyRef.current}/>}/>
-                )}
-                {userDataLoaded && (
-                    <Route path="/Sesiones" element={<Sesiones userData={verifyRef.current}/>}/>
-                )}
-                {userDataLoaded && (
-                    <Route path="/Pacientes" element={<Pacientes userData={verifyRef.current}/>}/>
-                )}
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Anuncios" element={<Anuncios userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Modulos" element={<Modulos userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Expedientes" element={<Vistas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="Secciones" element={<Sections userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Sesiones" element={<Sesiones userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Pacientes" element={<Pacientes userData={userData}/>}/>
+                </Route>
 
                 <Route
                     path="/InicioSesion"
@@ -96,45 +91,34 @@ function App() {
                         />
                     }
                 />
-                {userDataLoaded && (
-                    <Route
-                        path="/Dashboard"
-                        element={<DashBoard userData={verifyRef.current}/>}
-                    />
-                )}
 
-                {userDataLoaded && (
-                    <Route path="/citas" element={<Citas userData={verifyRef.current}/>}/>
-                )}
+
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Dashboard" element={<DashBoard userData={userData} />} />
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/citas" element={<Citas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Cuentas" element={<Accounts userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/AuditLogs" element={<AuditLogs userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/ZoomC" element={<MyZoom userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/ZoomV" element={<MyZoomPat userData={userData}/>}/>
+                </Route>
+
+
 
 
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
                 <Route path="/Cuestionario" element={<Wizard {...wizardData} />}/>
 
 
-                {userDataLoaded && (
-                    <Route path="/Cuentas" element={<Accounts userData={verifyRef.current}/>}/>
-                )}
-                {/* <Route
-          path="/Profiles"
-
-                element={<ProfilesPage />}
-
-        /> */}
-                {userDataLoaded && (
-                    <Route path="/AuditLogs" element={<AuditLogs userData={verifyRef.current}/>}/>
-                )}
-
-                {userDataLoaded && (
-                    <Route path="/ZoomC" element={<MyZoom userData={verifyRef.current}/>}/>
-                )}
-
-                {/* <Route path="/ZoomV" element={<MyZoomPat/>}/> */}
-
-
-                {userDataLoaded && (
-                    <Route path="/ZoomV" element={<MyZoomPat userData={verifyRef.current}/>}/>
-                )}
             </Routes>
 
         </Router>

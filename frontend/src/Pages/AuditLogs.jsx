@@ -6,12 +6,7 @@ import Navbar from "../Components/Navbar";
 import {useNavigate} from "react-router-dom";
 
 function AuditLogs(props) {
-    console.log(props.userData.user_data)
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     const [datos, setDatos] = useState([]);
     const [campoFiltrado, setCampoFiltrado] = useState('Fecha_Hora');
     const [filtro, setFiltro] = useState('');

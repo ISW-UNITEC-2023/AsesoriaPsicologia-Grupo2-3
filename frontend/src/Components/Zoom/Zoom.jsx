@@ -11,11 +11,7 @@ import {getCookies} from "../../Utilities/login-services";
 import {useNavigate} from "react-router-dom";
 
 function MyZoom(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     //Privilegios del usuario logueado
     const [userPrivileges, setUserPrivileges] = useState({});
 

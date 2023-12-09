@@ -61,7 +61,6 @@ function Login(props) {
     props.setUserDataLoaded(true);
     e.preventDefault();
 
-    navigate("/ZoomV");
   };
 
   const [errors, setErrors] = useState({ general: "" });

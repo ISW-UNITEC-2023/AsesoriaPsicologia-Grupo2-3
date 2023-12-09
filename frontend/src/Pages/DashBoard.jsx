@@ -10,11 +10,6 @@ import {getVerify} from "../Utilities/user-services";
 import {useNavigate} from "react-router-dom";
 
 function DashBoard(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
 
     const [displayedModules, setModules] = useState([]);
     const [isPopupOpen, setIsPopupOpen] = useState(false);

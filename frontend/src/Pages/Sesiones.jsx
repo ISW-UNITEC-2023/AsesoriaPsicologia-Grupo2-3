@@ -9,11 +9,7 @@ import TableConsultas from "../Components/Citas/TableConsultas";
 
 function Sesiones(props) {
     
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     const [showModal, setShowModal] = useState(false);
 
     const handleClose = () => setShowModal(false);

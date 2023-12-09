@@ -28,11 +28,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {useNavigate} from "react-router-dom";
 
 function Accounts(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
     const [originalUsers, setOriginalUsers] = useState([]);

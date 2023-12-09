@@ -10,11 +10,6 @@ import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 
 function PacientesForm(props) {
-    const navigate = useNavigate();
-    if (!props.userData.user_data) {
-        navigate("/InicioSesion");
-        return null;
-    }
 
     const [nombres, setNombres] = useState([]);
     const [showCrearPopup, setShowCrearPopup] = useState(false);

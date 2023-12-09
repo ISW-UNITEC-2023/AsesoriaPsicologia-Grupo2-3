@@ -164,6 +164,7 @@ export async function getCookies() {
             method: "GET",
             url: "http://localhost:8000/users/getCookies",
             withCredentials: true,
+            credentials: "include",
         };
         const response = await axios.request(options);
         return response.data;

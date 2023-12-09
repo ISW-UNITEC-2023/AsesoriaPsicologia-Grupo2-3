@@ -15,11 +15,7 @@ import ModulosLayout from "../Layout/ModulosLayout";
 import {useNavigate} from "react-router-dom";
 
 function ModulosForm(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar
     const [isDeletedPopUpOpen, setIsDeletedPopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminado

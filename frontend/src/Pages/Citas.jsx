@@ -4,11 +4,7 @@ import CitasLayout from "../Layout/CitasLayout";
 import {useNavigate} from "react-router-dom";
 
 export const Citas = (props) => {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     return (
         <CitasLayout pagina="Citas">
             <div className="w-auto min-h-screen flex flex-row">

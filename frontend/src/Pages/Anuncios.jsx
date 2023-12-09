@@ -49,11 +49,7 @@ function SearchBar() {
 }
 
 function Anuncios(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     /**DELETE */
     const [title, setTitle] = "";
     const [isDeletePopUpOpen, setIsDeletePopUpOpen] = useState(false); // Estado para abrir la ventana emergente de confirmación de eliminar

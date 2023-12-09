@@ -8,11 +8,7 @@ import {Input} from "@material-tailwind/react";
 import {useNavigate} from "react-router-dom";
 
 function Vistas(props) {
-    if (!props.userData.user_data) {
-        const navigate = useNavigate();
-        navigate("/InicioSesion");
-        return null;
-    }
+
     const [patientInfo, setPatientInfo] = useState({
         nombre: "",
         fechaNacimiento: "",
