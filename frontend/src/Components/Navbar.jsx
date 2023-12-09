@@ -57,14 +57,6 @@ function MyNavbar() {
             </div>
             {isOpen && (
               <div className="nb-dropdown-items">
-                <div className="nb-dropdown-item">
-                  <FontAwesomeIcon
-                    icon={faUserCircle}
-                    className="nb-dropdown-icon"
-                  />
-                  Mi Perfil
-                </div>
-
                 <div
                   className="nb-dropdown-item"
                   onClick={() => {
