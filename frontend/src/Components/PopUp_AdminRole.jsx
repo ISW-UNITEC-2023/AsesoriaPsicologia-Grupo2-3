@@ -104,11 +104,12 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
   }
 
   async function guardarRoles() {
-    let userRolesData = user.roles.length > 0
-    ? user.roles.map((item) => {
-        return { id_role: item[0], name_role: item[1] };
-      }, [])
-    : [];
+    let userRolesData =
+      user.roles.length > 0
+        ? user.roles.map((item) => {
+            return { id_role: item[0], name_role: item[1] };
+          }, [])
+        : [];
     let toAdd = defaultData.userRoles.filter((element) => {
       return !userRolesData.some((item) => {
         return item.id_role === element.id_role;
@@ -120,11 +121,17 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
       });
     });
     //Asignar y Remover Roles
-    for(let i = 0; i < toAdd.length; i++){
-      await userServices.assignRole({id: user.id_user, role: toAdd[i].id_role});
+    for (let i = 0; i < toAdd.length; i++) {
+      await userServices.assignRole({
+        id: user.id_user,
+        role: toAdd[i].id_role,
+      });
     }
-    for(let i = 0; i < toRemove.length; i++){
-      await userServices.removeRole({id: user.id_user, role: toRemove[i].id_role});
+    for (let i = 0; i < toRemove.length; i++) {
+      await userServices.removeRole({
+        id: user.id_user,
+        role: toRemove[i].id_role,
+      });
     }
     onClose();
   }

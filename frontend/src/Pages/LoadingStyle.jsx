@@ -20,15 +20,18 @@ const LoadingSpinner = () => {
 
         <div>
           <div className="loading-container">
-          <div>
-            <Button className="button-loading" onClick={redirectToInicioSesion}>
-              Regresar al inicio
-            </Button>
-          </div>
+            <div>
+              <Button
+                className="button-loading"
+                onClick={redirectToInicioSesion}
+              >
+                Regresar al inicio
+              </Button>
+            </div>
             <div className="message">
               <h1>No se encontró la autorización</h1>
               <p>Esta página no es de acceso público</p>
-              Para acceder porfavor registrate o inicia sesión 
+              Para acceder porfavor registrate o inicia sesión
             </div>
           </div>
         </div>
