@@ -514,7 +514,7 @@ function Accounts(props) {
               user={openEdit.userInfo}
             />
           )}
-          {openEmail.open === 1 && (
+          {/*openEmail.open === 1 && (
             <EmailPopUp
               isOpen={openEmail.open}
               onClose={() => {
@@ -522,7 +522,7 @@ function Accounts(props) {
               }}
               user={openEmail.userInfo}
             />
-          )}
+            )*/}
           {openRole.open == 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
@@ -550,12 +550,12 @@ function Accounts(props) {
                   Nombre
                 </div>
               </th>
-              <th>
+              {/*<th>
                 <div className="th-div-account">
                   <CustomBtFilter type="email_user" />
                   Correo
                 </div>
-              </th>
+            </th>*/}
               <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="number_user" />
@@ -598,7 +598,7 @@ function Accounts(props) {
                           });
                         }}
                       />
-                      <FontAwesomeIcon
+                      {/* <FontAwesomeIcon
                         icon={faEnvelope}
                         className="row-send-email"
                         onClick={() => {
@@ -607,7 +607,7 @@ function Accounts(props) {
                             userInfo: itemU,
                           });
                         }}
-                      />
+                      /> */}
                       <FontAwesomeIcon
                         icon={faUserGear}
                         className="row-user-role"
