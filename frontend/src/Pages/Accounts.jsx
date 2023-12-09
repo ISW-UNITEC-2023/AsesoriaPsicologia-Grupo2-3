@@ -246,8 +246,7 @@ function Accounts(props) {
       hour: "2-digit",
       minute: "2-digit",
     };
-    var formattedDate = date.toLocaleString("es-ES", options);
-    return formattedDate;
+    return date.toLocaleString("es-ES", options);
   };
 
   //Fetch de Usuarios
@@ -410,7 +409,7 @@ function Accounts(props) {
 
   return (
     <div className="account-container">
-      <Navbar userData={props.userData}/>
+      <Navbar userData={props.userData} />
       <div className="account-box">
         <div className="account-header">
           <span className="account-title">Administración de Cuentas</span>
