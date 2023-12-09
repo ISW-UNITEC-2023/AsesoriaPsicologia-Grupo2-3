@@ -1,13 +1,14 @@
 .role-admin-page {
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 .role-admin-box {
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow-y: scroll;
+  overflow: auto;
 }
 
 .form-header-ra {
@@ -181,6 +182,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .input-group-crear-rol{

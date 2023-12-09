@@ -9,13 +9,13 @@ body {
   display: flex;
   flex-direction: row;
   max-height: 100vh;
-  overflow-y: auto;
 }
 
 .historial-box {
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: auto;
 }
 
 .historial-header {
@@ -77,6 +77,30 @@ body {
 }
 
 .boton-descargar-log{
+  justify-self: flex-end;
+  margin-right: 1%;
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: auto;
+}
+
+.boton-descargar-log:hover{
+  background-color: #113946a1;
+}
+
+.boton-descargar-excel:hover{
+  background-color: #113946a1;
+}
+
+.remove-filter-historial:hover{
+  background-color: #113946a1;
+}
+
+.boton-descargar-excel{
   justify-self: flex-end;
   margin-right: 3%;
   background-color: #113946;
@@ -146,4 +170,11 @@ body {
 .pagination button:nth-child(-n + 2),
 .pagination button:nth-last-child(-n + 2) {
   display: inline-block;
+}
+
+.pagination-text{
+  align-self: center;
+  align-items: flex-start;
+  margin-right: auto;
+  margin-left: 3%;
 }

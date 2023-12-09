@@ -390,7 +390,7 @@ function AuditLogs(props) {
           <button className="boton-descargar-log" onClick={() => downloadLogs('pdf')}>
             Descargar Historial en PDF
           </button>
-          <button className="boton-descargar-log" onClick={() => downloadLogs('excel')}>
+          <button className="boton-descargar-excel" onClick={() => downloadLogs('excel')}>
             Descargar Historial en Excel
           </button>
         </div>
@@ -431,7 +431,7 @@ function AuditLogs(props) {
             </tr>
           </thead>
           <tbody>
-            {getCurrentLogs().map((dato) => (
+            {getCurrentLogs().length > 0 && getCurrentLogs().map((dato) => (
               <tr className="row-table-historial" key={dato.ID}>
                 <td className="td-items-historial">{dato.ID}</td>
                 <td className="td-items-historial">{dato.Usuario}</td>
@@ -446,6 +446,9 @@ function AuditLogs(props) {
           </tbody>
         </table>
         <div className="pagination">
+        <span className="pagination-text">
+            Mostrando {getCurrentLogs().length} de {logs.length} registros
+          </span>
           <button
             onClick={() => handlePageClick(currentPage - 1)}
             disabled={currentPage === 1}
