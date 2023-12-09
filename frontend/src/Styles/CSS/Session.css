@@ -1,0 +1,43 @@
+
+
+
+
+  .card-header {
+    background-color: #0b5ed7;
+    color: white;
+    text-align: center;
+  }
+
+  .card-title {
+    font-weight: bold;
+  }
+
+  .card-text {
+    font-size: 14px;
+  }
+
+
+
+  .card-link:hover {
+    text-decoration: underline;
+  }
+
+
+  .custom-green-button {
+    width: 15rem;
+    height: 3rem;
+  }
+  .sesiones-title{
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+
+
+
+
+
+
+
+
+

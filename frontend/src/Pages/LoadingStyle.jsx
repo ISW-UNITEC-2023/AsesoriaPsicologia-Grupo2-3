@@ -4,50 +4,40 @@ import "../Styles/CSS/LoadingSpiner.css";
 import register from "../Styles/Images/user.png";
 import { Button } from "react-bootstrap";
 const LoadingSpinner = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const redirectToInicioSesion = () => {
-        navigate("/InicioSesion");
-    };
-    const redirectToRegistro = () => {
-        navigate("/Cuestionario");
-    };
-
-    return (
-        <div id="loading_spinner" className="loading-spinner">
-            <div>
-                <div className="large-message">
-                    <div>
-                        <span>Necesitas Iniciar Sesión Para Continuar</span>
-                    </div>
-                </div>
-
-                <div id="loading_spinner_inicio_sesion" className="button-container">
-                    <div>
-                        <img src={register} alt="Registrarse" className="image" />
-                        <Button className="button" onClick={redirectToInicioSesion}>
-                            Ir a Inicio de Sesión
-                        </Button>
-                    </div>
-
-                    <div className="loading-container">
-                        <img src={register} alt="Registrarse" className="image" />
-                        <div className="message">
-                            Parece que no tienes acceso a esta página. Ingresa para disfrutar
-                            de nuestros servicios.
-                        </div>
-                    </div>
-
-                    <div id="loading_spinner_registraro">
-                        <img src={register} alt="Registrarse" className="image" />
-                        <Button className="button" onClick={redirectToRegistro}>
-                            Registrar
-                        </Button>
-                    </div>
-                </div>
-            </div>
+  const redirectToInicioSesion = () => {
+    navigate("/InicioSesion");
+  };
+  return (
+    <div className="loading-spinner">
+      <div>
+        <div className="large-message">
+          <div>
+            <span>401</span>
+          </div>
         </div>
-    );
+
+        <div>
+          <div className="loading-container">
+            <div>
+              <Button
+                className="button-loading"
+                onClick={redirectToInicioSesion}
+              >
+                Regresar al inicio
+              </Button>
+            </div>
+            <div className="message">
+              <h1>No se encontró la autorización</h1>
+              <p>Esta página no es de acceso público</p>
+              Para acceder porfavor registrate o inicia sesión
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default LoadingSpinner;

@@ -19,7 +19,7 @@
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   max-width: 90%;
-  width: 400px;
+  width: 450px;
   text-align: center;
   position: relative;
   transform-origin: center;
@@ -30,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #003b88;
+  background: #113946;
   color: #fff;
   padding: 20px;
   border-radius: 10px 10px 0 0;
@@ -48,21 +48,21 @@
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
 }
 
 .form-buttons-ar {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
 }
 
 .form-guardar-ar {
   background: none;
-  color: #003b88;
-  border: 1px solid #003b88;
+  color: #113946;
+  border: 1px solid #113946;
   outline: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -72,15 +72,15 @@
 }
 
 .form-guardar-ar:hover {
-  background: #003b88;
+  background: #113946;
   color: #fff;
-  border: 1px solid #003b88;
+  border: 1px solid #113946;
 }
 
 .form-cancel-ar {
   background: none;
-  color: #003b88;
-  border: 1px solid #003b88;
+  color: #113946;
+  border: 1px solid #113946;
   outline: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -122,22 +122,29 @@
   border: 1px solid #878787;
   border-radius: 5px;
   padding: 5px;
-  width: 150px;
-  margin-right: 10px;
+  margin-right: 20px;
+  width: 240px;
 }
 
-.eliminar-rol-user:hover{
-    color: #727272;
+.eliminar-rol-user:hover {
+  color: #727272;
 }
 
 .agregar-rol-user:hover {
-    color: #727272;
+  color: #727272;
 }
 
 .admin-rol-icon {
   margin-left: 5px;
 }
 
-.label-select-box{
-    margin-bottom: 10px;
+.label-select-box {
+  margin-bottom: 10px;
+}
+
+.row-select-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
 }

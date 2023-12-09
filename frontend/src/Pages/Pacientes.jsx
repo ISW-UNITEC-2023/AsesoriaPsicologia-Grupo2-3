@@ -9,23 +9,25 @@ import CrearUser from "../Components/PopUp_CrearUser";
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 
-function PacientesForm() {
+function PacientesForm(props) {
     const navigate = useNavigate();
     const [nombres, setNombres] = useState([]);
     const [showCrearPopup, setShowCrearPopup] = useState(false);
     const [showEditarPopup, setShowEditarPopup] = useState(false); // Estado para mostrar el popup de edición
 
     const [selectedUser, setSelectedUser] = useState(null); // Estado para almacenar el usuario seleccionado para la edición
+    const [nombre, setNombre] = useState("");
 
     async function initialList() {
-        const arregloUsuarios = await Services.getUsers();
+        const arregloUsuarios = await Services.getPatients();
+        console.log("pacientes",arregloUsuarios);
         const arregloMandar = [];
 
         arregloUsuarios.map((usuario) => {
             return arregloMandar.push({
-                    nombre: usuario.name_user,
-                    email: usuario.email_user,
-                    id_account: usuario.id_user,
+                nombre: usuario.name_user,
+                email: usuario.email_user,
+                id_account: usuario.id_user,
             });
         })
 
@@ -75,12 +77,18 @@ function PacientesForm() {
         setSelectedUser(null); // Limpia el usuario seleccionado cuando se cierra el popup de edición
     };
 
+
+    const handleClick = (nombre) => {
+        // Guardar el nombre en el localStorage
+        localStorage.setItem('namePatient', nombre);
+    };
+
     return (
         <PacientesLayout pagina="Pacientes">
             <div className="pacientes-container">
-                <NavigationB/>
+                <NavigationB userData={props.userData}/>
                 <div className="container-pacientes-title-list">
-                    <h1 className="title-pacientes" style={{width: "400%"}}>
+                    <h1 className="title-pacientes">
                         Pacientes
                     </h1>
 
@@ -90,7 +98,9 @@ function PacientesForm() {
                                 <div className="nombre-box">
                                     <FontAwesomeIcon icon={faUserCircle} className="icon-persona"/>
                                     <span className="nombre" style={{width: "400%"}}>
-                  <Link to={"/sesiones"}>{nombre.nombre}</Link>
+                   <Link to="/sesiones" onClick={() => handleClick(nombre.nombre)}>
+                {nombre.nombre}
+              </Link>
                 </span>
                                     {/* Agrega el evento onClick para abrir el popup de edición */}
                                 </div>

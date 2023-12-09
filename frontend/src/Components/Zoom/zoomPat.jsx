@@ -1,93 +1,111 @@
-// // MyZoomPat.jsx
+
 import React, { useState, useEffect } from 'react';
 import "./zoomPat.css";
 import Form from 'react-bootstrap/Form';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import NavigationB from "../Navbar";
-import {gMeeting} from "../../Utilities/zoom-services";
+import { gMeeting } from "../../Utilities/zoom-services";
+import { getCookies } from "../../Utilities/login-services";
 
 
-function MyZoomPat() {
-  const [meetings, setMeetings] = useState([]);
+function MyZoomPat(props) {
+    //Privilegios del usuario logueado
+    const [userPrivileges, setUserPrivileges] = useState({});
 
-  useEffect(() => {
-    // Llamada a la función gMeeting al cargar el componente
-    gMeeting()
-      .then(meetingsData => {
-        console.log("Datos de las reuniones:", meetingsData);
-        setMeetings(meetingsData.meetings || []);
-      })
-      .catch(error => {
-        console.error("Error al obtener reuniones:", error);
-      });
-  }, []);
+    const fetchUserData = async () => {
+        const userData = await getCookies();
+        if (userData && userData.user_data && userData.user_data.roles) {
+            setUserPrivileges(userData.user_data.privileges);
+        }
+        setUserPrivileges(userData.user_data.privileges);
+    };
 
-  return (
-    <div className='dashboard-container'>
+    const havePrivilege = (privilege) => {
+        if (userPrivileges && userPrivileges.length > 0) {
+            return userPrivileges.includes(privilege);
+        }
+    }
 
-        <NavigationB/>
-        <div style={{ margin: "30px", width: "80%" }}>
-        
-        <div>
-            <h1 className="title-pacientes">Zoom</h1>
-        </div>
-        <Tabs
-            defaultActiveKey="sesiones"
-            transition={false}
-            id="noanim-tab-example"
-            className="mb-3"
-            style={{marginLeft:"3%"}}
-        >
-            <Tab eventKey="sesiones" title="Sesiones Programadas">
-            <Container fluid="md" style={{marginLeft:"7%"}}>
-                <Row>
-                <Col>
-                    <Form.Label>Hora de Inicio</Form.Label>
-                </Col>
-                <Col>
-                    <Form.Label>Tema</Form.Label>
-                </Col>
-                <Col>
-                    <Form.Label>ID de la reunión</Form.Label>
-                </Col>
-                <Col>
-                </Col>
-                </Row>
-                {/* Mostrar detalles de todas las reuniones */}
-                {meetings.map(meeting => (
-                <Row key={meeting.id}>
-                    <Col style={{display:"flex", alignItems:"center", borderBottom: "1px solid rgb(190 179 179)"}}>
-                    <Form.Label>{new Date(meeting.start_time).toLocaleTimeString()}</Form.Label>
+    const [meetings, setMeetings] = useState([]);
+
+    useEffect(() => {
+        gMeeting().then(meetingsData => {
+            setMeetings(meetingsData.meetings || []);
+        })
+        fetchUserData();
+    },
+        []);
+
+    return (
+        <div className='zoom-container'>
+
+            <NavigationB userData={props.userData}/>
+            <div className='zoom-div'>
+                <Row className='zoom-row'>
+                    <Col>
+                        <h1 className="title-pacientes">Zoom</h1>
+                        {
+                            havePrivilege(31) ?
+                                <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>
+                                :
+                                <Form.Label className='titulo2'>No tienes los permisos necesarios para ver las sesiones programadas.</Form.Label>
+                        }
                     </Col>
-                    <Col style={{display:"flex", alignItems:"center", borderBottom: "1px solid rgb(190 179 179)"}}>
-                    <Form.Label>{meeting.topic}</Form.Label>
-                    </Col>
-                    <Col style={{display:"flex", alignItems:"center", borderBottom: "1px solid rgb(190 179 179)"}}>
-                    <Form.Label>{meeting.id}</Form.Label>
-                    </Col>
-                    <Col  style={{display:"flex", alignItems:"center", borderBottom: "1px solid rgb(190 179 179)", paddingBottom:"10px"}}>
-                    <Button style={{ width: "70px" , margin: "5px" }} variant="outline-primary"  href={meeting.join_url} target="_blank">
-                    Entrar
-                </Button>
+                    <Col></Col>
+                    <Col>
+                        {havePrivilege(32) && <Button className='buttons' variant="outline-primary" href="/ZoomC" onClick={() => { }} style={{ marginLeft: "235px" }}>Crear Sesion</Button>}
                     </Col>
                 </Row>
-                ))}
-            </Container>
-            </Tab>
-            <Tab eventKey="profile" title="Sesiones Pasadas">
-            <Container fluid="md">
-                ... Cargando Sesiones Pasadas
-            </Container>
-            </Tab>
-        </Tabs>
+
+                {havePrivilege(31) &&
+                    <div >
+                        <Container fluid="md" className="zoomscroll-content">
+                            <Row>
+                                <div></div>
+                                <Col>
+                                    <Form.Label className='titulo'>Hora de Inicio</Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Label className='titulo'>Tema</Form.Label>
+                                </Col>
+                                <Col>
+                                    <Form.Label className='titulo'>ID de la reunión</Form.Label>
+                                </Col>
+                                <Col>
+                                </Col>
+                            </Row>
+                            {meetings.map(meeting => (
+                                <Row key={meeting.id}>
+                                    <Col className='column'>
+                                    </Col>
+                                    <Form.Label className='form'>{new Date(meeting.start_time).toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</Form.Label>
+                                    <Col className='column'>
+                                        <Form.Label>{new Date(meeting.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</Form.Label>
+                                    </Col>
+                                    <Col className='column'>
+                                        <Form.Label>{meeting.topic}</Form.Label>
+                                    </Col>
+                                    <Col className='column'>
+                                        <Form.Label>{meeting.id}</Form.Label>
+                                    </Col>
+                                    <Col className='column2'>
+                                        {havePrivilege(31) &&
+                                            <Button className='buttons2' variant="outline-primary" href={meeting.join_url} target="_blank">
+                                                Entrar
+                                            </Button>
+                                        }
+                                    </Col>
+                                </Row>
+                            ))}
+                        </Container>
+                    </div>
+                }
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default MyZoomPat;

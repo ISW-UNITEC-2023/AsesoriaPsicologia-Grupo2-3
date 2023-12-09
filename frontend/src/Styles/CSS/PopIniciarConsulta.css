@@ -1,0 +1,104 @@
+.pop-iniciar-consulta {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.pop-iniciar-consulta.show {
+  display: block;
+}
+
+.pop-iniciar-consulta-content {
+  background-color: #fefefe;
+  margin-left: 25%;
+  margin-top: 1rem;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 55%;
+  height: 93% !important;
+}
+
+.pop-iniciar-consulta-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: normal;
+  margin-bottom: 10px;
+}
+.pop-iniciar-consulta-body {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}
+
+.pop-iniciar-consulta-body textarea,
+.pop-iniciar-consulta-body input,
+.pop-iniciar-consulta-form textarea,
+.pop-iniciar-consulta-form input {
+  border: 1px solid #3e3d3d;
+  width: 100%;
+  padding: 5px;
+}
+
+.pop-iniciar-consulta-form-medico input {
+  padding: 5px;
+}
+
+.pop-iniciar-consulta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pop-iniciar-consulta-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+  cursor: pointer;
+}
+.save-button:hover {
+  background-color: #327434;
+}
+
+.close-button-sesiones {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.pop-iniciar-consulta-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 80px; /* Altura del encabezado (ajusta según necesites) */
+}
+
+.pop-iniciar-consulta-header h1 {
+  text-align: center;
+}

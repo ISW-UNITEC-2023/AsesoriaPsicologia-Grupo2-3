@@ -19,8 +19,8 @@ const { tokenCheck } = require("./middlewares/tokenCheck");
 //   }
 // })();
 
-redis.on('connect', () => console.log("Connected to redis succesfully"))
-redis.on('error', (err) => console.log("Redis Client Error", err));
+redis.on("connect", () => console.log("Connected to redis succesfully"));
+redis.on("error", (err) => console.log("Redis Client Error", err));
 
 redis.connect();
 
@@ -44,7 +44,7 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -60,6 +60,8 @@ const clinicRouter = require("./Routes/clinics-routes");
 const announcementRouter = require("./Routes/announcement-routes");
 const fileRouter = require("./Routes/files-routes");
 const mailRouter = require("./Routes/mail-routes");
+const appointmentRouter = require("./Routes/appointment-routes");
+const actionsRoutes = require("./Routes/actions-routes");
 
 //Rutas de Zoom
 const zoomUsersRouter = require("./Routes/zoom/users");
@@ -76,13 +78,15 @@ app.use("/roles", rolesRouter);
 app.use("/privileges", privilegesRouter);
 app.use("/patients", patientsRouter);
 app.use("/sections", sectionRouter);
+app.use("/actions", actionsRoutes);
 app.use("/courses", courseRouter);
 app.use("/clinics", clinicRouter);
 app.use("/announcements", announcementRouter);
 app.use("/files", fileRouter);
 app.use("/mail", mailRouter);
+app.use("/appointment", appointmentRouter);
 
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 app.listen(PORT, () => {
   console.log("Server started!");
 });
