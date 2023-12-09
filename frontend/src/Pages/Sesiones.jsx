@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Container, Row, Col, Card} from "react-bootstrap";
 import {Button} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
+import {buttons} from 'react-bootstrap/Button';
 import NavigationB from "../Components/Navbar";
 import "../Styles/CSS/Session.css";
 import "../Styles/CSS/PopIniciarConsulta.css";
@@ -44,7 +45,7 @@ function Sesiones(props) {
         };
     return (
         <>
-            <div style={{width:"95rem"}} className="flex-grow flex flex-row items-center">
+            <div className="flex-grow flex flex-row items-center">
                 <NavigationB userData={props.userData}/>
                 <div className="flex-1 flex flex-col w-80">
                     <Row>
@@ -81,45 +82,38 @@ function Sesiones(props) {
 
             <div className={`pop-iniciar-consulta ${showModal ? 'show' : ''}`}>
                 <div className="pop-iniciar-consulta-content">
-                <button style={{marginLeft:"40rem"}} className="save-button" type="button" class="btn btn-outline-success" onClick={handleGuardarConsulta}>Guardar Consulta</button>
-                    
-                    <div>
-                        <Row>
-                            <Col>
-                            <h1 style={{marginLeft:"1.5rem" }}>Consulta Médica</h1>
-                            </Col>
-                            <Col style={{marginTop:"30px",marginLeft:"6rem",alignItems:"center"}}>
-                            <label htmlFor="doctorName">Nombre del Médico:</label>
-                            <input  style={{ borderBottom: "1px solid #3e3d3d",width:"200px"}}type="text" id="doctorName" />  
-                            </Col>
-                        </Row>
+                    <div className="pop-iniciar-consulta-header">
+                        <h1>Consulta Médica</h1>
+
+                        <buttons className="button-save" onClick={handleGuardarConsulta}>Guardar Consulta</buttons>
                     </div>
-                            
                     <div className="pop-iniciar-consulta-body">
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <label htmlFor="doctorName">Nombre del Médico:</label>
+                            <input type="text" id="doctorName" />
+                            </div>
                         <form className="pop-iniciar-consulta-form">
                             <label htmlFor="consultaMotivo">Motivo de Consulta:</label>
                             <textarea id="consultaMotivo" rows={3} placeholder="Ingrese motivo de consulta"></textarea>
 
                             <label htmlFor="observaciones">Observaciones:</label>
                             <textarea id="observaciones" rows={3} placeholder="Ingrese observaciones"></textarea>
-                            <Row>
-                                <Col style={{ marginLeft:"0.75rem",alignItems:"center"}}>
                                 <label htmlFor="montoConsulta">Monto de Consulta:</label>
-                            <input style={{ marginLeft:"5px",borderBottom: "1px solid #3e3d3d",width:"39rem"}}type="text" id="montoConsulta" placeholder="Ingrese monto de consulta" value={montoConsulta}
-                                        onChange={(e) => setMontoConsulta(e.target.value)}
-                                    />
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <span style={{ marginRight: '0.3rem' }}>Lps.</span>
+                                <input type="text" id="montoConsulta" placeholder="Ingrese monto de consulta" value={montoConsulta}
+                                    onChange={(e) => setMontoConsulta(e.target.value)}/>
+                                </div>
                                     {montoError && (
                                         <p style={{ color: "red", fontSize: "0.8rem", marginTop: "0.5rem" }}>El campo de Monto de Consulta no puede estar vacío</p>
                                     )}
-                                </Col>
-                            </Row>
                             <label htmlFor="ordenesMedicas">Órdenes Médicas:</label>
                             <textarea id="ordenesMedicas" rows={3} placeholder="Ingrese órdenes médicas"></textarea>
                         </form>
                     </div>
                     <div className="pop-iniciar-consulta-footer">
-                        <button className="save-button" type="button" class="btn btn-outline-danger" onClick={handleClose}>Cerrar</button>
-                        <button  className="close-button-sesiones" type="button" class="btn btn-outline-success" onClick={handleTerminarConsulta}>Terminar Consulta</button>
+                        <buttons className="close-button-sesiones" type="button" class="btn btn-outline-danger" onClick={handleClose}>Cerrar</buttons>
+                        <buttons className="button-terminar"  onClick={handleTerminarConsulta}>Terminar Consulta</buttons>
                     </div>
                 </div>
             </div>
