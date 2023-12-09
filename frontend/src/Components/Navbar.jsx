@@ -8,8 +8,10 @@ import {
   faChevronUp,
   faRightFromBracket,
   faUserGroup,
+  faUserGear,
   faCalendarDays,
   faVideo,
+  faFileLines,
   faBullhorn,
   faGaugeHigh,
   faAddressCard,
@@ -78,72 +80,49 @@ function MyNavbar() {
               </div>
             )}
           </div>
-          {ProtectedRoute(props.userData, [31]) ? (
-            <Link to="/Zoomv" className="link-navbar-plataforma">
-              <FontAwesomeIcon
-                icon={faVideo}
-                className="navbar-plataforma-icon"
-              />
-              Zoom
-            </Link>
-          ) : (
-            <></>
-          )}
-
-          {ProtectedRoute(props.userData, [31]) ? (
-            <Link to="/Calendario" className="link-navbar-plataforma">
-              <FontAwesomeIcon
-                icon={faCalendarDays}
-                className="navbar-plataforma-icon"
-              />
-              Calendario
-            </Link>
-          ) : (
-            <></>
-          )}
-
-          {ProtectedRoute(props.userData, [56]) ? (
-            <Link to="/Pacientes" className="link-navbar-plataforma">
-              <FontAwesomeIcon
-                icon={faUserGroup}
-                className="navbar-plataforma-icon"
-              />
-              Pacientes
-            </Link>
-          ) : (
-            <></>
-          )}
-
-          {ProtectedRoute(props.userData, [45]) ? (
-            <Link to="/Cuentas" className="link-navbar-plataforma">
-              <FontAwesomeIcon
-                icon={faAddressCard}
-                className="navbar-plataforma-icon"
-              />
-              Cuentas
-            </Link>
-          ) : (
-            <></>
-          )}
-
-          {ProtectedRoute(props.userData, [54]) && (
-            <Link to="/AuditLogs" className="link-navbar-plataforma">
-              <FontAwesomeIcon
-                icon={faFileLines}
-                className="navbar-plataforma-icon"
-              />
-              Logs
-            </Link>
-          )}
-          {ProtectedRoute(props.userData, [54]) && (
-            <Link to="/Roles" className="link-navbar-plataforma">
-              <FontAwesomeIcon
-                icon={faUserGear}
-                className="navbar-plataforma-icon"
-              />
-              Roles
-            </Link>
-          )}
+          <Link to="/Zoomv" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faVideo}
+              className="navbar-plataforma-icon"
+            />
+            Zoom
+          </Link>
+          <Link to="/Calendario" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              className="navbar-plataforma-icon"
+            />
+            Calendario
+          </Link>
+          <Link to="/Pacientes" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faUserGroup}
+              className="navbar-plataforma-icon"
+            />
+            Pacientes
+          </Link>
+          (<></>)
+          <Link to="/Cuentas" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faAddressCard}
+              className="navbar-plataforma-icon"
+            />
+            Cuentas
+          </Link>
+          <Link to="/AuditLogs" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faFileLines}
+              className="navbar-plataforma-icon"
+            />
+            Logs
+          </Link>
+          <Link to="/Roles" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faUserGear}
+              className="navbar-plataforma-icon"
+            />
+            Roles
+          </Link>
         </div>
       </div>
     </div>
