@@ -1,45 +1,180 @@
-.title-historial {
-    font-size: 40px;
-
-    padding: 20px;
-    color: #333;
-    font-weight: bold;
-    text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-.container-header {
-    display: flex;
-    margin-left: 5%;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #000;
-    margin-bottom: 30px;
-
+.historial-container {
+  display: flex;
+  flex-direction: row;
+  max-height: 100vh;
 }
 
+.historial-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+}
 
-.container-table {
-    min-height: 50px;
-    padding: 0%;
-    display: flex;
+.historial-header {
+  margin-left: 3%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  display: flex;
+}
 
-    margin-left: 2%;
-    width: 100%;
-  }
+.historial-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
 
-  .container-flitros {
-    min-height: 50px;
-    display: flex;
-    margin-bottom: 30px;
-    margin-left: 5%;
-    width: 100%;
-  }
-  
-  
+.historial-table {
+  width: 94%;
+  margin-left: 3%;
+  margin-right: 3%;
+  overflow-y: scroll;
+  font-size:1rem;
+}
 
-  .dashboard-container {
-    display: flex;
-    flex-direction: row;
-    
-    background-color: rgb(255, 255, 255);
-  }
+.historial-table-header th {
+  background-color: #113946;
+  color: white;
+}
+
+.historial-table-header tr {
+  border: 1px solid #000;
+}
+
+.row-table-historial:hover td {
+  background-color: #f0f0f0;
+}
+
+.td-items-historial {
+  width: 10px;
+  border: 1px solid #bbbbbb;
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.td-info-accion {
+  max-width: 100px;
+  height: auto;
+  white-space: wrap;
+  border: 1px solid #bbbbbb;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.th-div-historial{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.boton-descargar-log{
+  justify-self: flex-end;
+  margin-right: 1%;
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: auto;
+}
+
+.boton-descargar-log:hover{
+  background-color: #113946a1;
+}
+
+.boton-descargar-excel:hover{
+  background-color: #113946a1;
+}
+
+.remove-filter-historial:hover{
+  background-color: #113946a1;
+}
+
+.boton-descargar-excel{
+  justify-self: flex-end;
+  margin-right: 3%;
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: auto;
+}
+
+.remove-filter-historial{
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-right: 1%;
+  margin-left: auto;
+  justify-self: flex-end;
+  position: relative;
+}
+
+.limpiar-filtro-div{
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 10%);
+  color: #113946;
+  border: 1px solid #113946;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  padding: 4px 8px;
+  width: 8rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin: auto 3% 10px 0;
+}
+
+.pagination button {
+  background-color: #113946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  width: 40px;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background-color: #fff;
+  color: #113946;
+  border: #113946 1px solid;
+}
+
+.pagination button:nth-child(-n + 2),
+.pagination button:nth-last-child(-n + 2) {
+  display: inline-block;
+}
+
+.pagination-text{
+  align-self: center;
+  align-items: flex-start;
+  margin-right: auto;
+  margin-left: 3%;
+}

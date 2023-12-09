@@ -24,6 +24,7 @@
     "html2pdf": "^0.0.11",
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.0",
     "mailgen": "^2.0.27",
     "mdb-react-ui-kit": "^6.3.0",
     "mysql": "^2.18.1",

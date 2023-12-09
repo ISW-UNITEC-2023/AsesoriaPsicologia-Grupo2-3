@@ -13,13 +13,12 @@ const knex = require("knex")({
 async function createPrivilege(privilege) {
   return knex("privileges").insert({
     id_elemento: privilege.element,
-    privilege: privilege.privilege,
+    description: privilege.description,
     user_creator: privilege.creator,
   });
 }
 
 async function updatePrivilegeElement(id, element, editor) {
-  
   return knex("privileges")
     .where({ id_privilege: id })
     .update({
@@ -29,11 +28,11 @@ async function updatePrivilegeElement(id, element, editor) {
     });
 }
 
-async function updatePrivilege(id, privilege, editor) {
+async function updateDescription(id, description, editor) {
   return knex("privileges")
     .where({ id_privilege: id })
     .update({
-      privilege: privilege,
+      description: description,
       last_modification: new Date(),
       user_editor: editor,
     });
@@ -58,7 +57,7 @@ async function deletePrivilege(id) {
 module.exports = {
   createPrivilege,
   updatePrivilegeElement,
-  updatePrivilege,
+  updateDescription,
   getPrivileges,
   deletePrivilege,
 };

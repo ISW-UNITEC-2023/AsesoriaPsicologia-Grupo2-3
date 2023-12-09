@@ -96,13 +96,7 @@ async function getRolePrivilegesByElement(id_role, id_element) {
 //Delete
 async function deleteRole(id) {
   try {
-    const role = await knex("roles").select().where("id_role", id).first();
-    if (!role) {
-      throw new Error("Role not found");
-    }
-
     await knex("roles").where("id_role", id).del();
-    console.log("Role deleted successfully");
   } catch (error) {
     throw new Error(error.message);
   }

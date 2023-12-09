@@ -7,6 +7,8 @@ import DialogCitas from "./DialogCitas";
 import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
+import { Link } from 'react-router-dom';
+
 
 const TABLE_HEAD = [" ", "Fecha de Consulta", "Doctor Responsable", "Observaciones", ""];
 
@@ -178,13 +180,15 @@ export function TableConsultas({page}) {
 
                             return (
                                 <tr key={id_file}>
-                                    <td className={classes}>
+                                     <td className={classes}>
                                         <div className="flex items-center">
+                                            <Link to="/Expedientes"> 
+                                                <IconButton variant="text">
+                                                    <EyeIcon className="w-5 h-5" />
+                                                </IconButton>
+                                            </Link>
                                             <IconButton variant="text">
-                                                <EyeIcon className="w-5 h-5"/>
-                                            </IconButton>
-                                            <IconButton variant="text">
-                                                <PencilIcon className="w-5 h-5"/>
+                                                <PencilIcon className="w-5 h-5" />
                                             </IconButton>
                                         </div>
                                     </td>

@@ -38,15 +38,15 @@ async function updatePrivilegeElement(req, res) {
   }
 }
 
-async function updatePrivilege(req, res) {
-  const { id, privilege, editor } = req.body;
+async function updateDescription(req, res) {
+  const { id, description, editor } = req.body;
   try {
     if (
       typeof id == "number" &&
-      typeof privilege == "number" &&
+      typeof description == "string" &&
       typeof editor == "number"
     ) {
-      await privilegeServices.updatePrivilege(id, privilege, editor);
+      await privilegeServices.updatePrivilege(id, description, editor);
       res.send({ updatedPrivilegeId: id });
     }
   } catch (e) {
@@ -80,7 +80,7 @@ async function deletePrivilege(req, res) {
 module.exports = {
   createPrivilege,
   updatePrivilegeElement,
-  updatePrivilege,
+  updateDescription,
   getPrivileges,
   deletePrivilege,
 };
