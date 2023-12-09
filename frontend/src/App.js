@@ -176,6 +176,20 @@ function App() {
           }
         />
         <Route
+          path="/Roles"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+                element={<RoleAdmin userData={userData} />}
+                allowedRoles={["admin"]}
+                userRoles={userData}
+              />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
+        <Route
           path="/citas"
           element={
             userDataLoaded ? (

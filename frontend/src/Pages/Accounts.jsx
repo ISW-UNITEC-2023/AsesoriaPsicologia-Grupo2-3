@@ -20,6 +20,8 @@ import {
   faArrowDown,
   faFilterCircleXmark,
   faPenToSquare,
+  faArrowLeft,
+  faArrowRight,
   faEnvelope,
   faUserGear,
 } from "@fortawesome/free-solid-svg-icons";
@@ -36,6 +38,8 @@ function Accounts(props) {
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
   const [openCreate, setOpenCreate] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const accountsPerPage = 12;
   const [openEdit, setOpenEdit] = useState({
     open: 0,
     userInfo: null,
@@ -381,7 +385,6 @@ function Accounts(props) {
       setSorted(true);
       setUsers(filteredUsers);
       if (states.length === 0) {
-        console.log("limpiar filtros");
         limpiarFiltros();
       }
     }
@@ -406,6 +409,17 @@ function Accounts(props) {
     };
     fetchData();
   }
+
+  //Paginación
+  const getCurrentAccounts = () => {
+    const indexOfLastAccount = currentPage * accountsPerPage;
+    const indexOfFirstAccount = indexOfLastAccount - accountsPerPage;
+    return users.slice(indexOfFirstAccount, indexOfLastAccount);
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="account-container">
@@ -536,8 +550,8 @@ function Accounts(props) {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 &&
-              users.map((itemU) => {
+            {getCurrentAccounts().length > 0 &&
+              getCurrentAccounts().map((itemU) => {
                 return (
                   <tr className="row-table-accounts" key={itemU.id_user}>
                     <td className="accounts-table-obj">
@@ -600,6 +614,48 @@ function Accounts(props) {
               })}
           </tbody>
         </table>
+        <div className="pagination">
+          <span className="pagination-text">
+            Mostrando {getCurrentAccounts().length} de {users.length} cuentas
+          </span>
+          <button
+            onClick={() => handlePageClick(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+
+          {Array.from(
+            { length: Math.ceil(users.length / accountsPerPage) },
+            (_, index) => {
+              const page = index + 1;
+              const isCurrentPage = currentPage === page;
+              const shouldDisplay =
+                page === 1 ||
+                page === currentPage - 1 ||
+                page === currentPage ||
+                page === currentPage + 1 ||
+                page === Math.ceil(users.length / accountsPerPage);
+
+              return shouldDisplay ? (
+                <button
+                  key={page}
+                  onClick={() => handlePageClick(page)}
+                  className={isCurrentPage ? "active" : ""}
+                >
+                  {page}
+                </button>
+              ) : null;
+            }
+          )}
+
+          <button
+            onClick={() => handlePageClick(currentPage + 1)}
+            disabled={getCurrentAccounts().length < accountsPerPage}
+          >
+            <FontAwesomeIcon icon={faArrowRight} />
+          </button>
+        </div>
       </div>
     </div>
   );
