@@ -87,13 +87,15 @@ function MyNavbar() {
             />
             Zoom
           </Link>
-          <Link to="/Calendario" className="link-navbar-plataforma">
+
+          <Link to="/Calendar" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faCalendarDays}
               className="navbar-plataforma-icon"
             />
             Calendario
           </Link>
+
           <Link to="/Pacientes" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faUserGroup}
@@ -101,7 +103,7 @@ function MyNavbar() {
             />
             Pacientes
           </Link>
-          (<></>)
+
           <Link to="/Cuentas" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faAddressCard}
@@ -109,6 +111,7 @@ function MyNavbar() {
             />
             Cuentas
           </Link>
+
           <Link to="/AuditLogs" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faFileLines}
@@ -116,6 +119,7 @@ function MyNavbar() {
             />
             Logs
           </Link>
+
           <Link to="/Roles" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faUserGear}

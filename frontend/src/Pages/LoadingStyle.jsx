@@ -9,40 +9,27 @@ const LoadingSpinner = () => {
   const redirectToInicioSesion = () => {
     navigate("/InicioSesion");
   };
-  const redirectToRegistro = () => {
-    navigate("/Cuestionario");
-  };
-
   return (
     <div className="loading-spinner">
       <div>
         <div className="large-message">
           <div>
-            <span>Necesitas Iniciar Sesión Para Continuar</span>
+            <span>401</span>
           </div>
         </div>
 
-        <div className="button-container">
-          <div>
-            <img src={register} alt="Registrarse" className="image" />
-            <Button className="button" onClick={redirectToInicioSesion}>
-              Ir a Inicio de Sesión
-            </Button>
-          </div>
-
+        <div>
           <div className="loading-container">
-            <img src={register} alt="Registrarse" className="image" />
-            <div className="message">
-              Parece que no tienes acceso a esta página. Ingresa para disfrutar
-              de nuestros servicios.
-            </div>
-          </div>
-
           <div>
-            <img src={register} alt="Registrarse" className="image" />
-            <Button className="button" onClick={redirectToRegistro}>
-              Registrar
+            <Button className="button-loading" onClick={redirectToInicioSesion}>
+              Regresar al inicio
             </Button>
+          </div>
+            <div className="message">
+              <h1>No se encontró la autorización</h1>
+              <p>Esta página no es de acceso público</p>
+              Para acceder porfavor registrate o inicia sesión 
+            </div>
           </div>
         </div>
       </div>

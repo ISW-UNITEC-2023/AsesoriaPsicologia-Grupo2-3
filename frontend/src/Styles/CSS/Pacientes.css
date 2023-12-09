@@ -8,9 +8,10 @@
 .title-pacientes {
   font-size: 40px;
   padding: 20px;
-  color: #333;
+  color:  #212529;
   font-weight: bold;
   text-align: left;
+  width: 400%
 }
 
 .container-header {
