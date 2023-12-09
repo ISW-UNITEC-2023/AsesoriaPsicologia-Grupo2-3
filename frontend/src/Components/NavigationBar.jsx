@@ -49,7 +49,7 @@ function NavigationBar(props) {
                     <Link className="link-navbar iniciar-sesion-navbar" to="/InicioSesion">
                         Iniciar Sesión
                     </Link>
-                    <Link className="link-navbar comienza-ya-navbar" to="/Cuestionario">
+                    <Link className="link-navbar comienza-ya-navbar" to="/Registro">
                         Comienza Ya
                     </Link>
                 </Nav>
@@ -67,7 +67,7 @@ function NavigationBar(props) {
                         <Link className="link-navbar iniciar-sesion-navbar mb-2" to="/InicioSesion">
                             Iniciar Sesión
                         </Link>
-                        <Link className="link-navbar comienza-ya-navbar mb-2" to="/Cuestionario">
+                        <Link className="link-navbar comienza-ya-navbar mb-2" to="/Registro">
                             Comienza Ya
                         </Link>
                     </Nav>

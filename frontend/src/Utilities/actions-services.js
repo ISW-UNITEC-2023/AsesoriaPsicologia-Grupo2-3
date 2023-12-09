@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const host = process.env.REACT_APP_API_BASE_URL;
+const host = "http://localhost:8000";
 
 async function getActions() {
     try {
@@ -12,7 +12,7 @@ async function getActions() {
         const response = await axios.request(options);
         return response.data;
     } catch (e) {
-        console.error("Error al obtener acciones:", error);
+        console.error("Error al obtener acciones:", e);
         return null;
     }   
 }
