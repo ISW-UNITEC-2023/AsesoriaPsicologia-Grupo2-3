@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import { useState } from "react";
 
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCircle,
@@ -16,7 +15,7 @@ import {
   faBullhorn,
   faGaugeHigh,
   faAddressCard,
-  faBookOpen
+  faBookOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
 function MyNavbar() {
@@ -37,7 +36,6 @@ function MyNavbar() {
   const logs = () => {
     navigate("/AuditLogs");
   };
-  
 
   return (
     <div className="background">
@@ -54,8 +52,6 @@ function MyNavbar() {
           </div>
           {isOpen && (
             <div className="nb-dropdown-items">
-            
-
               <div
                 className="nb-dropdown-item"
                 onClick={() => {
@@ -68,7 +64,7 @@ function MyNavbar() {
                 />
                 Admin Logs
               </div>
-              
+
               <div
                 className="nb-dropdown-item"
                 onClick={() => {

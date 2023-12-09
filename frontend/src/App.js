@@ -31,7 +31,6 @@ function ProtectedRoute({
 }) {
   const isAuthorized =
     userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
-
   return isAuthorized ? element : null;
 }
 
@@ -237,7 +236,6 @@ export default App;
 const RegistroData = {
   unitecLogo: require("./Styles/Images/unitec-logo.png"),
   navbarBg: require("./Styles/Images/navbar.png"),
- 
 };
 
 const forgotData = {
