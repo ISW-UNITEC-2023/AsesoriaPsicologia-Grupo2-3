@@ -10,7 +10,7 @@ import Pacientes from "./Pages/Pacientes";
 import Sections from "./Pages/Sections";
 import Sesiones from "./Pages/Sesiones";
 import Vistas from "./Pages/Vistas";
-import Wizard from "./Pages/Wizard";
+import Registro from "./Pages/Registro";
 import Anuncios from "./Pages/Anuncios";
 import AnunciosCrear from "./Pages/AnunciosCrear";
 import Accounts from "./Pages/Accounts";
@@ -31,7 +31,6 @@ function ProtectedRoute({
 }) {
   const isAuthorized =
     userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
-
   return isAuthorized ? element : null;
 }
 
@@ -206,7 +205,7 @@ function App() {
         />
 
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route path="/Registro" element={<Registro {...RegistroData} />} />
         <Route
           path="/Crearanuncios"
           element={
@@ -222,7 +221,7 @@ function App() {
           }
         />
         <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Cuestionario" element={<Wizard {...wizardData} />} />
+        <Route path="/Registro" element={<Registro {...RegistroData} />} />
         <Route path="/Cuentas" element={<Accounts userData={userData} />} />
         <Route path="/AuditLogs" element={<AuditLogs userData={userData} />} />
         <Route path="/ZoomC" element={<MyZoom userData={userData} />} />
@@ -248,10 +247,9 @@ function App() {
 export default App;
 //Aqui se importan las imagenes necesarias para el proyecto
 //Ejemplo const logo = require('./assets/logo.png');
-const wizardData = {
+const RegistroData = {
   unitecLogo: require("./Styles/Images/unitec-logo.png"),
   navbarBg: require("./Styles/Images/navbar.png"),
-  howieImg: require("./Styles/Images/howie-wizard.png"),
 };
 
 const forgotData = {

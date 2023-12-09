@@ -250,8 +250,7 @@ function Accounts(props) {
       hour: "2-digit",
       minute: "2-digit",
     };
-    var formattedDate = date.toLocaleString("es-ES", options);
-    return formattedDate;
+    return date.toLocaleString("es-ES", options);
   };
 
   //Fetch de Usuarios

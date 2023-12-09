@@ -10,21 +10,13 @@ import {
   faUserGroup,
   faCalendarDays,
   faVideo,
+  faBullhorn,
+  faGaugeHigh,
   faAddressCard,
-  faFileLines,
-  faUserGear,
+  faBookOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
-
-function ProtectedRoute(userRoles, allowedPrivileges) {
-  const isAuthorized =
-    userRoles &&
-    userRoles.privileges.some((role) => allowedPrivileges.includes(role));
-
-  return isAuthorized;
-}
-
-function MyNavbar(props) {
+function MyNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -35,6 +27,10 @@ function MyNavbar(props) {
     localStorage.clear();
     deleteCookies();
     navigate("/InicioSesion");
+  };
+
+  const logs = () => {
+    navigate("/AuditLogs");
   };
 
   return (
