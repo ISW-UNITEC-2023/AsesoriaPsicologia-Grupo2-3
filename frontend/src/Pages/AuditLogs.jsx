@@ -12,8 +12,8 @@ import "../Styles/CSS/AuditLogs.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Services from "../Utilities/actions-services";
 import Navbar from "../Components/Navbar";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function AuditLogs(props) {
   const [logs, setLogs] = useState([]);
@@ -311,7 +311,7 @@ function AuditLogs(props) {
       { title: "Info de Accion", dataKey: "Info_Accion" },
       { title: "Fecha", dataKey: "Fecha_Hora" },
     ];
-  
+
     const rows = logs.map((log) => ({
       ID: log.ID,
       Usuario: log.Usuario,
@@ -320,7 +320,7 @@ function AuditLogs(props) {
       Info_Accion: log.Info_Accion,
       Fecha_Hora: formatDate(log.Fecha_Hora),
     }));
-  
+
     if (format === "pdf") {
       const pdf = new jsPDF();
       pdf.autoTable({
@@ -328,10 +328,9 @@ function AuditLogs(props) {
         body: rows,
         styles: {
           cellPadding: 2,
-          align: 'center',
+          align: "center",
           fontSize: 10,
           rowHeight: 8,
-
         },
         headStyles: {
           fillColor: [17, 57, 70],
@@ -342,8 +341,8 @@ function AuditLogs(props) {
           Info_Accion: { cellWidth: 50 },
         },
       });
-  
-      pdf.save("historial " + (formatDate(new Date())) + ".pdf");
+
+      pdf.save("historial " + formatDate(new Date()) + ".pdf");
     } else if (format === "excel") {
       const csvContent =
         "data:text/csv;charset=utf-8," +
@@ -356,7 +355,10 @@ function AuditLogs(props) {
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "historial "+(formatDate(new Date()))+".csv");
+      link.setAttribute(
+        "download",
+        "historial " + formatDate(new Date()) + ".csv"
+      );
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -387,10 +389,16 @@ function AuditLogs(props) {
               </span>
             )}
           </div>
-          <button className="boton-descargar-log" onClick={() => downloadLogs('pdf')}>
+          <button
+            className="boton-descargar-log"
+            onClick={() => downloadLogs("pdf")}
+          >
             Descargar Historial en PDF
           </button>
-          <button className="boton-descargar-excel" onClick={() => downloadLogs('excel')}>
+          <button
+            className="boton-descargar-excel"
+            onClick={() => downloadLogs("excel")}
+          >
             Descargar Historial en Excel
           </button>
         </div>
@@ -431,22 +439,23 @@ function AuditLogs(props) {
             </tr>
           </thead>
           <tbody>
-            {getCurrentLogs().length > 0 && getCurrentLogs().map((dato) => (
-              <tr className="row-table-historial" key={dato.ID}>
-                <td className="td-items-historial">{dato.ID}</td>
-                <td className="td-items-historial">{dato.Usuario}</td>
-                <td className="td-items-historial">{dato.Accion}</td>
-                <td className="td-items-historial">{dato.Tabla}</td>
-                <td className="td-info-accion">{dato.Info_Accion}</td>
-                <td className="td-items-historial">
-                  {formatDate(dato.Fecha_Hora)}
-                </td>
-              </tr>
-            ))}
+            {getCurrentLogs().length > 0 &&
+              getCurrentLogs().map((dato) => (
+                <tr className="row-table-historial" key={dato.ID}>
+                  <td className="td-items-historial">{dato.ID}</td>
+                  <td className="td-items-historial">{dato.Usuario}</td>
+                  <td className="td-items-historial">{dato.Accion}</td>
+                  <td className="td-items-historial">{dato.Tabla}</td>
+                  <td className="td-info-accion">{dato.Info_Accion}</td>
+                  <td className="td-items-historial">
+                    {formatDate(dato.Fecha_Hora)}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <div className="pagination">
-        <span className="pagination-text">
+          <span className="pagination-text">
             Mostrando {getCurrentLogs().length} de {logs.length} registros
           </span>
           <button

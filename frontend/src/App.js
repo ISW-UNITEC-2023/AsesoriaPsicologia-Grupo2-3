@@ -67,20 +67,7 @@ function App() {
           path="/ResetPassword"
           element={<ForgotPassword {...forgotData} />}
         />
-        <Route
-          path="/Anuncios"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Anuncios />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
+
         <Route
           path="/Modulos"
           element={
