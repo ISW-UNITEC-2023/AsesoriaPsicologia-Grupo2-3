@@ -34,17 +34,15 @@ function MyZoomPat(props) {
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {
-
-        gMeeting().then(meetingsData => {
-            setMeetings(meetingsData.meetings || []);
-        }).catch(error => {
-            console.error('Error:', error);
-            setMeetings(error.request);
-        })
-        
-        fetchUserData();
-    },
-    []);
+        const fetchData = async () => {
+            try {
+                await updatePrivileges();
+                const meetingsData = await gMeeting();
+                setMeetings(meetingsData.meetings || []);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
 
         fetchData();
     }, []);

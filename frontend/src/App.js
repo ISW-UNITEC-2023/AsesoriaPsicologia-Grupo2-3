@@ -13,6 +13,7 @@ import Vistas from "./Pages/Vistas";
 import Anuncios from "./Pages/Anuncios";
 import Accounts from "./Pages/Accounts";
 import AuditLogs from "./Pages/AuditLogs";
+import RoleAdmin from "./Pages/RoleAdmin";
 import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
@@ -78,6 +79,9 @@ function App() {
                 </Route>
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/Pacientes" element={<Pacientes userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Roles" element={<RoleAdmin userData={userData}/>}/>
                 </Route>
 
                 <Route
