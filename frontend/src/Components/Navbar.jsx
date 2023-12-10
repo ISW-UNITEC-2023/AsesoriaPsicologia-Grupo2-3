@@ -16,6 +16,7 @@ import {
   faGaugeHigh,
   faAddressCard,
   faBookOpen,
+  faMoneyCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { deleteCookies } from "../Utilities/login-services";
 function MyNavbar() {
@@ -118,6 +119,14 @@ function MyNavbar() {
               className="navbar-plataforma-icon"
             />
             Roles
+          </Link>
+
+          <Link to="/Chequeo" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faMoneyCheck}
+              className="navbar-plataforma-icon"
+            />
+            Chequeo
           </Link>
         </div>
       </div>
