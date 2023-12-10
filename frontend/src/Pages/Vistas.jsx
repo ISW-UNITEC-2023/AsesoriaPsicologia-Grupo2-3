@@ -5,10 +5,12 @@ import {useState} from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import {Input} from "@material-tailwind/react";
-import {useNavigate} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function Vistas(props) {
 
+
+function Vistas() {
     const [patientInfo, setPatientInfo] = useState({
         nombre: "",
         fechaNacimiento: "",
@@ -16,7 +18,8 @@ function Vistas(props) {
         direccion: "",
         estadoCivil: "",
     });
-
+    
+    const navigate = useNavigate();
     const [doctorName, setDoctorName] = useState("");
     const [reasonForConsultation, setReasonForConsultation] = useState("");
     const [observations, setObservations] = useState("");
@@ -39,6 +42,7 @@ function Vistas(props) {
 
     return (
         <div className="page-container">
+          
             <Container id="pdf-container">
                 <img src={tempImage} alt="Encabezado" className="encabezado-image"/>
                 <div className="Titulo">
@@ -52,72 +56,66 @@ function Vistas(props) {
                             <tr>
                                 <td className="left-column">Nombre:</td>
                                 <td className="right-column">
-                                    <Input
-                                        type="text"
-                                        variant="standard"
-                                        color="blue-gray"
-                                        placeholder="Nombre"
-                                        value={patientInfo.nombre}
-                                        onChange={(e) =>
-                                            setPatientInfo({...patientInfo, nombre: e.target.value})
-                                        }/>
+                                <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Nombre"
+                                            value={patientInfo.nombre}
+                                            readOnly 
+                                        />
                                 </td>
 
                             </tr>
                             <tr>
                                 <td className="left-column">Fecha de Nacimiento:</td>
                                 <td className="right-column">
-                                    <Input
-                                        type="date"
-                                        variant="standard"
-                                        color="blue-gray"
-                                        placeholder="Fecha de Nacimiento"
-                                        value={patientInfo.fechaNacimiento}
-                                        onChange={(e) =>
-                                            setPatientInfo({...patientInfo, fechaNacimiento: e.target.value})
-                                        }/>
+                                <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Fecha de Nacimiento"
+                                            value={patientInfo.fechaNacimiento}
+                                            readOnly 
+                                        />
+
                                 </td>
                             </tr>
                             <tr>
                                 <td className="left-column">Identidad:</td>
                                 <td className="right-column">
-                                    <Input
-                                        type="text"
-                                        variant="standard"
-                                        color="blue-gray"
-                                        placeholder="Identidad"
-                                        value={patientInfo.identidad}
-                                        onChange={(e) =>
-                                            setPatientInfo({...patientInfo, identidad: e.target.value})
-                                        }/>
+                                <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Identidad"
+                                            value={patientInfo.identidad}
+                                            readOnly 
+                                        />
+
                                 </td>
                             </tr>
                             <tr>
                                 <td className="left-column">Dirección:</td>
                                 <td className="right-column">
-                                    <Input
-                                        type="text"
-                                        variant="standard"
-                                        color="blue-gray"
-                                        placeholder="Dirección"
-                                        value={patientInfo.direccion}
-                                        onChange={(e) =>
-                                            setPatientInfo({...patientInfo, direccion: e.target.value})
-                                        }/>
+                                <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Direccion"
+                                            value={patientInfo.direccion}
+                                            readOnly 
+                                        />
+
                                 </td>
                             </tr>
                             <tr>
                                 <td className="left-column">Estado Civil:</td>
                                 <td className="right-column">
-                                    <Input
-                                        type="text"
-                                        variant="standard"
-                                        color="blue-gray"
-                                        placeholder="Estado Civil"
-                                        value={patientInfo.estadoCivil}
-                                        onChange={(e) =>
-                                            setPatientInfo({...patientInfo, estadoCivil: e.target.value})
-                                        }/>
+                                <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Estado Civil"
+                                            value={patientInfo.estadoCivil}
+                                            readOnly 
+                                        />
+
                                 </td>
                             </tr>
                             </tbody>
@@ -187,8 +185,12 @@ function Vistas(props) {
                 <button className="btn btn-primary fixed-download-button" onClick={downloadPDF}>
                     Descargar PDF
                 </button>
+            <button className="btn btn-secondary fixed-back-button" onClick={() =>navigate(-1)}>
+                    Volver
+            </button>
             </div>
         </div>
+    
     );
 }
 

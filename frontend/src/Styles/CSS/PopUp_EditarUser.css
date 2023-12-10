@@ -30,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #003b88;
+  background: #113946;
   color: #fff;
   padding: 20px;
   border-radius: 10px 10px 0 0;
@@ -93,7 +93,7 @@
 }
 
 .form-div-input-eu:focus-within {
-  border-color: #003b88;
+  border-color: #113946;
   transition: border-color 0.5s ease;
 }
 
@@ -122,7 +122,7 @@
 }
 
 .form-control-eu:focus {
-  border-color: #003b88;
+  border-color: #113946;
 }
 
 .form-buttons-eu {
@@ -135,8 +135,8 @@
 
 .form-actualizar-eu {
   background: none;
-  color: #003b88;
-  border: 1px solid #003b88;
+  color: #113946;
+  border: 1px solid #113946;
   outline: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -146,15 +146,15 @@
 }
 
 .form-actualizar-eu:hover {
-  background: #003b88;
+  background: #113946;
   color: #fff;
-  border: 1px solid #003b88;
+  border: 1px solid #113946;
 }
 
 .form-cancel-eu {
   background: none;
-  color: #003b88;
-  border: 1px solid #003b88;
+  color: #113946;
+  border: 1px solid #113946;
   outline: none;
   padding: 10px 20px;
   border-radius: 5px;

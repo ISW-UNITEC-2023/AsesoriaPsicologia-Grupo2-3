@@ -4,7 +4,7 @@ import "../Styles/CSS/Proximamente.css";
 
 function Proximamente() {
     return (
-        <div className="Proxi-container">
+        <div id="proximamente_component" className="Proxi-container">
             <NavigationB />
             
             

@@ -61,6 +61,7 @@ function Login(props) {
     props.setUserDataLoaded(true);
     e.preventDefault();
 
+    navigate("/Dashboard");
   };
 
   const [errors, setErrors] = useState({ general: "" });
@@ -93,7 +94,7 @@ function Login(props) {
 
   return (
     <>
-      <LoginLayout pagina="Iniciar Sesión">
+      <LoginLayout id="login_component" pagina="Iniciar Sesión">
         <div className={"bodyL"}>
           <div className="navigation-bar">
             <NavigationBar {...props} />
@@ -103,14 +104,16 @@ function Login(props) {
             <span className="autor-rotativo">{frases.dispAutor}</span>
           </div>
           <form
+            id="login_component_formulario_login"
             className="login-form"
             onSubmit={(e) => {
-              handleSubmit(e).then(r => r);
+              handleSubmit(e).then((r) => r);
             }}
           >
             <div className="containerL">
               <h2 className="title">Ingresa tus datos</h2>
               <input
+                id="login_component_formulario_login_correo_electronico"
                 type="text"
                 name="email"
                 className="input"
@@ -122,6 +125,7 @@ function Login(props) {
                 required
               />
               <input
+                id="login_component_formulario_login_contrasena"
                 type="password"
                 name="password"
                 className="input"
@@ -135,10 +139,15 @@ function Login(props) {
               {errors.general !== "" && (
                 <label className="error">{errors.general}</label>
               )}
-              <button className="button" type="submit">
+              <button
+                id="login_component_formulario_login_inicar_sesion_btn"
+                className="button"
+                type="submit"
+              >
                 Inicia sesión
               </button>
               <p
+                id="login_component_formulario_login_olvidaste_contrasena"
                 className="forgot-passwordL"
                 onClick={handleForgotPasswordClick}
               >
@@ -147,6 +156,8 @@ function Login(props) {
             </div>
           </form>
           <div className="footer-general">
+            <p className="footerL">FUNDAEMPRESA UNITEC</p>
+            <p className="footerL">© 2023 - Todos los derechos reservados</p>
           </div>
         </div>
       </LoginLayout>

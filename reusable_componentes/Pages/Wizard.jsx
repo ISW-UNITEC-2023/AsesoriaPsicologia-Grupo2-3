@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ProgressBar, Button, Form } from 'react-bootstrap';
 import "../Styles/CSS/WizardStyle.css";
-import NavigationBar from "../Components/NavigationBar";
-import quesData from "../Styles/Extras/preguntas.json";
+import NavigationBar from "../../frontend/src/Components/NavigationBar";
+import quesData from "../../frontend/src/Styles/Extras/preguntas.json";
 
 function Wizard(props) {
     const navigate = useNavigate();
@@ -123,11 +123,55 @@ function Wizard(props) {
     };
 
     return (
-
-                            <div className="containerReg">
-                                <div className="navigation-bar">
+        <>
+            <div className={"bodyR"}>
+                <div className="navigation-bar">
                     <NavigationBar {...props} />
-                        </div>
+                </div>
+                {preguntas.indice <= preguntas.pregunta.length - 1 &&
+                    <div className="progress-bar">
+                        <ProgressBar now={progress} className="custom-progress-bar " variant="danger" />
+                    </div>
+                }
+                <div className="wizard">
+                    <div className="wizard-mascota">
+                        <img src={howieImg} alt="" className="howie-img" />
+                    </div>
+                    <div className="register-form">
+                        {preguntas.indice <= preguntas.pregunta.length - 1 ? (
+                            <div className="">
+                                <div className="wizard-pregunta">
+                                    <p>{preguntas.dispPregunta}</p>
+                                </div>
+                                <div className="wizard-respuestas">
+                                    {preguntas.dispRespuestas.map((respuesta, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {preguntas.pregunta[preguntas.indice].tipo ===
+                                                    "justificacion" ? (
+                                                    <input
+                                                        type="text"
+                                                        placeholder={respuesta}
+                                                        className="wizard-respuesta"
+                                                        onChange={(e) =>
+                                                            handleJustificacionChange(e, index)
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <button
+                                                        className="wizard-respuesta"
+                                                        onClick={() => handlePregunta(index)}
+                                                    >
+                                                        {respuesta}
+                                                    </button>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="containerReg">
                                 <Form>
                                     <Form.Group controlId="formName" className="mb-3">
                                         <Form.Label>Nombre Completo</Form.Label>
@@ -222,15 +266,16 @@ function Wizard(props) {
                                 <Link className="forgot-passwordR" to="/InicioSesion">
                                     ¿Ya tienes una cuenta?
                                 </Link>
-
-                                <div className="footer-general">
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="footer-general">
                     <p className="footerL">FUNDAEMPRESA UNITEC</p>
                     <p className="footerL">© 2023 - Todos los derechos reservados</p>
                 </div>
             </div>
-                    
-               
-            
+        </>
     );
 
 }
