@@ -1,7 +1,43 @@
 import NavigationBar from "../Components/Navbar";
 import '../Styles/CSS/Chequeo.css';
-
+import React, {useState} from "react";
+import "../Styles/CSS/PopUpChequeo.css";
+import Form from 'react-bootstrap/Form';
 function Chequeo(props){
+    const [showModal, setShowModal] = useState(false);
+    const [montoConsulta, setMontoConsulta] = useState('');
+    const [montoError, setMontoError] = useState(false);
+    const handleClose = () => {
+        setShowModal(false);
+    };
+    const handleShow = () => setShowModal(true);
+    const handleTerminarConsulta = () => {
+        if (montoConsulta.trim() === '') {
+            setMontoError(true);
+        } else {
+            setMontoError(false);
+            setShowModal(false);
+        } };
+        const handleGuardarConsulta = () => {
+                setMontoError(false);
+                const doctorName = document.getElementById('doctorName').value;
+                const motivoConsulta = document.getElementById('consultaMotivo').value;
+                const observaciones = document.getElementById('observaciones').value;
+                const ordenesMedicas = document.getElementById('ordenesMedicas').value;
+                const consulta = {
+                    doctorName,
+                    motivoConsulta,
+                    observaciones,
+                    montoConsulta,
+                    ordenesMedicas,
+                };
+        
+                localStorage.setItem('consultaGuardada', JSON.stringify(consulta));
+                console.log('Consulta guardada:', consulta);
+                localStorage.clear();
+                setShowModal(false);
+        };
+
     return (
 <div className="style-db-container">
     <NavigationBar userData={props.userData} />
@@ -30,7 +66,7 @@ function Chequeo(props){
                 <td>Otto</td>
                 <td>Lps.</td>
                 <td>
-                <buttons className="button-metodo-pago">Asignar Método de Pago</buttons>
+                <buttons  onClick={handleShow} className="button-metodo-pago">Asignar Método de Pago</buttons>
                 </td>
             </tr>
             <tr>
@@ -39,7 +75,7 @@ function Chequeo(props){
                 <td>Thornton</td>
                 <td>Lps.</td>
                 <td>
-                <buttons className="button-metodo-pago">Asignar Método de Pago</buttons>
+                <buttons onClick={handleShow} className="button-metodo-pago">Asignar Método de Pago</buttons>
                 </td>
             </tr>
             <tr>
@@ -48,13 +84,36 @@ function Chequeo(props){
                 <td>the Bird</td>
                 <td>Lps.</td>
                 <td>
-                <buttons className="button-metodo-pago">Asignar Método de Pago</buttons>
+                <buttons  onClick={handleShow} className="button-metodo-pago">Asignar Método de Pago</buttons>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
+<div className={`pop-metodo-pago  ${showModal ? 'show' : ''}`}>
+                <div className="pop-metodo-pago-content">
+                    <div className="pop-metodo-pago-header">
+                    <h1>Asignar método de pago a</h1>
+                        <div className="consulta-text">
+                        <h1>Consulta__</h1>
+                        </div>
+                    </div>
+                    <div className="pop-metodo-pago-body">
+                    <Form.Select aria-label="Default select example">
+                                            <option hidden>Método de Pago</option>
+                                            <option value="1"> Efectivo </option>
+                                            <option value="2"> Transferencia </option>
+                                            <option value="3"> Tarjeta de Crédito </option>
+                                            <option value="4"> Tarjeta de Débito </option>
+                                        </Form.Select>
+                    </div>
+                    <div className="pop-metodo-pago-footer">
+                        <buttons className="button-close-metodo" onClick={handleClose}>Cancelar</buttons>
+                        <buttons className="button-agregar-metodo-pago"  onClick={handleTerminarConsulta}>Agregar método de Pago</buttons>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     );
