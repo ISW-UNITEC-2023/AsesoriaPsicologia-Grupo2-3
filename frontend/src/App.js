@@ -10,268 +10,147 @@ import Pacientes from "./Pages/Pacientes";
 import Sections from "./Pages/Sections";
 import Sesiones from "./Pages/Sesiones";
 import Vistas from "./Pages/Vistas";
-import Registro from "./Pages/Registro";
 import Anuncios from "./Pages/Anuncios";
 import Accounts from "./Pages/Accounts";
 import AuditLogs from "./Pages/AuditLogs";
 import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
-import { Citas } from "./Pages/Citas";
-import { Zoom } from "react-toastify";
-import Calendar from "./Pages/Calendar";
-import RoleAdmin from "./Pages/RoleAdmin";
+import {Citas} from "./Pages/Citas";
+import ProtectedRoute from "./Utilities/ProtectedRoute";
 
-function ProtectedRoute({
-  element,
-  allowedRoles,
-  userRoles,
-  allowedPrivileges,
-}) {
-  const isAuthorized =
-    userRoles && userRoles.roles.some((role) => allowedRoles.includes(role));
-  return isAuthorized ? element : null;
-}
 
 function App() {
-  const [userData, setUserData] = useState(null);
-  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-  const fetchUserData = async () => {
-    const userData = await getCookies();
-    if (userData && userData.user_data && userData.user_data.roles) {
-      setUserData(userData.user_data);
-      setUserDataLoaded(true);
+    const [userDataLoaded, setUserDataLoaded] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const [initialRender, setInitialRender] = useState(true);
+    async function fetchData() {
+        try {
+            const data = await getCookies();
+            setUserDataLoaded(true);
+            setUserData(data);
+
+        } catch (error) {
+            console.error('Error al obtener cookies:', error);
+        }
     }
-    setUserData(userData.user_data);
-    console.log("Fetching data", userData);
-  };
+    const handleLoginSuccess = (e) => {
+        e.preventDefault();
+        setInitialRender(false);
+        fetchData();
+        window.location.href = '/Dashboard';
+    };
 
-  const handleLoginSuccess = (e) => {
-    e.preventDefault();
-    fetchUserData();
-  };
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+    useEffect(() => {
+        setInitialRender(false);
+        fetchData();
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage {...homedata} />} />
-        <Route path="/Inicio" element={<LandingPage {...homedata} />} />
-        <Route
-          path="/ResetPassword"
-          element={<ForgotPassword {...forgotData} />}
-        />
+    }, []);
+    if (initialRender || !userDataLoaded || userData === null) {
+        return null;
+    }
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<LandingPage {...homedata} />}/>
+                <Route path="/Inicio" element={<LandingPage {...homedata} />}/>
+                <Route
+                    path="/ResetPassword"
+                    element={<ForgotPassword {...forgotData} />}
+                />
 
-        <Route
-          path="/Modulos"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Modulos />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Expedientes"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Vistas />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Secciones"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Sections />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Sesiones"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Sesiones userData={userData} />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Pacientes"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Pacientes userData={userData} />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/InicioSesion"
-          element={
-            <Login
-              {...loginData}
-              onLoginSuccess={handleLoginSuccess}
-              setUserDataLoaded={setUserDataLoaded}
-            />
-          }
-        />
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Anuncios" element={<Anuncios userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Modulos" element={<Modulos userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Expedientes" element={<Vistas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="Secciones" element={<Sections userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Sesiones" element={<Sesiones userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Pacientes" element={<Pacientes userData={userData}/>}/>
+                </Route>
 
-        <Route
-          path="/Dashboard"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<DashBoard userData={userData} />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/Roles"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<RoleAdmin userData={userData} />}
-                allowedRoles={["admin"]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route
-          path="/citas"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Citas userData={userData} />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
+                <Route
+                    path="/InicioSesion"
+                    element={
+                        <Login
+                            {...loginData}
+                            onLoginSuccess={handleLoginSuccess}
+                            setUserDataLoaded={setUserDataLoaded}
+                        />
+                    }
+                />
 
-        <Route
-          path="/Calendar"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<Calendar userData={userData} />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
 
-        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Registro" element={<Registro {...RegistroData} />} />
-        <Route
-          path="/Crearanuncios"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<AnunciosCrear />}
-                allowedRoles={["admin", "patient", "teacher", "psychologist"]}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-        <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />} />
-        <Route path="/Registro" element={<Registro {...RegistroData} />} />
-        <Route path="/Cuentas" element={<Accounts userData={userData} />} />
-        <Route path="/AuditLogs" element={<AuditLogs userData={userData} />} />
-        <Route path="/ZoomC" element={<MyZoom userData={userData} />} />
-        <Route
-          path="/ZoomV"
-          element={
-            userDataLoaded ? (
-              <ProtectedRoute
-                element={<MyZoomPat userData={userData} />}
-                allowedRoles={userData.allRoles}
-                userRoles={userData}
-              />
-            ) : (
-              <LoadingSpinner />
-            )
-          }
-        />
-      </Routes>
-    </Router>
-  );
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Dashboard" element={<DashBoard userData={userData} />} />
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/citas" element={<Citas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Cuentas" element={<Accounts userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/AuditLogs" element={<AuditLogs userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/ZoomC" element={<MyZoom userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/ZoomV" element={<MyZoomPat userData={userData}/>}/>
+                </Route>
+
+
+
+
+                <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
+
+
+            </Routes>
+
+        </Router>
+    );
 }
 
 export default App;
 //Aqui se importan las imagenes necesarias para el proyecto
 //Ejemplo const logo = require('./assets/logo.png');
-const RegistroData = {
-  unitecLogo: require("./Styles/Images/unitec-logo.png"),
-  navbarBg: require("./Styles/Images/navbar.png"),
+const wizardData = {
+    unitecLogo: require("./Styles/Images/unitec-logo.png"),
+    navbarBg: require("./Styles/Images/navbar.png"),
+    howieImg: require("./Styles/Images/howie-wizard.png"),
 };
 
 const forgotData = {
-  unitecLogo: require("./Styles/Images/unitec-logo.png"),
-  navbarBg: require("./Styles/Images/navbar.png"),
+    unitecLogo: require("./Styles/Images/unitec-logo.png"),
+    navbarBg: require("./Styles/Images/navbar.png"),
 };
 
 const homedata = {
-  unitecLogo: require("./Styles/Images/unitec-logo.png"),
-  navbarBg: require("./Styles/Images/navbar.png"),
+    unitecLogo: require("./Styles/Images/unitec-logo.png"),
+    navbarBg: require("./Styles/Images/navbar.png"),
 };
 
 const aboutData = {
-  unitecLogo: require("./Styles/Images/unitec-logo.png"),
-  navbarBg: require("./Styles/Images/navbar.png"),
-  misionIcon: require("./Styles/Images/fondoAU1.png"),
-  visionIcon: require("./Styles/Images/fondoAU2.jpg"),
-  historyIcon: require("./Styles/Images/fondoAU3.jpeg"),
+    unitecLogo: require("./Styles/Images/unitec-logo.png"),
+    navbarBg: require("./Styles/Images/navbar.png"),
+    misionIcon: require("./Styles/Images/fondoAU1.png"),
+    visionIcon: require("./Styles/Images/fondoAU2.jpg"),
+    historyIcon: require("./Styles/Images/fondoAU3.jpeg"),
 };
 
 const loginData = {
-  unitecLogo: require("./Styles/Images/unitec-logo.png"),
-  navbarBg: require("./Styles/Images/navbar.png"),
+    unitecLogo: require("./Styles/Images/unitec-logo.png"),
+    navbarBg: require("./Styles/Images/navbar.png"),
 };
