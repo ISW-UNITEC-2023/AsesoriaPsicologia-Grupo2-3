@@ -32,12 +32,17 @@ function MyZoomPat(props) {
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {
+
         gMeeting().then(meetingsData => {
             setMeetings(meetingsData.meetings || []);
+        }).catch(error => {
+            console.error('Error:', error);
+            setMeetings(error.request);
         })
+        
         fetchUserData();
     },
-        []);
+    []);
 
     return (
         <div className='zoom-container'>
@@ -53,6 +58,8 @@ function MyZoomPat(props) {
                                 :
                                 <Form.Label className='titulo2'>No tienes los permisos necesarios para ver las sesiones programadas.</Form.Label>
                         }
+                       
+                        
                     </Col>
                     <Col></Col>
                     <Col>
@@ -77,7 +84,9 @@ function MyZoomPat(props) {
                                 <Col>
                                 </Col>
                             </Row>
-                            {meetings.map(meeting => (
+
+                           {!meetings?.status ?
+                           meetings.map(meeting => (
                                 <Row key={meeting.id}>
                                     <Col className='column'>
                                     </Col>
@@ -99,7 +108,10 @@ function MyZoomPat(props) {
                                         }
                                     </Col>
                                 </Row>
-                            ))}
+                            ))
+                            :
+                            <Form.Label className='titulo2' style={{paddingTop: '30px'}}>{`Error al obtener las sesiones. Código de error: ${meetings.status}`}</Form.Label>
+                        }
                         </Container>
                     </div>
                 }
