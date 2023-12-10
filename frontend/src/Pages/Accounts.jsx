@@ -93,19 +93,25 @@ function Accounts(props) {
     };
 
     return (
-      <div className="dropdown">
+      <div id="accounts_dropdown" className="dropdown">
         <button
+          id="accounts_dropdown_toggle"
           className="custom-dropdown-toggle"
           type="button"
-          id={`dropdownMenu$}`}
+          //id={`dropdownMenu$}`}
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
           <FontAwesomeIcon icon={faFilter} className="filter-icon" />
         </button>
-        <div className="dropdown-menu" aria-labelledby={`dropdownMenu${type}`}>
+        <div
+          id="accounts_dropdown_menu"
+          className="dropdown-menu"
+          aria-labelledby={`dropdownMenu${type}`}
+        >
           <button
+            id="accounts_dropdown_menu_sort-asc"
             className="dropdown-item"
             onClick={() => {
               sortUsers("asc");
@@ -115,6 +121,7 @@ function Accounts(props) {
             ASC
           </button>
           <button
+            id="accounts_dropdown_menu_sort-desc"
             className="dropdown-item"
             onClick={() => {
               sortUsers("desc");
@@ -130,20 +137,28 @@ function Accounts(props) {
 
   const CustomCbFilter = ({ type }) => {
     return (
-      <div className="dropdown">
+      <div id="accounts_dropdown" className="dropdown">
         <button
+          id="accounts_dropdown_toggle"
           className="custom-dropdown-toggle"
           type="button"
-          id={`dropdownMenu$}`}
+          //id={`dropdownMenu$}`}
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
           <FontAwesomeIcon icon={faFilter} className="filter-icon" />
         </button>
-        <div className="dropdown-menu" aria-labelledby={`dropdownMenu${type}`}>
+        <div
+          id="accounts_dropdown_menu"
+          className="dropdown-menu"
+          aria-labelledby={`dropdownMenu${type}`}
+        >
           {type === "roles" ? (
-            <div className="form-check-filter">
+            <div
+              id="accounts_dropdown_menu_filtro"
+              className="form-check-filter"
+            >
               {roles.length > 0 &&
                 roles.map((role) => {
                   return (
@@ -152,11 +167,12 @@ function Accounts(props) {
                       htmlFor={role.id_role}
                     >
                       <input
+                        id={`accounts_dropdown_menu_filtro_${role.id_role}`}
                         className="check-input-filter"
                         type="checkbox"
                         name={type}
                         value={role.name_role}
-                        id={role.id_role}
+                        //id={role.id_role}
                         checked={selectedRoles.includes(role.name_role)}
                         onChange={(e) => {
                           filterSelectedItem(e);
@@ -168,11 +184,12 @@ function Accounts(props) {
                 })}
               <label className="filter-check-label">
                 <input
+                  id="accounts_dropdown_menu_filtro_role-ninguno"
                   className="check-input-filter"
                   type="checkbox"
                   name={type}
                   value={"Sin rol"}
-                  id={0}
+                  //id={0}
                   checked={selectedRoles.includes("Sin rol")}
                   onChange={(e) => {
                     filterSelectedItem(e);
@@ -182,14 +199,18 @@ function Accounts(props) {
               </label>
             </div>
           ) : (
-            <div className="form-check-filter">
+            <div
+              id="accounts_dropdown_menu_filtro"
+              className="form-check-filter"
+            >
               <label className="filter-check-label" htmlFor="active">
                 <input
+                  id="accounts_dropdown_menu_filtro_rol-activo"
                   className="check-input-filter"
                   type="checkbox"
                   name="state"
                   value={1}
-                  id="active"
+                  //id="active"
                   checked={selectedState.includes(1)}
                   onChange={(e) => {
                     filterSelectedItem(e);
@@ -199,11 +220,12 @@ function Accounts(props) {
               </label>
               <label className="filter-check-label" htmlFor="inactive">
                 <input
+                  id="accounts_dropdown_menu_filtro_rol-inactivo"
                   className="check-input-filter"
                   type="checkbox"
                   name={type}
                   value={0}
-                  id="inactive"
+                  //id="inactive"
                   checked={selectedState.includes(0)}
                   onChange={(e) => {
                     filterSelectedItem(e);
@@ -221,18 +243,29 @@ function Accounts(props) {
   const SearchDropdown = ({ matchingNames }) => {
     return (
       <div
+        id="search-dropdown"
         className="dropdown-menu show mt-2.5"
-        aria-labelledby="searchDropdownMenu"
+        aria-labelledby="search_dropdown_menu"
         style={{ maxHeight: "200px", overflowY: "auto" }}
       >
         {matchingNames.length > 0 ? (
           matchingNames.map((name) => (
-            <button className="dropdown-item" type="button" key={name}>
+            <button
+              id={`search_dropdown_menu_name_${name}`}
+              className="dropdown-item"
+              type="button"
+              key={name}
+            >
               {name}
             </button>
           ))
         ) : (
-          <button className="dropdown-item" type="button" disabled>
+          <button
+            id={`search_dropdown_menu_name_no-name`}
+            className="dropdown-item"
+            type="button"
+            disabled
+          >
             No se encontraron resultados
           </button>
         )}
@@ -481,7 +514,7 @@ function Accounts(props) {
               user={openEdit.userInfo}
             />
           )}
-          {openEmail.open === 1 && (
+          {/*openEmail.open === 1 && (
             <EmailPopUp
               isOpen={openEmail.open}
               onClose={() => {
@@ -489,7 +522,7 @@ function Accounts(props) {
               }}
               user={openEmail.userInfo}
             />
-          )}
+            )*/}
           {openRole.open == 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
@@ -517,12 +550,12 @@ function Accounts(props) {
                   Nombre
                 </div>
               </th>
-              <th>
+              {/*<th>
                 <div className="th-div-account">
                   <CustomBtFilter type="email_user" />
                   Correo
                 </div>
-              </th>
+            </th>*/}
               <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="number_user" />
@@ -565,7 +598,7 @@ function Accounts(props) {
                           });
                         }}
                       />
-                      <FontAwesomeIcon
+                      {/* <FontAwesomeIcon
                         icon={faEnvelope}
                         className="row-send-email"
                         onClick={() => {
@@ -574,7 +607,7 @@ function Accounts(props) {
                             userInfo: itemU,
                           });
                         }}
-                      />
+                      /> */}
                       <FontAwesomeIcon
                         icon={faUserGear}
                         className="row-user-role"

@@ -114,7 +114,7 @@ export const ForgotPassword = (props) => {
         };
 
         return (
-            <>
+            <div id="forgot_password">
                 <ForgotLayout pagina="Recuperar Contraseña">
                     <div className={"bodyF"}>
                         <div className="navigation-bar">
@@ -125,6 +125,7 @@ export const ForgotPassword = (props) => {
                                     <div className="token-input">
                                         {token.map((letter, index) => (
                                             <input
+                                                id={`forgot_password_token_${letter}`}
                                                 key={index}
                                                 type="text"
                                                 maxLength="1"
@@ -137,7 +138,7 @@ export const ForgotPassword = (props) => {
                                             />
                                         ))}
                                     </div>
-                                    <button className="button" type="submit" onClick={handleTokenSubmit}>
+                                    <button id="forgot_password_enviar_btn" className="button" type="submit" onClick={handleTokenSubmit}>
                                         Enviar
                                     </button>
                                 </div>
@@ -145,7 +146,7 @@ export const ForgotPassword = (props) => {
                         </div>
                     </div>
                 </ForgotLayout>
-            </>
+            </div>
         )
     }
 
@@ -184,7 +185,7 @@ export const ForgotPassword = (props) => {
         }
 
         return (
-            <>
+            <div id="forgot_password">
                 <ForgotLayout pagina="Recuperar Contraseña">
                     <div className={"bodyF"}>
                         <div className="navigation-bar">
@@ -193,6 +194,7 @@ export const ForgotPassword = (props) => {
                                 <div className="containerF">
                                     <h2 className="title">Ingresa tu nueva contraseña</h2>
                                     <input
+                                        id="forgot_password_new_password"
                                         type="password"
                                         placeholder="Nueva Contraseña"
                                         className="input"
@@ -200,13 +202,14 @@ export const ForgotPassword = (props) => {
                                         onChange={(e) => setNewPassword(e.target.value)}
                                     />
                                     <input
+                                        id="forgot_password_confirm_new_password"
                                         type="password"
                                         placeholder="Confirmar Contraseña"
                                         className="input"
                                         value={confirmNewPassword}
                                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                                     />
-                                    <button className="button" type="submit" onClick={handleNewPasswordSubmit}>
+                                    <button id="forgot_password_submit_btn" className="button" type="submit" onClick={handleNewPasswordSubmit}>
                                         Cambiar Contraseña
                                     </button>
                                 </div>
@@ -214,12 +217,12 @@ export const ForgotPassword = (props) => {
                         </div>
                     </div>
                 </ForgotLayout>
-            </>
+            </div>
         )
     }
 
     return (
-        <>
+        <div id="forgot_password">
             <ForgotLayout pagina="Recuperar Contraseña">
                 <div className={"bodyL"}>
                     <div className="navigation-bar">
@@ -229,6 +232,7 @@ export const ForgotPassword = (props) => {
                         <div className="containerF">
                             <h2 className="title">Ingresa tus datos</h2>
                             <input
+                                id="forgot_password_correo"
                                 type="text"
                                 placeholder="Correo Electronico"
                                 value={email}
@@ -238,14 +242,14 @@ export const ForgotPassword = (props) => {
                             />
                             {!isEmailValid && email.length > 0 &&
                                 <p className="error-message">El correo ingresado no es válido</p>}
-                            <button className="button" type="submit" onClick={handleForgotPasswordClick}>
+                            <button id="forgot_password_submit_btn" className="button" type="submit" onClick={handleForgotPasswordClick}>
                                 Recuperar Contraseña
                             </button>
                         </div>
                     </div>
                 </div>
             </ForgotLayout>
-        </>
+        </div>
     )
 }
 
