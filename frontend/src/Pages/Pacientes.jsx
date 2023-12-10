@@ -16,7 +16,6 @@ function PacientesForm(props) {
     const [showEditarPopup, setShowEditarPopup] = useState(false); // Estado para mostrar el popup de edición
 
     const [selectedUser, setSelectedUser] = useState(null); // Estado para almacenar el usuario seleccionado para la edición
-    const [nombre, setNombre] = useState("");
 
     async function initialList() {
         const arregloUsuarios = await Services.getPatients();

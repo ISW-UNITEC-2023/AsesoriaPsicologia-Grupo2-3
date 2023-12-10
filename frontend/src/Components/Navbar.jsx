@@ -3,22 +3,23 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faUserCircle,
+    faAddressCard,
+    faCalendar,
+    faCalendarDays,
     faChevronDown,
     faChevronUp,
-    faRightFromBracket,
-    faUserGroup,
-    faUserGear,
-    faCalendarDays,
-    faVideo,
     faFileLines,
-    faBullhorn,
     faGaugeHigh,
-    faAddressCard,
     faMoneyBill,
     faMoneyCheck,
+    faRightFromBracket,
+    faUserCircle,
+    faUserGear,
+    faUserGroup,
+    faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import {deleteCookies} from "../Utilities/login-services";
+import {Button, Popover, PopoverContent, PopoverHandler, Typography} from "@material-tailwind/react";
 
 function MyNavbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -136,13 +137,44 @@ function MyNavbar() {
                         />
                         Chequeo
                     </Link>
-                    <Link to="/Estadisticas" className="link-navbar-plataforma">
-                        <FontAwesomeIcon
-                            icon={faMoneyBill}
-                            className="navbar-plataforma-icon"
-                        />
-                        Estadísticas
-                    </Link>
+                    <Popover placement="right-start">
+                        <PopoverHandler>
+                            <Button variant="text" className="hover:bg-transparent">
+                                <div className="flex flex-col items-center justify-center">
+                                    <FontAwesomeIcon
+                                        icon={faMoneyBill}
+                                        className="navbar-plataforma-icon text-white mr-2"
+                                    />
+                                    <div className="text-white">
+                                        Analíticas
+                                    </div>
+                                </div>
+                            </Button>
+
+                        </PopoverHandler>
+                        <PopoverContent className="w-auto">
+                            <Typography variant="h6" color="blue-gray" className="mb-4">
+                                Analiticas
+                            </Typography>
+                            <div className="flex flex-row gap-5">
+                                <Link to="/Estadisticas" className="flex items-center">
+                                    <FontAwesomeIcon
+                                        icon={faMoneyBill}
+                                        className="navbar-plataforma-icon mr-2"
+                                    />
+                                    Estadísticas
+                                </Link>
+                                <Link to="/Estadisticas" className="flex items-center">
+                                    <FontAwesomeIcon
+                                        icon={faCalendar}
+                                        className="navbar-plataforma-icon mr-2"
+                                    />
+                                    Reportes
+                                </Link>
+                            </div>
+
+                        </PopoverContent>
+                    </Popover>
                 </div>
             </div>
         </div>
