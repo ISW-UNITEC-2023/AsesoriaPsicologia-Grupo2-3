@@ -1,8 +1,10 @@
 import Navbar from "../Components/Navbar";
 import TableConsultas from "../Components/Citas/TableConsultas";
 import CitasLayout from "../Layout/CitasLayout";
+import {useNavigate} from "react-router-dom";
 
 export const Citas = (props) => {
+
     return (
         <CitasLayout pagina="Citas">
             <div className="w-auto min-h-screen flex flex-row">

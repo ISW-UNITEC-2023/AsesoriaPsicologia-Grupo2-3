@@ -11,7 +11,7 @@ import "../Styles/CSS/RoleAdmin.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import rolesImg from "../Styles/Images/rolesimg.png";
 
-const RoleAdmin = () => {
+const RoleAdmin = (props) => {
   const [privileges, setPrivileges] = useState([]);
   const [roles, setRoles] = useState([]);
 
@@ -217,7 +217,7 @@ const RoleAdmin = () => {
 
   return (
     <div className="role-admin-page">
-      <Navbar />
+      <Navbar userData={props.userData}/>
       <Modal
         isOpen={modalOpen.open}
         backdrop={true}
