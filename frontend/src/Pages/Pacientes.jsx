@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../Styles/CSS/Pacientes.css";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Services from "../Utilities/login-services";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
