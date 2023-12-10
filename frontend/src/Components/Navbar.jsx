@@ -73,6 +73,13 @@ function MyNavbar() {
               </div>
             )}
           </div>
+          <Link to="/Dashboard" className="link-navbar-plataforma">
+            <FontAwesomeIcon
+              icon={faGaugeHigh}
+              className="navbar-plataforma-icon"
+            />
+            Tablero
+          </Link>
           <Link to="/Zoomv" className="link-navbar-plataforma">
             <FontAwesomeIcon
               icon={faVideo}
