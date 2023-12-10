@@ -10,7 +10,6 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
-    const [idPacienteN, setIdPacienteN] = useState(0);
     const {
         data: fetchedUsers,
         error: usersError,
@@ -21,6 +20,12 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         error: rolesError,
         isLoading: rolesLoading
     } = useSWR('http://localhost:8000/roles/viewAll', user_services.getAllUsersRoles);
+
+    useEffect(() => {
+        setNombreDoctorN(nombreDoctor);
+        setFechaN(fecha);
+        setHoraN(hora);
+    }, []);
 
     if (usersLoading || rolesLoading) {
         return (
@@ -38,7 +43,6 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         )
     }
 
-
     const usersWithRoles = fetchedUsers.map(user => {
         const userRoles = fetchedRoles
             .filter(role => user.id_user === role.id_user)
@@ -46,7 +50,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         return {...user, roles: userRoles};
     });
 
-    const doctores = Array.isArray(usersWithRoles)
+     const doctores = Array.isArray(usersWithRoles)
         ? usersWithRoles.filter(user => user.roles.some(role => role[0] === 3))
         : [];
 
@@ -54,26 +58,8 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         updateOpen(!open);
     };
 
-    const namePaciente = encodeURIComponent(localStorage.getItem("namePatient"));
+    const idPaciente = localStorage.getItem("id_patient");
 
-    const idPaciente = async (name) => {
-        try {
-            const response = await axios.get(`http://localhost:8000/patients/getPatient/${name}`);
-            setIdPacienteN(response.data.data)
-            return response.data.data;
-        } catch (error) {
-            toast("Ha ocurrido un error al obtener el ID del paciente: " + error.message, {type: "error"});
-            throw error;
-        }
-    };
-
-
-    useEffect(() => {
-        setNombreDoctorN(nombreDoctor);
-        setFechaN(fecha);
-        setHoraN(hora);
-        idPaciente(namePaciente).then(r => r);
-    }, [idPacienteN]);
 
     const handleConfirmC = async () => {
         // combinar los iso de fecha y hora
@@ -87,7 +73,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                 appointment_date: fechaHora,
                 id_clinic: 8,
                 id_doctor: id_doctor,
-                id_file: idPacienteN,
+                id_file: idPaciente,
                 user_creator: localStorage.getItem("user_id")
             }).then(() => {
                 console.log(fechaHora);

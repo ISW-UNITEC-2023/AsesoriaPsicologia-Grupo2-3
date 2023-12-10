@@ -275,15 +275,15 @@ function Accounts(props) {
 
   //Formato de fecha
   const formatDate = (announceDate) => {
-    var date = new Date(announceDate);
-    var options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return date.toLocaleString("es-ES", options);
+      const date = new Date(announceDate);
+      const options = {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+      };
+      return date.toLocaleString("es-ES", options);
   };
 
   //Fetch de Usuarios
@@ -303,7 +303,7 @@ function Accounts(props) {
       setUsers(fetchedUsers);
       setOriginalUsers(fetchedUsers);
     };
-    fetchData();
+    fetchData().then(r => r);
   }, []);
 
   //Fetch de Roles
@@ -312,7 +312,7 @@ function Accounts(props) {
       const fetchedRoles = await role_services.getAllRoles();
       setRoles(fetchedRoles);
     };
-    fetchData();
+    fetchData().then(r => r);
   }, []);
 
   //Filtrado de Nombre
@@ -440,8 +440,8 @@ function Accounts(props) {
       setUsers(fetchedUsers);
       setOriginalUsers(fetchedUsers);
     };
-    fetchData();
-  }
+    await fetchData();
+    }
 
   //Paginación
   const getCurrentAccounts = () => {
@@ -523,7 +523,7 @@ function Accounts(props) {
               user={openEmail.userInfo}
             />
             )*/}
-          {openRole.open == 1 && (
+          {openRole.open === 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
               onClose={() => {

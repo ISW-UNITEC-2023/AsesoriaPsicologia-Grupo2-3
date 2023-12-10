@@ -23,7 +23,7 @@ async function createAppo(new_appo)
     });
 }
 
-async function createConsultation(new_appo)
+async function addConsultation(new_appo)
 {
     await knex("appointments").update({
         id_file: new_appo.id_file,
@@ -41,7 +41,7 @@ async function createConsultation(new_appo)
 
 async function deleteAppo(id_appointment)
 {
-    return await knex("appointments").where("id_appointment", id_appointment).del();
+    return knex("appointments").where("id_appointment", id_appointment).del();
 }
 
 //UPDATE
@@ -128,7 +128,7 @@ async function getAppo()
 
 async function getById(id) {
 
-    let App = await knex.select().from("appointments").where("id_", id);
+    let App = await knex.select().from("appointments").where("id_file", id);
     App = JSON.stringify(App);
     return JSON.parse(App);
 
@@ -171,7 +171,7 @@ module.exports = {
     getAppo,
     getById,
     createAppo,
-    createConsultation,
+    addConsultation,
     deleteAppo,
     updateMedicOrder,
     updatePayment,
