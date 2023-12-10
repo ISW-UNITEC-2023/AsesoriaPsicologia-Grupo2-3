@@ -20,14 +20,14 @@ function PacientesForm(props) {
 
     async function initialList() {
         const arregloUsuarios = await Services.getPatients();
-        console.log("pacientes", arregloUsuarios);
         const arregloMandar = [];
 
         arregloUsuarios.map((usuario) => {
+            let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
             return arregloMandar.push({
-                nombre: usuario.name_user,
-                email: usuario.email_user,
-                id_account: usuario.id_user,
+                nombre: nombre_user,
+                email: usuario.email,
+                id_account: usuario.id_file,
             });
         })
 
