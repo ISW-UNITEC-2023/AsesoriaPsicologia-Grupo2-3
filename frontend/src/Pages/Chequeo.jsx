@@ -11,33 +11,7 @@ function Chequeo(props){
         setShowModal(false);
     };
     const handleShow = () => setShowModal(true);
-    const handleTerminarConsulta = () => {
-        if (montoConsulta.trim() === '') {
-            setMontoError(true);
-        } else {
-            setMontoError(false);
-            setShowModal(false);
-        } };
-        const handleGuardarConsulta = () => {
-                setMontoError(false);
-                const doctorName = document.getElementById('doctorName').value;
-                const motivoConsulta = document.getElementById('consultaMotivo').value;
-                const observaciones = document.getElementById('observaciones').value;
-                const ordenesMedicas = document.getElementById('ordenesMedicas').value;
-                const consulta = {
-                    doctorName,
-                    motivoConsulta,
-                    observaciones,
-                    montoConsulta,
-                    ordenesMedicas,
-                };
-        
-                localStorage.setItem('consultaGuardada', JSON.stringify(consulta));
-                console.log('Consulta guardada:', consulta);
-                localStorage.clear();
-                setShowModal(false);
-        };
-
+    
     return (
 <div className="style-db-container">
     <NavigationBar userData={props.userData} />
@@ -110,7 +84,7 @@ function Chequeo(props){
                     </div>
                     <div className="pop-metodo-pago-footer">
                         <buttons className="button-close-metodo" onClick={handleClose}>Cancelar</buttons>
-                        <buttons className="button-agregar-metodo-pago"  onClick={handleTerminarConsulta}>Agregar método de Pago</buttons>
+                        <buttons className="button-agregar-metodo-pago">Agregar método de Pago</buttons>
                     </div>
                 </div>
             </div>
