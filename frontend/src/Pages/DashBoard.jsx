@@ -7,6 +7,7 @@ import { loadModules } from "../Utilities/course-services";
 import { Button, Accordion } from "react-bootstrap";
 import DashboardLayout from "../Layout/DashboardLayout";
 
+
 function DashBoard(props) {
   const [displayedModules, setModules] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -15,6 +16,8 @@ function DashBoard(props) {
   const [selectedButtonInfo, setSelectedButtonInfo] = useState({});
   const [cookies, setCookies] = useState({});
   const [cookiesLoaded, setCookiesLoaded] = useState(false);
+  const nameUser=localStorage.getItem("name_user")
+
 
   useEffect(() => {
     updateModuleList();
@@ -26,6 +29,7 @@ function DashBoard(props) {
     }
 
     fetchData();
+    
   };
 
   return (
@@ -34,7 +38,7 @@ function DashBoard(props) {
         <NavigationB userData={props.userData} />
         <div className="dashboard-box">
           <div className="dashboard-header flex flex-col md:flex-row justify-between">
-            <h1 className="dashboard-titulo">Bienvenido !</h1>
+            <h1 className="dashboard-titulo">{`Bienvenido ${nameUser}`}</h1>
             <div className="dashboard-buttons flex flex-row gap-2 justify-end mb-2 lg:mb-0">
               <Button
                 id="dashboard_nueva_clase_btn"
@@ -67,17 +71,7 @@ function DashBoard(props) {
                 id="dashboard_seccion_card_container"
                 className="section-card-container flex flex-row flex-wrap gap-3 center"
               >
-                {/*Array.isArray(displayedModules) ? (
-                                    displayedModules.map((module) => (
-                                        <SectionCard
-                                            id="dashboard_seccion_card"
-                                            props={module}
-                                            handleReload={() => setState(true)}
-                                        />
-                                    ))
-                                ) : (
-                                    <p>No hay módulos para mostrar</p>
-                                )*/}
+                
               </div>
             </div>
           </div>
