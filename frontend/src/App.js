@@ -23,7 +23,7 @@ import { Citas } from "./Pages/Citas";
 import { Zoom } from "react-toastify";
 import Calendar from "./Pages/Calendar";
 import RoleAdmin from "./Pages/RoleAdmin";
-
+import Chequeos from "./Pages/Chequeo";
 function ProtectedRoute({
   element,
   allowedRoles,
@@ -191,7 +191,20 @@ function App() {
             )
           }
         />
-
+         <Route
+          path="/Chequeo"
+          element={
+            userDataLoaded ? (
+              <ProtectedRoute
+              element={<Chequeos userData={userData} />}
+              allowedRoles={userData.allRoles}
+              userRoles={userData}
+            />
+            ) : (
+              <LoadingSpinner />
+            )
+          }
+        />
         <Route
           path="/Calendar"
           element={
@@ -243,6 +256,7 @@ function App() {
           }
         />
       </Routes>
+
     </Router>
   );
 }
