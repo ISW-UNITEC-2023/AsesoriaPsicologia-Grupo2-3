@@ -434,6 +434,7 @@ const RoleAdmin = (props) => {
               <input
                 className="nombre-crear-rol"
                 placeholder="Escribe un nombre"
+                required
                 onChange={(e) => {
                   setOpenCreate({
                     ...openCreate,
@@ -444,6 +445,7 @@ const RoleAdmin = (props) => {
               <textarea
                 className="descripcion-crear-rol"
                 placeholder="Escribe una descripción"
+                required
                 onChange={(e) => {
                   setOpenCreate({
                     ...openCreate,

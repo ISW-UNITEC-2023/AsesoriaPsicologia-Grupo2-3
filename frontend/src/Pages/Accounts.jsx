@@ -550,12 +550,12 @@ function Accounts(props) {
                   Nombre
                 </div>
               </th>
-              {/*<th>
+              <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="email_user" />
                   Correo
                 </div>
-            </th>*/}
+            </th>
               <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="number_user" />
