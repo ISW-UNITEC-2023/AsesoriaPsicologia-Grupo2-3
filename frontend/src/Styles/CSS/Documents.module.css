@@ -1,0 +1,23 @@
+.style-title {
+    font-size: 40px;
+    padding: 20px;
+    color: #306aa7;
+    font-weight: bold;
+    text-align: left;
+    width: 400%
+}
+
+.style-header-container {
+    display: flex;
+    margin-left: 20px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+}
+
+.style-db-container {
+    display: flex;
+    flex-direction: row;
+
+    background-color: rgb(255, 255, 255);
+}
