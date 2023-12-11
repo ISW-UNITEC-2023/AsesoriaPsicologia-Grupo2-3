@@ -81,6 +81,51 @@ async function updateStateMedic(req, res) {
         res.send({message: "Error de actualizacion", err: error.message});
     }
 }
+  
+// async function updatePaymentTypeMedic(req, res) {
+//     try {
+//       const { payment_type, editor, id, id_clinic, id_doctor, id_file } = req.body;
+//       await appointmentServices.updatePaymentType({
+//         payment_type,
+//         editor,
+//         id,
+//         id_clinic,
+//         id_doctor,
+//         id_file,
+//       });
+//       res.send({ message: "Se ha actualizado el tipo de pago" });
+//     } catch (error) {
+//       res.send({ message: "Error de actualizacion", err: error.message });
+//     }
+//   }
+  async function updatePaymentTypeMedic(req, res) {
+    try {
+      const { payment_type, editor, id, id_clinic, id_doctor, id_file } = req.body;
+      await appointmentServices.updatePaymentType({
+        payment_type,
+        editor,
+        id,
+        id_clinic,
+        id_doctor,
+        id_file,
+      });
+      res.send({ message: "Se ha actualizado el tipo de pago y el estado de la cita" });
+    } catch (error) {
+      res.send({ message: "Error de actualización", err: error.message });
+    }
+  }
+  
+ 
+
+  async function updateZoomLink(req, res) {
+    try {
+      const { zoom_link, editor, id, id_clinic, id_doctor, id_file } = req.body;
+      await appointmentServices.updateZoomLink({ zoom_link, editor, id, id_clinic, id_doctor, id_file });
+      res.send({ message: "Se ha actualizado el enlace de Zoom" });
+    } catch (error) {
+      res.send({ message: "Error de actualización", err: error.message });
+    }
+  }
 
 async function deleteAppointment(req, res) {
     try {
@@ -173,8 +218,28 @@ async function getClinic(req, res) {
     } catch (error) {
         res.send({message: "Error", error: error.message});
     }
-}
+  }
+/*SELECT * FROM attention_sys.appointments
+WHERE state_appointment = 'Terminado' AND id_clinic = '8';
 
+*/
+
+  async function getChequeo(req, res){
+    const { idClinic } = req.body;
+    try {
+       
+      const App = await appointmentServices.getChequeo(idClinic);
+      res.send({
+        message: "Se obtuvieron los datos para el chequeo ",
+        AppInfo: App,
+      });
+    } catch (e) {
+      res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+        error: "No se pudo obtener los datos del chequeo",
+      });
+    }
+  }
+    
 
 module.exports = {
     getAppointments,
@@ -189,5 +254,8 @@ module.exports = {
     updateStateMedic,
     getDoctor,
     getClinic,
-    getCreator
+    getCreator,
+    getChequeo,
+    updatePaymentTypeMedic,
+    updateZoomLink
 };
