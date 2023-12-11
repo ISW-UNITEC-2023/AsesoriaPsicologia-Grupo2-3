@@ -116,8 +116,35 @@ async function updateState(appo)
         id_file: appo.id_file
     });
 }
+// async function updatePaymentType(appo) {
+//     await knex("appointments")
+//       .update({
+//         payment_type: appo.payment_type,
+//         user_editor: appo.editor,
+//         last_modification: new Date(),
+//       })
+//       .where({
+//         id_appointment: appo.id,
+//         id_clinic: appo.id_clinic,
+//         id_doctor: appo.id_doctor,
+//         id_file: appo.id_file,
+//       });
+//   }
 
-//GET
+async function updatePaymentType(appo) {
+    await knex("appointments").update({
+      payment_type: appo.payment_type,
+      state_appointment: "PROCESADA",
+      user_editor: appo.editor,
+      last_modification: new Date(),
+    }).where({
+      id_appointment: appo.id,
+      id_clinic: appo.id_clinic,
+      id_doctor: appo.id_doctor,
+      id_file: appo.id_file,
+    });
+  }
+  
 
 
 async function getAppo()
@@ -166,6 +193,54 @@ async function getClinic(id) {
     );
 }
 
+/** SELECT * FROM attention_sys.appointments
+WHERE state_appointment = 'Terminado' AND id_clinic = '8'; */
+// async function getChequeo(idClinic) {
+//     let data = await knex
+//       .select("*")
+//       .from("appointments")
+//       .where("state_appointment", "Terminado")
+//       .andWhere("id_clinic", idClinic);
+  
+//     data = JSON.stringify(data);
+//     return JSON.parse(data);
+//   }
+async function getChequeo(idClinic) {
+    try {
+      let data = await knex
+        .select(
+          "id_appointment",
+          "payment_amount",
+          "payment_type",
+          "id_file",
+          "users.name_user as doctor_name"
+        )
+        .from("appointments")
+        .leftJoin("users", "appointments.id_doctor", "users.id_user")
+        .where("appointments.state_appointment", "Terminado")
+        .andWhere("appointments.id_clinic", idClinic);
+        
+  
+      data = JSON.stringify(data);
+      return JSON.parse(data);
+    } catch (error) {
+      console.error("Error in getChequeo:", error);
+      throw new Error("An error occurred while fetching data");
+    }
+  }
+  async function updateZoomLink(appo) {
+    await knex("appointments").update({
+      zoom_link: appo.zoom_link,
+      user_editor: appo.editor,
+      last_modification: new Date()
+    }).where({
+      id_appointment: appo.id,
+      id_clinic: appo.id_clinic,
+      id_doctor: appo.id_doctor,
+      id_file: appo.id_file
+    });
+  }
+  
 
 module.exports = {
     getAppo,
@@ -180,6 +255,9 @@ module.exports = {
     updateState,
     getDoctor,
     getClinic,
-    getCreator
+    getCreator,
+    getChequeo,
+    updatePaymentType,
+    updateZoomLink
 
 };
