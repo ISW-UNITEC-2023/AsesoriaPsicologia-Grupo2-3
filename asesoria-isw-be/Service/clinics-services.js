@@ -76,35 +76,9 @@ async function viewAllUserClinics(id) {
   return JSON.parse(clinics);
 }
 
-//Marcados para borrar
-async function changePsychologist(clinic) {
-  await knex("clinics")
-    .update({
-      id_psychologist: clinic.psychologist,
-      user_editor: clinic.editor,
-      last_modification: new Date(),
-    })
-    .where("id_clinic", clinic.id_clinic);
-}
-
-async function viewAllSectionClinics(id) {
-  let clinics = await knex("clinics").select("*").where("id_section", id);
-  clinics = JSON.stringify(clinics);
-  return JSON.parse(clinics);
-}
-
-async function viewAllPsychologistClinics(id) {
-  let clinics = await knex("clinics").select("*").where("id_psychologist", id);
-  clinics = JSON.stringify(clinics);
-  return JSON.parse(clinics);
-}
-
 module.exports = {
   createClinic,
-  viewAllSectionClinics,
-  viewAllPsychologistClinics,
   setActiveClinic,
-  changePsychologist,
   viewAllClinics,
   existClinic,
   viewAllAppointments,

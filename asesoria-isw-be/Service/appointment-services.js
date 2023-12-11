@@ -105,51 +105,29 @@ async function updateState(appo)
 
 //GET
 
-
 async function getAppo()
 {
-   
     return JSON.parse(JSON.stringify(await knex("appointments").select("*")));
 }
 
-async function getById(id) {
-
-    let App = await knex.select().from("appointments").where("id_", id);
-    App = JSON.stringify(App);
-    return JSON.parse(App);
-
-
+async function getById(id) 
+{
+    return JSON.parse(JSON.stringify(await knex.select().from("appointments").where("id_", id)));
 }
 
-
-async function getCreator(id) {
-    return JSON.parse(
-        JSON.stringify(
-            await knex("appointments")
-                .select()
-                .where("user_creator", id)
-        )
-    );
+async function getCreator(id) 
+{
+    return JSON.parse(JSON.stringify(await knex("appointments").select().where("user_creator", id)));
 }
 
-async function getDoctor(doctorId) {
-    return JSON.parse(
-        JSON.stringify(
-            await knex("appointments")
-                .select()
-                .where("id_doctor", doctorId)
-        )
-    );
+async function getDoctor(doctorId) 
+{
+    return JSON.parse(JSON.stringify(await knex("appointments").select().where("id_doctor", doctorId)));
 }
 
-async function getClinic(id) {
-    return JSON.parse(
-        JSON.stringify(
-            await knex("appointments")
-                .select()
-                .where("id_clinic", id)
-        )
-    );
+async function getClinic(id) 
+{
+    return JSON.parse(JSON.stringify(await knex("appointments").select().where("id_clinic", id)));
 }
 
 
@@ -166,5 +144,4 @@ module.exports = {
     getDoctor,
     getClinic,
     getCreator
-
 };

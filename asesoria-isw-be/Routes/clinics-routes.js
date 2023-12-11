@@ -19,12 +19,4 @@ router.get("/viewAllUser", clinicControllers.viewAllUserClinics);
 //delete
 router.delete("/delete", clinicControllers.deleteClinic);
 
-//marcados para borrar
-router.post("/changePsychologist", clinicControllers.changePsychologist);
-router.post("/viewAllSectionClinics", clinicControllers.viewAllSectionClinics);
-router.post(
-  "/viewAllPsychologistClinics",
-  clinicControllers.viewAllPsychologistClinics
-);
-
 module.exports = router;

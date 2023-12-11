@@ -13,14 +13,14 @@ router.put("/updateObservations", appointmentControllers.updateObservations);
 router.put("/updateAppointment", appointmentControllers.updateAppointment);
 router.put("/updateState", appointmentControllers.updateStateMedic);
 
-//Get
-
+//GET
 router.get("/getAll", appointmentControllers.getAppointments);
 router.get("/getById", appointmentControllers.getById);
- router.get("/getCreator", appointmentControllers.getCreator);
- router.get("/getDoctor", appointmentControllers.getDoctor);
- router.get("/getClinic", appointmentControllers.getClinic);
-//Delete
+router.get("/getCreator", appointmentControllers.getCreator);
+router.get("/getDoctor", appointmentControllers.getDoctor);
+router.get("/getClinic", appointmentControllers.getClinic);
+
+//DELETE
 router.delete("/deleteById", appointmentControllers.deleteAppointment);
 
 module.exports = router;

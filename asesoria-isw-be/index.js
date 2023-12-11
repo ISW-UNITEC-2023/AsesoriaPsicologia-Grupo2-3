@@ -53,13 +53,8 @@ app.use(bodyParser.json());
 const usersRouter = require("./Routes/users-routes");
 const rolesRouter = require("./Routes/roles-routes");
 const privilegesRouter = require("./Routes/privileges-routes");
-const patientsRouter = require("./Routes/patients-routes");
-const courseRouter = require("./Routes/course-routes");
-const sectionRouter = require("./Routes/sections-routes");
 const clinicRouter = require("./Routes/clinics-routes");
-const announcementRouter = require("./Routes/announcement-routes");
 const fileRouter = require("./Routes/files-routes");
-const mailRouter = require("./Routes/mail-routes");
 const appointmentRouter = require("./Routes/appointment-routes");
 
 //Rutas de Zoom
@@ -75,13 +70,8 @@ app.use("/api/webinars", tokenCheck, zoomWebinarsRouter);
 app.use("/users", usersRouter);
 app.use("/roles", rolesRouter);
 app.use("/privileges", privilegesRouter);
-app.use("/patients", patientsRouter);
-app.use("/sections", sectionRouter);
-app.use("/courses", courseRouter);
 app.use("/clinics", clinicRouter);
-app.use("/announcements", announcementRouter);
 app.use("/files", fileRouter);
-app.use("/mail", mailRouter);
 app.use("/appointment", appointmentRouter);
 
 const PORT = 8000;
