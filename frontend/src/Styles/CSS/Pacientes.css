@@ -1,108 +1,129 @@
 .pacientes-container {
   display: flex;
-  flex-direction: row;
+  flex-grow: initial;
+  flex-direction: column;
+  align-items: center;
   background-color: rgb(255, 255, 255);
-  overflow: scroll;
-}
-
-.title-pacientes {
-  font-size: 40px;
-  padding: 20px;
-  color:  #212529;
-  font-weight: bold;
-  text-align: left;
-  width: 400%
-}
-
-.container-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #000;
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.nombre-box {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  font-family: "Arial", sans-serif;
-  font-size: 20px;
-  color: #333;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  text-align: left;
-  text-decoration: none;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.nombre-box:hover {
-  /* background-color: #d3d3d3;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); */
-}
-
-.editar-button:hover {
-  background-color: #13c52d;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-}
-
-.icon-persona {
-  margin-right: 15px;
-  font-size: 30px;
-  color: #5281ce;
-}
-
-.crear-participante-button {
-  background-color: #007bff; /* Cambia el color de fondo según tus preferencias */
-  color: #fff; /* Cambia el color del texto según tus preferencias */
-  font-size: 14px; /* Cambia el tamaño de fuente según tus preferencias */
-  padding: 8px 16px; /* Ajusta el espaciado interno según tus preferencias */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right; /* Alinea a la derecha */
-  margin-right: 5%; /* Agrega un margen derecho para separarlo del título */
-}
-
-.nombre-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.editar-button {
-  /* Alinea el botón a la derecha */
-  margin-left: auto;
-  background-color: rgb(14, 182, 98);
-  color: white;
-  /* Agrega cualquier otro estilo deseado para el botón de editar */
-}
-
-.nombre-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nombre {
-  margin-right: auto;
-}
-.container-pacientes-title-list {
   width: 100%;
 }
 
-@media screen and (min-width: 1000px) {
-  .pacientes-container {
-    height: 100vh;
-  }
+.navbar2 {
+  display: flex;
+  flex-direction: row;
+}
+.pacientes-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-left:113px;
+}
+
+
+.title-pacientes2 {
+  font-size: 40px;
+  color:#26586c !important;
+  font-weight: bold;
+}
+.conteiner-card-text{
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  width: 280px;
+  height: 180px; 
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-persona {
+  font-size: 60px;
+  color: #113946;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+}
+
+.dropdown {
+  background-color: #113946;
+  position: relative;
+  display: inline-block;
+  margin-top: auto;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #113946;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 5px 0;
+  min-width: 120px;
+  z-index: 1;
+  right: 0;
+  left: auto;
+  margin-top: 10px;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  color: white;
+  transition: background-color 0.3s;
+  line-height: 1;
+}
+
+.dropdown-item:hover {
+  background-color: #395eaf;
+}
+.IniciarConsulta {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  top: 30px;
+  right: 20px; 
+}
+
+.consultation-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #26586c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.consultation-btn:hover {
+  background-color: #1c4351;
 }
