@@ -53,7 +53,6 @@ function App() {
     useEffect(() => {
         setInitialRender(false);
         fetchData();
-
     }, []);
     if (initialRender || !userDataLoaded || userData === null) {
         return null;

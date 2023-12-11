@@ -1,6 +1,7 @@
 //Components
 import Navbar from "../Components/Navbar";
 import { Modal } from "reactstrap";
+import { toast, ToastContainer } from "react-toastify";
 
 //Functions
 import { useEffect, useState } from "react";
@@ -84,7 +85,6 @@ const RoleAdmin = (props) => {
         rolesPrivileges.privileges[rolesPrivileges.id_role.indexOf(idRole)][i]
           .id_privilege === idPriv
       ) {
-        console.log(rolesPrivileges.privileges[rolesPrivileges.id_role.indexOf(idRole)][i])
         return rolesPrivileges.privileges[
           rolesPrivileges.id_role.indexOf(idRole)
         ][i];
@@ -117,8 +117,8 @@ const RoleAdmin = (props) => {
       checkedPrivileges: checks,
       privileges: privs,
     });
-    console.log(checks[index])
-    console.log(dataOriginal.data[index])
+    console.log(checks[index]);
+    console.log(dataOriginal.data[index]);
   };
 
   async function refreshPrivileges(rolesData, privilegesData) {
@@ -156,7 +156,7 @@ const RoleAdmin = (props) => {
       privileges: rolesprivileges,
       checkedPrivileges: checks,
     });
-    if(dataOriginal.filled === 0){
+    if (dataOriginal.filled === 0) {
       setDataOriginal({
         data: checks,
         filled: 1,
@@ -165,6 +165,19 @@ const RoleAdmin = (props) => {
   }
 
   async function createRole() {
+    if (openCreate.name === "" || openCreate.description === "") {
+      toast.error("Debe llenar todos los campos!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
     await rolesServices.createRole(openCreate.name, openCreate.description);
     const data = await rolesServices.getAllRoles();
     setRoles(data);
@@ -217,7 +230,7 @@ const RoleAdmin = (props) => {
 
   return (
     <div className="role-admin-page">
-      <Navbar userData={props.userData}/>
+      <Navbar userData={props.userData} />
       <Modal
         isOpen={modalOpen.open}
         backdrop={true}
@@ -465,6 +478,18 @@ const RoleAdmin = (props) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
