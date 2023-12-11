@@ -1,20 +1,23 @@
-// Documents.jsx
 import React from "react";
-import "../Styles/CSS/Documents.module.css";
+import "../Styles/CSS/Documents.css";
 import Visualization from "../Components/Documents/visualizations";
 import NavigationB from "../Components/Navbar";
-
+import { useLocation } from 'react-router-dom';
 function Documents(props) {
+    const location = useLocation();
+    const{id_file,userData} = location.state;
+    //console.log(id_file);
+    //console.log(userData);
   return (
       <div>
-        <div className="style-db-container">
-          <NavigationB key="navB" userData={props.userData}/>
+        <div className="document-db-container">
+            <NavigationB />
           <div style={{ width: "90%" }}>
-            <div className="style-header-container">
-              <h1 className="style-title" style={{ width: "300%" }}>
-                Documentos
-                <Visualization user={9} appointment={1} />
-              </h1>
+            <div className="document-header-container">
+                <h1 className="document-title" style={{width: "300%"}}>
+                    Documentos
+                    <Visualization user={9}/>
+                </h1>
 
             </div>
           </div>

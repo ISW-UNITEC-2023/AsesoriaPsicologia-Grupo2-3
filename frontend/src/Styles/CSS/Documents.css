@@ -1,4 +1,4 @@
-.style-title {
+.document-title {
     font-size: 40px;
     padding: 20px;
     color: #306aa7;
@@ -7,17 +7,15 @@
     width: 400%
 }
 
-.style-header-container {
-    display: flex;
-    margin-left: 20px;
-    justify-content: space-between;
-    margin-bottom: 30px;
-
-}
-
-.style-db-container {
+.document-header-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
 
-    background-color: rgb(255, 255, 255);
+.document-db-container {
+    display: flex;
+    flex-direction: row;
 }
