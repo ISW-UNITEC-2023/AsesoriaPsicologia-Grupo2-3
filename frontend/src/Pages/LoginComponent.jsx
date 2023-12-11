@@ -61,7 +61,7 @@ function Login(props) {
     props.setUserDataLoaded(true);
     e.preventDefault();
 
-    navigate("/Dashboard");
+    //navigate("/Dashboard");
   };
 
   const [errors, setErrors] = useState({ general: "" });
