@@ -164,7 +164,7 @@ function MyNavbar() {
                                     />
                                     Estadísticas
                                 </Link>
-                                <Link to="/Estadisticas" className="flex items-center">
+                                <Link to="/Reportes" className="flex items-center">
                                     <FontAwesomeIcon
                                         icon={faCalendar}
                                         className="navbar-plataforma-icon mr-2"
