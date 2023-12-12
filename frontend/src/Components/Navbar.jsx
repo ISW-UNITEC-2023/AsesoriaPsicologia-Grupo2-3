@@ -143,7 +143,7 @@ function MyNavbar() {
                                 <div className="flex flex-col items-center justify-center">
                                     <FontAwesomeIcon
                                         icon={faMoneyBill}
-                                        className="navbar-plataforma-icon text-white mr-2"
+                                        className="navbar-plataforma-icon text-white "
                                     />
                                     <div className="text-white">
                                         Analíticas
@@ -154,9 +154,9 @@ function MyNavbar() {
                         </PopoverHandler>
                         <PopoverContent className="w-auto">
                             <Typography variant="h6" color="blue-gray" className="mb-4">
-                                Analiticas
+                                Analíticas
                             </Typography>
-                            <div className="flex flex-row gap-5">
+                            <div className="flex flex-row gap-4">
                                 <Link to="/Estadisticas" className="flex items-center">
                                     <FontAwesomeIcon
                                         icon={faMoneyBill}
@@ -164,7 +164,7 @@ function MyNavbar() {
                                     />
                                     Estadísticas
                                 </Link>
-                                <Link to="/Estadisticas" className="flex items-center">
+                                <Link to="/Reportes" className="flex items-center">
                                     <FontAwesomeIcon
                                         icon={faCalendar}
                                         className="navbar-plataforma-icon mr-2"

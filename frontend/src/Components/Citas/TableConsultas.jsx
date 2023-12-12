@@ -114,7 +114,7 @@ export function TableConsultas({page}) {
                 <div className="flex flex-row justify-between items-center w-full">
                     {page === "Cita" && (
                         <div className="flex flex-row gap-2 items-center">
-                            <BreadCrumbsC nombrePaciente={"Juan Perez"}/>
+                            <BreadCrumbsC/>
                         </div>
                     )}
                 </div>
@@ -137,7 +137,7 @@ export function TableConsultas({page}) {
                 <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex flex-row gap-2">
                         <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
-                            Historial de Consultas
+                            Historial de Citas
                         </Typography>
                     </div>
                 </div>

@@ -1,53 +1,53 @@
 const knex = require("knex")({
-  client: "mysql",
-  connection: {
-    host: process.env.DB_HOST,
-    port: 3306,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-  },
+    client: "mysql",
+    connection: {
+        host: process.env.DB_HOST,
+        port: 3306,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+    },
 });
 
 //Post
 
-async function createAppo(new_appo)
-{
+async function createAppo(new_appo) {
     await knex("appointments").insert({
         appointment_date: new_appo.fecha,
         id_file: new_appo.id_file,
         id_doctor: new_appo.id_doctor,
         id_clinic: new_appo.id_clinic,
         user_creator: new_appo.user_creator,
-        creation_date: new Date()
+        creation_date: new Date(),
+        appointment_type: new_appo.appointment_type,
     });
 }
 
-async function addConsultation(new_appo)
-{
-    await knex("appointments").update({
-        id_file: new_appo.id_file,
-        id_doctor: new_appo.id_doctor,
-        id_clinic: new_appo.id_clinic,
-        user_creator: new_appo.user_creator,
-        last_modification: new Date(),
-        observations: new_appo.observations,
-        payment_amount: new_appo.amount,
-        medic_orders: new_appo.medic_orders,
-    });
+async function addConsultation(new_appo) {
+    await knex("appointments")
+        .where({ id_appointment: new_appo.id_appointment })
+        .update({
+            id_file: new_appo.id_file,
+            id_doctor: new_appo.id_doctor,
+            id_clinic: new_appo.id_clinic,
+            user_creator: new_appo.user_creator,
+            last_modification: new Date(),
+            observations: new_appo.observations,
+            payment_amount: new_appo.amount,
+            medic_orders: new_appo.medic_orders,
+        });
 }
+
 
 //DELETE
 
-async function deleteAppo(id_appointment)
-{
+async function deleteAppo(id_appointment) {
     return knex("appointments").where("id_appointment", id_appointment).del();
 }
 
 //UPDATE
 
-async function updateMedicOrder(appo)
-{
+async function updateMedicOrder(appo) {
     await knex("appointments").update({
         medic_orders: appo.medic_orders,
         user_editor: appo.editor,
@@ -60,8 +60,7 @@ async function updateMedicOrder(appo)
     });
 }
 
-async function updatePayment(appo)
-{
+async function updatePayment(appo) {
     await knex("appointments").update({
         payment_amount: appo.amount,
         payment_type: appo.type,
@@ -75,8 +74,7 @@ async function updatePayment(appo)
     });
 }
 
-async function updateObservation(appo)
-{
+async function updateObservation(appo) {
     await knex("appointments").update({
         observations: appo.observations,
         user_editor: appo.editor,
@@ -85,26 +83,26 @@ async function updateObservation(appo)
         id_appointment: appo.id,
         id_clinic: appo.id_clinic,
         id_doctor: appo.id_doctor,
-        id_file: appo.id_file
+        id_file: appo.id_file,
     });
 }
 
-async function updateAppo(appo)
-{
+async function updateAppo(appo) {
     await knex("appointments").update({
-        appointment_date: appo.fecha,
+        appointment_date: appo.fecha ? appo.fecha : appo.appointment_date,
         user_editor: appo.editor,
         last_modification: new Date()
     }).where({
         id_appointment: appo.id,
         id_clinic: appo.id_clinic,
         id_doctor: appo.id_doctor,
-        id_file: appo.id_file
+        id_file: appo.id_file,
+        appointment_type: appo.appointment_type,
+        appointment_date: appo.appointment_date
     });
 }
 
-async function updateState(appo)
-{
+async function updateState(appo) {
     await knex("appointments").update({
         state_appointment: appo.state,
         user_editor: appo.editor,
@@ -120,8 +118,7 @@ async function updateState(appo)
 //GET
 
 
-async function getAppo()
-{
+async function getAppo() {
 
     return JSON.parse(JSON.stringify(await knex("appointments").select("*")));
 }

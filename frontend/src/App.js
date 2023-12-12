@@ -23,6 +23,7 @@ import Calendar from "./Pages/Calendar";
 import ProtectedRoute from "./Utilities/ProtectedRoute";
 import Chequeos from "./Pages/Chequeo";
 import Estadisticas from "./Pages/Estadisticas";
+import Reportes from "./Pages/Reportes";
 
 
 function App() {
@@ -106,6 +107,9 @@ function App() {
                 </Route>
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/Estadisticas" element={<Estadisticas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Reportes" element={<Reportes userData={userData}/>}/>
                 </Route>
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/citas" element={<Citas userData={userData}/>}/>
