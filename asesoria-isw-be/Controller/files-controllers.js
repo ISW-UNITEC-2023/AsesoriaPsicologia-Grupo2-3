@@ -1,4 +1,5 @@
 const fileServices = require("../Service/files_services");
+const { isEmail, isPassword } = require("../Utils/validator");
 
 async function createFile(req, res) {
   const {
@@ -7,13 +8,12 @@ async function createFile(req, res) {
     last_name,
     second_surname,
     birthdate,
+    email,
+    phone_number,
     address,
     civil_status,
     medical_history,
     substance_usage,
-    // first_impressions,
-    // treatment_plan,
-    // filescol,
     id_clinic,
     active,
     user_editor,
@@ -26,124 +26,104 @@ async function createFile(req, res) {
   const lengSname = second_surname.toString();
   const lengLname = last_name.toString();
 
+  const lengemail = email.toString();
+  const lengphone_number = parseInt(phone_number, 10);
+
   const lengAdress = address.toString();
   const lengCstatus = civil_status.toString();
   const lengMedical = medical_history.toString();
   const lengSubtance = substance_usage.toString();
-  // const lengFimpressions = first_impressions.toString();
-  // const lengTreatment = treatment_plan.toString();
-  // const lengFiles = filescol.toString();
   const lengactive = active.toString();
 
+  if (isNaN(lengphone_number) || !Number.isInteger(lengphone_number)) {
+    errorMessages.push("El campo de numeor de telefono esta mal debe ser un numero de celular");
+  }
+
+  if (!isEmail(email)) {
+    errorMessages.push("El correo electrónico no es valido");
+
+  }
+
   if (
-    lengFname.length > 45 ||
-    lengFname.length == 0 ||
-    typeof first_name != "string"
+      lengFname.length > 45 ||
+      lengFname.length == 0 ||
+      typeof first_name != "string"
   ) {
     errorMessages.push(
-      "Primer nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+        "Primer nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+    );
+  }
+
+
+  if (
+      lengMname.length > 45 ||
+      lengMname.length == 0 ||
+      typeof middle_name != "string"
+  ) {
+    errorMessages.push(
+        "Segundo nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-    lengMname.length > 45 ||
-    lengMname.length == 0 ||
-    typeof middle_name != "string"
+      lengLname.length > 45 ||
+      lengLname.length == 0 ||
+      typeof last_name != "string"
   ) {
     errorMessages.push(
-      "Segundo nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+        "Primer apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-    lengLname.length > 45 ||
-    lengLname.length == 0 ||
-    typeof last_name != "string"
+      lengSname.length > 45 ||
+      lengSname.length == 0 ||
+      typeof second_surname != "string"
   ) {
     errorMessages.push(
-      "Primer apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+        "Segundo apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-    lengSname.length > 45 ||
-    lengSname.length == 0 ||
-    typeof second_surname != "string"
+      lengAdress.length > 100 ||
+      lengAdress.length == 0 ||
+      typeof address != "string"
   ) {
     errorMessages.push(
-      "Segundo apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+        "La direccion es invalida, debe contener mas de un caracter pero menos de 100 caractes"
     );
   }
 
   if (
-    lengAdress.length > 100 ||
-    lengAdress.length == 0 ||
-    typeof address != "string"
+      lengCstatus.length > 10 ||
+      lengCstatus.length == 0 ||
+      typeof civil_status != "string"
   ) {
     errorMessages.push(
-      "La direccion es invalida, debe contener mas de un caracter pero menos de 100 caractes"
+        "El estado civil es invalido, debe contener mas de 1 caracter pero menos de 10 caracteres"
     );
   }
 
   if (
-    lengCstatus.length > 10 ||
-    lengCstatus.length == 0 ||
-    typeof civil_status != "string"
+      lengMedical.length > 500 ||
+      lengMedical.length == 0 ||
+      typeof medical_history != "string"
   ) {
     errorMessages.push(
-      "El estado civil es invalido, debe contener mas de 1 caracter pero menos de 10 caracteres"
+        "Historial medico es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres"
     );
   }
 
   if (
-    lengMedical.length > 500 ||
-    lengMedical.length == 0 ||
-    typeof medical_history != "string"
+      lengSubtance.length > 200 ||
+      lengSubtance.length == 0 ||
+      typeof substance_usage != "string"
   ) {
     errorMessages.push(
-      "Historial medico es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres"
+        'El campo de "Sustancias de uso" es invalido, debe contener mas de 1 caracter pero menos de 200 caracteres'
     );
   }
-
-  if (
-    lengSubtance.length > 200 ||
-    lengSubtance.length == 0 ||
-    typeof substance_usage != "string"
-  ) {
-    errorMessages.push(
-      'El campo de "Sustancias de uso" es invalido, debe contener mas de 1 caracter pero menos de 200 caracteres'
-    );
-  }
-
-  // if (
-  //   lengFimpressions.length > 500 ||
-  //   lengFimpressions.length == 0 ||
-  //   typeof first_impressions != "string"
-  // ) {
-  //   errorMessages.push(
-  //     'El campo de "primeras impresiones" es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres'
-  //   );
-  // }
-
-  // if (
-  //   lengTreatment.length > 500 ||
-  //   lengTreatment.length == 0 ||
-  //   typeof treatment_plan != "string"
-  // ) {
-  //   errorMessages.push(
-  //     'El campo de "plan de tratamiento" es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres'
-  //   );
-  // }
-
-  // if (
-  //   lengFiles.length > 45 ||
-  //   lengFiles.length == 0 ||
-  //   typeof filescol != "string"
-  // ) {
-  //   errorMessages.push(
-  //     'El campo de "filescol" es invalido, debe contener mas de 1 caracter pero menos de 45 caracteres'
-  //   );
-  // }
 
   if (lengactive > 1) {
     errorMessages.push("El campo de activo debe ser un numero 1 o 0");
@@ -159,13 +139,12 @@ async function createFile(req, res) {
         last_name,
         second_surname,
         birthdate,
+        email,
+        phone_number,
         address,
         civil_status,
         medical_history,
         substance_usage,
-        // first_impressions,
-        // treatment_plan,
-        // filescol,
         id_clinic,
         active,
         user_editor,
@@ -180,7 +159,7 @@ async function createFile(req, res) {
     }
   }
 }
-//
+
 async function updateFirstName(req, res) {
   const { id, first_name, editor } = req.body;
   const errors = [];
@@ -670,6 +649,16 @@ async function getFileById(req, res) {
     res.send({ message: "Error", error: error.message });
   }
 }
+
+async function getAllFiles(req, res) {
+  try {
+    const file = await fileServices.getAllFiles();
+    res.send(file);
+  } catch (error) {
+    res.send({ message: "Error", error: error.message });
+  }
+}
+
 async function updateFilescol(req, res) {
   const { id, filescol, editor } = req.body;
   const errors = [];
@@ -824,7 +813,7 @@ module.exports = {
   getFileById,
   getClinicFiles,
   deleteFile,
-
+  getAllFiles,
   updateFirstName,
   updateMiddleName,
   existFile,

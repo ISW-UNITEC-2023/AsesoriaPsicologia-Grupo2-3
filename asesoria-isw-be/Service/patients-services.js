@@ -98,7 +98,7 @@ async function getPatients() {
     return JSON.parse(patients);
 }
 
-// Obtener el, id del paciente con el nombre
+// Obtener él, id del paciente con el nombre
 async function getPatientId(name) {
     let patient = await knex("users").select("id_user").where("name_user", name);
     return patient[0].id_user;

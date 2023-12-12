@@ -18,7 +18,12 @@ import {getCookies} from "./Utilities/login-services";
 import MyZoomPat from "./Components/Zoom/zoomPat";
 import MyZoom from "./Components/Zoom/Zoom";
 import {Citas} from "./Pages/Citas";
+import Registro from "./Pages/Registro";
+import Calendar from "./Pages/Calendar";
 import ProtectedRoute from "./Utilities/ProtectedRoute";
+import Chequeos from "./Pages/Chequeo";
+import Estadisticas from "./Pages/Estadisticas";
+import Reportes from "./Pages/Reportes";
 
 
 function App() {
@@ -26,6 +31,7 @@ function App() {
     const [userDataLoaded, setUserDataLoaded] = useState(false);
     const [userData, setUserData] = useState(null);
     const [initialRender, setInitialRender] = useState(true);
+
     async function fetchData() {
         try {
             const data = await getCookies();
@@ -36,6 +42,7 @@ function App() {
             console.error('Error al obtener cookies:', error);
         }
     }
+
     const handleLoginSuccess = (e) => {
         e.preventDefault();
         setInitialRender(false);
@@ -47,7 +54,6 @@ function App() {
     useEffect(() => {
         setInitialRender(false);
         fetchData();
-
     }, []);
     if (initialRender || !userDataLoaded || userData === null) {
         return null;
@@ -97,7 +103,13 @@ function App() {
 
 
                 <Route element={<ProtectedRoute cookies={userData}/>}>
-                    <Route path="/Dashboard" element={<DashBoard userData={userData} />} />
+                    <Route path="/Dashboard" element={<DashBoard userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Estadisticas" element={<Estadisticas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Reportes" element={<Reportes userData={userData}/>}/>
                 </Route>
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/citas" element={<Citas userData={userData}/>}/>
@@ -114,11 +126,16 @@ function App() {
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/ZoomV" element={<MyZoomPat userData={userData}/>}/>
                 </Route>
-
-
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Calendar" element={<Calendar userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Chequeo" element={<Chequeos userData={userData}/>}/>
+                </Route>
 
 
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
+                <Route path="/Registro" element={<Registro {...aboutData} />}/>
 
 
             </Routes>

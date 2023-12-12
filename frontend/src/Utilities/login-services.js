@@ -34,13 +34,13 @@ async function getModulesAll() {
   };
 
   axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
 }
 
 async function getSeccionbyModu() {
@@ -205,11 +205,12 @@ async function getStudents() {
 async function getPatients() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/users/viewPatients",
+    url: "http://localhost:8000/files/getAllFiles",
   };
 
   try {
     const response = await axios.request(options);
+
     return response.data;
   } catch (e) {
     return { message: e.response.data.error };
