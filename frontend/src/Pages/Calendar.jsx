@@ -1,5 +1,6 @@
 import NavigationBar from "../Components/Navbar";
 import "../Styles/CSS/Calendar.css";
+import CalendarC from "../Components/CalendarC";
 
 function Calendar(props){
     return (
@@ -10,6 +11,11 @@ function Calendar(props){
             <h1 className="style-title" style={{ width: "400%" }}>
         Calendario
             </h1>
+            
+        </div>
+        <div style={{paddingLeft: "2.5%"}}>
+
+        <CalendarC />
         </div>
         </div>
     </div>
