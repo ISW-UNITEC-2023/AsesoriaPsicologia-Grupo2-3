@@ -7,6 +7,7 @@ const appointmentControllers = require("../Controller/appointment-controller");
 router.post("/create", appointmentControllers.createAppointment);
 
 //PUT
+router.put("/addConsultation", appointmentControllers.addConsultation);
 router.put("/updateOrder", appointmentControllers.updateOrder);
 router.put("/updatePayment", appointmentControllers.updatePaymentMedic);
 router.put("/updateObservations", appointmentControllers.updateObservations);
