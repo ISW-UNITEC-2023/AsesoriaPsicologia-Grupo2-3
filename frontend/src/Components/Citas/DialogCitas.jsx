@@ -10,7 +10,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
-    const [idPacienteN, setIdPacienteN] = useState(0);
+    const [modalidad, setModalidad] = useState("");
     const {
         data: fetchedUsers,
         error: usersError,
@@ -21,6 +21,12 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         error: rolesError,
         isLoading: rolesLoading
     } = useSWR('http://localhost:8000/roles/viewAll', user_services.getAllUsersRoles);
+
+    useEffect(() => {
+        setNombreDoctorN(nombreDoctor);
+        setFechaN(fecha);
+        setHoraN(hora);
+    }, []);
 
     if (usersLoading || rolesLoading) {
         return (
@@ -38,7 +44,6 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         )
     }
 
-
     const usersWithRoles = fetchedUsers.map(user => {
         const userRoles = fetchedRoles
             .filter(role => user.id_user === role.id_user)
@@ -54,26 +59,8 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         updateOpen(!open);
     };
 
-    const namePaciente = encodeURIComponent(localStorage.getItem("namePatient"));
+    const idPaciente = localStorage.getItem("id_patient");
 
-    const idPaciente = async (name) => {
-        try {
-            const response = await axios.get(`http://localhost:8000/patients/getPatient/${name}`);
-            setIdPacienteN(response.data.data)
-            return response.data.data;
-        } catch (error) {
-            toast("Ha ocurrido un error al obtener el ID del paciente: " + error.message, {type: "error"});
-            throw error;
-        }
-    };
-
-
-    useEffect(() => {
-        setNombreDoctorN(nombreDoctor);
-        setFechaN(fecha);
-        setHoraN(hora);
-        idPaciente(namePaciente).then(r => r);
-    }, [idPacienteN]);
 
     const handleConfirmC = async () => {
         // combinar los iso de fecha y hora
@@ -85,9 +72,9 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
             axios.post(`http://localhost:8000/appointment/create`, {
                 id_user: localStorage.getItem("user_id"),
                 appointment_date: fechaHora,
-                id_clinic: 8,
+                id_clinic: localStorage.getItem("id_clinic"),
                 id_doctor: id_doctor,
-                id_file: idPacienteN,
+                id_file: idPaciente,
                 user_creator: localStorage.getItem("user_id")
             }).then(() => {
                 console.log(fechaHora);
@@ -155,7 +142,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                                                                     color="blue-gray">
                                                             Nombre Doctor:
                                                         </Typography>
-                                                        <Select value={nombreDoctorN}
+                                                        <Select label="Nombre del doctor" value={nombreDoctorN}
                                                                 onChange={(e) => setNombreDoctorN(e)}>
                                                             {doctores.map((doctor) => (
                                                                 <Select.Option value={doctor.id_user}>
@@ -193,6 +180,23 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                                                             value={horaN}
                                                             onChange={(e) => setHoraN(e.target.value)}
                                                         />
+                                                    </div>
+                                                    <div className="flex flex-row gap-3 items-center">
+                                                        <Typography
+                                                            className="whitespace-nowrap text-sm text-black mt-2"
+                                                            variant="h6"
+                                                            color="blue-gray">
+                                                            Modalidad de la Cita:
+                                                        </Typography>
+                                                        <Select label="Formato" value={modalidad}
+                                                                onChange={(e) => setModalidad(e)}>
+                                                            <Select.Option value={"Presencial"}>
+                                                                Presencial
+                                                            </Select.Option>
+                                                            <Select.Option value={"Virtual"}>
+                                                                Virtual
+                                                            </Select.Option>
+                                                        </Select>
                                                     </div>
                                                 </div>
                                             </div>

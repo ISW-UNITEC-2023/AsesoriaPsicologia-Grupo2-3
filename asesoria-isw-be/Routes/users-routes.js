@@ -23,6 +23,8 @@ router.get("/viewTeachers", userController.getTeachers);
 router.get("/viewPatients", userController.getPatients);
 router.get("/viewRoles", userController.getAllUsersRoles);
 router.get("/getUserById", userController.getUserByID);
+router.get("/getVerify", userController.getVerify);
+
 //COOKIES
 
 router.post("/getRoles", userController.getUserRoles)

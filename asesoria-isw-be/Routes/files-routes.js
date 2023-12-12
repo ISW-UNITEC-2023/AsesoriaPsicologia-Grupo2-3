@@ -26,7 +26,7 @@ router.put("/updateIdClinic", fileControllers.updateIdClinic);
 router.get("/existFile", fileControllers.existFile);
 router.get("/getFileById", fileControllers.getFileById);
 router.get("/getClinicFiles", fileControllers.getClinicFiles);
-
+router.get("/getAllFiles", fileControllers.getAllFiles);
 //Delete
 router.delete("/delete", fileControllers.deleteFile);
 
