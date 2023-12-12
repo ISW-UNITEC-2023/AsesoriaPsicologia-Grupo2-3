@@ -1,17 +1,5 @@
-import {PencilIcon} from "@heroicons/react/24/solid";
 import {ArrowDownTrayIcon,} from "@heroicons/react/24/outline";
-import {
-    Avatar,
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    Chip,
-    IconButton,
-    Input,
-    Tooltip,
-    Typography,
-} from "@material-tailwind/react";
+import {Avatar, Button, Card, CardBody, CardHeader, Chip, Input, Typography,} from "@material-tailwind/react";
 import {useEffect, useState} from "react";
 
 const TABLE_HEAD = ["Transaction", "Amount", "Date", "Status", "Account"];
