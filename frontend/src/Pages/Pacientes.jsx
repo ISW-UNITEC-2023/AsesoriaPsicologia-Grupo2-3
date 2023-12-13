@@ -23,11 +23,8 @@ function PacientesForm() {
     const [showModal, setShowModal] = useState(false);
     const [montoConsulta, setMontoConsulta] = useState('');
     const [montoError, setMontoError] = useState(false);
-    const [id, setId] = useState('');
-    const [nombre, setNombre] = useState('');
     const [motivoConsulta, setMotivoConsulta] = useState('');
     const [observaciones, setObservaciones] = useState('');
-    const [monto, setMonto] = useState('');
     const [ordenesMedicas, setOrdenesMedicas] = useState('');
     const {
         data: fetchedUsers,
