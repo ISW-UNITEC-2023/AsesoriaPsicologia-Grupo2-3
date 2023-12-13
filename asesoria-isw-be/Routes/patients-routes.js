@@ -14,6 +14,5 @@ router.post("/getPatients", patientsControllers.viewClinicPatients);
 
 //Get
 router.get("/viewAll", patientsControllers.getPatients);
-router.get("/getPatient/:name", patientsControllers.getPatient);
 
 module.exports = router;

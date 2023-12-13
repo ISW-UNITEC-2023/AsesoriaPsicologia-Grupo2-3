@@ -3,9 +3,9 @@ const appointmentServices = require("../Service/appointment-services");
 
 async function createAppointment(req, res) {
     try {
-        const {appointment_date, id_file, id_doctor, id_clinic, user_creator} = req.body;
+        const {appointment_date, id_file, id_doctor, id_clinic, user_creator, appointment_type} = req.body;
         const fecha = new Date(appointment_date);
-        await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator});
+        await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator, appointment_type});
         res.send({message: "Se ha creado una nueva cita"})
     } catch (error) {
         res.send({message: "No se pudo crear la cita", err: error.message});
@@ -14,17 +14,18 @@ async function createAppointment(req, res) {
 
 async function addConsultation(req, res) {
     try {
-        const {id_file, id_doctor, id_clinic, user_creator, observations, amount, medic_orders} = req.body;
+        const {id_appointment, id_file, id_doctor, id_clinic, user_creator, observations, payment_amount, medic_orders} = req.body;
         await appointmentServices.addConsultation({
+            id_appointment,
             id_file,
             id_doctor,
             id_clinic,
             user_creator,
             observations,
-            amount,
+            payment_amount,
             medic_orders
         });
-        res.send({message: "Se ha creado una nueva consulta"})
+        res.send({message: "Se han agregado los datos de la consulta"})
     } catch (error) {
         res.send({message: "No se pudo crear la consulta", err: error.message});
     }
@@ -53,8 +54,11 @@ async function updatePaymentMedic(req, res) {
 
 async function updateObservations(req, res) {
     try {
-        const {observations, editor, id, id_clinic, id_doctor, id_file} = req.body;
-        await appointmentServices.updateObservation({observations, editor, id, id_clinic, id_doctor, id_file});
+        const {observations, editor, id, id_clinic, id_doctor, id_file, appointment_type, appointment_date} = req.body;
+        await appointmentServices.updateObservation({
+            observations, editor, id, id_clinic, id_doctor, id_file,
+            appointment_type, appointment_date
+        });
         res.send({message: "Se ha actualizado la observacion"})
     } catch (error) {
         res.send({message: "Error de actualizacion", err: error.message});
