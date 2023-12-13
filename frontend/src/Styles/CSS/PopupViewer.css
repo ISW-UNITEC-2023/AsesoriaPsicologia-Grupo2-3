@@ -1,43 +1,43 @@
 .modal-content {
-    background-color: #f8f9fa;
-    border: none;
+  background-color: #f8f9fa;
+  border: none;
 }
 
 .modal-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0;
 }
 
 .modal-footer {
-    border-top: 1px solid #ced4da;
-    padding: 20px;
+  border-top: 1px solid #ced4da;
+  padding: 20px;
 }
 
 .btn-secondary {
-    background-color: #0056b3;
-    color: #0062ff;
-    padding: 10px 20px;
-    width: 100%;
-    max-width: 200px;
+  background-color: #0056b3;
+  color: #0062ff;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 200px;
 }
 
 @media (min-width: 576px) {
-    .btn-secondary {
-        max-width: 150px;
-    }
+  .btn-secondary {
+    max-width: 150px;
+  }
 }
 
 @media (min-width: 768px) {
-    .btn-secondary {
-        max-width: 120px;
-    }
+  .btn-secondary {
+    max-width: 120px;
+  }
 }
 
 @media (min-width: 1200px) {
-    .modal-dialog {
-        max-width: 97%;
-    }
+  .modal-dialog {
+    max-width: 97%;
+  }
 }

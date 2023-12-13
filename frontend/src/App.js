@@ -130,8 +130,10 @@ function App() {
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/Chequeo" element={<Chequeos userData={userData}/>}/>
                 </Route>
-                <Route path="/Documentos" element={<Documentos />} />
 
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Documentos" element={<Documentos />} />
+                </Route>
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
                 <Route path="/Registro" element={<Registro {...aboutData} />}/>
 

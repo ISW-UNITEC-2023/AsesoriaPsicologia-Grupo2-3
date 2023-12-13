@@ -14,7 +14,6 @@ function ArchivoVisualizador(props) {
 
   useEffect(() => {
     cargarArchivos();
-
   }, []);
 
   useEffect(() => {
@@ -23,14 +22,14 @@ function ArchivoVisualizador(props) {
   //obtener los nombres de los archivos
   const cargarArchivos = async () => {
     try {
-      const response = await Services.getDocumentId(props.user);
+      const response = await Services.getDocumentId(props.id_file);
 
       if (Array.isArray(response)) {
         setAllArchivos(response);
       } else {
         console.error(
-            'La propiedad "archivos" no está presente en la respuesta:',
-            response
+          'La propiedad "archivos" no está presente en la respuesta:',
+          response
         );
       }
     } catch (error) {
@@ -41,7 +40,7 @@ function ArchivoVisualizador(props) {
   //filtro para buscar archivo por nombre
   const filtrarArchivos = (archivosToFilter, term) => {
     const filteredArchivos = archivosToFilter.filter((file) =>
-        file.nombre_archivo.toLowerCase().includes(term.toLowerCase())
+      file.document_name.toLowerCase().includes(term.toLowerCase())
     );
     setArchivos(filteredArchivos);
   };
@@ -56,10 +55,10 @@ function ArchivoVisualizador(props) {
     try {
       const formData = new FormData();
       formData.append("archivo", archivo);
+      formData.append("user_creator", props.userData.user_data.id_user);
+      formData.append("id_file", props.id_file);
+      await Services.uploadFile(formData);
 
-      const probar = await Services.uploadFile(formData);
-      console.log(probar);
-      await Services.updateFile(probar.fileId, props.user);
       cargarArchivos();
       alert("¡Archivo cargado exitosamente!");
       setArchivo(null);
@@ -84,13 +83,17 @@ function ArchivoVisualizador(props) {
   const editarNombre = async (file, extension) => {
     try {
       const nuevoNombre = prompt(
-          "Ingrese el nuevo nombre:",
-          file.nombre_archivo
+        "Ingrese el nuevo nombre:",
+        file.document_name
       );
 
       if (nuevoNombre !== null) {
         const nuevaRuta = `${nuevoNombre}.${extension}`;
-        await Services.updateDocumentName(file.id, nuevaRuta);
+        await Services.updateDocumentName(
+          file.id_document,
+          nuevaRuta,
+          props.userData.user_data.id_user
+        );
         cargarArchivos();
       }
     } catch (error) {
@@ -100,88 +103,91 @@ function ArchivoVisualizador(props) {
   //eliminar archivo
   const eliminarArchivo = async (file) => {
     const confirmarEliminacion = window.confirm(
-        "¿Está seguro de que desea eliminar este archivo?"
+      "¿Está seguro de que desea eliminar este archivo?"
     );
 
     if (confirmarEliminacion) {
-      await Services.deleteDocument(file.id);
+      await Services.deleteDocument(file.id_document);
       cargarArchivos();
       alert("¡Archivo eliminado exitosamente!");
     }
   };
 
   return (
-      <div>
-        <div className="upload-section">
-          <label className="custom-file-input">
-            <input
-                type="file"
-                onChange={manejarCambioArchivo}
-                ref={inputFileRef}
-                style={{ display: "none" }}
-            />
-          </label>
+    <div>
+      <div className="upload-section">
+        <label className="custom-file-input">
           <input
-              type="text"
-              placeholder="Buscar por nombre..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+            type="file"
+            onChange={manejarCambioArchivo}
+            ref={inputFileRef}
+            style={{ display: "none" }}
           />
+        </label>
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
 
-          <button onClick={handleClick}>Cargar Archivo</button>
-          <button onClick={subirArchivo}>Subir Archivo</button>
+        <button onClick={handleClick}>Cargar Archivo</button>
+        <button onClick={subirArchivo}>Subir Archivo</button>
 
-          <div>
-            <div className="archivo-visualizador-container">
-              <ListGroup className="archivo-visualizador-title-list">
-                {archivos.map((file) => {
-                  const partesNombreArchivo = file.nombre_archivo.split(".");
+        <div>
+          <div className="archivo-visualizador-container">
+            <ListGroup className="archivo-visualizador-title-list">
+              {archivos.map((file) => {
+                const partesNombreArchivo = file.document_name.split(".");
 
-                  const extension =
-                      partesNombreArchivo[partesNombreArchivo.length - 1];
+                const extension =
+                  partesNombreArchivo[partesNombreArchivo.length - 1];
 
-                  return (
-                      <ListGroup.Item key={file.id} className="archivo-box">
-                        <div className="archivo-info">
+                return (
+                  <ListGroup.Item
+                    key={file.id_document}
+                    className="archivo-box"
+                  >
+                    <div className="archivo-info">
                       <span className="archivo-visualizador-title">
-                        {file.nombre_archivo}
+                        {file.document_name}
                       </span>
-                        </div>
-                        <div className="archivo-actions">
-                          <Button
-                              className="archivo-visualizador-button"
-                              onClick={() => openPopup(file)}
-                          >
-                            Ver Archivo
-                          </Button>
-                          <Button
-                              className="archivo-visualizador-button"
-                              onClick={() => editarNombre(file, extension)}
-                          >
-                            Editar Nombre
-                          </Button>
-                          <Button
-                              className="archivo-visualizador-button"
-                              onClick={() => eliminarArchivo(file)}
-                          >
-                            Eliminar
-                          </Button>
-                        </div>
-                      </ListGroup.Item>
-                  );
-                })}
-              </ListGroup>
-              {selectedFile && (
-                  <PopupViewer
-                      file={selectedFile}
-                      onClose={() => setSelectedFile(null)}
-                  />
-              )}
-            </div>
+                    </div>
+                    <div className="archivo-actions">
+                      <Button
+                        className="archivo-visualizador-button"
+                        onClick={() => openPopup(file)}
+                      >
+                        Ver Archivo
+                      </Button>
+                      <Button
+                        className="archivo-visualizador-button"
+                        onClick={() => editarNombre(file, extension)}
+                      >
+                        Editar Nombre
+                      </Button>
+                      <Button
+                        className="archivo-visualizador-button"
+                        onClick={() => eliminarArchivo(file)}
+                      >
+                        Eliminar
+                      </Button>
+                    </div>
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
+            {selectedFile && (
+              <PopupViewer
+                file={selectedFile}
+                onClose={() => setSelectedFile(null)}
+              />
+            )}
           </div>
         </div>
       </div>
+    </div>
   );
 }
 

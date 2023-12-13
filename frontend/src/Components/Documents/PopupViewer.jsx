@@ -9,22 +9,22 @@ const PopupViewer = ({ file, onClose }) => {
 
   const openFile = async () => {
     try {
-      const response = await Services.descargarArchivo(file.id);
+      const response = await Services.descargarArchivo(file.id_document);
       if (
-        file.tipo_archivo === "image/jpeg" ||
-        file.tipo_archivo === "image/png" ||
-        file.tipo_archivo === "image/jpg" ||
-        file.tipo_archivo === "image/gif" ||
-        file.tipo_archivo === "image/webp"
+        file.document_type === "image/jpeg" ||
+        file.document_type === "image/png" ||
+        file.document_type === "image/jpg" ||
+        file.document_type === "image/gif" ||
+        file.document_type === "image/webp"
       ) {
         const url = window.URL.createObjectURL(new Blob([response]));
-        setContent(<img src={url} alt={file.nombre_archivo} />);
-      } else if (file.tipo_archivo === "application/pdf") {
+        setContent(<img src={url} alt={file.document_name} />);
+      } else if (file.document_type === "application/pdf") {
         const blob = new Blob([response], { type: "application/pdf" });
         const pdfUrl = URL.createObjectURL(blob);
         setContent(
           <iframe
-            title={file.nombre_archivo}
+            title={file.document_name}
             width="800"
             height="600"
             src={pdfUrl}
@@ -47,11 +47,11 @@ const PopupViewer = ({ file, onClose }) => {
 
   const handleDownload = async () => {
     try {
-      const response = await Services.descargarArchivo(file.id);
+      const response = await Services.descargarArchivo(file.id_document);
       const blob = new Blob([response]);
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
-      link.download = file.nombre_archivo;
+      link.download = file.document_name;
       link.click();
       window.URL.revokeObjectURL(link.href);
     } catch (error) {
@@ -60,18 +60,18 @@ const PopupViewer = ({ file, onClose }) => {
   };
 
   return (
-      <Modal
-          show={!!content}
-          onHide={() => {
-            setContent(null);
-            onClose();
-          }}
-          dialogClassName="modal-dialog-centered modal-dialog-scrollable"
-      >
-        <Modal.Body>
-          {content}
-          <style>
-            {`
+    <Modal
+      show={!!content}
+      onHide={() => {
+        setContent(null);
+        onClose();
+      }}
+      dialogClassName="modal-dialog-centered modal-dialog-scrollable"
+    >
+      <Modal.Body>
+        {content}
+        <style>
+          {`
             img {
               max-width: 90%;
               max-height: 90%;
@@ -93,28 +93,28 @@ const PopupViewer = ({ file, onClose }) => {
               object-fit: contain;
             }
           `}
-          </style>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-              variant="secondary"
-              onClick={() => {
-                setContent(null);
-                onClose();
-              }}
-              className="btn-block popup-button"
-          >
-            Cerrar
-          </Button>
-          <Button
-              variant="secondary"
-              onClick={handleDownload}
-              className="btn-block popup-button"
-          >
-            Descargar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </style>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setContent(null);
+            onClose();
+          }}
+          className="btn-block popup-button"
+        >
+          Cerrar
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={handleDownload}
+          className="btn-block popup-button"
+        >
+          Descargar
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
