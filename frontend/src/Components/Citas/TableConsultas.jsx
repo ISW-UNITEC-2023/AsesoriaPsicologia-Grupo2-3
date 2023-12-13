@@ -1,13 +1,12 @@
-import {PencilIcon} from "@heroicons/react/24/solid";
-import {Button, Card, CardBody, CardHeader, IconButton, Spinner, Typography,} from "@material-tailwind/react";
-import {EyeIcon} from "@heroicons/react/20/solid";
+import {Button, Card, CardBody, CardHeader, Spinner, Typography,} from "@material-tailwind/react";
 import BreadCrumbsC from "./BreadCrumbsC";
 import {useEffect, useState} from "react";
 import DialogCitas from "./DialogCitas";
 import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
 
 
 const TABLE_HEAD = [" ", "Fecha de Consulta", "Doctor Responsable", "Observaciones", ""];
@@ -56,7 +55,7 @@ export function TableConsultas({page}) {
         setTitulo("Agendar Cita");
     }
 
-    const handleOpenE = () => {
+    const handleOpenE = (id) => {
         data.data.map(
             (
                 {
@@ -73,6 +72,13 @@ export function TableConsultas({page}) {
                 setTitulo("Modificar Cita");
             }
         );
+    }
+
+    const handleDelete = (id) => {
+        toast("Cita eliminada con éxito", {
+            type: "success",
+            autoClose: 2000,
+        })
     }
 
     const updateIsOpen = (isOpen) => {
@@ -117,116 +123,78 @@ export function TableConsultas({page}) {
                             <BreadCrumbsC/>
                         </div>
                     )}
-                </div>
-                {page === "Cita" && (
-                    <div className="flex flex-row justify-between gap-4 mt-4 mb-4">
-                        <div className="flex flex-row justify-between gap-2">
+                    {page === "Cita" && (
+                        <div>
                             <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpen}>
                                 Agendar Cita
                             </Button>
-                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpenE}>
-                                Modificar Cita
-                            </Button>
                         </div>
-                        <div className="flex flex-row justify-between gap-2">
-                            <Button style={{background: "#113946"}} variant="gradient" type="button">Ver
-                                expediente</Button>
-                        </div>
-                    </div>
-                )}
-                <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-                    <div className="flex flex-row gap-2">
+                    )}
+                </div>
+                <div className="flex flex-col justify-between mt-4 md:flex-row md:items-center">
+                    <div className="flex flex-row">
                         <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
                             Historial de Citas
                         </Typography>
                     </div>
                 </div>
             </CardHeader>
-            <CardBody className="overflow-x-auto px-0" style={{maxHeight: "calc(100vh - 350px)"}}>
-                <table className="w-full min-w-max table-auto text-left">
-                    <thead>
-                    <tr>
-                        {TABLE_HEAD.map((head) => (
-                            <th
-                                key={head}
-                                className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                            >
-                                <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal leading-none opacity-70"
-                                >
-                                    {head}
-                                </Typography>
-                            </th>
-                        ))}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data.data.map(
-                        (
-                            {
-                                appointment_date,
-                                id_file,
-                                id_doctor,
-                                observations,
-                            },
-                            index,
-                        ) => {
-                            const isLast = index === data.data.length - 1;
-                            const classes = isLast
-                                ? "p-4"
-                                : "p-4 border-b border-blue-gray-50";
-
-                            return (
-                                <tr key={index}>
-                                     <td className={classes}>
-                                        <div className="flex items-center">
-                                            <Link to="/Expedientes">
-                                                <IconButton variant="text">
-                                                    <EyeIcon className="w-5 h-5" />
-                                                </IconButton>
-                                            </Link>
-                                            <IconButton variant="text">
-                                                <PencilIcon className="w-5 h-5" />
-                                            </IconButton>
-                                        </div>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {formatDate(appointment_date)}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {getDoctorName(id_doctor)}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {observations ? observations : "Sin observaciones"}
-                                        </Typography>
-                                    </td>
-                                </tr>
-                            );
+            <CardBody className="overflow-x-auto px-0 p-0" style={{maxHeight: "calc(100vh - 130px)"}}>
+                {data.data.map(
+                    (
+                        {
+                            appointment_date,
+                            id_doctor,
+                            id_appointment,
                         },
-                    )}
-                    {open && <DialogCitas nombreDoctor={nombreDoctor} fecha={fecha} titulo={titulo} open={open}
-                                          updateOpen={updateIsOpen}/>}
-                    </tbody>
-                </table>
+                    ) => {
+                        {
+                            return (
+                                <div className="ml-2 mr-2 md:ml-10 md:mr-10 mt-4 mb-4 p-4 flex flex-col justify-between
+                                 md:flex-row md:items-center bg-white rounded-md border border-black">
+                                    <div className="flex flex-col justify-between gap-2">
+                                        <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
+                                            Paciente: {nombre}
+                                        </Typography>
+                                        <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
+                                            Doctor: {getDoctorName(id_doctor)}
+                                        </Typography>
+                                        <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
+                                            Fecha y hora de cita: {formatDate(appointment_date)}
+                                        </Typography>
+                                    </div>
+                                    <div className="flex flex-col justify-between gap-2 items-center">
+                                        <div className="flex flex-row gap-2">
+                                            <Button className="w-32" style={{background: "#113946"}} variant="gradient"
+                                                    type="button">
+                                                Iniciar Consulta
+                                            </Button>
+                                            <Button className="w-32" style={{background: "#cb3939"}}
+                                                    variant={"gradient"} onClick={() => handleOpenE(id_appointment)}>
+                                                Modificar Cita
+                                            </Button>
+                                        </div>
+                                        <div className="flex flex-row gap-2">
+                                            <Button className="w-32" style={{background: "#cb3939"}}
+                                                    variant={"gradient"} onClick={() => handleDelete(id_appointment)}>
+                                                Eliminar Cita
+                                            </Button>
+                                            <Link to={"/expedientes"}>
+                                                <Button className="w-32" style={{background: "#cb3939"}}
+                                                        variant="gradient"
+                                                        type="button">
+                                                    Ver expediente
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }
+                )}
+                {open && <DialogCitas nombreDoctor={nombreDoctor} fecha={fecha} titulo={titulo} open={open}
+                                      updateOpen={updateIsOpen}/>}
             </CardBody>
         </Card>
     );

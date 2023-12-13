@@ -75,7 +75,8 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                 id_clinic: localStorage.getItem("id_clinic"),
                 id_doctor: id_doctor,
                 id_file: idPaciente,
-                user_creator: localStorage.getItem("user_id")
+                user_creator: localStorage.getItem("user_id"),
+                appointment_type: modalidad
             }).then(() => {
                 console.log(fechaHora);
                 handleOpen();
@@ -190,10 +191,10 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                                                         </Typography>
                                                         <Select label="Formato" value={modalidad}
                                                                 onChange={(e) => setModalidad(e)}>
-                                                            <Select.Option value={"Presencial"}>
+                                                            <Select.Option value={"PRESENCIAL"}>
                                                                 Presencial
                                                             </Select.Option>
-                                                            <Select.Option value={"Virtual"}>
+                                                            <Select.Option value={"VIRTUAL"}>
                                                                 Virtual
                                                             </Select.Option>
                                                         </Select>
