@@ -51,10 +51,14 @@ function Chequeo(props) {
           <button
             className="button-agregar-metodo-pago"
             onClick={() => handleAddPayment(consultaSeleccionada)}
-          >
-            Agregar método de Pago
+          > Agregar método de Pago
           </button>
         </div>
+        {paymentError && (
+        <div className="error-message">
+          Por favor, seleccione un método de pago antes de continuar.
+        </div>
+      )}
       </div>
     </div>
   );
@@ -63,9 +67,10 @@ function Chequeo(props) {
   const [selectedConsulta, setSelectedConsulta] = useState(null);
   const [tempSelectedPayment, setTempSelectedPayment] = useState("");
   const [consultations, setConsultations] = useState([]);
+  const [paymentError, setPaymentError] =useState(false);
   const fetchData = async () => {
-    const idClinic = props.userData.user_data.id_clinic; //obtener la informacion de la clinica
-    //const idClinic = "8"; // Estático para probar
+    //const idClinic = props.userData.user_data.id_clinic; //obtener la informacion de la clinica
+    const idClinic = "8"; // Estático para probar
     try {
       const data = await getChequeo(idClinic);
       setConsultations(data.AppInfo);
@@ -92,6 +97,11 @@ function Chequeo(props) {
   };
 
   const handleAddPayment = async (consultaSeleccionada) => {
+    if(tempSelectedPayment=== '')
+    {
+      setPaymentError(true);
+      return;
+    }
     handleClose();
 
     try {
@@ -103,6 +113,7 @@ function Chequeo(props) {
         consultaSeleccionada.id_doctor,
         consultaSeleccionada.id_file
       );
+      setPaymentError(false);
       fetchData();
     } catch (error) {
       console.error("Error:", error.message);
@@ -114,14 +125,21 @@ function Chequeo(props) {
       <NavigationBar userData={props.userData} />
       <div style={{ width: "90%" }}>
         <div className="style-chequeo-header">
-          <h1 className="style-chequeo-title" style={{ width: "400%" }}>
+          <h1 className="style-chequeo-title" style={{ width: "200%" }}>
             Chequeo
           </h1>
-          <Link to="/Estadisticas">
-            <button className="button-estadisticas-reportes">
-              Ver Estadísticas y Reportes
+          <Link to="/Reportes">
+            <button className="button-reporte">
+              Reportes
             </button>
           </Link>
+         
+          <Link to="/Estadisticas">
+            <button className="button-estadistica">
+              Estadísticas
+            </button>
+          </Link>
+         
         </div>
         <div className="table-container">
           <table className="custom-table">
