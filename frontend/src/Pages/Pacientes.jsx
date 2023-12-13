@@ -15,7 +15,7 @@ import user_services from "../Utilities/user-services";
 import {Option, Select, Spinner} from "@material-tailwind/react";
 import Dropdown from "react-bootstrap/Dropdown";
 
-function PacientesForm() {
+function PacientesForm(props) {
     const [nombres, setNombres] = useState([]);
     const [showCrearPopup, setShowCrearPopup] = useState(false);
     const [showEditarPopup, setShowEditarPopup] = useState(false);
@@ -220,6 +220,7 @@ function PacientesForm() {
                                                 aria-haspopup="true" aria-expanded="false">
                                             Acciones
                                         </button>
+
                                         <div className="dropdown-menu"
                                              aria-labelledby={`dropdown-${nombre.id_account}`}>
                                             <Link to="/citas"
@@ -230,11 +231,19 @@ function PacientesForm() {
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
                                                   className="dropdown-item">Ver Expediente</Link>
-                                            <Link to="/Documento"
+                                                  <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
+                                            {/* <Link to="/Documento"
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
-                                                  className="dropdown-item">Ver Documentos</Link>
+                                                  className="dropdown-item">Ver Documentos</Link> */}
 
+{/* =======
+                                        <div className="dropdown-menu" aria-labelledby={`dropdown-${nombre.id_account}`}>
+                                            <Link to="/citas" className="dropdown-item">Manejar Cita</Link>
+                                            <Link to="/Expedientes" className="dropdown-item">Ver Expediente</Link>
+                                            <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
+                                             */}
+{/* >>>>>>> Axel-KL-Documents */}
                                         </div>
                                     </div>
                                 </div>

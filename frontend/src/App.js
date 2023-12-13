@@ -25,6 +25,8 @@ import Chequeos from "./Pages/Chequeo";
 import Estadisticas from "./Pages/Estadisticas";
 import Reportes from "./Pages/Reportes";
 
+import Documentos from "./Pages/Documents";
+import LoadingSpinner from "./Pages/LoadingStyle";
 
 function App() {
 
@@ -100,7 +102,7 @@ function App() {
                         />
                     }
                 />
-
+                <Route path="/error" element={<LoadingSpinner/>}/>
 
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/Dashboard" element={<DashBoard userData={userData}/>}/>
@@ -133,7 +135,9 @@ function App() {
                     <Route path="/Chequeo" element={<Chequeos userData={userData}/>}/>
                 </Route>
 
-
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Documentos" element={<Documentos />} />
+                </Route>
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
                 <Route path="/Registro" element={<Registro {...aboutData} />}/>
 
