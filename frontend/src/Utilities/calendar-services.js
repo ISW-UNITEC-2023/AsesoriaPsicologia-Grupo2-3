@@ -3,10 +3,10 @@ import axios from "axios";
 export async function createEvent(title, url, start, end,)
 {
   let data = JSON.stringify({
-    "title": title,
-   
+    
+    "title": title, 
     }
-  });
+  );
 
   console.log(data);
   let config = {

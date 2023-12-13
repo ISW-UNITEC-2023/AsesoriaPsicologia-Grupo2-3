@@ -1,9 +1,10 @@
 import NavigationBar from "../Components/Navbar";
 import '../Styles/CSS/Chequeo.css';
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import "../Styles/CSS/PopUpChequeo.css";
 import Form from 'react-bootstrap/Form';
 import {Link} from "react-router-dom";
+import { getChequeo } from '../Utilities/appointment-services.js';
 function Chequeo(props){
     const paymentMethods = {
         "1": "Efectivo",
@@ -15,7 +16,22 @@ function Chequeo(props){
     const [showModal, setShowModal] = useState(false);
     const [selectedPayment, setSelectedPayment] = useState('');
     const [tempSelectedPayment, setTempSelectedPayment] = useState('');
+    const [consultations, setConsultations] = useState([]);
 
+    useEffect(() => {
+      
+        const idClinic = '8'; // para probar su funcionalidadd pero no sirve
+        const fetchData = async () => {
+            try {
+                const data = await getChequeo(idClinic);
+                setConsultations(data.AppInfo); 
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
     const handleShow = () => setShowModal(true);
     
     const handleClose = () => {
@@ -56,34 +72,15 @@ function Chequeo(props){
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Lps.</td>
-                <td>
-                <buttons  onClick={handleShow} className="button-metodo-pago">Asignar Método de Pago</buttons>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>Lps.</td>
-                <td>
-                <buttons onClick={handleShow} className="button-metodo-pago">Asignar Método de Pago</buttons>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>Lps.</td>
-                <td>
-                <buttons  onClick={handleShow} className="button-metodo-pago">Asignar Método de Pago</buttons>
-                </td>
-            </tr>
-        </tbody>
+                    {consultations.map(consulta => (
+                        <tr key={consulta.idConsulta}>
+                            <td>{consulta.doctorResponsable}</td>
+                            <td>{consulta.paciente}</td>
+                            <td>{consulta.monto}</td>
+                            <td>{consulta.metodoPago}</td>
+                        </tr>
+                    ))}
+                </tbody>
     </table>
 </div>
 
