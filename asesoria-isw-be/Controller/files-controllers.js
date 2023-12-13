@@ -159,7 +159,6 @@ async function createFile(req, res) {
     }
   }
 }
-//
 
 async function updateFirstName(req, res) {
   const { id, first_name, editor } = req.body;
@@ -652,8 +651,6 @@ async function getFileById(req, res) {
 }
 
 async function getAllFiles(req, res) {
-
-
   try {
     const file = await fileServices.getAllFiles();
     res.send(file);
