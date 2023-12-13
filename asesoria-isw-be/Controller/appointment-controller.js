@@ -301,13 +301,32 @@ WHERE state_appointment = 'Terminado' AND id_clinic = '8';
 
 async function getChequeo(req, res) {
   const { idClinic } = req.query;
+  const errors = [];
+
+  if (!idClinic) {
+    errors.push("Falta el id_clinic de la clinica");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
   try {
     const App = await appointmentServices.getChequeo(idClinic);
+
+    if (App.length === 0) {
+      return res.status(HTTPCodes.NOT_FOUND).send({
+        error: "No se encontraron datos para el chequeo",
+      });
+    }
+
     res.send({
-      message: "Se obtuvieron los datos para el chequeo ",
+      message: "Se obtuvieron los datos para el chequeo",
       AppInfo: App,
     });
   } catch (e) {
+    console.error("Error en getChequeo:", e);
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
       error: "No se pudo obtener los datos del chequeo",
     });

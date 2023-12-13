@@ -64,8 +64,8 @@ function Chequeo(props) {
   const [tempSelectedPayment, setTempSelectedPayment] = useState("");
   const [consultations, setConsultations] = useState([]);
   const fetchData = async () => {
-    //const idClinic = props.userData.user_data.id_clinic; //obtener la informacion de la clinica
-    const idClinic = "8"; // Estático para probar
+    const idClinic = props.userData.user_data.id_clinic; //obtener la informacion de la clinica
+    //const idClinic = "8"; // Estático para probar
     try {
       const data = await getChequeo(idClinic);
       setConsultations(data.AppInfo);
@@ -135,23 +135,29 @@ function Chequeo(props) {
               </tr>
             </thead>
             <tbody>
-              {consultations.map((consulta) => (
-                <tr key={consulta.id_appointment}>
-                  <td>{consulta.id_appointment}</td>
-                  <td>{consulta.doctor_name}</td>
-                  <td>{`${consulta.first_name} ${consulta.middle_name} ${consulta.last_name} ${consulta.second_surname}`}</td>
-                  <td>{consulta.payment_amount}</td>
-                  <td>
-                    {consulta.payment_type}
-                    <button
-                      onClick={() => handleShow(consulta)}
-                      className="button-metodo-pago"
-                    >
-                      Asignar Método de Pago
-                    </button>
-                  </td>
+              {consultations ? (
+                consultations.map((consulta) => (
+                  <tr key={consulta.id_appointment}>
+                    <td>{consulta.id_appointment}</td>
+                    <td>{consulta.doctor_name}</td>
+                    <td>{`${consulta.first_name} ${consulta.middle_name} ${consulta.last_name} ${consulta.second_surname}`}</td>
+                    <td>{consulta.payment_amount}</td>
+                    <td>
+                      {consulta.payment_type}
+                      <button
+                        onClick={() => handleShow(consulta)}
+                        className="button-metodo-pago"
+                      >
+                        Asignar Método de Pago
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">No hay datos disponibles</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

@@ -222,8 +222,8 @@ async function getChequeo(idClinic) {
 
     return data;
   } catch (error) {
-    console.error("Error in getChequeo:", error);
-    throw new Error("An error occurred while fetching data");
+    console.error("Error en getChequeo:", error);
+    throw new Error("Ocurrió un error al obtener los datos");
   }
 }
 
