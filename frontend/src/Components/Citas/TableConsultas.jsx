@@ -75,10 +75,13 @@ export function TableConsultas({page}) {
     }
 
     const handleDelete = (id) => {
-        toast("Cita eliminada con éxito", {
-            type: "success",
-            autoClose: 2000,
-        })
+        axios.delete(`http://localhost:8000/appointment/deleteById/${id}`)
+            .then(() => {
+                toast.success("Cita eliminada con éxito");
+            })
+            .catch(err => {
+                toast.error("Ha ocurrido un error al eliminar la cita " + err);
+            })
     }
 
     const updateIsOpen = (isOpen) => {

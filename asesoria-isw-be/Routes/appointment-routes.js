@@ -22,6 +22,6 @@ router.get("/getCreator", appointmentControllers.getCreator);
 router.get("/getDoctor", appointmentControllers.getDoctor);
 router.get("/getClinic", appointmentControllers.getClinic);
 //Delete
-router.delete("/deleteById", appointmentControllers.deleteAppointment);
+router.delete("/deleteById/:id", appointmentControllers.deleteAppointment);
 
 module.exports = router;

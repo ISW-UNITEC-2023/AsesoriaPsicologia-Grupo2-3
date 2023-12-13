@@ -88,7 +88,7 @@ async function updateStateMedic(req, res) {
 
 async function deleteAppointment(req, res) {
     try {
-        const {id} = req.body;
+        const {id} = req.params;
 
         await appointmentServices.deleteAppo(id);
         res.send({message: "Cita eliminada!"});
