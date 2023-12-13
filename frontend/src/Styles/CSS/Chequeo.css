@@ -12,7 +12,7 @@
     margin-top: 5px;
     margin-bottom: 10px;
     padding: 10px;
-    margin: 10px;
+    margin-right: 100px;
 
 }
 
@@ -52,8 +52,8 @@
 }
 
 .button-estadisticas-reportes {
-    margin: auto;
-    width: 100%;
+    margin-top: 50px;
+    width: 250%;
     height: 50px;
     border-radius: 5px;
     cursor: pointer;text-align: center;

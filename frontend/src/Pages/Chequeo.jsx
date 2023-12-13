@@ -3,6 +3,7 @@ import '../Styles/CSS/Chequeo.css';
 import React, {useState} from "react";
 import "../Styles/CSS/PopUpChequeo.css";
 import Form from 'react-bootstrap/Form';
+import {Link} from "react-router-dom";
 function Chequeo(props){
     const paymentMethods = {
         "1": "Efectivo",
@@ -39,7 +40,9 @@ function Chequeo(props){
                 <h1 className="style-chequeo-title" style={{ width: "400%" }}>
             Chequeo
                 </h1>
+                <Link to="/Estadisticas">
                 <buttons className="button-estadisticas-reportes">Ver Estadísticas y Reportes</buttons>
+                </Link>
             </div>
             <div class="table-container">
     <table class="custom-table">
