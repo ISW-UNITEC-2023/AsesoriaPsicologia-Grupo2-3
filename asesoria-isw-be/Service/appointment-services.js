@@ -14,6 +14,7 @@ const knex = require("knex")({
 async function createAppo(new_appo) {
     await knex("appointments").insert({
         appointment_date: new_appo.fecha,
+        appointment_hour: new_appo.hora,
         id_file: new_appo.id_file,
         id_doctor: new_appo.id_doctor,
         id_clinic: new_appo.id_clinic,
@@ -50,6 +51,19 @@ async function deleteAppo(id_appointment) {
 async function updateMedicOrder(appo) {
     await knex("appointments").update({
         medic_orders: appo.medic_orders,
+        user_editor: appo.editor,
+        last_modification: new Date()
+    }).where({
+        id_appointment: appo.id,
+        id_clinic: appo.id_clinic,
+        id_doctor: appo.id_doctor,
+        id_file: appo.id_file
+    });
+}
+
+async function updateHour(appo) {
+    await knex("appointments").update({
+        appointment_hour: appo.hour,
         user_editor: appo.editor,
         last_modification: new Date()
     }).where({
@@ -246,6 +260,7 @@ module.exports = {
     addConsultation,
     deleteAppo,
     updateMedicOrder,
+    updateHour,
     updatePayment,
     updateObservation,
     updateAppo,

@@ -13,11 +13,10 @@ router.put("/updatePayment", appointmentControllers.updatePaymentMedic);
 router.put("/updateObservations", appointmentControllers.updateObservations);
 router.put("/updateAppointment", appointmentControllers.updateAppointment);
 router.put("/updateState", appointmentControllers.updateStateMedic);
+router.put("/updateHour", appointmentControllers.updateHour);
+router.put("/updatePaymentType", appointmentControllers.updatePaymentTypeMedic);
 
-  router.put("/updatePaymentType", appointmentControllers.updatePaymentTypeMedic);
- 
 router.put("/updateZoomLink", appointmentControllers.updateZoomLink);
-
 
 //Get
 
@@ -27,7 +26,7 @@ router.get("/getCreator", appointmentControllers.getCreator);
 router.get("/getDoctor", appointmentControllers.getDoctor);
 router.get("/getClinic", appointmentControllers.getClinic);
 
- router.get("/getChequeo", appointmentControllers.getChequeo);
+router.get("/getChequeo", appointmentControllers.getChequeo);
 //Delete
 router.delete("/deleteById/:id", appointmentControllers.deleteAppointment);
 

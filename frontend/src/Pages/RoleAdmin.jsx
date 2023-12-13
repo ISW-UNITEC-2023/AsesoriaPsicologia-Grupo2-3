@@ -411,6 +411,7 @@ const RoleAdmin = (props) => {
                   <label>{role.name_role}</label>
                   <div className="botones-role-box">
                     <button
+                    className="boton-editar-role"
                       onClick={() => {
                         abrirModal("editar");
                         setRolesPrivileges({

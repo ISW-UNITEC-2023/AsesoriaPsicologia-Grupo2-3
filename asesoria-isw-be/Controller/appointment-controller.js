@@ -3,7 +3,7 @@ const appointmentServices = require("../Service/appointment-services");
 
 async function createAppointment(req, res) {
     try {
-        const {appointment_date, id_file, id_doctor, id_clinic, user_creator, appointment_type} = req.body;
+        const {appointment_date, id_file, hour, id_doctor, id_clinic, user_creator, appointment_type} = req.body;
         const fecha = new Date(appointment_date);
         await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator, appointment_type});
         res.send({message: "Se ha creado una nueva cita"})
@@ -41,6 +41,16 @@ async function updateOrder(req, res) {
         res.send({message: "Error de actualizacion", err: error.message});
     }
 }
+
+async function updateHour(req, res){{
+    try {
+        const {hour, editor, id, id_clinic, id_doctor, id_file} = req.body;
+        await appointmentServices.updateHour({hour, editor, id, id_clinic, id_doctor, id_file});
+        res.send({message: "Se ha actualizado la hora de la cita"})
+    }catch (error) {
+        res.send({message: "Error de actualizacion", err: error.message});
+    }
+}}
 
 async function updatePaymentMedic(req, res) {
     try {
@@ -252,6 +262,7 @@ module.exports = {
     addConsultation,
     deleteAppointment,
     updateOrder,
+    updateHour,
     updatePaymentMedic,
     updateObservations,
     updateAppointment,
