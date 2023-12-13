@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const qs = require('query-string');
 
-const errorHandler = require('../../utils/errorHandler');
+const errorHandler = require('../../Utils/errorHandler');
 const { ZOOM_API_BASE_URL } = require('../../constants');
 
 const router = express.Router();

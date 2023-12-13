@@ -1,5 +1,5 @@
 const redis = require('../configs/redis');
-const { getToken, setToken } = require('../utils/token');
+const { getToken, setToken } = require('../Utils/token');
 
 /**
   * Middleware that checks if a valid (not expired) token exists in redis
