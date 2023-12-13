@@ -1,5 +1,5 @@
 import "./zoom.css"
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -7,31 +7,34 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavigationB from "../Navbar";
 import {cMeeting} from "../../Utilities/zoom-services";
-import {getCookies} from "../../Utilities/login-services";
-import {useNavigate} from "react-router-dom";
+import { getVerify } from "../../Utilities/user-services";
+
+function havePrivilege(userPrivilege, privilege) {
+	const isAuthorized = userPrivilege && userPrivilege.privileges && privilege.some((privilege) =>
+		userPrivilege.privileges.includes(privilege)
+	);
+	return isAuthorized;
+}
 
 function MyZoom(props) {
 
     //Privilegios del usuario logueado
-    const [userPrivileges, setUserPrivileges] = useState({});
-
-    const fetchUserData = async () => {
-        const userData = await getCookies();
-        if (userData && userData.user_data && userData.user_data.roles) {
-            setUserPrivileges(userData.user_data.privileges);
-        }
-        setUserPrivileges(userData.user_data.privileges);
-    };
-
-    const havePrivilege = (privilege) => {
-        if (userPrivileges && userPrivileges.length > 0) {
-            return userPrivileges.includes(privilege);
-        }
-    }
+	const verifyRef = useRef(null);
+	const updatePrivileges = async () => {
+		try {
+			const data = await getVerify(props.userData.user_data.id_user);
+			verifyRef.current = data;
+		} catch (error) {
+			console.error("Error updating privileges:", error);
+		}
+	};
 
 
     useEffect(() => {
-        fetchUserData();
+        async function update () {
+            await updatePrivileges();
+        }
+        update();
     }, []);
 
 
@@ -83,7 +86,7 @@ function MyZoom(props) {
                     <Row className="zoom-crear-row">
                         <Col>
                             <h1 className="zoom-crear-title">Zoom</h1>
-                            {havePrivilege(32) ?
+                            {havePrivilege(verifyRef.current, [32]) ?
                                 <Form.Label className="zoom-crear-title2">Crear Sesiones</Form.Label>
                                 :
                                 <Form.Label className="zoom-crear-title2">No tienes permiso de crear nuevas
@@ -98,7 +101,7 @@ function MyZoom(props) {
                             }} className="style-btn-cancelar">Cancelar</Button>
                         </Col>
                     </Row>
-                    {havePrivilege(32) &&
+                    {havePrivilege(verifyRef.current, [32]) &&
                         <div className="container-controls">
 
                             <Container fluid="md" className="zoomscroll-content">

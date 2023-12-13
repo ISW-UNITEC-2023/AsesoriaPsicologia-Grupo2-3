@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "./zoomPat.css";
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -6,9 +6,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import NavigationB from "../Navbar";
-import {gMeeting} from "../../Utilities/zoom-services";
-import {useNavigate} from "react-router-dom";
-import {getVerify} from "../../Utilities/user-services";
+import { gMeeting } from "../../Utilities/zoom-services";
+import { useNavigate } from "react-router-dom";
+import { getVerify } from "../../Utilities/user-services";
 
 function havePrivilege(userPrivilege, privilege) {
     const isAuthorized = userPrivilege && userPrivilege.privileges && privilege.some((privilege) =>
@@ -20,7 +20,7 @@ function havePrivilege(userPrivilege, privilege) {
 function MyZoomPat(props) {
 
     //Privilegios del usuario logueado
-    
+
     const verifyRef = useRef(null);
     const updatePrivileges = async () => {
         try {
@@ -49,7 +49,7 @@ function MyZoomPat(props) {
     return (
         <div className='zoom-container'>
 
-            <NavigationB key="navB" userData={props.userData}/>
+            <NavigationB key="navB" userData={props.userData} />
             <div className='zoom-div'>
                 <Row className='zoom-row'>
                     <Col>
@@ -61,14 +61,23 @@ function MyZoomPat(props) {
                                 <Form.Label className='titulo2'>No tienes los permisos necesarios para ver las sesiones
                                     programadas.</Form.Label>
                         }
-                       
-                        
+
+
                     </Col>
                     <Col></Col>
                     <Col>
-                        {havePrivilege(verifyRef.current, [32]) &&
-                            <Button className='buttons' variant="outline-primary" href="/ZoomC" onClick={() => {
-                            }} style={{marginLeft: "235px"}}>Crear Sesion</Button>}
+                        {
+                            havePrivilege(verifyRef.current, [32]) &&
+                            <Button
+                                className='buttons'
+                                variant="outline-primary"
+                                href="/ZoomC"
+                                onClick={() => { }}
+                                style={{ marginLeft: "235px" }}
+                            >
+                                Crear Sesion
+                            </Button>
+                        }
                     </Col>
                 </Row>
 
@@ -90,42 +99,42 @@ function MyZoomPat(props) {
                                 </Col>
                             </Row>
 
-                           {!meetings?.status ?
-                           meetings.map(meeting => (
-                                <Row key={meeting.id}>
-                                    <Col className='column'>
-                                    </Col>
-                                    <Form.Label
-                                        className='form'>{new Date(meeting.start_time).toLocaleDateString('es-ES', {
-                                        month: 'long',
-                                        day: 'numeric'
-                                    })}</Form.Label>
-                                    <Col className='column'>
-                                        <Form.Label>{new Date(meeting.start_time).toLocaleTimeString([], {
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                            hour12: true
-                                        })}</Form.Label>
-                                    </Col>
-                                    <Col className='column'>
-                                        <Form.Label>{meeting.topic}</Form.Label>
-                                    </Col>
-                                    <Col className='column'>
-                                        <Form.Label>{meeting.id}</Form.Label>
-                                    </Col>
-                                    <Col className='column2'>
-                                        {havePrivilege(verifyRef.current, [31]) &&
-                                            <Button className='buttons2' variant="outline-primary"
+                            {!meetings?.status ?
+                                meetings.map(meeting => (
+                                    <Row key={meeting.id}>
+                                        <Col className='column'>
+                                        </Col>
+                                        <Form.Label
+                                            className='form'>{new Date(meeting.start_time).toLocaleDateString('es-ES', {
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}</Form.Label>
+                                        <Col className='column'>
+                                            <Form.Label>{new Date(meeting.start_time).toLocaleTimeString([], {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            })}</Form.Label>
+                                        </Col>
+                                        <Col className='column'>
+                                            <Form.Label>{meeting.topic}</Form.Label>
+                                        </Col>
+                                        <Col className='column'>
+                                            <Form.Label>{meeting.id}</Form.Label>
+                                        </Col>
+                                        <Col className='column2'>
+                                            {havePrivilege(verifyRef.current, [31]) &&
+                                                <Button className='buttons2' variant="outline-primary"
                                                     href={meeting.join_url} target="_blank">
-                                                Entrar
-                                            </Button>
-                                        }
-                                    </Col>
-                                </Row>
-                            ))
-                            :
-                            <Form.Label className='titulo2' style={{paddingTop: '30px'}}>{`Error al obtener las sesiones. Código de error: ${meetings.status}`}</Form.Label>
-                        }
+                                                    Entrar
+                                                </Button>
+                                            }
+                                        </Col>
+                                    </Row>
+                                ))
+                                :
+                                <Form.Label className='titulo2' style={{ paddingTop: '30px' }}>{`Error al obtener las sesiones. Código de error: ${meetings.status}`}</Form.Label>
+                            }
                         </Container>
                     </div>
                 }
