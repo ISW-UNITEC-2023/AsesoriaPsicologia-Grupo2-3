@@ -7,10 +7,6 @@ import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
-
-
-const TABLE_HEAD = [" ", "Fecha de Consulta", "Doctor Responsable", "Observaciones", ""];
-
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({page}) {
@@ -24,6 +20,9 @@ export function TableConsultas({page}) {
     const [titulo, setTitulo] = useState("");
     const [nombreDoctor, setNombreDoctor] = useState("");
     const [fecha, setFecha] = useState("");
+    const [hora, setHora] = useState("");
+    const [formato, setFormato] = useState("");
+    const [idAppo, setIdAppo] = useState("");
     const id = localStorage.getItem("id_patient");
     const {
         data: fetchedRoles,
@@ -46,19 +45,13 @@ export function TableConsultas({page}) {
         let month = '' + (d.getMonth() + 1);
         let day = '' + d.getDate();
         const year = d.getFullYear();
-        let hour = '' + d.getHours();
-        let minutes = '' + d.getMinutes();
 
         if (month.length < 2)
             month = '0' + month;
         if (day.length < 2)
             day = '0' + day;
-        if (hour.length < 2)
-            hour = '0' + hour;
-        if (minutes.length < 2)
-            minutes = '0' + minutes;
 
-        return [day, month, year].join('/') + " " + [hour, minutes].join(':');
+        return [year, month, day].join('-');
     }
 
     const handleOpen = () => {
@@ -71,14 +64,17 @@ export function TableConsultas({page}) {
             (
                 {
                     appointment_date,
-                    id_file,
+                    appointment_hour,
                     id_doctor,
+                    appointment_type,
                 },
-                index,
             ) => {
-                setNombreDoctor(getDoctorName(id_doctor));
-                setFecha(appointment_date);
-
+                setIdAppo(id);
+                setNombreDoctor(id_doctor);
+                const fecha = formatDate(appointment_date);
+                setFecha(fecha);
+                setHora(appointment_hour);
+                setFormato(appointment_type);
                 setOpen(true);
                 setTitulo("Modificar Cita");
             }
@@ -98,6 +94,13 @@ export function TableConsultas({page}) {
     const updateIsOpen = (isOpen) => {
         setOpen(isOpen);
     }
+
+    useEffect(() => {
+        fecha && setFecha(fecha);
+        hora && setHora(hora);
+        nombreDoctor && setNombreDoctor(nombreDoctor);
+        idAppo && setIdAppo(idAppo);
+    }, [fecha, hora, nombreDoctor, idAppo]);
 
     useEffect(() => {
         updateIsOpen(open);
@@ -220,6 +223,7 @@ export function TableConsultas({page}) {
                     (
                         {
                             appointment_date,
+                            appointment_hour,
                             id_doctor,
                             id_appointment,
                         },
@@ -236,7 +240,7 @@ export function TableConsultas({page}) {
                                             Doctor: {getDoctorName(id_doctor)}
                                         </Typography>
                                         <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
-                                            Fecha y hora de cita: {formatDate(appointment_date)}
+                                            Fecha y hora de cita: {formatDate(appointment_date)} {appointment_hour}
                                         </Typography>
                                     </div>
                                     <div className="flex flex-col justify-between gap-2 items-center">
@@ -269,7 +273,8 @@ export function TableConsultas({page}) {
                         }
                     }
                 )}
-                {open && <DialogCitas nombreDoctor={nombreDoctor} fecha={fecha} titulo={titulo} open={open}
+                {open && <DialogCitas idAppo={idAppo} nombreDoctor={nombreDoctor} fecha={fecha} hora={hora} formato={formato}
+                                      titulo={titulo} open={open}
                                       updateOpen={updateIsOpen}/>}
                 <div className={`pop-iniciar-consulta ${showModal ? 'show' : ''}`}>
                     <div className="pop-iniciar-consulta-content">
@@ -324,7 +329,7 @@ export function TableConsultas({page}) {
                             </form>
                         </div>
                         <div className="pop-iniciar-consulta-footer">
-                            <buttons className="close-button-sesiones" type="button" class="btn btn-outline-danger"
+                            <buttons className="close-button-sesiones btn btn-outline-danger" type="button"
                                      onClick={handleClose}>Cerrar
                             </buttons>
                             <buttons className="button-terminar" onClick={handleTerminarConsulta}>Terminar

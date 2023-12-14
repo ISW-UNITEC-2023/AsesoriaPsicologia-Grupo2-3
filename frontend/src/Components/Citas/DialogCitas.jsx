@@ -6,11 +6,11 @@ import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 
-export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, updateOpen}) {
+export default function DialogCitas({idAppo, titulo, nombreDoctor, fecha, hora, formato, open, updateOpen}) {
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
-    const [modalidad, setModalidad] = useState("");
+    const [modalidad, setModalidad] = useState(formato);
     const {
         data: fetchedUsers,
         error: usersError,
@@ -21,12 +21,6 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         error: rolesError,
         isLoading: rolesLoading
     } = useSWR('http://localhost:8000/roles/viewAll', user_services.getAllUsersRoles);
-
-    useEffect(() => {
-        setNombreDoctorN(nombreDoctor);
-        setFechaN(fecha);
-        setHoraN(hora);
-    }, []);
 
     if (usersLoading || rolesLoading) {
         return (
@@ -63,22 +57,21 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
 
 
     const handleConfirmC = async () => {
-        // combinar los iso de fecha y hora
-        const fechaHora = fechaN + " " + horaN + ":00.000Z";
-        // Obtener él, id del doctor seleccionado
+        const date = new Date(fechaN);
+        date.setDate(date.getDate() + 1);
         const id_doctor = doctores.filter(doctor => doctor.id_user === nombreDoctorN)[0].id_user;
 
         try {
             axios.post(`http://localhost:8000/appointment/create`, {
                 id_user: localStorage.getItem("user_id"),
-                appointment_date: fechaHora,
+                appointment_date: date,
+                appointment_hour: horaN,
                 id_clinic: localStorage.getItem("id_clinic"),
                 id_doctor: id_doctor,
                 id_file: idPaciente,
                 user_creator: localStorage.getItem("user_id"),
                 appointment_type: modalidad
             }).then(() => {
-                console.log(fechaHora);
                 handleOpen();
                 toast("Cita Agendada Correctamente", {
                     type: "success",
@@ -93,11 +86,34 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
     };
 
     const handleConfirmM = () => {
-        handleOpen();
-        toast("Cita Modificada Correctamente", {
-            type: "success",
-            bodyStyle: {width: "1000%"}
-        });
+        const date = new Date(fechaN);
+        date.setDate(date.getDate() + 1);
+        const id_doctor = doctores.filter(doctor => doctor.id_user === nombreDoctorN)[0].id_user;
+
+        try {
+            axios.put(`http://localhost:8000/appointment/updateAppointment`, {
+                id_appointment: idAppo,
+                id_user: localStorage.getItem("user_id"),
+                appointment_date: date,
+                appointment_hour: horaN,
+                id_clinic: localStorage.getItem("id_clinic"),
+                id_doctor: id_doctor,
+                id_file: idPaciente,
+                user_editor: localStorage.getItem("user_id"),
+                appointment_type: modalidad
+            }).then(() => {
+                console.log(date + " " + horaN);
+                handleOpen();
+                toast("Cita Modificada Correctamente", {
+                    type: "success",
+                    bodyStyle: {width: "1000%"}
+                });
+            }).catch((error) => {
+                toast("Ha ocurrido un error al modificar la cita: " + error.message, {type: "error"})
+            })
+        } catch (error) {
+            toast("Ha ocurrido un error al modificar la cita: " + error.message, {type: "error"})
+        }
     }
 
     return (

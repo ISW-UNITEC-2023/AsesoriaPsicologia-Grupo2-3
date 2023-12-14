@@ -273,10 +273,12 @@ function PacientesForm(props) {
                             <div className="pop-iniciar-consulta-body">
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <label htmlFor="doctorName">Nombre del Médico:</label>
-                                    <Select label="Nombre del médico" className="select-doctor" placeholder="Seleccione un médico">
+                                    <Select label="Nombre del médico" className="select-doctor"
+                                            placeholder="Seleccione un médico">
                                         {doctores.map(doctor => (
                                             <Option key={doctor.id_user} value={doctor.id_user} onClick={() => {
-                                                localStorage.setItem('id_doctor', doctor.id_user)}} >
+                                                localStorage.setItem('id_doctor', doctor.id_user)
+                                            }}>
                                                 {doctor.name_user}
                                             </Option>
                                         ))}
