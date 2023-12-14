@@ -1,12 +1,13 @@
 import {Button, Card, CardBody, CardHeader, Option, Select, Spinner, Typography,} from "@material-tailwind/react";
 import BreadCrumbsC from "./BreadCrumbsC";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import DialogCitas from "./DialogCitas";
 import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
+
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({page}) {
@@ -273,9 +274,10 @@ export function TableConsultas({page}) {
                         }
                     }
                 )}
-                {open && <DialogCitas idAppo={idAppo} nombreDoctor={nombreDoctor} fecha={fecha} hora={hora} formato={formato}
-                                      titulo={titulo} open={open}
-                                      updateOpen={updateIsOpen}/>}
+                {open &&
+                    <DialogCitas idAppo={idAppo} nombreDoctor={nombreDoctor} fecha={fecha} hora={hora} formato={formato}
+                                 titulo={titulo} open={open}
+                                 updateOpen={updateIsOpen}/>}
                 <div className={`pop-iniciar-consulta ${showModal ? 'show' : ''}`}>
                     <div className="pop-iniciar-consulta-content">
                         <div className="pop-iniciar-consulta-header">

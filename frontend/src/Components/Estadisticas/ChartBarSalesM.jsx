@@ -1,41 +1,81 @@
-import { useRef, useEffect } from "react";
+import {useRef, useEffect} from "react";
 import * as echarts from "echarts";
+import axios from "axios";
+import useSWR from "swr";
+import {Spinner} from "@material-tailwind/react";
 
-const ChartBarSalesM = () => {
+const fetcher = (url) => axios.get(url).then((res) => res.data);
+
+export const ChartBarSalesM = () => {
+    const {
+        data: salesMonth,
+        error: errorMonth,
+        isLoading: loadingMonth
+    } = useSWR('http://localhost:8000/stats/getMonthSales', fetcher, {refreshInterval: 1000});
+
     const chartRef = useRef(null);
 
     useEffect(() => {
-        if (chartRef.current) {
-            const chart = echarts.init(chartRef.current);
+        if (!salesMonth) return;
 
-            const option = {
-                title: {
-                    text: "Ventas Mensuales",
-                    top: "5%",
-                    left: "center",
-                },
-                tooltip: {
-                    trigger: "axis",
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [
-                    {
-                        data: [120, 200, 150, 80, 70, 110, 130, /* ... */],
-                        type: 'bar'
-                    }
-                ]
-            };
-            chart.setOption(option);
-        }
-    }, []);
+        // Limpiar el chart
+        echarts.dispose(chartRef.current);
 
-    return <div ref={chartRef} style={{ width: "100%", height: "400px" }} />;
+        const chart = echarts.init(chartRef.current);
+
+        const orderedMonths = Object.keys(salesMonth.data).sort((a, b) => {
+            // Asumo que estás trabajando con nombres de meses en español
+            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            return months.indexOf(a) - months.indexOf(b);
+        });
+
+        const option = {
+            title: {
+                text: "Ingresos Mensuales",
+                top: "5%",
+                left: "center",
+            },
+            tooltip: {
+                trigger: "axis",
+            },
+            xAxis: {
+                type: "category",
+                data: orderedMonths,
+            },
+            yAxis: {
+                type: "value",
+            },
+            series: [
+                {
+                    name: "Ventas",
+                    type: "bar",
+                    barWidth: "50%",
+                    data: orderedMonths.map(month => salesMonth.data[month]),
+                },
+            ],
+        };
+
+        chart.setOption(option);
+    }, [salesMonth]);
+
+    if (loadingMonth) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spinner/>
+            </div>
+        )
+    }
+
+    if (errorMonth) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p>Ha ocurrido un error al cargar las ventas mensuales</p>
+            </div>
+        )
+    }
+
+    return <div ref={chartRef} style={{width: "100%", height: "400px"}}/>;
 };
 
 export default ChartBarSalesM;
