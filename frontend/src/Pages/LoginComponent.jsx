@@ -74,7 +74,7 @@ function Login(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await Services.postLogin(form.email, form.password);
+    const response = await Services.postLogin(form.email, form.password, form.registro);
     if (response.errorMessage !== undefined) {
       setErrors({
         general: response.errorMessage[0],

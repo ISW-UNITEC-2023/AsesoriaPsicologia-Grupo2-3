@@ -77,7 +77,7 @@ async function registerUser(req, res) {
 
 async function loginUser(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password, registro } = req.body;
 
     const errorMessage = [];
 
@@ -89,7 +89,7 @@ async function loginUser(req, res) {
     const email_exists = await userServices.findExistingEmail(email);
 
     if (email_exists.length === 0) {
-      errorMessage.push("No existe un correo con este email");
+      errorMessage.push("No existe un usuario con este email.");
       res.send({
         errorMessage,
       });
@@ -130,6 +130,7 @@ async function loginUser(req, res) {
       );
 
       if (userEncryptedDetails.encryptedPassword === email_now.password_user) {
+        if(email_exists[0].id_clinic === parseInt(registro)){
         const accessToken = jwt.sign(
           {
             id: email_now.id_user,
@@ -166,6 +167,9 @@ async function loginUser(req, res) {
           refreshToken,
           id: email_now.id_user,
         });
+      } else {
+        res.send({ errorMessage: ["El usuario no está asignado a esa clínica."] });
+      }
       } else {
         res.send({ errorMessage: ["Contraseña incorrecta"] });
       }
