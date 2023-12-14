@@ -69,6 +69,7 @@ function Login(props) {
   const [form, setform] = useState({
     email: "",
     password: "",
+    registro: "",
   });
 
   const handleSubmit = async (event) => {
@@ -113,10 +114,21 @@ function Login(props) {
               <h2 className="title">Ingresa tus datos</h2>
               <input
                 type="text"
+                name="registro"
+                className="input"
+                placeholder="Registro"
+                value={form.registro}
+                onChange={(e) => {
+                  setform({ ...form, registro: e.target.value });
+                }}
+                required
+              />
+              <input
+                type="text"
                 name="email"
                 className="input"
                 value={form.email}
-                placeholder="Correo Electronico"
+                placeholder="Correo Electrónico"
                 onChange={(e) => {
                   setform({ ...form, email: e.target.value });
                 }}
