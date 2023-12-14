@@ -1,4 +1,5 @@
 const fileServices = require("../Service/files_services");
+const ClinicServices = require("../Service/clinics-services");
 const { isEmail, isPassword } = require("../Utils/validator");
 
 async function createFile(req, res) {
@@ -26,7 +27,6 @@ async function createFile(req, res) {
   const lengSname = second_surname.toString();
   const lengLname = last_name.toString();
 
-  const lengemail = email.toString();
   const lengphone_number = parseInt(phone_number, 10);
 
   const lengAdress = address.toString();
@@ -34,6 +34,14 @@ async function createFile(req, res) {
   const lengMedical = medical_history.toString();
   const lengSubtance = substance_usage.toString();
   const lengactive = active.toString();
+
+  //verificaion de si existe la clinica
+  const Clinic = await ClinicServices.existClinic(id_clinic);
+
+  if (!Clinic) {
+    errorMessages.push("No existe un clinica con ese id");
+  }
+
 
   if (isNaN(lengphone_number) || !Number.isInteger(lengphone_number)) {
     errorMessages.push("El campo de numeor de telefono esta mal debe ser un numero de celular");

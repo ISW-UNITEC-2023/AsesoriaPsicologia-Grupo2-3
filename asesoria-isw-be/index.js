@@ -63,6 +63,7 @@ const mailRouter = require("./Routes/mail-routes");
 const appointmentRouter = require("./Routes/appointment-routes");
 const actionsRoutes = require("./Routes/actions-routes");
 const documentsRoutes = require("./Routes/documents-routes");
+const reportsRoutes = require("./Routes/reports-routes");
 
 //Rutas de Zoom
 const zoomUsersRouter = require("./Routes/zoom/users");
@@ -87,6 +88,7 @@ app.use("/files", fileRouter);
 app.use("/mail", mailRouter);
 app.use("/appointment", appointmentRouter);
 app.use("/documents", documentsRoutes);
+app.use("/reports", reportsRoutes);
 
 const PORT = 8000;
 app.listen(PORT, () => {
