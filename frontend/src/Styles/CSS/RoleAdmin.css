@@ -15,7 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px 0px 60px;
+  padding: 3% 6.5% 0px 6.5%;
   font-size: 2rem;
   font-family: sans-serif;
 }
@@ -29,7 +29,7 @@
 }
 
 .roles-admin-img{
-  width: 40%;
+  width: 80%;
   align-self: flex-end;
   margin-left: auto;
   margin-top: auto;
@@ -50,7 +50,7 @@
 }
 
 .form-body-ra {
-  padding: 0 60px 20px 60px;
+  padding: 2% 6.5% 20px 6.5%;
   gap: 20px;
   font-family: sans-serif;
   display: flex;
@@ -103,6 +103,7 @@
   text-wrap: wrap;
   height: 70px;
   margin-bottom: 15px;
+  line-height: normal;
 }
 
 .select-privileges-box {
@@ -161,7 +162,7 @@
   border-bottom: 1px solid #ababab;
   width: 100%;
   font-size: 1.2rem;
-  color: #5173B8;
+  color: #113946;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -174,12 +175,18 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+  font-size: 1rem;
+}
+
+.boton-editar-role{
+  padding-right: 10px;
+  border-right: 1px solid #b1b1b1;
 }
 
 .container-crear-rol{
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
   margin-bottom: 20px;
@@ -194,34 +201,39 @@
 }
 
 .nombre-crear-rol{
-  border:1px solid #5173b879;
+  border:1px solid #113946;
+  background-color: #c8d5d982;
+  color: #113946;
   padding: 8px;
   margin-bottom: 10px;
   width: 100%;
+  border-radius: 4px;
 }
 
 .descripcion-crear-rol{
-  border:1px solid #5173b879;
+  border:1px solid #113946;
+  background-color: #c8d5d982;
+  color: #113946;
   padding: 8px;
   resize: none;
   width: 100%;
+  border-radius: 4px;
 }
 
 .boton-crear-rol{
   width: 25%;
   margin-left: 5%;
   padding: 10px;
-  background-color: #5173B8;
+  background-color: #113946;
   border: none;
   color: #fff;
-  border-radius: 5px;
 }
 
 .confirmar-modal-ra{
   width: 250px;
   margin-left: 5%;
   padding: 10px;
-  background-color: #5173B8;
+  background-color: #113946;
   border: none;
   color: #fff;
   border-radius: 5px;
@@ -231,7 +243,7 @@
   width: 250px;
   margin-left: 5%;
   padding: 10px;
-  background-color: #5173B8;
+  background-color: #113946;
   border: none;
   color: #fff;
   border-radius: 5px;
@@ -274,7 +286,7 @@
 .botones-editar-privilegio{
   width: 40%;
   padding: 10px;
-  background-color: #5173B8;
+  background-color: #113946;
   border: none;
   color: #fff;
   border-radius: 5px;

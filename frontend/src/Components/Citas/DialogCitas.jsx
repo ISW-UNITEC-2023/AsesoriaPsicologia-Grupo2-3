@@ -10,6 +10,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
+    const [modalidad, setModalidad] = useState("");
     const {
         data: fetchedUsers,
         error: usersError,
@@ -50,7 +51,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
         return {...user, roles: userRoles};
     });
 
-     const doctores = Array.isArray(usersWithRoles)
+    const doctores = Array.isArray(usersWithRoles)
         ? usersWithRoles.filter(user => user.roles.some(role => role[0] === 3))
         : [];
 
@@ -71,10 +72,11 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
             axios.post(`http://localhost:8000/appointment/create`, {
                 id_user: localStorage.getItem("user_id"),
                 appointment_date: fechaHora,
-                id_clinic: 8,
+                id_clinic: localStorage.getItem("id_clinic"),
                 id_doctor: id_doctor,
                 id_file: idPaciente,
-                user_creator: localStorage.getItem("user_id")
+                user_creator: localStorage.getItem("user_id"),
+                appointment_type: modalidad
             }).then(() => {
                 console.log(fechaHora);
                 handleOpen();
@@ -141,7 +143,7 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                                                                     color="blue-gray">
                                                             Nombre Doctor:
                                                         </Typography>
-                                                        <Select value={nombreDoctorN}
+                                                        <Select label="Nombre del doctor" value={nombreDoctorN}
                                                                 onChange={(e) => setNombreDoctorN(e)}>
                                                             {doctores.map((doctor) => (
                                                                 <Select.Option value={doctor.id_user}>
@@ -179,6 +181,23 @@ export default function DialogCitas({titulo, nombreDoctor, fecha, hora, open, up
                                                             value={horaN}
                                                             onChange={(e) => setHoraN(e.target.value)}
                                                         />
+                                                    </div>
+                                                    <div className="flex flex-row gap-3 items-center">
+                                                        <Typography
+                                                            className="whitespace-nowrap text-sm text-black mt-2"
+                                                            variant="h6"
+                                                            color="blue-gray">
+                                                            Modalidad de la Cita:
+                                                        </Typography>
+                                                        <Select label="Formato" value={modalidad}
+                                                                onChange={(e) => setModalidad(e)}>
+                                                            <Select.Option value={"PRESENCIAL"}>
+                                                                Presencial
+                                                            </Select.Option>
+                                                            <Select.Option value={"VIRTUAL"}>
+                                                                Virtual
+                                                            </Select.Option>
+                                                        </Select>
                                                     </div>
                                                 </div>
                                             </div>

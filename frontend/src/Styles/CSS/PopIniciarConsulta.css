@@ -15,6 +15,7 @@
 }
 
 .pop-iniciar-consulta-content {
+  overflow: auto;
   background-color: #fefefe;
   margin-left: 33%;
   margin-top: 1.5rem;

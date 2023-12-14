@@ -23,7 +23,10 @@ import Calendar from "./Pages/Calendar";
 import ProtectedRoute from "./Utilities/ProtectedRoute";
 import Chequeos from "./Pages/Chequeo";
 import Estadisticas from "./Pages/Estadisticas";
+import Reportes from "./Pages/Reportes";
 
+import Documentos from "./Pages/Documents";
+import LoadingSpinner from "./Pages/LoadingStyle";
 
 function App() {
 
@@ -53,7 +56,6 @@ function App() {
     useEffect(() => {
         setInitialRender(false);
         fetchData();
-
     }, []);
     if (initialRender || !userDataLoaded || userData === null) {
         return null;
@@ -100,13 +102,16 @@ function App() {
                         />
                     }
                 />
-
+                <Route path="/error" element={<LoadingSpinner/>}/>
 
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/Dashboard" element={<DashBoard userData={userData}/>}/>
                 </Route>
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/Estadisticas" element={<Estadisticas userData={userData}/>}/>
+                </Route>
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Reportes" element={<Reportes userData={userData}/>}/>
                 </Route>
                 <Route element={<ProtectedRoute cookies={userData}/>}>
                     <Route path="/citas" element={<Citas userData={userData}/>}/>
@@ -130,7 +135,9 @@ function App() {
                     <Route path="/Chequeo" element={<Chequeos userData={userData}/>}/>
                 </Route>
 
-
+                <Route element={<ProtectedRoute cookies={userData}/>}>
+                    <Route path="/Documentos" element={<Documentos />} />
+                </Route>
                 <Route path="/SobreNosotros" element={<AboutUs {...aboutData} />}/>
                 <Route path="/Registro" element={<Registro {...aboutData} />}/>
 
