@@ -3,9 +3,25 @@ const appointmentServices = require("../Service/appointment-services");
 
 async function createAppointment(req, res) {
     try {
-        const {appointment_date, id_file, hour, id_doctor, id_clinic, user_creator, appointment_type} = req.body;
+        const {
+            appointment_date,
+            id_file,
+            appointment_hour,
+            id_doctor,
+            id_clinic,
+            user_creator,
+            appointment_type
+        } = req.body;
         const fecha = new Date(appointment_date);
-        await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator, appointment_type});
+        await appointmentServices.createAppo({
+            fecha,
+            appointment_hour,
+            id_file,
+            id_doctor,
+            id_clinic,
+            user_creator,
+            appointment_type
+        });
         res.send({message: "Se ha creado una nueva cita"})
     } catch (error) {
         res.send({message: "No se pudo crear la cita", err: error.message});
@@ -14,7 +30,16 @@ async function createAppointment(req, res) {
 
 async function addConsultation(req, res) {
     try {
-        const {id_appointment, id_file, id_doctor, id_clinic, user_creator, observations, payment_amount, medic_orders} = req.body;
+        const {
+            id_appointment,
+            id_file,
+            id_doctor,
+            id_clinic,
+            user_creator,
+            observations,
+            payment_amount,
+            medic_orders
+        } = req.body;
         await appointmentServices.addConsultation({
             id_appointment,
             id_file,
@@ -42,15 +67,17 @@ async function updateOrder(req, res) {
     }
 }
 
-async function updateHour(req, res){{
-    try {
-        const {hour, editor, id, id_clinic, id_doctor, id_file} = req.body;
-        await appointmentServices.updateHour({hour, editor, id, id_clinic, id_doctor, id_file});
-        res.send({message: "Se ha actualizado la hora de la cita"})
-    }catch (error) {
-        res.send({message: "Error de actualizacion", err: error.message});
+async function updateHour(req, res) {
+    {
+        try {
+            const {hour, editor, id, id_clinic, id_doctor, id_file} = req.body;
+            await appointmentServices.updateHour({hour, editor, id, id_clinic, id_doctor, id_file});
+            res.send({message: "Se ha actualizado la hora de la cita"})
+        } catch (error) {
+            res.send({message: "Error de actualizacion", err: error.message});
+        }
     }
-}}
+}
 
 async function updatePaymentMedic(req, res) {
     try {
@@ -77,10 +104,10 @@ async function updateObservations(req, res) {
 
 async function updateAppointment(req, res) {
     try {
-        const {appointment_date, editor, id, id_clinic, id_doctor, id_file} = req.body;
+        const {id_appointment, appointment_date, appointment_hour, user_editor, id_doctor, id_file} = req.body;
         const fecha = new Date(appointment_date);
-        await appointmentServices.updateAppo({fecha, editor, id, id_clinic, id_doctor, id_file});
-        res.send({message: "Se ha actualizado la fecha de cita"})
+        await appointmentServices.updateAppo({id_appointment, fecha, appointment_hour, user_editor, id_doctor, id_file});
+        res.send({message: "Se ha actualizado la cita"})
     } catch (error) {
         res.send({message: "Error de actualizacion", err: error.message});
     }
@@ -95,7 +122,7 @@ async function updateStateMedic(req, res) {
         res.send({message: "Error de actualizacion", err: error.message});
     }
 }
-  
+
 // async function updatePaymentTypeMedic(req, res) {
 //     try {
 //       const { payment_type, editor, id, id_clinic, id_doctor, id_file } = req.body;
@@ -112,34 +139,33 @@ async function updateStateMedic(req, res) {
 //       res.send({ message: "Error de actualizacion", err: error.message });
 //     }
 //   }
-  async function updatePaymentTypeMedic(req, res) {
+async function updatePaymentTypeMedic(req, res) {
     try {
-      const { payment_type, editor, id, id_clinic, id_doctor, id_file } = req.body;
-      await appointmentServices.updatePaymentType({
-        payment_type,
-        editor,
-        id,
-        id_clinic,
-        id_doctor,
-        id_file,
-      });
-      res.send({ message: "Se ha actualizado el tipo de pago y el estado de la cita" });
+        const {payment_type, editor, id, id_clinic, id_doctor, id_file} = req.body;
+        await appointmentServices.updatePaymentType({
+            payment_type,
+            editor,
+            id,
+            id_clinic,
+            id_doctor,
+            id_file,
+        });
+        res.send({message: "Se ha actualizado el tipo de pago y el estado de la cita"});
     } catch (error) {
-      res.send({ message: "Error de actualización", err: error.message });
+        res.send({message: "Error de actualización", err: error.message});
     }
-  }
-  
- 
+}
 
-  async function updateZoomLink(req, res) {
+
+async function updateZoomLink(req, res) {
     try {
-      const { zoom_link, editor, id, id_clinic, id_doctor, id_file } = req.body;
-      await appointmentServices.updateZoomLink({ zoom_link, editor, id, id_clinic, id_doctor, id_file });
-      res.send({ message: "Se ha actualizado el enlace de Zoom" });
+        const {zoom_link, editor, id, id_clinic, id_doctor, id_file} = req.body;
+        await appointmentServices.updateZoomLink({zoom_link, editor, id, id_clinic, id_doctor, id_file});
+        res.send({message: "Se ha actualizado el enlace de Zoom"});
     } catch (error) {
-      res.send({ message: "Error de actualización", err: error.message });
+        res.send({message: "Error de actualización", err: error.message});
     }
-  }
+}
 
 async function deleteAppointment(req, res) {
     try {
@@ -232,28 +258,29 @@ async function getClinic(req, res) {
     } catch (error) {
         res.send({message: "Error", error: error.message});
     }
-  }
+}
+
 /*SELECT * FROM attention_sys.appointments
 WHERE state_appointment = 'Terminado' AND id_clinic = '8';
 
 */
 
-  async function getChequeo(req, res){
-    const { idClinic } = req.body;
+async function getChequeo(req, res) {
+    const {idClinic} = req.body;
     try {
-       
-      const App = await appointmentServices.getChequeo(idClinic);
-      res.send({
-        message: "Se obtuvieron los datos para el chequeo ",
-        AppInfo: App,
-      });
+
+        const App = await appointmentServices.getChequeo(idClinic);
+        res.send({
+            message: "Se obtuvieron los datos para el chequeo ",
+            AppInfo: App,
+        });
     } catch (e) {
-      res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-        error: "No se pudo obtener los datos del chequeo",
-      });
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+            error: "No se pudo obtener los datos del chequeo",
+        });
     }
-  }
-    
+}
+
 
 module.exports = {
     getAppointments,
