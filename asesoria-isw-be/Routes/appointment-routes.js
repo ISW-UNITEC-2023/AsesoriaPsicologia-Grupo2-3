@@ -15,7 +15,6 @@ router.put("/updateAppointment", appointmentControllers.updateAppointment);
 router.put("/updateState", appointmentControllers.updateStateMedic);
 router.put("/updateHour", appointmentControllers.updateHour);
 router.put("/updatePaymentType", appointmentControllers.updatePaymentTypeMedic);
-
 router.put("/updateZoomLink", appointmentControllers.updateZoomLink);
 
 //Get

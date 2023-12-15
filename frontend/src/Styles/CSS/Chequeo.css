@@ -12,7 +12,7 @@
     margin-top: 5px;
     margin-bottom: 10px;
     padding: 10px;
-    margin-right: 100px;
+    margin-right: 90px;
 
 }
 
@@ -50,13 +50,14 @@
     background-color: #f5f5f5;
     cursor: pointer;
 }
-
-.button-estadisticas-reportes {
-    margin-top: 50px;
-    width: 250%;
-    height: 50px;
+/*reportes*/
+.button-reporte {
+    margin-top: 40px;
+    width: 150%;
+    height: 40px;
     border-radius: 5px;
-    cursor: pointer;text-align: center;
+    cursor: pointer;
+    text-align: center;
     color: #fff;
     background-color:#113946;
     border: 1px solid #113946;
@@ -64,13 +65,34 @@
     justify-content: center; 
     align-items: center; 
 }
-.button-estadisticas-reportes:focus {
+.button-reporte:focus {
     box-shadow: 0 0 0 3px #113946;
 }    
-.button-estadisticas-reportes:active {
+.button-reporte:active {
         transform: translateY(2px);
 }
 
+/*estadistica*/
+.button-estadistica {
+    margin: 40px;
+    width: 120%;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    background-color:#113946;
+    border: 1px solid #113946;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+.button-estadistica:focus {
+    box-shadow: 0 0 0 3px #113946;
+}    
+.button-estadistica:active {
+        transform: translateY(2px);
+}
 
 .button-metodo-pago {
     margin: auto;
