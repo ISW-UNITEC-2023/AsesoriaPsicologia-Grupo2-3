@@ -108,3 +108,10 @@
 .button-close-metodo:active {
     transform: translateY(2px);
   }
+
+  .error-message
+  {
+    color: red;
+    text-align: center;
+    margin-top: 5px;
+  }
