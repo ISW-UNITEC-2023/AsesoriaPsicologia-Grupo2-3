@@ -14,6 +14,7 @@ const knex = require("knex")({
 async function createAppo(new_appo) {
   await knex("appointments").insert({
     appointment_date: new_appo.fecha,
+    appointment_hour: new_appo.appointment_hour,
     id_file: new_appo.id_file,
     id_doctor: new_appo.id_doctor,
     id_clinic: new_appo.id_clinic,
@@ -61,6 +62,21 @@ async function updateMedicOrder(appo) {
     });
 }
 
+async function updateHour(appo) {
+  await knex("appointments")
+    .update({
+      appointment_hour: appo.hour,
+      user_editor: appo.editor,
+      last_modification: new Date(),
+    })
+    .where({
+      id_appointment: appo.id,
+      id_clinic: appo.id_clinic,
+      id_doctor: appo.id_doctor,
+      id_file: appo.id_file,
+    });
+}
+
 async function updatePayment(appo) {
   await knex("appointments")
     .update({
@@ -93,20 +109,25 @@ async function updateObservation(appo) {
 }
 
 async function updateAppo(appo) {
-  await knex("appointments")
-    .update({
-      appointment_date: appo.fecha ? appo.fecha : appo.appointment_date,
-      user_editor: appo.editor,
-      last_modification: new Date(),
-    })
-    .where({
-      id_appointment: appo.id,
-      id_clinic: appo.id_clinic,
-      id_doctor: appo.id_doctor,
-      id_file: appo.id_file,
-      appointment_type: appo.appointment_type,
-      appointment_date: appo.appointment_date,
-    });
+  if (!appo.id_appointment) {
+    console.error("Error: idAppointment is undefined or null");
+    return;
+  }
+
+  try {
+    await knex("appointments")
+      .where({ id_appointment: appo.id_appointment })
+      .update({
+        id_doctor: appo.id_doctor,
+        appointment_date: appo.fecha,
+        appointment_hour: appo.appointment_hour,
+        user_editor: appo.user_editor,
+        last_modification: new Date(),
+      });
+  } catch (error) {
+    console.error("Error in updateAppo:", error);
+    throw new Error("An error occurred while updating the appointment");
+  }
 }
 
 async function updateState(appo) {
@@ -123,6 +144,7 @@ async function updateState(appo) {
       id_file: appo.id_file,
     });
 }
+
 // async function updatePaymentType(appo) {
 //     await knex("appointments")
 //       .update({
@@ -187,7 +209,7 @@ async function getClinic(id) {
 }
 
 /** SELECT * FROM attention_sys.appointments
-WHERE state_appointment = 'Terminado' AND id_clinic = '8'; */
+ WHERE state_appointment = 'Terminado' AND id_clinic = '8'; */
 // async function getChequeo(idClinic) {
 //     let data = await knex
 //       .select("*")
@@ -249,6 +271,7 @@ module.exports = {
   addConsultation,
   deleteAppo,
   updateMedicOrder,
+  updateHour,
   updatePayment,
   updateObservation,
   updateAppo,

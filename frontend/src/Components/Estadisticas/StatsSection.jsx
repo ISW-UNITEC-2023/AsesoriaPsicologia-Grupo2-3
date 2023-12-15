@@ -1,25 +1,28 @@
 import axios from "axios";
 import useSWR from "swr";
 import {Spinner} from "@material-tailwind/react";
+import {formatMoney} from "../../Helpers";
 
-//const fetcher = (url) => axios.get(url).then((res) => res.data);
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const StatsSection = () => {
-    /*const {
+    const {
         data: salesWeek,
         error: errorWeek,
         isLoading: loadingWeek
-    } = useSWR('/api/v1/sales/mountWeeklySales', fetcher, {refreshInterval: 1000});
+    } = useSWR('http://localhost:8000/stats/getStatsWeek', fetcher, {refreshInterval: 1000});
+
     const {
         data: salesDay,
         error: errorDay,
         isLoading: loadingDay
-    } = useSWR('/api/v1/sales/mountDailySales', fetcher, {refreshInterval: 1000});
+    } = useSWR('http://localhost:8000/stats/getStatsDay', fetcher, {refreshInterval: 1000});
+
     const {
         data: salesMonth,
         error: errorMonth,
         isLoading: loadingMonth
-    } = useSWR('/api/v1/sales/mountMonthlySales', fetcher, {refreshInterval: 1000});
+    } = useSWR('http://localhost:8000/stats/getStatsMonth', fetcher, {refreshInterval: 1000});
 
     if (loadingWeek || loadingDay || loadingMonth) {
         return (
@@ -35,23 +38,23 @@ const StatsSection = () => {
                 <p className="text-red-500">Error al cargar las estadísticas</p>
             </div>
         );
-    }*/
+    }
 
 
     return (
         <div className="container my-6 mx-auto md:px-6">
             <section className="mb-10 text-center">
-                <p className="mb-10 text-2xl font-bold" style={{ color: "#26586c" }}>
-                    Estadísticas de Ventas
+                <p className="mb-10 text-2xl font-bold" style={{color: "#26586c"}}>
+                    Estadísticas de Ingresos
                 </p>
                 <div className="grid lg:grid-cols-3 lg:gap-x-12">
                     <div className="mb-16 lg:mb-0">
                         <div
                             className="block h-auto rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                            <div className="flex justify-center" >
+                            <div className="flex justify-center">
                                 <div
                                     className="-mt-8 inline-block rounded-full bg-primary-100 p-4 text-primary shadow-md"
-                                    >
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -59,12 +62,11 @@ const StatsSection = () => {
                                     </svg>
                                 </div>
                             </div>
-                            <div className="p-6" >
-                                <h3 className="mb-4 text-2xl font-bold" style={{ color: "#26586c" }}>
-                                    {//salesWeek ? formatMoney(salesWeek.data) : formatMoney(0)
-                                        "L 15000.00"}
+                            <div className="p-6">
+                                <h3 className="mb-4 text-2xl font-bold" style={{color: "#26586c"}}>
+                                    {salesWeek ? formatMoney(salesWeek.data) : formatMoney(0)}
                                 </h3>
-                                <h5 className="mb-4 text-lg font-medium">Ventas Semana</h5>
+                                <h5 className="mb-4 text-lg font-medium">Ingreso de la Semana</h5>
                             </div>
                         </div>
                     </div>
@@ -72,10 +74,10 @@ const StatsSection = () => {
                     <div className="mb-16 lg:mb-0">
                         <div
                             className="block h-auto rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                            <div className="flex justify-center" >
+                            <div className="flex justify-center">
                                 <div
                                     className="-mt-8 inline-block rounded-full bg-primary-100 p-4 text-primary shadow-md"
-                                    >
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -83,12 +85,11 @@ const StatsSection = () => {
                                     </svg>
                                 </div>
                             </div>
-                            <div className="p-6" >
-                                <h3 className="mb-4 text-2xl font-bold" style={{ color: "#26586c" }}>
-                                    {//salesDay ? formatMoney(salesDay.data) : formatMoney(0)
-                                        "L 7500.00"}
+                            <div className="p-6">
+                                <h3 className="mb-4 text-2xl font-bold" style={{color: "#26586c"}}>
+                                    {salesDay ? formatMoney(salesDay.data) : formatMoney(0)}
                                 </h3>
-                                <h5 className="mb-4 text-lg font-medium">Ventas Día</h5>
+                                <h5 className="mb-4 text-lg font-medium">Ingreso del Día</h5>
                             </div>
                         </div>
                     </div>
@@ -96,10 +97,10 @@ const StatsSection = () => {
                     <div>
                         <div
                             className="block h-auto rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                            <div className="flex justify-center" >
+                            <div className="flex justify-center">
                                 <div
                                     className="-mt-8 inline-block rounded-full bg-primary-100 p-4 text-primary shadow-md"
-                                    >
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -107,12 +108,11 @@ const StatsSection = () => {
                                     </svg>
                                 </div>
                             </div>
-                            <div className="p-6" >
-                                <h3 className="mb-4 text-2xl font-bold" style={{ color: "#26586c" }}>
-                                    {//salesMonth ? formatMoney(salesMonth.data) : formatMoney(0)
-                                        "L 35000.00"}
+                            <div className="p-6">
+                                <h3 className="mb-4 text-2xl font-bold" style={{color: "#26586c"}}>
+                                    {salesMonth ? formatMoney(salesMonth.data) : formatMoney(0)}
                                 </h3>
-                                <h5 className="mb-4 text-lg font-medium">Ventas Mes</h5>
+                                <h5 className="mb-4 text-lg font-medium">Ingreso del Mes</h5>
                             </div>
                         </div>
                     </div>

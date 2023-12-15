@@ -23,11 +23,8 @@ function PacientesForm(props) {
     const [showModal, setShowModal] = useState(false);
     const [montoConsulta, setMontoConsulta] = useState('');
     const [montoError, setMontoError] = useState(false);
-    const [id, setId] = useState('');
-    const [nombre, setNombre] = useState('');
     const [motivoConsulta, setMotivoConsulta] = useState('');
     const [observaciones, setObservaciones] = useState('');
-    const [monto, setMonto] = useState('');
     const [ordenesMedicas, setOrdenesMedicas] = useState('');
     const {
         data: fetchedUsers,
@@ -276,10 +273,12 @@ function PacientesForm(props) {
                             <div className="pop-iniciar-consulta-body">
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <label htmlFor="doctorName">Nombre del Médico:</label>
-                                    <Select label="Nombre del médico" className="select-doctor" placeholder="Seleccione un médico">
+                                    <Select label="Nombre del médico" className="select-doctor"
+                                            placeholder="Seleccione un médico">
                                         {doctores.map(doctor => (
                                             <Option key={doctor.id_user} value={doctor.id_user} onClick={() => {
-                                                localStorage.setItem('id_doctor', doctor.id_user)}} >
+                                                localStorage.setItem('id_doctor', doctor.id_user)
+                                            }}>
                                                 {doctor.name_user}
                                             </Option>
                                         ))}

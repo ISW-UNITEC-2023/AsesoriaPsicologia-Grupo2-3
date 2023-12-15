@@ -71,6 +71,25 @@ async function updateOrder(req, res) {
   }
 }
 
+async function updateHour(req, res) {
+  {
+    try {
+      const { hour, editor, id, id_clinic, id_doctor, id_file } = req.body;
+      await appointmentServices.updateHour({
+        hour,
+        editor,
+        id,
+        id_clinic,
+        id_doctor,
+        id_file,
+      });
+      res.send({ message: "Se ha actualizado la hora de la cita" });
+    } catch (error) {
+      res.send({ message: "Error de actualizacion", err: error.message });
+    }
+  }
+}
+
 async function updatePaymentMedic(req, res) {
   try {
     const { amount, type, editor, id, id_clinic, id_doctor, id_file } =
@@ -120,18 +139,24 @@ async function updateObservations(req, res) {
 
 async function updateAppointment(req, res) {
   try {
-    const { appointment_date, editor, id, id_clinic, id_doctor, id_file } =
-      req.body;
+    const {
+      id_appointment,
+      appointment_date,
+      appointment_hour,
+      user_editor,
+      id_doctor,
+      id_file,
+    } = req.body;
     const fecha = new Date(appointment_date);
     await appointmentServices.updateAppo({
+      id_appointment,
       fecha,
-      editor,
-      id,
-      id_clinic,
+      appointment_hour,
+      user_editor,
       id_doctor,
       id_file,
     });
-    res.send({ message: "Se ha actualizado la fecha de cita" });
+    res.send({ message: "Se ha actualizado la cita" });
   } catch (error) {
     res.send({ message: "Error de actualizacion", err: error.message });
   }
@@ -209,7 +234,37 @@ async function updateZoomLink(req, res) {
 
 async function deleteAppointment(req, res) {
   try {
-    const { id } = req.body;
+    const { payment_type, editor, id, id_clinic, id_doctor, id_file } =
+      req.body;
+    await appointmentServices.updatePaymentType({
+      payment_type,
+      editor,
+      id,
+      id_clinic,
+      id_doctor,
+      id_file,
+    });
+    res.send({
+      message: "Se ha actualizado el tipo de pago y el estado de la cita",
+    });
+  } catch (error) {
+    res.send({ message: "Error de actualización", err: error.message });
+  }
+}
+
+/*async function updateZoomLink(req, res) {
+  try {
+      const {zoom_link, editor, id, id_clinic, id_doctor, id_file} = req.body;
+      await appointmentServices.updateZoomLink({zoom_link, editor, id, id_clinic, id_doctor, id_file});
+      res.send({message: "Se ha actualizado el enlace de Zoom"});
+  } catch (error) {
+      res.send({message: "Error de actualización", err: error.message});
+  }
+}*/
+
+async function deleteAppointment(req, res) {
+  try {
+    const { id } = req.params;
 
     await appointmentServices.deleteAppo(id);
     res.send({ message: "Cita eliminada!" });
@@ -283,7 +338,6 @@ async function getDoctor(req, res) {
 
 async function getClinic(req, res) {
   const id = req.query.id;
-
   try {
     const App = await appointmentServices.getClinic(id);
     res.send({
@@ -294,6 +348,7 @@ async function getClinic(req, res) {
     res.send({ message: "Error", error: error.message });
   }
 }
+
 /*SELECT * FROM attention_sys.appointments
 WHERE state_appointment = 'Terminado' AND id_clinic = '8';
 
@@ -340,6 +395,7 @@ module.exports = {
   addConsultation,
   deleteAppointment,
   updateOrder,
+  updateHour,
   updatePaymentMedic,
   updateObservations,
   updateAppointment,

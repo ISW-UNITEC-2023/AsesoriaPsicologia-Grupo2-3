@@ -1,42 +1,34 @@
 import axios from "axios";
 
-export async function createEvent(title, url, start, end,)
-{
-  let data = JSON.stringify({
-    
-    "title": title, 
-    }
-  );
+const host = process.env.REACT_APP_API_BASE_URL;
 
-  console.log(data);
-  let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: 'http://localhost:8000/api/meetings/6KUo64WFSiOt8Xhltqol-w',
-    headers: { 
-      'Content-Type': 'application/json'
-    },
-    data : data
+async function getEvents() {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/calendar/getEvents",
+    data: {},
   };
-
-  axios.request(config)
-  .then((response) => {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-    
+  let events = await axios.request(options);
+  return events;
 }
 
-
-export async function getEvents(userId) {
-  try {
-    const response = await axios.get('http://localhost:8000/api/users/6KUo64WFSiOt8Xhltqol-w/meetings');
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener reuniones:", error);
-    throw error;
-  }
+async function createEvent(event) {
+  const options = {
+    method: "POST",
+    url: "http://localhost:8000/calendar/createEvent",
+    data: {
+      title: event.title,
+      url: event.url,
+      start: event.start,
+      end: event.end,
+      //id_clinic: event.id_clinic,
+    },
+  };
+  let events = await axios.request(options);
+  return events.data;
 }
+
+export default {
+  getEvents,
+  createEvent,
+};
