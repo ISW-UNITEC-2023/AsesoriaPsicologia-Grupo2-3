@@ -12,6 +12,7 @@ async function getStatsDay(req, res) {
 async function getStatsWeek(req, res) {
     try {
         const stats = await statsService.getStatsWeek();
+
         res.send({message: "Se han obtenido las estadísticas", data: stats});
     } catch (error) {
         res.send({message: "No se pudieron obtener las estadísticas", err: error.message});

@@ -94,9 +94,18 @@ async function getWeekSales() {
 
         const ventasPorDiasS = {};
 
+
+        const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        for(let i = 0; i < 7; i++)
+        {
+            ventasPorDiasS[daysOfWeek[i]] = 0;
+        }
+
         results.forEach((row) => {
             const formattedDate = format(row.appointment_date, 'yyyy-MM-dd HH:mm:ss');
+           
             const parsedDate = parseISO(formattedDate);
+           
             const nombreDia = format(parsedDate, 'EEEE', {locale: esLocale}); // Obtener el nombre del día de la semana en español
             const nombreDiaCapitalizado = nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1);
 
@@ -125,13 +134,22 @@ async function getMonthSales() {
     const startDate = startOfMonth(currentDate);
     const endDate = endOfMonth(currentDate);
 
+    const stardateformt =  `${currentDate.getFullYear()}:01:1`
+    const enddateformt =  `${currentDate.getFullYear()}:12:31`
     try {
         const results = await knex("appointments")
             .select("appointment_date", "payment_amount")
-            .whereBetween("appointment_date", [startDate, endDate])
+            .whereBetween("appointment_date", [stardateformt, enddateformt])
             .andWhere("state_appointment", "COMPLETA");
 
         const ventasPorMesS = {};
+
+        const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        for(let i = 0; i < 12; i++)
+        {
+            ventasPorMesS[months[i]] = 0;
+        }
 
         results.forEach((row) => {
             const formattedDate = format(row.appointment_date, 'yyyy-MM-dd HH:mm:ss');

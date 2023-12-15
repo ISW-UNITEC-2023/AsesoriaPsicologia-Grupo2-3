@@ -1,111 +1,113 @@
 import {ArrowDownTrayIcon,} from "@heroicons/react/24/outline";
 import {Avatar, Button, Card, CardBody, CardHeader, Chip, Input, Typography,} from "@material-tailwind/react";
 import {useEffect, useState} from "react";
+import services from "../../Utilities/reports-service"
+import {  startOfWeek, endOfWeek, format } from 'date-fns';
 
-const TABLE_HEAD = ["Transaction", "Amount", "Date", "Status", "Account"];
+const TABLE_HEAD = ["Account", "Amount", "Date", "Status", "Transaction"];
 
-const TABLE_ROWS = [
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
-        name: "Spotify",
-        amount: "$2,500",
-        date: "Wed 3:00pm",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
-        name: "Amazon",
-        amount: "$5,000",
-        date: "Wed 1:00pm",
-        status: "paid",
-        account: "master-card",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
-        name: "Pinterest",
-        amount: "$3,400",
-        date: "Mon 7:40pm",
-        status: "pending",
-        account: "master-card",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
-        name: "Google",
-        amount: "$1,000",
-        date: "Wed 5:00pm",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-netflix.svg",
-        name: "netflix",
-        amount: "$14,000",
-        date: "Wed 3:30am",
-        status: "cancelled",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-slack.svg",
-        name: "Slack",
-        amount: "$2,500",
-        date: "Wed 3:00pm",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
-        name: "Spotify",
-        amount: "$2,500",
-        date: "Wed 3:00pm",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
-        name: "Amazon",
-        amount: "$5,000",
-        date: "Wed 1:00pm",
-        status: "paid",
-        account: "master-card",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
-        name: "Pinterest",
-        amount: "$3,400",
-        date: "Mon 7:40pm",
-        status: "pending",
-        account: "master-card",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-    {
-        img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
-        name: "Google",
-        amount: "$1,000",
-        date: "Wed 5:00pm",
-        status: "paid",
-        account: "visa",
-        accountNumber: "1234",
-        expiry: "06/2026",
-    },
-];
+// const TABLE_ROWS = [
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
+//         name: "Spotify",
+//         amount: "$2,500",
+//         date: "Wed 3:00pm",
+//         status: "paid",
+//         account: "visa",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
+//         name: "Amazon",
+//         amount: "$5,000",
+//         date: "Wed 1:00pm",
+//         status: "paid",
+//         account: "master-card",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
+//         name: "Pinterest",
+//         amount: "$3,400",
+//         date: "Mon 7:40pm",
+//         status: "pending",
+//         account: "master-card",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
+//         name: "Google",
+//         amount: "$1,000",
+//         date: "Wed 5:00pm",
+//         status: "paid",
+//         account: "visa",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-netflix.svg",
+//         name: "netflix",
+//         amount: "$14,000",
+//         date: "Wed 3:30am",
+//         status: "cancelled",
+//         account: "visa",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-slack.svg",
+//         name: "Slack",
+//         amount: "$2,500",
+//         date: "Wed 3:00pm",
+//         status: "paid",
+//         account: "visa",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
+//         name: "Spotify",
+//         amount: "$2,500",
+//         date: "Wed 3:00pm",
+//         status: "paid",
+//         account: "visa",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
+//         name: "Amazon",
+//         amount: "$5,000",
+//         date: "Wed 1:00pm",
+//         status: "paid",
+//         account: "master-card",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
+//         name: "Pinterest",
+//         amount: "$3,400",
+//         date: "Mon 7:40pm",
+//         status: "pending",
+//         account: "master-card",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+//     {
+//         img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
+//         name: "Google",
+//         amount: "$1,000",
+//         date: "Wed 5:00pm",
+//         status: "paid",
+//         account: "visa",
+//         accountNumber: "1234",
+//         expiry: "06/2026",
+//     },
+// ];
 
 function TableReportes() {
     const [date1, setDate1] = useState("");
@@ -113,10 +115,33 @@ function TableReportes() {
     const [dateRange, setDateRange] = useState(false);
     const [isDownloading, setIsDownloading] = useState(false);
 
+    const [reports, setReports] = useState([]);
+
+    useEffect(() => {
+        getReportes(format(startOfWeek(new Date), 'yyyy-MM-dd'),format(endOfWeek(new Date), 'yyyy-MM-dd')).then(r => r)
+    }, []);
+    
+    async function getReportes(startformat,endformat )
+    {
+        
+        try {
+            let response = await services.getReport(startformat,endformat);
+            
+
+            setReports(response);
+
+            console.log("reportes", response)
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }
+
     useEffect(() => {
         // Cuando dejan de estar vacíos los dos campos de fecha, se activa el rango de fechas
         if (date1 && date2) {
             setDateRange(true);
+        
+            getReportes(date1,date2).then(r => r)
         } else {
             setDateRange(false);
         }
@@ -127,6 +152,11 @@ function TableReportes() {
         setTimeout(() => {
             setIsDownloading(false);
         }, 3000);
+    }
+
+    const data  = (appointment_date) =>
+    {
+        return format(appointment_date, 'yyyy-MM-dd HH:mm:ss');
     }
 
     return (
@@ -193,41 +223,37 @@ function TableReportes() {
                     </tr>
                     </thead>
                     <tbody>
-                    {TABLE_ROWS.map(
+                    {reports.map(
                         (
                             {
-                                img,
-                                name,
-                                amount,
-                                date,
-                                status,
-                                account,
-                                accountNumber,
-                                expiry,
+                                id_file,
+                                first_name,
+                                middle_name,
+                                last_name,
+                                second_surname,
+                                payment_amount,
+                                appointment_date,
+                                state_appointment,
+                                payment_type,
                             },
                             index,
                         ) => {
-                            const isLast = index === TABLE_ROWS.length - 1;
+                            const isLast = index === reports.length - 1;
                             const classes = isLast
                                 ? "p-4"
                                 : "p-4 border-b border-blue-gray-50";
 
                             return (
-                                <tr key={name}>
+                                <tr key={id_file}>
                                     <td className={classes}>
                                         <div className="flex items-center gap-3">
-                                            <Avatar
-                                                src={img}
-                                                alt={name}
-                                                size="md"
-                                                className="border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1"
-                                            />
+                                            
                                             <Typography
                                                 variant="small"
                                                 color="blue-gray"
                                                 className="font-bold"
                                             >
-                                                {name}
+                                                {`${first_name} ${middle_name} ${last_name} ${second_surname}`}
                                             </Typography>
                                         </div>
                                     </td>
@@ -237,7 +263,7 @@ function TableReportes() {
                                             color="blue-gray"
                                             className="font-normal"
                                         >
-                                            {amount}
+                                            {payment_amount}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
@@ -246,7 +272,7 @@ function TableReportes() {
                                             color="blue-gray"
                                             className="font-normal"
                                         >
-                                            {date}
+                                            {appointment_date}
                                         </Typography>
                                     </td>
                                     <td className={classes}>
@@ -254,47 +280,39 @@ function TableReportes() {
                                             <Chip
                                                 size="sm"
                                                 variant="ghost"
-                                                value={status}
+                                                value={state_appointment}
                                                 color={
-                                                    status === "paid"
+                                                    state_appointment === "COMPLETA"
                                                         ? "green"
-                                                        : status === "pending"
+                                                        : state_appointment === "PENDIENTE"
                                                             ? "amber"
-                                                            : "red"
+                                                            : state_appointment === "CANCELADA"
+                                                            ? "red"
+                                                            : "brown"
                                                 }
                                             />
                                         </div>
                                     </td>
                                     <td className={classes}>
                                         <div className="flex items-center gap-3">
-                                            <div className="h-9 w-12 rounded-md border border-blue-gray-50 p-1">
-                                                <Avatar
-                                                    src={
-                                                        account === "visa"
-                                                            ? "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/visa.png"
-                                                            : "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/mastercard.png"
-                                                    }
-                                                    size="sm"
-                                                    alt={account}
-                                                    variant="square"
-                                                    className="h-full w-full object-contain p-1"
-                                                />
-                                            </div>
+                                           
                                             <div className="flex flex-col">
-                                                <Typography
+                                            <Typography
                                                     variant="small"
                                                     color="blue-gray"
-                                                    className="font-normal capitalize"
+                                                    className="font-bold"
                                                 >
-                                                    {account.split("-").join(" ")} {accountNumber}
+                                                    {payment_type === 1 
+                                                    ? "Efectivo" 
+                                                    :payment_type === 2 
+                                                    ? "Transferencia"
+                                                    : payment_type === 3
+                                                    ? "Tarjeta de Crédito"
+                                                    : payment_type === 4
+                                                    ? "Tarjeta de Débito" 
+                                                    : "Sin Metodo de Pago"}
                                                 </Typography>
-                                                <Typography
-                                                    variant="small"
-                                                    color="blue-gray"
-                                                    className="font-normal opacity-70"
-                                                >
-                                                    {expiry}
-                                                </Typography>
+                                                
                                             </div>
                                         </div>
                                     </td>
