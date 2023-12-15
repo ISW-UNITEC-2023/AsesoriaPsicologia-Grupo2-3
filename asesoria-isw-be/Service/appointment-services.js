@@ -164,7 +164,7 @@ async function updatePaymentType(appo) {
   await knex("appointments")
     .update({
       payment_type: appo.payment_type,
-      state_appointment: "PROCESADA",
+      state_appointment: "COMPLETA",
       user_editor: appo.editor,
       last_modification: new Date(),
     })
@@ -239,7 +239,7 @@ async function getChequeo(idClinic) {
       .from("appointments")
       .leftJoin("users", "appointments.id_doctor", "users.id_user")
       .leftJoin("files", "appointments.id_file", "files.id_file")
-      .where("appointments.state_appointment", "Terminado")
+      .where("appointments.state_appointment", "PENDIENTE")
       .andWhere("appointments.id_clinic", idClinic);
 
     return data;
