@@ -14,6 +14,8 @@ import {
   faEye,
   faTrash,
   faCloudArrowUp,
+  faFileLines,
+  faFileImage,
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Toast } from "react-bootstrap";
 
@@ -73,11 +75,11 @@ function Documents(props) {
 
   const handleFileChange = (e) => {
     const files = e.target.files;
-    const previews = [...selectedPreviews]
+    const previews = [...selectedPreviews];
 
     if (selectedFiles.length + files.length > 5) {
       toast.warn("Solo se permiten como máximo 5 archivos", {
-        position: "top-center",
+        position: "top-right",
         autoClose: 3500,
         hideProgressBar: false,
         closeOnClick: true,
@@ -88,23 +90,58 @@ function Documents(props) {
       });
       return;
     }
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const file = {
-            id_document: null,
-            document_name: files[i].name,
-            document_size: files[i].size,
-            document_type: files[i].type,
-            document_url: reader.result,
-          };
-          previews.push(reader.result)
-          setSelectedPreviews(previews)
-          setSelectedFiles(prevFiles => [...prevFiles, file]);
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const file = {
+          id_document: null,
+          document_name: files[i].name,
+          document_size: files[i].size,
+          document_type: files[i].type,
+          buffer: reader.result,
         };
-        reader.readAsDataURL(files[i]);
-      }
-    
+        previews.push(reader.result);
+        setSelectedPreviews(previews);
+        setSelectedFiles((prevFiles) => [...prevFiles, file]);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    const previews = [...selectedPreviews];
+
+    if (selectedFiles.length + files.length > 5) {
+      toast.warn("Solo se permiten como máximo 5 archivos", {
+        position: "top-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const file = {
+          id_document: null,
+          document_name: files[i].name,
+          document_size: files[i].size,
+          document_type: files[i].type,
+          buffer: reader.result,
+        };
+        previews.push(reader.result);
+        setSelectedPreviews(previews);
+        setSelectedFiles((prevFiles) => [...prevFiles, file]);
+      };
+      reader.readAsDataURL(files[i]);
+    }
   };
 
   const removeFile = (file) => {
@@ -112,30 +149,45 @@ function Documents(props) {
     setSelectedFiles(updatedFiles);
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const files = Array.from(e.dataTransfer.files);
-    const uniqueSelectedFiles = files.filter(
-      (file) =>
-        !selectedFiles.some((selectedFile) => selectedFile.name === file.name)
-    );
-    setSelectedFiles([...selectedFiles, ...uniqueSelectedFiles]);
-  };
-
   const subirArchivo = async () => {
     try {
-      const formData = new FormData();
-      selectedFiles.forEach((file) => {
-        formData.append("files", file);
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        await Services.uploadFile({
+          name: file.document_name,
+          size: file.document_size,
+          type: file.document_type,
+          buffer: file.buffer,
+          id_file,
+          user_creator: userData.user_data.id_user
       });
-      formData.append("id_file", id_file);
-      formData.append("id_user", userData.user_data.id_user);
-      await Services.uploadDocument(formData);
-      cargarArchivos();
+      }
+
       setUploadFile(false);
       setSelectedFiles([]);
+      cargarArchivos();
+      toast.success("¡Archivos subidos exitosamente!", {
+        position: "top-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
-      console.error("Ocurrió un error al intentar subir el archivo:", error);
+      console.error("Error al subir los archivos:", error);
+      toast.error("¡Hubo un error al subir los archivos!", {
+        position: "top-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -160,6 +212,7 @@ function Documents(props) {
       console.error("Ocurrió un error al intentar editar el nombre:", error);
     }
   };
+
   //eliminar archivo
   const eliminarArchivo = async (file) => {
     const confirmarEliminacion = window.confirm(
@@ -172,6 +225,7 @@ function Documents(props) {
       alert("¡Archivo eliminado exitosamente!");
     }
   };
+
   //Convertir size del archivo
   const convertSize = (size) => {
     const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -265,15 +319,12 @@ function Documents(props) {
               <div className="modal-upload-header">
                 <h2 className="modal-upload-title">Cargar archivos</h2>
               </div>
-              <div
-                className="custom-file-upload"
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
-              >
+              <div className="custom-file-upload">
                 <label
-                  for="file-upload"
                   className="label-file-box"
-                  onDragOver={handleDragOver}
+                  onDragOver={(e) => {
+                    handleDragOver(e);
+                  }}
                   onDrop={(e) => {
                     handleDrop(e);
                   }}
@@ -286,31 +337,69 @@ function Documents(props) {
                     Arrastra archivos a esta zona
                   </span>
                   o
-                  <input
-                    type="file"
-                    accept={["application/pdf", "image/*", ".doc", ".docx"]}
-                    multiple={true}
-                    max={5}
-                    onChange={(e) => {
-                      handleFileChange(e);
-                    }}
-                  />
-                  <div className="preview-file-container">
-                    {selectedFiles.map((file, index) => (
-                      <div key={index} className="file-preview">
-                        <span className="file-name">{file.document_name}</span>
-                        <button
-                          type="button"
-                          className="file-remove-button"
-                          onClick={() => {
-                            removeFile(file);
-                          }}
-                        >
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                  <label className="select-files-label" for="file-upload">
+                    Selecciona archivos
+                    <input
+                      id="file-upload"
+                      type="file"
+                      accept={[
+                        "application/pdf",
+                        "image/*",
+                        "text/*",
+                        ".docx",
+                        ".doc",
+                      ]}
+                      multiple={true}
+                      max={5}
+                      className="file-upload-input"
+                      onChange={(e) => {
+                        handleFileChange(e);
+                      }}
+                    />
+                  </label>
                 </label>
+              </div>
+              <label className="preview-file-title">
+                Archivos Seleccionados {selectedFiles.length} / 5
+              </label>
+              <div className="preview-file-container">
+                {selectedFiles.length === 0 && (
+                  <span className="no-files-selected">
+                    No se han seleccionado archivos
+                  </span>
+                )}
+                {selectedFiles.length > 0 &&
+                  selectedFiles.map((file, index) => (
+                    <div key={index} className="file-preview">
+                      {file.document_type === "image/png" ||
+                      file.document_type === "image/jpg" ||
+                      file.document_type === "image/jpeg" ||
+                      file.document_type === "image/webp" ||
+                      file.document_type === "image/svg" ||
+                      file.document_type === "image/gif" ? (
+                        <FontAwesomeIcon
+                          className="preview-file-icon"
+                          icon={faFileImage}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          className="preview-file-icon"
+                          icon={faFileLines}
+                        />
+                      )}
+                      <span className="preview-file-name">
+                        {file.document_name}
+                      </span>
+                      <button
+                        className="preview-file-remove"
+                        onClick={() => {
+                          removeFile(file);
+                        }}
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  ))}
               </div>
               <div className="footer-upload-buttons">
                 <button
