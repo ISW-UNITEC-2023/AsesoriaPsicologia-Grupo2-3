@@ -51,14 +51,16 @@ function Chequeo(props) {
           <button
             className="button-agregar-metodo-pago"
             onClick={() => handleAddPayment(consultaSeleccionada)}
-          > Agregar método de Pago
+          >
+            {" "}
+            Agregar método de Pago
           </button>
         </div>
         {paymentError && (
-        <div className="error-message">
-          Por favor, seleccione un método de pago antes de continuar.
-        </div>
-      )}
+          <div className="error-message">
+            Por favor, seleccione un método de pago antes de continuar.
+          </div>
+        )}
       </div>
     </div>
   );
@@ -67,7 +69,7 @@ function Chequeo(props) {
   const [selectedConsulta, setSelectedConsulta] = useState(null);
   const [tempSelectedPayment, setTempSelectedPayment] = useState("");
   const [consultations, setConsultations] = useState([]);
-  const [paymentError, setPaymentError] =useState(false);
+  const [paymentError, setPaymentError] = useState(false);
   const fetchData = async () => {
     //const idClinic = props.userData.user_data.id_clinic; //obtener la informacion de la clinica
     const idClinic = "8"; // Estático para probar
@@ -97,8 +99,7 @@ function Chequeo(props) {
   };
 
   const handleAddPayment = async (consultaSeleccionada) => {
-    if(tempSelectedPayment=== '')
-    {
+    if (tempSelectedPayment === "") {
       setPaymentError(true);
       return;
     }
@@ -129,17 +130,12 @@ function Chequeo(props) {
             Chequeo
           </h1>
           <Link to="/Reportes">
-            <button className="button-reporte">
-              Reportes
-            </button>
+            <button className="button-reporte">Reportes</button>
           </Link>
-         
+
           <Link to="/Estadisticas">
-            <button className="button-estadistica">
-              Estadísticas
-            </button>
+            <button className="button-estadistica">Estadísticas</button>
           </Link>
-         
         </div>
         <div className="table-container">
           <table className="custom-table">
@@ -161,7 +157,6 @@ function Chequeo(props) {
                     <td>{`${consulta.first_name} ${consulta.middle_name} ${consulta.last_name} ${consulta.second_surname}`}</td>
                     <td>{consulta.payment_amount}</td>
                     <td>
-                      {consulta.payment_type}
                       <button
                         onClick={() => handleShow(consulta)}
                         className="button-metodo-pago"
