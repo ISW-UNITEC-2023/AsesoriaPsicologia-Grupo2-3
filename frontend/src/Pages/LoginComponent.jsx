@@ -116,9 +116,9 @@ function Login(props) {
               <input
                 id="login_component_formulario_login_correo_electronico"
                 type="text"
-                name="registro"
+                name="Numero de clinica "
                 className="input"
-                placeholder="Registro"
+                placeholder="Numero de clinica "
                 value={form.registro}
                 onChange={(e) => {
                   setform({ ...form, registro: e.target.value });
