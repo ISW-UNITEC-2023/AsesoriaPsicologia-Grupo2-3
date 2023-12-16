@@ -1,27 +1,53 @@
-import {PencilIcon} from "@heroicons/react/24/solid";
-import {Button, Card, CardBody, CardHeader, IconButton, Spinner, Typography,} from "@material-tailwind/react";
-import {EyeIcon} from "@heroicons/react/20/solid";
+import { PencilIcon } from "@heroicons/react/24/solid";
+import { Button, Card, CardBody, CardHeader, IconButton, Spinner, Typography, } from "@material-tailwind/react";
+import { EyeIcon } from "@heroicons/react/20/solid";
 import BreadCrumbsC from "./BreadCrumbsC";
-import {useEffect, useState} from "react";
 import DialogCitas from "./DialogCitas";
 import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from "react";
+import { getVerify } from "../../Utilities/user-services";
 
 
 const TABLE_HEAD = [" ", "Fecha de Consulta", "Doctor Responsable", "Observaciones", ""];
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-export function TableConsultas({page}) {
+function havePrivilege(userPrivilege, privilege) {
+    const isAuthorized = userPrivilege && userPrivilege.privileges && privilege.some((privilege) =>
+        userPrivilege.privileges.includes(privilege)
+    );
+    return isAuthorized;
+}
+
+export function TableConsultas({ page }) {
+    //Privilegios del usuario logueado
+    const verifyRef = useRef(null);
+    const updatePrivileges = async () => {
+        try {
+            const data = await getVerify(props.userData.user_data.id_user);
+            verifyRef.current = data;
+        } catch (error) {
+            console.error("Error updating privileges:", error);
+        }
+    };
+
+    useEffect(() => {
+        async function update() {
+            await updatePrivileges();
+        }
+        update();
+    }, []);
+
     const [open, setOpen] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [nombreDoctor, setNombreDoctor] = useState("");
     const [fecha, setFecha] = useState("");
     const id = localStorage.getItem("id_patient");
-    const {data: data, error, isLoading} = useSWR(`http://localhost:8000/appointment/getById/${id}`, fetcher,
-        {refreshInterval: 1000});
+    const { data: data, error, isLoading } = useSWR(`http://localhost:8000/appointment/getById/${id}`, fetcher,
+        { refreshInterval: 1000 });
     const {
         data: fetchedUsers,
         error: usersError,
@@ -86,7 +112,7 @@ export function TableConsultas({page}) {
     if (isLoading || usersLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <Spinner/>
+                <Spinner />
             </div>
         )
     }
@@ -101,7 +127,7 @@ export function TableConsultas({page}) {
 
     const getDoctorName = (id) => {
         if (usersLoading) {
-            return <Spinner/>
+            return <Spinner />
         }
 
         const doctor = fetchedUsers.find((user) => user.id_user === id);
@@ -114,118 +140,149 @@ export function TableConsultas({page}) {
                 <div className="flex flex-row justify-between items-center w-full">
                     {page === "Cita" && (
                         <div className="flex flex-row gap-2 items-center">
-                            <BreadCrumbsC/>
+                            <BreadCrumbsC />
                         </div>
                     )}
                 </div>
                 {page === "Cita" && (
                     <div className="flex flex-row justify-between gap-4 mt-4 mb-4">
                         <div className="flex flex-row justify-between gap-2">
-                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpen}>
-                                Agendar Cita
-                            </Button>
-                            <Button style={{background: "#113946"}} variant={"gradient"} onClick={handleOpenE}>
-                                Modificar Cita
-                            </Button>
+                            {
+                                havePrivilege(verifyRef.current, [61]) &
+                                <Button style={{ background: "#113946" }} variant={"gradient"} onClick={handleOpen}>
+                                    Agendar Cita
+                                </Button>
+                            }
+                            {
+                                havePrivilege(verifyRef.current, [64]) &
+                                <Button style={{ background: "#113946" }} variant={"gradient"} onClick={handleOpenE}>
+                                    Modificar Cita
+                                </Button>
+                            }
                         </div>
                         <div className="flex flex-row justify-between gap-2">
-                            <Button style={{background: "#113946"}} variant="gradient" type="button">Ver
-                                expediente</Button>
+                            {
+                                havePrivilege(verifyRef.current, [57]) &
+                                <Button style={{ background: "#113946" }} variant="gradient" type="button">
+                                    Ver expediente
+                                </Button>
+                            }
                         </div>
                     </div>
                 )}
                 <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                     <div className="flex flex-row gap-2">
-                        <Typography color="blue-gray" style={{color: "#113946"}} variant="h6">
+                        <Typography color="blue-gray" style={{ color: "#113946" }} variant="h6">
                             Historial de Citas
                         </Typography>
                     </div>
                 </div>
             </CardHeader>
-            <CardBody className="overflow-x-auto px-0" style={{maxHeight: "calc(100vh - 350px)"}}>
+            <CardBody className="overflow-x-auto px-0" style={{ maxHeight: "calc(100vh - 350px)" }}>
                 <table className="w-full min-w-max table-auto text-left">
                     <thead>
-                    <tr>
-                        {TABLE_HEAD.map((head) => (
-                            <th
-                                key={head}
-                                className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                            >
-                                <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal leading-none opacity-70"
+                        <tr>
+                            {TABLE_HEAD.map((head) => (
+                                <th
+                                    key={head}
+                                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                                 >
-                                    {head}
-                                </Typography>
-                            </th>
-                        ))}
-                    </tr>
+                                    <Typography
+                                        variant="small"
+                                        color="blue-gray"
+                                        className="font-normal leading-none opacity-70"
+                                    >
+                                        {head}
+                                    </Typography>
+                                </th>
+                            ))}
+                        </tr>
                     </thead>
-                    <tbody>
-                    {data.data.map(
-                        (
-                            {
-                                appointment_date,
-                                id_file,
-                                id_doctor,
-                                observations,
-                            },
-                            index,
-                        ) => {
-                            const isLast = index === data.data.length - 1;
-                            const classes = isLast
-                                ? "p-4"
-                                : "p-4 border-b border-blue-gray-50";
+                    {
+                        havePrivilege(verifyRef.current, [62]) ?
+                            <tbody>
+                                {data.data.map(
+                                    (
+                                        {
+                                            appointment_date,
+                                            id_file,
+                                            id_doctor,
+                                            observations,
+                                        },
+                                        index,
+                                    ) => {
+                                        const isLast = index === data.data.length - 1;
+                                        const classes = isLast
+                                            ? "p-4"
+                                            : "p-4 border-b border-blue-gray-50";
 
-                            return (
-                                <tr key={index}>
-                                     <td className={classes}>
-                                        <div className="flex items-center">
-                                            <Link to="/Expedientes">
-                                                <IconButton variant="text">
-                                                    <EyeIcon className="w-5 h-5" />
-                                                </IconButton>
-                                            </Link>
-                                            <IconButton variant="text">
-                                                <PencilIcon className="w-5 h-5" />
-                                            </IconButton>
-                                        </div>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {formatDate(appointment_date)}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {getDoctorName(id_doctor)}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {observations ? observations : "Sin observaciones"}
-                                        </Typography>
-                                    </td>
+                                        return (
+                                            <tr key={index}>
+                                                <td className={classes}>
+                                                    <div className="flex items-center">
+                                                        {
+                                                            havePrivilege(verifyRef.current, [57]) &
+                                                            <Link to="/Expedientes">
+                                                                <IconButton variant="text">
+                                                                    <EyeIcon className="w-5 h-5" />
+                                                                </IconButton>
+                                                            </Link>
+                                                        }
+                                                        {
+                                                            havePrivilege(verifyRef.current, [59]) &
+                                                            <IconButton variant="text">
+                                                                <PencilIcon className="w-5 h-5" />
+                                                            </IconButton>
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {formatDate(appointment_date)}
+                                                    </Typography>
+                                                </td>
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {getDoctorName(id_doctor)}
+                                                    </Typography>
+                                                </td>
+                                                <td className={classes}>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {observations ? observations : "Sin observaciones"}
+                                                    </Typography>
+                                                </td>
+                                            </tr>
+                                        );
+                                    },
+                                )}
+                                {open && <DialogCitas nombreDoctor={nombreDoctor} fecha={fecha} titulo={titulo} open={open}
+                                    updateOpen={updateIsOpen} />}
+                            </tbody>
+                            :
+                            <tbody>
+                                <tr>
+                                    <Typography
+                                        variant="h6"
+                                        color="blue-gray"
+                                        className="flex justify-center font-normal"
+                                    >
+                                        Ha ocurrido un error al cargar las citas, no tienes los permisos necesarios.
+                                    </Typography>
                                 </tr>
-                            );
-                        },
-                    )}
-                    {open && <DialogCitas nombreDoctor={nombreDoctor} fecha={fecha} titulo={titulo} open={open}
-                                          updateOpen={updateIsOpen}/>}
-                    </tbody>
+                            </tbody>
+                    }
                 </table>
             </CardBody>
         </Card>

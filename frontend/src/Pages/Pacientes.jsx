@@ -1,21 +1,48 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import "../Styles/CSS/Pacientes.css";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Services from "../Utilities/login-services";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import useSWR from "swr";
 import user_services from "../Utilities/user-services";
-import {Option, Select, Spinner} from "@material-tailwind/react";
+import { Option, Select, Spinner } from "@material-tailwind/react";
 import Dropdown from "react-bootstrap/Dropdown";
+import { getVerify } from "../Utilities/user-services";
 
-function PacientesForm(props) {
+function havePrivilege(userPrivilege, privilege) {
+    const isAuthorized = userPrivilege && userPrivilege.privileges && privilege.some((privilege) =>
+        userPrivilege.privileges.includes(privilege)
+    );
+    return isAuthorized;
+}
+
+function PacientesForm(props) {    
+    //Privilegios del usuario logueado
+
+    const verifyRef = useRef(null);
+    const updatePrivileges = async () => {
+        try {
+            const data = await getVerify(props.userData.user_data.id_user);
+            verifyRef.current = data;
+        } catch (error) {
+            console.error("Error updating privileges:", error);
+        }
+    };
+
+    useEffect(() => {
+        async function update() {
+            await updatePrivileges();
+        }
+        update();
+    }, []);
+
     const [nombres, setNombres] = useState([]);
     const [showCrearPopup, setShowCrearPopup] = useState(false);
     const [showEditarPopup, setShowEditarPopup] = useState(false);
@@ -165,7 +192,7 @@ function PacientesForm(props) {
     if (usersLoading || rolesLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <Spinner/>
+                <Spinner />
             </div>
         )
     }
@@ -182,7 +209,7 @@ function PacientesForm(props) {
         const userRoles = fetchedRoles
             .filter(role => user.id_user === role.id_user)
             .map(role => [role.id_role, role.name_role]);
-        return {...user, roles: userRoles};
+        return { ...user, roles: userRoles };
     });
 
     const doctores = Array.isArray(usersWithRoles)
@@ -192,64 +219,92 @@ function PacientesForm(props) {
     return (
         <PacientesLayout pagina="Pacientes">
             <div className="navbar2">
-                <NavigationB/>
+                <NavigationB />
 
                 <div className="pacientes-container">
                     <div className="pacientes-header">
                         <h1 className="title-pacientes2">Pacientes</h1>
                         <div className="IniciarConsulta">
+                            {
+                                havePrivilege(verifyRef.current, [53]) &&
+                                <button className="consultation-btn" onClick={handleShow}>
 
-                            <button className="consultation-btn" onClick={handleShow}>
-
-                                Iniciar consulta
-                            </button>
+                                    Iniciar consulta
+                                </button>
+                            }
                         </div>
                     </div>
-                    <div className="card-container">
-                        {nombres.map((nombre) => (
-                            <div key={nombre.id_account} className="card">
-                                <div className="card-body">
-                                    <FontAwesomeIcon icon={faUserCircle} className="icon-persona"/>
-                                    <h3 className="card-title">{nombre.nombre}</h3>
-                                    <div className="conteiner-card-text">
-                                        <h4 className="card-text">{formatDate(nombre.creationDate)}</h4>
-                                    </div>
-                                    <div className="dropdown">
-                                        <button className="btn btn-secondary dropdown-toggle" type="button"
-                                                id={`dropdown-${nombre.id_account}`} data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                            Acciones
-                                        </button>
+                    {
+                        havePrivilege(verifyRef.current, [56]) ?
+                            <div className="card-container">
+                                {nombres.map((nombre) => (
+                                    <div key={nombre.id_account} className="card">
+                                        <div className="card-body">
+                                            <FontAwesomeIcon icon={faUserCircle} className="icon-persona" />
+                                            <h3 className="card-title">{nombre.nombre}</h3>
+                                            <div className="conteiner-card-text">
+                                                <h4 className="card-text">{formatDate(nombre.creationDate)}</h4>
+                                            </div>
+                                            <div className="dropdown">
+                                                <button className="btn btn-secondary dropdown-toggle" type="button"
+                                                    id={`dropdown-${nombre.id_account}`} data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Acciones
+                                                </button>
 
-                                        <div className="dropdown-menu"
-                                             aria-labelledby={`dropdown-${nombre.id_account}`}>
-                                            <Link to="/citas"
-                                                  onClick={() => handleClick(nombre.id_account, nombre.nombre,
-                                                      nombre.id_clinic)}
-                                                  className="dropdown-item">Agendar Cita</Link>
-                                            <Link to="/Expedientes"
-                                                  onClick={() => handleClick(nombre.id_account, nombre.nombre,
-                                                      nombre.id_clinic)}
-                                                  className="dropdown-item">Ver Expediente</Link>
-                                                  <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
-                                            {/* <Link to="/Documento"
+                                                <div className="dropdown-menu"
+                                                    aria-labelledby={`dropdown-${nombre.id_account}`}>
+                                                    {
+                                                        havePrivilege(verifyRef.current, [61]) &&
+                                                        <Link to="/citas"
+                                                            onClick={() => handleClick(nombre.id_account, nombre.nombre,
+                                                                nombre.id_clinic)}
+                                                            className="dropdown-item">
+                                                            Agendar Cita
+                                                        </Link>
+                                                    }
+                                                    {
+                                                        havePrivilege(verifyRef.current, [57]) &&
+                                                        <Link to="/Expedientes"
+                                                            onClick={() => handleClick(nombre.id_account, nombre.nombre, nombre.id_clinic)}
+                                                            className="dropdown-item">
+                                                            Ver Expediente
+                                                        </Link>
+                                                    }
+                                                    {
+                                                        havePrivilege(verifyRef.current, [66]) &&
+                                                        <Link to="/Documentos"
+                                                            className="dropdown-item"
+                                                            state={{ id_file: nombre.id_account, userData: props.userData }}>
+                                                            Ver Documentos
+                                                        </Link>
+
+                                                    }
+                                                    {/* <Link to="/Documento"
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
                                                   className="dropdown-item">Ver Documentos</Link> */}
 
-{/* =======
+                                                    {/* =======
                                         <div className="dropdown-menu" aria-labelledby={`dropdown-${nombre.id_account}`}>
                                             <Link to="/citas" className="dropdown-item">Manejar Cita</Link>
                                             <Link to="/Expedientes" className="dropdown-item">Ver Expediente</Link>
                                             <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
                                              */}
-{/* >>>>>>> Axel-KL-Documents */}
+                                                    {/* >>>>>>> Axel-KL-Documents */}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                ))}
+                            </div>
+                            :
+                            <div>
+                                <div className="flex justify-center items-center h-screen">
+                                    <p>Ha ocurrido un error al cargar los usuarios, parece que no tienes los permisos necesarios.</p>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                    }
 
                     {showCrearPopup && (
                         <CrearUser
@@ -274,12 +329,13 @@ function PacientesForm(props) {
                                 </buttons>
                             </div>
                             <div className="pop-iniciar-consulta-body">
-                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
                                     <label htmlFor="doctorName">Nombre del Médico:</label>
                                     <Select label="Nombre del médico" className="select-doctor" placeholder="Seleccione un médico">
                                         {doctores.map(doctor => (
                                             <Option key={doctor.id_user} value={doctor.id_user} onClick={() => {
-                                                localStorage.setItem('id_doctor', doctor.id_user)}} >
+                                                localStorage.setItem('id_doctor', doctor.id_user)
+                                            }} >
                                                 {doctor.name_user}
                                             </Option>
                                         ))}
@@ -288,36 +344,36 @@ function PacientesForm(props) {
                                 <form className="pop-iniciar-consulta-form">
                                     <label htmlFor="consultaMotivo">Motivo de Consulta:</label>
                                     <textarea id="consultaMotivo" rows={3}
-                                              placeholder="Ingrese motivo de consulta"
-                                              value={motivoConsulta}
-                                              onChange={(e) => setMotivoConsulta(e.target.value)}/>
+                                        placeholder="Ingrese motivo de consulta"
+                                        value={motivoConsulta}
+                                        onChange={(e) => setMotivoConsulta(e.target.value)} />
 
                                     <label htmlFor="observaciones">Observaciones:</label>
                                     <textarea id="observaciones" rows={3}
-                                              placeholder="Ingrese observaciones"
-                                              value={observaciones}
-                                              onChange={(e) => setObservaciones(e.target.value)}/>
+                                        placeholder="Ingrese observaciones"
+                                        value={observaciones}
+                                        onChange={(e) => setObservaciones(e.target.value)} />
                                     <label htmlFor="montoConsulta">Monto de Consulta:</label>
-                                    <div style={{display: 'flex', alignItems: 'center'}}>
-                                        <span style={{marginRight: '0.3rem'}}>Lps.</span>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <span style={{ marginRight: '0.3rem' }}>Lps.</span>
                                         <input type="text" id="montoConsulta" placeholder="Ingrese monto de consulta"
-                                               value={montoConsulta}
-                                               onChange={(e) => setMontoConsulta(e.target.value)}/>
+                                            value={montoConsulta}
+                                            onChange={(e) => setMontoConsulta(e.target.value)} />
                                     </div>
                                     {montoError && (
-                                        <p style={{color: "red", fontSize: "0.8rem", marginTop: "0.5rem"}}>El campo de
+                                        <p style={{ color: "red", fontSize: "0.8rem", marginTop: "0.5rem" }}>El campo de
                                             Monto de Consulta no puede estar vacío</p>
                                     )}
                                     <label htmlFor="ordenesMedicas">Órdenes Médicas:</label>
                                     <textarea id="ordenesMedicas" rows={3}
-                                              placeholder="Ingrese órdenes médicas"
-                                              value={ordenesMedicas}
-                                              onChange={(e) => setOrdenesMedicas(e.target.value)}/>
+                                        placeholder="Ingrese órdenes médicas"
+                                        value={ordenesMedicas}
+                                        onChange={(e) => setOrdenesMedicas(e.target.value)} />
                                 </form>
                             </div>
                             <div className="pop-iniciar-consulta-footer">
                                 <buttons className="close-button-sesiones" type="button" class="btn btn-outline-danger"
-                                         onClick={handleClose}>Cerrar
+                                    onClick={handleClose}>Cerrar
                                 </buttons>
                                 <buttons className="button-terminar" onClick={handleTerminarConsulta}>Terminar
                                     Consulta
