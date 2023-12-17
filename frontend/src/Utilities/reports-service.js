@@ -1,5 +1,6 @@
 import axios from "axios";
 import { format} from 'date-fns';
+const host = process.env.REACT_APP_API_BASE_URL;
 
 
 //obtener reportes
@@ -7,7 +8,7 @@ async function getReport(startDate, endDate){
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `http://localhost:8000/reports/getReport?startDate=${startDate}&endDate=${endDate}`,
+        url: `${host}/reports/getReport?startDate=${startDate}&endDate=${endDate}`,
         headers: { },
       };
       

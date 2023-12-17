@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
 async function postLogin(email, password) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/users/login",
+    url: host+"/users/login",
     data: { email, password },
     withCredentials: true, // Esto es para que axios envíe las cookies
   };
@@ -16,7 +16,7 @@ async function postLogin(email, password) {
 async function getUsers() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/users/viewUsers",
+    url: host+"/users/viewUsers",
   };
 
   try {
@@ -30,7 +30,7 @@ async function getUsers() {
 async function getModulesAll() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/modulos/all",
+    url: host+"/modulos/all",
   };
 
   axios
@@ -46,7 +46,7 @@ async function getModulesAll() {
 async function getSeccionbyModu() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/list",
+    url: host+"/user/list",
   };
 
   try {
@@ -60,7 +60,7 @@ async function getSeccionbyModu() {
 async function registerUser(name, email, phone, password, type, active) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/user/register",
+    url: host+"/user/register",
     data: { name, email, phone, password, type, active },
   };
 
@@ -75,7 +75,7 @@ async function registerUser(name, email, phone, password, type, active) {
 async function updateUser(id_account, role, active) {
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/user/update",
+    url: host+"/user/update",
     data: { id_account, role, active },
   };
 
@@ -90,7 +90,7 @@ async function updateUser(id_account, role, active) {
 async function deleteUser(id_account) {
   const options = {
     method: "DELETE",
-    url: "http://localhost:8000/user/delete",
+    url: host+"/user/delete",
     data: { id_account },
   };
 
@@ -105,7 +105,7 @@ async function deleteUser(id_account) {
 async function updateUserPassword(id_account, password) {
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/user/updatePassword",
+    url: host+"/user/updatePassword",
     data: { id_account, password },
   };
 
@@ -120,7 +120,7 @@ async function updateUserPassword(id_account, password) {
 async function updateUserEmail(id_account, email) {
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/user/updateEmail",
+    url: host+"/user/updateEmail",
     data: { id_account, email },
   };
 
@@ -136,7 +136,7 @@ export async function getCookies() {
   try {
     const options = {
       method: "GET",
-      url: "http://localhost:8000/users/getCookies",
+      url: host+"/users/getCookies",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -150,7 +150,7 @@ export async function deleteCookies() {
   try {
     const options = {
       method: "DELETE",
-      url: "http://localhost:8000/users/removeCookie",
+      url: host+"/users/removeCookie",
       withCredentials: true,
     };
     const response = await axios.request(options);
@@ -163,7 +163,7 @@ export async function deleteCookies() {
 async function getAdmins() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/admins",
+    url: host+"/user/admins",
   };
 
   try {
@@ -177,7 +177,7 @@ async function getAdmins() {
 async function getTeachers() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/users/viewTeachers",
+    url: host+"/users/viewTeachers",
   };
 
   try {
@@ -191,7 +191,7 @@ async function getTeachers() {
 async function getStudents() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/user/students",
+    url: host+"/user/students",
   };
 
   try {
@@ -205,7 +205,7 @@ async function getStudents() {
 async function getPatients() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/files/getAllFiles",
+    url: host+"/files/getAllFiles",
   };
 
   try {

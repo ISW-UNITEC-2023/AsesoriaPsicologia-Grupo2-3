@@ -52,6 +52,7 @@ async function getEvents(req, res) {
     } catch (e) {
         res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
             error: "No se pudieron obtener los eventos.",
+            e
         });
     }
 }

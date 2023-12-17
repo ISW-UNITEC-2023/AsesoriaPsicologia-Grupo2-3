@@ -138,12 +138,12 @@ async function loginUser(req, res) {
 
                 res.cookie("user_data", userData, {
                     maxAge: 259200000, // Duración de 3 días en milisegundos
-                    httpOnly: true,
-                    secure: true,
+                    httpOnly: false,
+                    secure: false,
                     sameSite: "lax",
                     signed: true,
                 });
-
+                console.log(res);
                 res.send({
                     name: email_now.name_user,
                     accessToken,

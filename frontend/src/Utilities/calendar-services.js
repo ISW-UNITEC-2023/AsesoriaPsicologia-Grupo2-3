@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
 async function getEvents() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/calendar/getEvents",
+    url: host + "/calendar/getEvents",
     data: {},
   };
   let events = await axios.request(options);
@@ -15,7 +15,7 @@ async function getEvents() {
 async function createEvent(event) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/calendar/createEvent",
+    url: host + "/calendar/createEvent",
     data: {
       title: event.title,
       url: event.url,

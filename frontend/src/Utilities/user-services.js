@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
 async function getUsers() {
     const options = {
         method: "GET",
-        url: "http://localhost:8000/users/viewUsers",
+        url: host+"/users/viewUsers",
         data: {},
     };
     let users = await axios.request(options);
@@ -15,7 +15,7 @@ async function getUsers() {
 async function getPatients() {
     const options = {
         method: "GET",
-        url: "http://localhost:8000/users/viewPatients",
+        url: host+"/users/viewPatients",
         data: {},
     };
     let users = await axios.request(options);
@@ -26,7 +26,7 @@ async function getPatients() {
 async function getAllUsersRoles() {
     const options = {
         method: "GET",
-        url: "http://localhost:8000/users/viewRoles",
+        url: host+"/users/viewRoles",
         data: {},
     };
     let roles = await axios.request(options);
@@ -36,7 +36,7 @@ async function getAllUsersRoles() {
 async function createUser(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/register",
+        url: host+"/users/register",
         data: {
             name: user.name,
             email: user.email,
@@ -54,7 +54,7 @@ async function createUser(user) {
 async function editName(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/updateName",
+        url: host+"/users/updateName",
         data: {
             id: user.id,
             name: user.name,
@@ -68,7 +68,7 @@ async function editName(user) {
 async function editPhone(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/updatePhone",
+        url: host+"/users/updatePhone",
         data: {
             id: user.id,
             phone: user.phone,
@@ -82,7 +82,7 @@ async function editPhone(user) {
 async function editEmail(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/updateEmail",
+        url: host+"/users/updateEmail",
         data: {
             id: user.id,
             newEmail: user.email,
@@ -96,7 +96,7 @@ async function editEmail(user) {
 async function editActive(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/changeActive",
+        url: host+"/users/changeActive",
         data: {
             id: user.id,
             active: user.active,
@@ -110,7 +110,7 @@ async function editActive(user) {
 async function editPassword(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/updatePassword",
+        url: host+"/users/updatePassword",
         data: {
             id: user.id,
             newPassword: user.password,
@@ -124,7 +124,7 @@ async function editPassword(user) {
 async function assignRole(user) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/assignRole",
+        url: host+"/users/assignRole",
         data: {
             id_user: user.id,
             id_role: user.role,
@@ -137,7 +137,7 @@ async function assignRole(user) {
 async function removeRole(user) {
     const options = {
         method: "DELETE",
-        url: "http://localhost:8000/users/removeRole",
+        url: host+"/users/removeRole",
         data: {
             id_user: user.id,
             id_role: user.role,
@@ -150,7 +150,7 @@ async function removeRole(user) {
 async function postLogin(email, password) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/users/login",
+        url: host+"/users/login",
         data: {email, password},
         withCredentials: true,
     };
@@ -162,7 +162,7 @@ export async function getCookies() {
     try {
         const options = {
             method: "GET",
-            url: "http://localhost:8000/users/getCookies",
+            url: host+"/users/getCookies",
             withCredentials: true,
             credentials: "include",
         };
@@ -178,7 +178,7 @@ export async function deleteCookies() {
     try {
         const options = {
             method: "GET",
-            url: "http://localhost:8000/users/deletecookie",
+            url: host+"/users/deletecookie",
             withCredentials: true,
         };
         const response = await axios.request(options);
@@ -211,7 +211,7 @@ export async function getVerify(id) {
     try {
         const options = {
             method: 'GET',
-            url: 'http://localhost:8000/users/getVerify',
+            url: host + '/users/getVerify',
             params: {id_user: id},
             withCredentials: true,
         };
