@@ -44,7 +44,7 @@ async function createUser(user) {
             password: user.password,
             type: user.type,
             active: user.active,
-            creator: parseInt(localStorage.getItem("user_id"))
+            creator: user.creator
         },
     };
     let users = await axios.request(options);
@@ -58,7 +58,7 @@ async function editName(user) {
         data: {
             id: user.id,
             name: user.name,
-            editor: parseInt(localStorage.getItem("user_id")),
+            editor: user.editor,
         },
     };
     const response = await axios.request(options);
@@ -72,7 +72,7 @@ async function editPhone(user) {
         data: {
             id: user.id,
             phone: user.phone,
-            editor: parseInt(localStorage.getItem("user_id")),
+            editor: user.editor,
         },
     };
     const response = await axios.request(options);
@@ -86,7 +86,7 @@ async function editEmail(user) {
         data: {
             id: user.id,
             newEmail: user.email,
-            editor: parseInt(localStorage.getItem("user_id")),
+            editor: user.editor,
         },
     };
     const response = await axios.request(options);
@@ -100,7 +100,7 @@ async function editActive(user) {
         data: {
             id: user.id,
             active: user.active,
-            editor: parseInt(localStorage.getItem("user_id")),
+            editor: user.editor,
         },
     };
     const response = await axios.request(options);
@@ -114,7 +114,7 @@ async function editPassword(user) {
         data: {
             id: user.id,
             newPassword: user.password,
-            editor: parseInt(localStorage.getItem("user_id")),
+            editor: user.editor,
         },
     };
     const response = await axios.request(options);
@@ -128,6 +128,7 @@ async function assignRole(user) {
         data: {
             id_user: user.id,
             id_role: user.role,
+            user_creator: user.creator
         },
     };
     const response = await axios.request(options);

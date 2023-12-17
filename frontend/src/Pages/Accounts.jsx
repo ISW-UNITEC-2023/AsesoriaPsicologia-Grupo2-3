@@ -240,113 +240,35 @@ function Accounts(props) {
     );
   };
 
-  const SearchDropdown = ({ matchingNames }) => {
-    return (
-      <div
-        id="search-dropdown"
-        className="dropdown-menu show mt-2.5"
-        aria-labelledby="search_dropdown_menu"
-        style={{ maxHeight: "200px", overflowY: "auto" }}
-      >
-        {matchingNames.length > 0 ? (
-          matchingNames.map((name) => (
-            <button
-              id={`search_dropdown_menu_name_${name}`}
-              className="dropdown-item"
-              type="button"
-              key={name}
-            >
-              {name}
-            </button>
-          ))
-        ) : (
-          <button
-            id={`search_dropdown_menu_name_no-name`}
-            className="dropdown-item"
-            type="button"
-            disabled
-          >
-            No se encontraron resultados
-          </button>
-        )}
-      </div>
-    );
-  };
-
   //Formato de fecha
   const formatDate = (announceDate) => {
-      const date = new Date(announceDate);
-      const options = {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-      };
-      return date.toLocaleString("es-ES", options);
+    const date = new Date(announceDate);
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return date.toLocaleString("es-ES", options);
   };
 
   //Fetch de Usuarios
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
-
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
-        fetchedRoles.forEach((role) => {
-          if (user.id_user === role.id_user) {
-            user.roles.push([role.id_role, role.name_role]);
-          }
-        });
-      });
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    fetchData().then(r => r);
-  }, []);
-
-  //Fetch de Roles
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedRoles = await role_services.getAllRoles();
-      setRoles(fetchedRoles);
-    };
-    fetchData().then(r => r);
+    refreshUsers();
   }, []);
 
   //Filtrado de Nombre
   useEffect(() => {
-    // Filter names that match the search term
-    const names = users
-      .filter((user) =>
-        user.name_user.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .map((user) => user.name_user);
-
-    setMatchingNames(names);
+    // filtrarUsuarios(users, searchTerm);
   }, [searchTerm, users]);
 
-  //Dropdown search
-  useEffect(() => {
-    const handleInputFocus = () => {
-      setDisplayResults(true);
-    };
-
-    const handleInputBlur = () => {
-      setDisplayResults(false);
-    };
-
-    const inputElement = document.querySelector(".search-user-box input");
-
-    inputElement.addEventListener("focus", handleInputFocus);
-    inputElement.addEventListener("blur", handleInputBlur);
-
-    return () => {
-      inputElement.removeEventListener("focus", handleInputFocus);
-      inputElement.removeEventListener("blur", handleInputBlur);
-    };
-  }, []);
+  const filtrarUsuarios = (usersCol, term) => {
+    const filteredUsersCol = usersCol.filter((data) =>
+      data.name_user.toLowerCase().includes(term.toLowerCase())
+    );
+    setUsers(filteredUsersCol);
+  };
 
   //Limpiar filtros
   function limpiarFiltros() {
@@ -425,24 +347,27 @@ function Accounts(props) {
 
   //Recuperar usuarios para actualizar
   async function refreshUsers() {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
+    const fetchedUsers = await user_services.getUsers();
+    const fetchedRoles = await user_services.getAllUsersRoles();
 
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
-        fetchedRoles.forEach((role) => {
-          if (user.id_user === role.id_user) {
-            user.roles.push([role.id_role, role.name_role]);
-          }
-        });
+    fetchedUsers.forEach((user) => {
+      user.roles = [];
+      fetchedRoles.forEach((role) => {
+        if (user.id_user === role.id_user) {
+          user.roles.push([role.id_role, role.name_role]);
+        }
       });
-      
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    await fetchData();
-    }
+    });
+    
+    setUsers(fetchedUsers);
+    setOriginalUsers(fetchedUsers);
+
+    const roles = await role_services.getAllRoles();
+    const filteredRoles = roles.filter((role) => {
+      return fetchedRoles.some((fetchedRole) => fetchedRole.id_role === role.id_role);
+    });
+    setRoles(filteredRoles);
+  }
 
   //Paginación
   const getCurrentAccounts = () => {
@@ -461,7 +386,7 @@ function Accounts(props) {
       <div className="account-box">
         <div className="account-header">
           <span className="account-title">Administración de Cuentas</span>
-          <div className="search-user-box">
+          {/* <div className="search-user-box">
             <FontAwesomeIcon icon={faSearch} className="iconSearch-box" />
             <input
               type="text"
@@ -469,8 +394,7 @@ function Accounts(props) {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {displayResults && <SearchDropdown matchingNames={matchingNames} />}
-          </div>
+          </div> */}
           <div
             className="remove-filter-button"
             onClick={() => {
@@ -492,7 +416,7 @@ function Accounts(props) {
           <button
             className="crear-cuenta-button"
             onClick={() => {
-              setOpenCreate(1);
+              setOpenCreate(1)
             }}
           >
             Crear cuenta
@@ -500,38 +424,32 @@ function Accounts(props) {
           <PopUpCrearUser
             isOpen={openCreate}
             onClose={() => {
+              refreshUsers(),
               setOpenCreate(0);
             }}
-            refreshUsers={() => {
-              refreshUsers();
-            }}
+            creator={props.userData.user_data.id_user}
           />
           {openEdit.open === 1 && (
             <PopUpEditUser
               isOpen={openEdit.open}
               onClose={() => {
                 setOpenEdit({ open: 0, userInfo: null });
+                refreshUsers();
               }}
               user={openEdit.userInfo}
+              editor={props.userData.user_data.id_user}
             />
           )}
-          {/*openEmail.open === 1 && (
-            <EmailPopUp
-              isOpen={openEmail.open}
-              onClose={() => {
-                setOpenEmail({ open: 0, userInfo: null });
-              }}
-              user={openEmail.userInfo}
-            />
-            )*/}
           {openRole.open === 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
               onClose={() => {
+                refreshUsers();
                 setOpenRole({ open: 0, userInfo: null });
               }}
               user={openRole.userInfo}
               roles={roles}
+              creator={props.userData.user_data.id_user}
             />
           )}
         </div>
@@ -556,7 +474,7 @@ function Accounts(props) {
                   <CustomBtFilter type="email_user" />
                   Correo
                 </div>
-            </th>
+              </th>
               <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="number_user" />

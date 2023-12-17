@@ -23,6 +23,8 @@
 }
 
 .remove-filter-button{
+  justify-self: flex-end;
+  margin-left: auto;
   background-color: none;
   color: #113946;
   border: 1px solid #113946;

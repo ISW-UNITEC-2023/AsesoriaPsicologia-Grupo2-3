@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import userServices from "../Utilities/user-services";
 
-const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
+const PopUpAdminRole = ({ isOpen, onClose, user, roles, creator }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -122,9 +122,11 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
     });
     //Asignar y Remover Roles
     for (let i = 0; i < toAdd.length; i++) {
+      console.log(creator)
       await userServices.assignRole({
         id: user.id_user,
         role: toAdd[i].id_role,
+        creator: creator
       });
     }
     for (let i = 0; i < toRemove.length; i++) {

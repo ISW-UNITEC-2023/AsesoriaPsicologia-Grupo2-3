@@ -9,7 +9,7 @@ import {
     faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
+const CrearUser = ({ isOpen, onClose, creator }) => {
     const overlayStyle = {
         opacity: isOpen ? 1 : 0,
         pointerEvents: isOpen ? "auto" : "none",
@@ -29,6 +29,7 @@ const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
         password: "",
         type: "",
         active: 1,
+        creator: creator,
     });
 
     const togglePasswordVisibility = () => {
@@ -49,7 +50,6 @@ const CrearUser = ({ isOpen, onClose, refreshUsers }) => {
         }
         if (validatorServices.isPassword(credentials.password) && validatorServices.isEmail(credentials.email)) {
             const response = await userServices.createUser(credentials);
-            refreshUsers();
             onClose();
         }
     };

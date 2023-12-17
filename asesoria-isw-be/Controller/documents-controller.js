@@ -3,7 +3,6 @@ const multer = require("multer");
 const upload = multer();
 
 async function uploadFile(req, res) {
-  console.log(req.body)
   const data = {
     nombreArchivo: req.body.document_name,
     tipoArchivo: req.body.document_type,

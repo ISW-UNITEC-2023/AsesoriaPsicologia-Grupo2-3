@@ -7,7 +7,7 @@ import {
     faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-const EditarUser = ({ isOpen, onClose, user }) => {
+const EditarUser = ({ isOpen, onClose, user, editor }) => {
     const overlayStyle = {
         opacity: isOpen ? 1 : 0,
         pointerEvents: isOpen ? "auto" : "none",
@@ -32,17 +32,18 @@ const EditarUser = ({ isOpen, onClose, user }) => {
     });
 
     async function actualizarUsuario() {
+        console.log(credentials.active, user.active_user)
         if (credentials.name !== user.user_name) {
-            await userServices.editName({ id: user.id_user, name: credentials.name, editor: user.id_user });
+            await userServices.editName({ id: user.id_user, name: credentials.name, editor: editor });
         }
         if (credentials.email !== user.email_user) {
-            await userServices.editEmail({ id: user.id_user, email: credentials.email, editor: user.id_user });
+            await userServices.editEmail({ id: user.id_user, email: credentials.email, editor: editor });
         }
         if (credentials.phone !== user.number_user) {
-            await userServices.editPhone({ id: user.id_user, phone: credentials.phone, editor: user.id_user });
+            await userServices.editPhone({ id: user.id_user, phone: credentials.phone, editor: editor });
         }
         if (credentials.active !== user.active_user) {
-            await userServices.editActive({ id: user.id_user, active: credentials.active, editor: user.id_user });
+            await userServices.editActive({ id: user.id_user, active: credentials.active, editor: editor });
         }
         onClose();
     }
@@ -184,12 +185,13 @@ const EditarUser = ({ isOpen, onClose, user }) => {
                                 <select
                                     id="popup_editar_usuario_estado_usuario"
                                     className="form-control-eu"
+                                    defaultValue={credentials.active}
                                     required
                                     onChange={(event) =>
-                                        setCredentials({
+                                        {setCredentials({
                                             ...credentials,
                                             active: event.target.value,
-                                        })
+                                        })}
                                     }
                                 >
                                     <option value={0}>Inactivo</option>

@@ -84,24 +84,16 @@ async function changeUserActive(user) {
 }
 
 async function assignRole(user) {
-  const role = await knex("roles")
-    .select("id_role")
-    .where("id_role", user.id_role);
-  if (!role) {
-    throw new Error("Role not found");
+  try {
+    return await knex("user_role").insert({
+      id_role: user.id_role,
+      id_user: user.id_user,
+      user_creator: user.user_creator,
+      creation_date: new Date(),
+    });
+  } catch (error) {
+    console.log(error.message)
   }
-
-  const userInfo = await knex("users")
-    .select("id_user")
-    .where("id_user", user.id_user);
-  if (!userInfo) {
-    throw new Error("User not found");
-  }
-
-  return await knex("user_role").insert({
-    id_role: user.id_role,
-    id_user: user.id_user,
-  });
 }
 
 async function removeRole(user) {
@@ -109,7 +101,6 @@ async function removeRole(user) {
     await knex("user_role")
       .where({ id_user: user.id_user, id_role: user.id_role })
       .del();
-    console.log("Role deleted successfully");
   } catch (error) {
     throw new Error(error.message);
   }
@@ -166,50 +157,51 @@ async function getPatients() {
   return JSON.parse(users);
 }
 
-async function getUserRoles(idUser){
+async function getUserRoles(idUser) {
   let roles = await knex.raw(
     `
       SELECT roles.id_role, roles.name_role
         FROM roles
           INNER JOIN user_role ON (user_role.id_role = roles.id_role)
           WHERE user_role.id_user = ?
-    `, [idUser]
-  )
-  roles = JSON.stringify(roles)
+    `,
+    [idUser]
+  );
+  roles = JSON.stringify(roles);
   return JSON.parse(roles);
 }
 
-async function getAllUsersRoles(){
+async function getAllUsersRoles() {
   let roles = await knex.raw(
     `
       SELECT roles.id_role, roles.name_role, user_role.id_user
         FROM roles
           INNER JOIN user_role ON user_role.id_role = roles.id_role
     `
-  )
+  );
   roles = JSON.stringify(roles);
   return JSON.parse(roles);
-  }
-  
-  async function getRoles(id) {
-    let roles = await knex
-      .select("name_role")
-      .from("user_role")
-      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
-      .where("id_user", "=", id);
-    roles = JSON.stringify(roles);
-    return JSON.parse(roles);
-  }
-  
-  async function getRoleId(id) {
-    let roles = await knex
-      .select("user_role.id_role")
-      .from("user_role")
-      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
-      .where("id_user", "=", id);
-    roles = JSON.stringify(roles);
-    return JSON.parse(roles);
-  }
+}
+
+async function getRoles(id) {
+  let roles = await knex
+    .select("name_role")
+    .from("user_role")
+    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+    .where("id_user", "=", id);
+  roles = JSON.stringify(roles);
+  return JSON.parse(roles);
+}
+
+async function getRoleId(id) {
+  let roles = await knex
+    .select("user_role.id_role")
+    .from("user_role")
+    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+    .where("id_user", "=", id);
+  roles = JSON.stringify(roles);
+  return JSON.parse(roles);
+}
 
 module.exports = {
   createUser,
@@ -230,5 +222,5 @@ module.exports = {
   getAllUsersRoles,
   getUserCredentialsByid,
   getRoles,
-  getRoleId
+  getRoleId,
 };

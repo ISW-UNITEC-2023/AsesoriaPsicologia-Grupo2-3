@@ -23,7 +23,6 @@ import { Modal, Toast } from "react-bootstrap";
 import "../Styles/CSS/Documents.css";
 
 function Documents(props) {
-  const location = useLocation();
   const { id_file, userData } = useLocation().state;
   const [allArchivos, setAllArchivos] = useState([]);
   const [archivos, setArchivos] = useState([]);
