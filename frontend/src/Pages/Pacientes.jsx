@@ -15,6 +15,9 @@ import useSWR from "swr";
 import user_services from "../Utilities/user-services";
 import { Option, Select, Spinner } from "@material-tailwind/react";
 import Dropdown from "react-bootstrap/Dropdown";
+//import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
+import patientsService from "../Utilities/patients-service";
+
 
 function PacientesForm(props) {
     const [nombres, setNombres] = useState([]);
@@ -43,6 +46,40 @@ function PacientesForm(props) {
     const handleClose = () => {
         setShowModal(false);
     };
+
+    const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
+    const [selectedPatient, setSelectedPatient] = useState({
+        nombre: "",
+        fechaNacimiento: "",
+        numeroIdentidad: "",
+        direccion: "",
+        estadoCivil: "",
+    });
+
+    const handleShowAgregarPacientePopUp = (patient) => {
+        setSelectedPatient(patient);
+        setShowCrearPacientePopup(true);
+    };
+
+    const handleCrearPaciente = async (pacienteInfo) => {
+        try {
+            const result = await patientsService.createPatient(pacienteInfo);
+            if (result.success) {
+                console.log("Paciente creado con éxito:", result.data);
+            } else {
+                console.error("Error al crear el paciente:", result.message);
+            }
+        } catch (error) {
+            console.error('Error creating patient:', error);
+        } finally {
+            setDisplayActionPopUp(false);
+        }
+    };
+    
+    const closeCrearPacientePopup = () => {
+        setShowCrearPacientePopup(false);
+    };
+
 
     async function initialList() {
         const arregloUsuarios = await Services.getPatients();
@@ -91,10 +128,6 @@ function PacientesForm(props) {
             }
         }
     };
-    
-    const handleShowAgregarPacientePopUp = () => {
-        setShowCrearPacientePopup(true);
-    }
 
     const handleGuardarConsulta = () => {
         setMontoError(false);
@@ -161,10 +194,6 @@ function PacientesForm(props) {
         setSelectedUser(null);
     };
 
-    const closeCrearPacientePopup = () => {
-        setShowCrearPacientePopup(false);
-    };
-
     const handleClick = (id, nombre, id_clinic) => {
         localStorage.setItem('id_patient', id);
         localStorage.setItem('namePatient', nombre);
@@ -207,9 +236,8 @@ function PacientesForm(props) {
                     <div className="pacientes-header">
                         <h1 className="title-pacientes2">Pacientes</h1>
                         <div className="IniciarConsulta">
-
-                            <button className="consultation-btn" onClick={handleShowAgregarPacientePopUp}>
-                                Iniciar consulta
+                            <button className="consultation-btn" onClick={() => handleShowAgregarPacientePopUp(selectedPatient)}>
+                                Agregar Paciente
                             </button>
                         </div>
                     </div>
@@ -280,7 +308,25 @@ function PacientesForm(props) {
                             isOpen={showCrearPacientePopup}
                         />
                     )}
-                    
+                    {showCrearPacientePopup && (
+                        <CrearPaciente
+                            onClose={() => setShowCrearPacientePopup(false)}
+                            onSummit={handleCrearPaciente}
+                            isOpen={showCrearPacientePopup}
+                        />
+                    )}
+                    {displayActionPopUp && (
+                        <PopUpAction
+                            isOpen={displayActionPopUp}
+                            actionType="Agregar"
+                            pageName="Pacientes"
+                            itemName={selectedPatient.name}
+                            itemId={selectedPatient.numeroIdentidad}
+                            onCancel={() => setDisplayActionPopUp(false)}
+                            onConfirm={() => handleCrearPaciente()}
+                        />
+                    )}
+
                 </div>
             </div>
         </PacientesLayout>
@@ -288,5 +334,4 @@ function PacientesForm(props) {
 }
 
 export default PacientesForm;
-
 
