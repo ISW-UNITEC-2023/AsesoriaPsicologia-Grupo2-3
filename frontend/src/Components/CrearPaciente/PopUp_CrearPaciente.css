@@ -10,6 +10,20 @@
   text-align: start;
 }
 
+.form-control-paciente-nombre {
+  text-align: center !important;
+}
+
+.form-control-paciente-date {
+  text-align: center !important;
+}
+
+.form-control-paciente-identidad {
+  text-align: center;
+}
+.form-control-paciente-direccion {
+  text-align: center;
+}
 .form-control-paciente {
   align-items: end !important;
   justify-content: end !important;
@@ -49,11 +63,14 @@
 .add_patient-footer-summit-buttom {
   background-color: #26586c !important;
   border-color: #1d4251 !important;
+  width: 90%;
+  margin-bottom: 1rem !important;
 }
 
 .add_patient-footer-summit-buttom:hover {
-  background-color: #1d4251 !important;
+  background-color: #296379 !important;
   border-color: #0c252e !important;
+  transition: background-color 0.4s ease-in-out;
 }
 @media (max-width: 580px) and (min-width: 1200px) {
   .form-control-paciente-date {

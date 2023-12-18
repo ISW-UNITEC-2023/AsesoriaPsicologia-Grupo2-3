@@ -36,11 +36,11 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
             <Form.Label className="form-label-pacientes">Nombre</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Ingrese el nombre"
+              placeholder="Maria Perez"
               name="nombre"
               value={formData.nombre}
               onChange={handleInputChange}
-              className="form-control-paciente"
+              className="form-control-paciente-nombre"
               required
             />
           </Form.Group>
@@ -69,11 +69,11 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Ingrese el número de identidad"
+              placeholder="XXXX-XXXX-XXXX"
               name="numeroIdentidad"
               value={formData.numeroIdentidad}
               onChange={handleInputChange}
-              className="form-control-paciente"
+              className="form-control-paciente-identidad"
               required
             />
           </Form.Group>
@@ -84,11 +84,11 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
             <Form.Label className="form-label-pacientes">Dirección</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Ingrese la dirección"
+              placeholder="Dirección: XXXX"
               name="direccion"
               value={formData.direccion}
               onChange={handleInputChange}
-              className="form-control-paciente"
+              className="form-control-paciente-direccion"
               required
             />
           </Form.Group>
@@ -107,7 +107,7 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
               className="form-control-paciente-estado"
               required
             >
-              <option value="">Seleccione</option>
+              <option value="">Estado Civil</option>
               <option value="soltero">Soltero</option>
               <option value="casado">Casado</option>
               <option value="divorciado">Divorciado</option>
