@@ -210,6 +210,23 @@ async function getAllUsersRoles(){
     roles = JSON.stringify(roles);
     return JSON.parse(roles);
   }
+  async function getByClinic(clinic) {
+        let users = await knex
+          .select(
+            'u.id_user',
+            'u.name_user',
+            'u.email_user',
+            'u.active_user',
+            'u.number_user',
+            'r.name_role AS rol'
+          )
+          .from('users as u')
+          .join('user_role as ur', 'u.id_user', '=', 'ur.id_user')
+          .join('roles as r', 'ur.id_role', '=', 'r.id_role')
+          .where('u.id_clinic', clinic);
+    users = JSON.stringify(users);
+    return JSON.parse(users);
+  }
 
 module.exports = {
   createUser,
@@ -225,10 +242,11 @@ module.exports = {
   findExistingEmail,
   getAllusers,
   getTeachers,
-  getPatients,
+  getPatients, 
   getUserRoles,
   getAllUsersRoles,
   getUserCredentialsByid,
   getRoles,
-  getRoleId
+  getRoleId,
+  getByClinic
 };

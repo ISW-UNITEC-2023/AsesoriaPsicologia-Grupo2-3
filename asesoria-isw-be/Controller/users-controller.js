@@ -484,6 +484,20 @@ async function getUserByID(req, res) {
         });
     }
 }
+async function getByClinic(req, res) {
+    const {clinic} = req.query;
+
+    try {
+        const users = await userServices.getByClinic(clinic);
+        res.send(users);
+
+    } catch (error) {
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+            error: "No se pudo obtener la info del usuario segun clinica",
+        });
+    }
+}
+
 
 
 async function deleteCookies(req, res) {
@@ -551,6 +565,8 @@ module.exports = {
     deleteCookies,
     getPrivilegesById,
     getUserByID,
-    getVerify
+    getVerify,
+    getByClinic,
+
 
 };
