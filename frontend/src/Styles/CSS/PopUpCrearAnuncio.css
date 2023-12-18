@@ -64,6 +64,7 @@ div.modal-footer {
 div.modal-title {
   text-align: center;
   font-weight: 700;
+  margin-bottom: -1rem !important;
 }
 
 @media screen and (max-width: 1200px) {

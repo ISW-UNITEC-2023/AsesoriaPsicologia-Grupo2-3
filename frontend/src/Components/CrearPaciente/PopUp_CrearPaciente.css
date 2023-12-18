@@ -4,6 +4,11 @@
   align-items: center !important;
   background-color: rgba(0, 0, 0, 0.5);
 }
+.add_patient-header {
+  display: flex !important;
+  flex-direction: column;
+  margin-bottom: 0rem !important;
+}
 
 .form-label-pacientes {
   width: 10rem !important;
