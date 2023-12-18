@@ -43,7 +43,7 @@ button.accordion-button.collapsed {
 .information {
   padding: 2rem;
   width: 86%;
-  height:350px;
+  height:auto;
   color: #676666;
   border: 1px solid #676666;
   border-radius: 0px;
@@ -57,7 +57,7 @@ button.accordion-button.collapsed {
   margin: 2rem;
 }
 
-.section-card-container.flex.flex-row.flex-wrap.gap-3.center {
+.section-card-container{
   justify-content: center;
 }
 
