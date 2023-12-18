@@ -6,7 +6,7 @@ export default function CitasLayout({children, pagina}) {
     return (
         <>
             <Helmet>
-                <title>{`Clínica - ${pagina}`}</title>
+                <title>{`Clinica - ${pagina}`}</title>
             </Helmet>
 
             <main>

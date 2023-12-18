@@ -212,7 +212,7 @@ function PacientesForm(props) {
                                         <h4 className="card-text">{formatDate(nombre.creationDate)}</h4>
                                     </div>
                                     <div className="dropdown">
-                                        <button className="btn btn-secondary dropdown-toggle" type="button"
+                                        <button className="dropdown-botton" type="button"
                                                 id={`dropdown-${nombre.id_account}`} data-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="false">
                                             Acciones
