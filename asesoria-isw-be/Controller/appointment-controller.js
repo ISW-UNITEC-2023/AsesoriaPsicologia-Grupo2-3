@@ -5,8 +5,9 @@ async function createAppointment(req, res) {
     try {
         const {appointment_date, id_file, hour, id_doctor, id_clinic, user_creator, appointment_type} = req.body;
         const fecha = new Date(appointment_date);
-        await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator, appointment_type});
-        res.send({message: "Se ha creado una nueva cita"})
+        let appoId = await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator, appointment_type});
+
+        res.send({message: "Se ha creado una nueva cita", appoId})
     } catch (error) {
         res.send({message: "No se pudo crear la cita", err: error.message});
     }

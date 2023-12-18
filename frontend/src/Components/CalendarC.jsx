@@ -21,7 +21,7 @@ function CalendarC() {
         console.log(res.data);
         setEvents(res.data);
       });
-    };
+    }; 
 
     fetchEvents();
   }, []);

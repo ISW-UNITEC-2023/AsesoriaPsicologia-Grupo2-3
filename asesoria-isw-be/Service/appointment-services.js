@@ -12,7 +12,7 @@ const knex = require("knex")({
 //Post
 
 async function createAppo(new_appo) {
-    await knex("appointments").insert({
+    return( await knex("appointments").insert({
         appointment_date: new_appo.fecha,
         appointment_hour: new_appo.hora,
         id_file: new_appo.id_file,
@@ -21,7 +21,7 @@ async function createAppo(new_appo) {
         user_creator: new_appo.user_creator,
         creation_date: new Date(),
         appointment_type: new_appo.appointment_type,
-    });
+    }))
 }
 
 async function addConsultation(new_appo) {
