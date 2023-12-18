@@ -67,7 +67,7 @@ const PopupViewer = ({ file, onClose }) => {
         setContent(null);
         onClose();
       }}
-      dialogClassName="modal-dialog-centered modal-dialog-scrollable"
+      dialogClassName="modal-dialog-centered modal-dialog-scrollable modal-dialog-viewer"
     >
       <Modal.Body className="modal-body-viewer">
         {content}

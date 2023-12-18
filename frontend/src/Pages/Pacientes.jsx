@@ -15,7 +15,7 @@ import useSWR from "swr";
 import user_services from "../Utilities/user-services";
 import { Option, Select, Spinner } from "@material-tailwind/react";
 import Dropdown from "react-bootstrap/Dropdown";
-//import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
+import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 
 function PacientesForm(props) {
   const [nombres, setNombres] = useState([]);
@@ -72,7 +72,7 @@ function PacientesForm(props) {
     } catch (error) {
       console.error("Error creating patient:", error);
     } finally {
-      setDisplayActionPopUp(false);
+      setDisplayActionPopUp(true);
     }
   };
 
