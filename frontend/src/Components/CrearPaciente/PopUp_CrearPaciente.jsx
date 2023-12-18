@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./PopUp_CrearPaciente.css";
 
@@ -11,33 +11,34 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
         estadoCivil: "",
     });
 
-    const [isAnyFieldEmpty, setIsAnyFieldEmpty] = useState(false);
+    const isFieldEmpty = (value) => value.trim() === '';
+
+    const isFormDataEmpty = Object.values(formData).every(isFieldEmpty);
+    const isAnyFieldEmpty = Object.values(formData).some(isFieldEmpty);
+
+    useEffect(() => {
+        console.log("Any empty: " + isAnyFieldEmpty + "\nAll empty: " + isFormDataEmpty);
+    }, [isAnyFieldEmpty, isFormDataEmpty]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData((formData) => ({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value,
         }));
-
-        setIsAnyFieldEmpty(Object.values(formData).some((field) => field.trim() === ''));
     };
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        setIsAnyFieldEmpty(Object.values(formData).some((field) => field.trim() === ''));
-
-        if (isAnyFieldEmpty) {
+        if (isAnyFieldEmpty || isFormDataEmpty) {
             console.error('Todos los campos son obligatorios');
-            return;
+        } else {
+            onSummit(formData);
+            onClose();
         }
-
-        onSummit(formData);
-        onClose();
     };
+
 
     return (
         <Modal className="add_patient" show={isOpen} onHide={onClose}>
@@ -131,7 +132,7 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer className="add_patient-footer">
-                <Form.Label className="form-label-error" style={{ display: isAnyFieldEmpty ? 'block' : 'none' }}>
+                <Form.Label className="form-label-error" style={{ color: (isAnyFieldEmpty || isFormDataEmpty) ? 'red' : 'white' }}>
                     Todos los campos son obligatorios
                 </Form.Label>
 
