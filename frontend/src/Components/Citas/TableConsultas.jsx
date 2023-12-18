@@ -16,7 +16,10 @@ import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { updateAppointmentWithoutAmount } from "../../Utilities/appointment-services";
+import {
+  updateAppointmentWithoutAmount,
+  getStateInitials,
+} from "../../Utilities/appointment-services";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({ page }) {
@@ -35,6 +38,7 @@ export function TableConsultas({ page }) {
   const [idAppo, setIdAppo] = useState("");
   const id = localStorage.getItem("id_patient");
   const [id_appointmentRef, setIdAppointment] = useState(null);
+  const [dataAppointment, setDataAppointment] = useState(null);
   const {
     data: fetchedRoles,
     error: rolesError,
@@ -156,10 +160,15 @@ export function TableConsultas({ page }) {
   const handleClose = () => {
     setShowModal(false);
   };
-  const handleShow = (id_appointment) => {
+  const handleShow = async (id_appointment) => {
     setShowModal(true);
     setIdAppointment(id_appointment);
+
+    const data = await getStateInitials(id_appointment);
+
+    setDataAppointment(data);
   };
+
   const handleTerminarConsulta = async () => {
     if (montoConsulta.trim() === "") {
       setMontoError(true);
@@ -183,6 +192,7 @@ export function TableConsultas({ page }) {
         setShowModal(false);
         setMontoError(false);
         setIdAppointment(null);
+        setDataAppointment(null);
       } catch (error) {
         console.log(error);
       }
@@ -210,6 +220,7 @@ export function TableConsultas({ page }) {
       });
 
       setShowModal(false);
+      setDataAppointment(null);
       setIdAppointment(null);
     } catch (error) {
       console.error("Error al actualizar la cita:", error);
@@ -397,7 +408,11 @@ export function TableConsultas({ page }) {
                   id="observaciones"
                   rows={3}
                   placeholder="Ingrese observaciones"
-                  value={observaciones}
+                  value={
+                    dataAppointment.AppInfo
+                      ? dataAppointment.AppInfo[0].observations
+                      : observaciones
+                  }
                   onChange={(e) => setObservaciones(e.target.value)}
                 />
                 <label htmlFor="montoConsulta">Monto de Consulta:</label>
@@ -427,7 +442,11 @@ export function TableConsultas({ page }) {
                   id="ordenesMedicas"
                   rows={3}
                   placeholder="Ingrese órdenes médicas"
-                  value={ordenesMedicas}
+                  value={
+                    dataAppointment.AppInfo
+                      ? dataAppointment.AppInfo[0].medic_orders
+                      : ordenesMedicas
+                  }
                   onChange={(e) => setOrdenesMedicas(e.target.value)}
                 />
               </form>

@@ -38,4 +38,6 @@ router.get("/getChequeo", appointmentControllers.getChequeo);
 //Delete
 router.delete("/deleteById/:id", appointmentControllers.deleteAppointment);
 
+router.get("/getStateInitial", appointmentControllers.getStateInitial);
+
 module.exports = router;

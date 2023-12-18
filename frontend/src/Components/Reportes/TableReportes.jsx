@@ -309,6 +309,8 @@ function TableReportes() {
                               : "brown"
                               ? "amber"
                               : state_appointment === "INICIADO"
+                              ? "amber"
+                              : state_appointment === "PENDIENTE"
                           }
                         />
                       </div>

@@ -76,3 +76,18 @@ export async function updateAppointmentWithoutAmount(
     return { message: e.response.data.error };
   }
 }
+
+export async function getStateInitials(id_appointment) {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/appointment/getStateInitial",
+    params: { id_appointment: id_appointment },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
