@@ -1,5 +1,4 @@
 import axios from "axios";
-import { id } from "date-fns/locale";
 const host = process.env.REACT_APP_API_BASE_URL;
 
 export async function getChequeo(idClinic) {
@@ -52,7 +51,8 @@ export async function updateAppointmentWithoutAmount(
   user_editor,
   observations,
   medic_orders,
-  state_appointment
+  state_appointment,
+  motive
 ) {
   const options = {
     method: "PUT",
@@ -66,7 +66,23 @@ export async function updateAppointmentWithoutAmount(
       observations: observations,
       medic_orders: medic_orders,
       state_appointment: state_appointment,
+      motive: motive,
     },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+export async function getStateInitials(id_appointment) {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/appointment/getStateInitial",
+    params: { id_appointment: id_appointment },
   };
 
   try {

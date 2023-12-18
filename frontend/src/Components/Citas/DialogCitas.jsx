@@ -92,6 +92,7 @@ export default function DialogCitas({
           user_creator: localStorage.getItem("user_id"),
           appointment_type: modalidad,
           appointment_hour: horaN,
+          state_appointment: "PENDIENTE",
         })
         .then(() => {
           handleOpen();

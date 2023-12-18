@@ -22,6 +22,7 @@ async function createAppo(new_appo) {
     creation_date: new Date(),
     appointment_type: new_appo.appointment_type,
     appointment_hour: new_appo.appointment_hour,
+    state_appointment: new_appo.state_appointment,
   });
 }
 
@@ -38,6 +39,7 @@ async function addConsultation(new_appo) {
       payment_amount: new_appo.payment_amount,
       medic_orders: new_appo.medic_orders,
       state_appointment: new_appo.state_appointment,
+      motive: new_appo.motive,
     });
 }
 
@@ -53,6 +55,7 @@ async function updateAppointmentWithoutAmount(new_appo) {
       observations: new_appo.observations,
       medic_orders: new_appo.medic_orders,
       state_appointment: new_appo.state_appointment,
+      motive: new_appo.motive,
     });
 }
 
@@ -267,6 +270,17 @@ async function getChequeo(idClinic) {
   }
 }
 
+async function getStateInitial(id_appointment) {
+  return JSON.parse(
+    JSON.stringify(
+      await knex("appointments").select().where({
+        id_appointment: id_appointment,
+        state_appointment: "INICIADO",
+      })
+    )
+  );
+}
+
 async function updateZoomLink(appo) {
   await knex("appointments")
     .update({
@@ -301,4 +315,5 @@ module.exports = {
   updatePaymentType,
   updateZoomLink,
   updateAppointmentWithoutAmount,
+  getStateInitial,
 };

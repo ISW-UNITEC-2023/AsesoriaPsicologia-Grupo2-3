@@ -10,6 +10,7 @@ async function createAppointment(req, res) {
       user_creator,
       appointment_type,
       appointment_hour,
+      state_appointment,
     } = req.body;
     const fecha = new Date(appointment_date);
     await appointmentServices.createAppo({
@@ -20,6 +21,7 @@ async function createAppointment(req, res) {
       user_creator,
       appointment_type,
       appointment_hour,
+      state_appointment,
     });
     res.send({ message: "Se ha creado una nueva cita" });
   } catch (error) {
@@ -39,6 +41,7 @@ async function addConsultation(req, res) {
       payment_amount,
       medic_orders,
       state_appointment,
+      motive,
     } = req.body;
 
     await appointmentServices.addConsultation({
@@ -51,6 +54,7 @@ async function addConsultation(req, res) {
       payment_amount,
       medic_orders,
       state_appointment,
+      motive,
     });
     res.send({ message: "Se han agregado los datos de la consulta" });
   } catch (error) {
@@ -406,6 +410,7 @@ async function updateAppointmentWithoutAmount(req, res) {
       observations,
       medic_orders,
       state_appointment,
+      motive,
     } = req.body;
 
     await appointmentServices.updateAppointmentWithoutAmount({
@@ -417,10 +422,44 @@ async function updateAppointmentWithoutAmount(req, res) {
       observations,
       medic_orders,
       state_appointment,
+      motive,
     });
     res.send({ message: "Se han agregado los datos de la consulta" });
   } catch (error) {
     res.send({ message: "No se pudo crear la consulta", err: error.message });
+  }
+}
+
+async function getStateInitial(req, res) {
+  const { id_appointment } = req.query;
+  const errors = [];
+
+  if (!id_appointment) {
+    errors.push("Falta el id_clinic de la clinica");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
+  try {
+    const App = await appointmentServices.getStateInitial(id_appointment);
+    if (App.length === 0) {
+      return res.status(HTTPCodes.NOT_FOUND).send({
+        error: "No se encontraron datos para el chequeo",
+      });
+    }
+
+    res.send({
+      message: "Se obtuvieron los datos para el chequeo",
+      AppInfo: App,
+    });
+  } catch (e) {
+    console.error("Error en getChequeo:", e);
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los datos del chequeo",
+    });
   }
 }
 
@@ -443,4 +482,5 @@ module.exports = {
   updatePaymentTypeMedic,
   updateZoomLink,
   updateAppointmentWithoutAmount,
+  getStateInitial,
 };

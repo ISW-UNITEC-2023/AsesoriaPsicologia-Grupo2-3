@@ -16,7 +16,10 @@ import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { updateAppointmentWithoutAmount } from "../../Utilities/appointment-services";
+import {
+  updateAppointmentWithoutAmount,
+  getStateInitials,
+} from "../../Utilities/appointment-services";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({ page }) {
@@ -35,6 +38,7 @@ export function TableConsultas({ page }) {
   const [idAppo, setIdAppo] = useState("");
   const id = localStorage.getItem("id_patient");
   const [id_appointmentRef, setIdAppointment] = useState(null);
+  const [dataAppointment, setDataAppointment] = useState(null);
   const {
     data: fetchedRoles,
     error: rolesError,
@@ -155,11 +159,35 @@ export function TableConsultas({ page }) {
 
   const handleClose = () => {
     setShowModal(false);
+    setObservaciones("");
+    setMontoConsulta("");
+    setOrdenesMedicas("");
+    setMotivoConsulta("");
+    setMontoError(false);
+    setIdAppointment(null);
+    setDataAppointment(null);
   };
-  const handleShow = (id_appointment) => {
+  const handleShow = async (id_appointment) => {
     setShowModal(true);
     setIdAppointment(id_appointment);
+    const data = await getStateInitials(id_appointment);
+    setDataAppointment(data);
+
+    setObservaciones(
+      data && data.AppInfo && data.AppInfo[0]
+        ? data.AppInfo[0].observations
+        : ""
+    );
+    setOrdenesMedicas(
+      data && data.AppInfo && data.AppInfo[0]
+        ? data.AppInfo[0].medic_orders
+        : ""
+    );
+    setMotivoConsulta(
+      data && data.AppInfo && data.AppInfo[0] ? data.AppInfo[0].motive : ""
+    );
   };
+
   const handleTerminarConsulta = async () => {
     if (montoConsulta.trim() === "") {
       setMontoError(true);
@@ -175,6 +203,7 @@ export function TableConsultas({ page }) {
           payment_amount: montoConsulta,
           medic_orders: ordenesMedicas,
           state_appointment: "TERMINADO",
+          motive: motivoConsulta,
         });
         toast.success("Consulta guardada con éxito", {
           position: toast.POSITION.TOP_CENTER,
@@ -183,6 +212,7 @@ export function TableConsultas({ page }) {
         setShowModal(false);
         setMontoError(false);
         setIdAppointment(null);
+        setDataAppointment(null);
       } catch (error) {
         console.log(error);
       }
@@ -201,7 +231,8 @@ export function TableConsultas({ page }) {
         localStorage.getItem("user_id"),
         observaciones,
         ordenesMedicas,
-        "INICIADO"
+        "INICIADO",
+        motivoConsulta
       );
 
       toast.success("Consulta guardada con éxito", {
@@ -210,6 +241,7 @@ export function TableConsultas({ page }) {
       });
 
       setShowModal(false);
+      setDataAppointment(null);
       setIdAppointment(null);
     } catch (error) {
       console.error("Error al actualizar la cita:", error);
@@ -382,6 +414,7 @@ export function TableConsultas({ page }) {
                   ))}
                 </Select>
               </div>
+
               <form className="pop-iniciar-consulta-form">
                 <label htmlFor="consultaMotivo">Motivo de Consulta:</label>
                 <textarea

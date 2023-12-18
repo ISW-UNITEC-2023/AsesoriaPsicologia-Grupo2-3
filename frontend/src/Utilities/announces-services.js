@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
 export async function loadAnnounces() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/announcements/viewAll",
+    url: host+"/announcements/viewAll",
   };
 
   const response = await axios.request(options);
@@ -16,7 +16,7 @@ export async function loadAnnounces() {
 export async function DeleteAnnounces(id_announces) {
   const options = {
     method: "DELETE",
-    url: "http://localhost:8000/announcements/delete",
+    url: host+"/announcements/delete",
     data: {
       id: id_announces,
     },
@@ -35,7 +35,7 @@ export async function DeleteAnnounces(id_announces) {
 export async function CreateAnnounce(info) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/announcements/create",
+    url: host+"/announcements/create",
     data: info
   };
 
@@ -52,7 +52,7 @@ export async function CreateAnnounce(info) {
 export async function UpdateAnnouncesTitle(id, title) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/announcements/updateTitle",
+    url: host+"/announcements/updateTitle",
     data: {
       id: id,
       title: title,
@@ -73,7 +73,7 @@ export async function UpdateAnnouncesTitle(id, title) {
 export async function UpdateAnnouncesDecription(id, message) {
   const options = {
     method: "POST",
-    url: "http://localhost:8000/announcements/updateMessage",
+    url: host+"/announcements/updateMessage",
     data: {
       id: id,
       message: message,

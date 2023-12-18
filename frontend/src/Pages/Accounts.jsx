@@ -437,6 +437,7 @@ function Accounts(props) {
           }
         });
       });
+      
       setUsers(fetchedUsers);
       setOriginalUsers(fetchedUsers);
     };

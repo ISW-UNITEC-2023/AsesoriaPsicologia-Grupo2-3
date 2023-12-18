@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
 export async function loadModules() {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/courses/getCourses",
+    url: host+"/courses/getCourses",
     withCredentials: true,
   };
   const response = await axios.request(options);
@@ -16,7 +16,7 @@ export async function createModules(module) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "POST",
-    url: "http://localhost:8000/courses/create", // Correct endpoint URL
+    url: host+"/courses/create", // Correct endpoint URL
     withCredentials: true,
     data: module, // Use the 'module' parameter
   };
@@ -26,7 +26,7 @@ export async function createModules(module) {
 
 export async function deleteModule(id) {
   const host = process.env.REACT_APP_API_BASE_URL;
-  const url = "http://localhost:8000/courses/delete";
+  const url = host+"/courses/delete";
   const data = { id: id };
 
   try {
