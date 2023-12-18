@@ -9,6 +9,7 @@ async function createAppointment(req, res) {
       id_clinic,
       user_creator,
       appointment_type,
+      appointment_hour,
     } = req.body;
     const fecha = new Date(appointment_date);
     await appointmentServices.createAppo({
@@ -18,6 +19,7 @@ async function createAppointment(req, res) {
       id_clinic,
       user_creator,
       appointment_type,
+      appointment_hour,
     });
     res.send({ message: "Se ha creado una nueva cita" });
   } catch (error) {
@@ -32,20 +34,23 @@ async function addConsultation(req, res) {
       id_file,
       id_doctor,
       id_clinic,
-      user_creator,
+      user_editor,
       observations,
       payment_amount,
       medic_orders,
+      state_appointment,
     } = req.body;
+
     await appointmentServices.addConsultation({
       id_appointment,
       id_file,
       id_doctor,
       id_clinic,
-      user_creator,
+      user_editor,
       observations,
       payment_amount,
       medic_orders,
+      state_appointment,
     });
     res.send({ message: "Se han agregado los datos de la consulta" });
   } catch (error) {
@@ -146,6 +151,7 @@ async function updateAppointment(req, res) {
       user_editor,
       id_doctor,
       id_file,
+      appointment_type,
     } = req.body;
     const fecha = new Date(appointment_date);
     await appointmentServices.updateAppo({
@@ -155,6 +161,7 @@ async function updateAppointment(req, res) {
       user_editor,
       id_doctor,
       id_file,
+      appointment_type,
     });
     res.send({ message: "Se ha actualizado la cita" });
   } catch (error) {
@@ -388,6 +395,35 @@ async function getChequeo(req, res) {
   }
 }
 
+async function updateAppointmentWithoutAmount(req, res) {
+  try {
+    const {
+      id_appointment,
+      id_file,
+      id_doctor,
+      id_clinic,
+      user_editor,
+      observations,
+      medic_orders,
+      state_appointment,
+    } = req.body;
+
+    await appointmentServices.updateAppointmentWithoutAmount({
+      id_appointment,
+      id_file,
+      id_doctor,
+      id_clinic,
+      user_editor,
+      observations,
+      medic_orders,
+      state_appointment,
+    });
+    res.send({ message: "Se han agregado los datos de la consulta" });
+  } catch (error) {
+    res.send({ message: "No se pudo crear la consulta", err: error.message });
+  }
+}
+
 module.exports = {
   getAppointments,
   getById,
@@ -406,4 +442,5 @@ module.exports = {
   getChequeo,
   updatePaymentTypeMedic,
   updateZoomLink,
+  updateAppointmentWithoutAmount,
 };

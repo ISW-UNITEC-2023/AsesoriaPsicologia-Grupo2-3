@@ -21,6 +21,7 @@ async function createAppo(new_appo) {
     user_creator: new_appo.user_creator,
     creation_date: new Date(),
     appointment_type: new_appo.appointment_type,
+    appointment_hour: new_appo.appointment_hour,
   });
 }
 
@@ -31,11 +32,27 @@ async function addConsultation(new_appo) {
       id_file: new_appo.id_file,
       id_doctor: new_appo.id_doctor,
       id_clinic: new_appo.id_clinic,
-      user_creator: new_appo.user_creator,
+      user_editor: new_appo.user_editor,
       last_modification: new Date(),
       observations: new_appo.observations,
-      payment_amount: new_appo.amount,
+      payment_amount: new_appo.payment_amount,
       medic_orders: new_appo.medic_orders,
+      state_appointment: new_appo.state_appointment,
+    });
+}
+
+async function updateAppointmentWithoutAmount(new_appo) {
+  await knex("appointments")
+    .where({ id_appointment: new_appo.id_appointment })
+    .update({
+      id_file: new_appo.id_file,
+      id_doctor: new_appo.id_doctor,
+      id_clinic: new_appo.id_clinic,
+      user_editor: new_appo.user_editor,
+      last_modification: new Date(),
+      observations: new_appo.observations,
+      medic_orders: new_appo.medic_orders,
+      state_appointment: new_appo.state_appointment,
     });
 }
 
@@ -123,6 +140,7 @@ async function updateAppo(appo) {
         appointment_hour: appo.appointment_hour,
         user_editor: appo.user_editor,
         last_modification: new Date(),
+        appointment_type: appo.appointment_type,
       });
   } catch (error) {
     console.error("Error in updateAppo:", error);
@@ -164,7 +182,7 @@ async function updatePaymentType(appo) {
   await knex("appointments")
     .update({
       payment_type: appo.payment_type,
-      state_appointment: "PROCESADA",
+      state_appointment: "PROCESADO",
       user_editor: appo.editor,
       last_modification: new Date(),
     })
@@ -239,7 +257,7 @@ async function getChequeo(idClinic) {
       .from("appointments")
       .leftJoin("users", "appointments.id_doctor", "users.id_user")
       .leftJoin("files", "appointments.id_file", "files.id_file")
-      .where("appointments.state_appointment", "Terminado")
+      .where("appointments.state_appointment", "TERMINADO")
       .andWhere("appointments.id_clinic", idClinic);
 
     return data;
@@ -282,4 +300,5 @@ module.exports = {
   getChequeo,
   updatePaymentType,
   updateZoomLink,
+  updateAppointmentWithoutAmount,
 };

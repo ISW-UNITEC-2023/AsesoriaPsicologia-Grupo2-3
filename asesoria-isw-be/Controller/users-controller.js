@@ -76,8 +76,8 @@ async function registerUser(req, res) {
 }
 
 async function loginUser(req, res) {
-    try {
-        const {email, password} = req.body;
+  try {
+    const { email, password, registro } = req.body;
 
         const errorMessage = [];
 
@@ -88,76 +88,97 @@ async function loginUser(req, res) {
 
         const email_exists = await userServices.findExistingEmail(email);
 
-        if (email_exists.length === 0) {
-            errorMessage.push("No existe un correo con este email");
-            res.send({
-                errorMessage,
-            });
-            return res;
-        }
 
-
-        const userData = {
-            email: email,
-            id_user: email_exists[0].id_user,
-            id_clinic: email_exists[0].id_clinic,
-        };
-        if (errorMessage.length) {
-            res.send({
-                errorMessage,
-            });
-        } else {
-            const email_now = email_exists[0];
-            const userEncryptedDetails = encryptPassword(
-                password,
-                email_now.salt_user
-            );
-
-            if (userEncryptedDetails.encryptedPassword === email_now.password_user) {
-                const accessToken = jwt.sign(
-                    {
-                        id: email_now.id_user,
-                        email: email_now.email_user,
-                        name: email_now.name_user,
-                    },
-                    process.env.ACCESS_TOKEN_SECRET,
-                    {
-                        expiresIn: "1h",
-                    }
-                );
-
-                const refreshToken = jwt.sign(
-                    {
-                        email: email_now.email_user,
-                    },
-                    process.env.REFRESH_TOKEN_SECRET,
-                    {
-                        expiresIn: "30d",
-                    }
-                );
-
-                res.cookie("user_data", userData, {
-                    maxAge: 259200000, // Duración de 3 días en milisegundos
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: "lax",
-                    signed: true,
-                });
-
-                res.send({
-                    name: email_now.name_user,
-                    accessToken,
-                    refreshToken,
-                    id: email_now.id_user,
-                });
-            } else {
-                res.send({errorMessage: ["Contraseña incorrecta"]});
-            }
-        }
-    } catch (e) {
-        console.log(e);
-        res.status(500).send("INTERNAL SERVER ERROR");
+    if (email_exists.length === 0) {
+      errorMessage.push("No existe un usuario con este email.");
+      res.send({
+        errorMessage,
+      });
+      return res;
     }
+    const roles = await userServices.getUserRoles(email_exists[0].id_user);
+    //console.log("Roles", roles[0]);
+    const allroles = await rolesServices.getRoles();
+    
+    const allroles2= allroles.map((roles) => roles.name_role);
+
+    let privileges = await Promise.all(
+      roles[0].map(async (role) => {
+        return await rolesServices.getRolePrivileges(role.id_role);
+      })
+    );
+
+    const privilegios = privileges[0].map((privilege) => privilege.id_privilege);
+    
+    //console.log("Privilegios retornados", privilegios);
+    const roleNames = roles[0].map((role) => role.name_role);
+
+    const userData = {
+      email: email,
+      roles: roleNames,
+      privileges: privilegios,
+      allRoles: allroles2,
+    };
+    if (errorMessage.length) {
+      res.send({
+        errorMessage,
+      });
+    } else {
+      const email_now = email_exists[0];
+      const userEncryptedDetails = encryptPassword(
+        password,
+        email_now.salt_user
+      );
+
+      if (userEncryptedDetails.encryptedPassword === email_now.password_user) {
+        if(email_exists[0].id_clinic === parseInt(registro)){
+        const accessToken = jwt.sign(
+          {
+            id: email_now.id_user,
+            email: email_now.email_user,
+            name: email_now.name_user,
+          },
+          process.env.ACCESS_TOKEN_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
+
+        const refreshToken = jwt.sign(
+          {
+            email: email_now.email_user,
+          },
+          process.env.REFRESH_TOKEN_SECRET,
+          {
+            expiresIn: "30d",
+          }
+        );
+
+        res.cookie("user_data", userData, {
+          maxAge: 259200000, // Duración de 3 días en milisegundos
+          httpOnly: true,
+          secure: true,
+          sameSite: "lax",
+          signed: true,
+        });
+
+        res.send({
+          name: email_now.name_user,
+          accessToken,
+          refreshToken,
+          id: email_now.id_user,
+        });
+      } else {
+        res.send({ errorMessage: ["El usuario no está asignado a esa clínica."] });
+      }
+      } else {
+        res.send({ errorMessage: ["Contraseña incorrecta"] });
+      }
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("INTERNAL SERVER ERROR");
+  }
 }
 
 async function updateUserPassword(req, res) {
