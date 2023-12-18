@@ -41,6 +41,7 @@ async function addConsultation(req, res) {
       payment_amount,
       medic_orders,
       state_appointment,
+      motive,
     } = req.body;
 
     await appointmentServices.addConsultation({
@@ -53,6 +54,7 @@ async function addConsultation(req, res) {
       payment_amount,
       medic_orders,
       state_appointment,
+      motive,
     });
     res.send({ message: "Se han agregado los datos de la consulta" });
   } catch (error) {
@@ -408,6 +410,7 @@ async function updateAppointmentWithoutAmount(req, res) {
       observations,
       medic_orders,
       state_appointment,
+      motive,
     } = req.body;
 
     await appointmentServices.updateAppointmentWithoutAmount({
@@ -419,6 +422,7 @@ async function updateAppointmentWithoutAmount(req, res) {
       observations,
       medic_orders,
       state_appointment,
+      motive,
     });
     res.send({ message: "Se han agregado los datos de la consulta" });
   } catch (error) {

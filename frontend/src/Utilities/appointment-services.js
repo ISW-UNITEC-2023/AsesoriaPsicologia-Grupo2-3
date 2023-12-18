@@ -52,7 +52,8 @@ export async function updateAppointmentWithoutAmount(
   user_editor,
   observations,
   medic_orders,
-  state_appointment
+  state_appointment,
+  motive
 ) {
   const options = {
     method: "PUT",
@@ -66,6 +67,7 @@ export async function updateAppointmentWithoutAmount(
       observations: observations,
       medic_orders: medic_orders,
       state_appointment: state_appointment,
+      motive: motive,
     },
   };
 

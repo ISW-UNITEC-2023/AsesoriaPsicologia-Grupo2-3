@@ -20,6 +20,7 @@ import {
   updateAppointmentWithoutAmount,
   getStateInitials,
 } from "../../Utilities/appointment-services";
+import { set } from "date-fns";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({ page }) {
@@ -159,14 +160,33 @@ export function TableConsultas({ page }) {
 
   const handleClose = () => {
     setShowModal(false);
+    setObservaciones("");
+    setMontoConsulta("");
+    setOrdenesMedicas("");
+    setMotivoConsulta("");
+    setMontoError(false);
+    setIdAppointment(null);
+    setDataAppointment(null);
   };
   const handleShow = async (id_appointment) => {
     setShowModal(true);
     setIdAppointment(id_appointment);
-
     const data = await getStateInitials(id_appointment);
-
     setDataAppointment(data);
+
+    setObservaciones(
+      data && data.AppInfo && data.AppInfo[0]
+        ? data.AppInfo[0].observations
+        : ""
+    );
+    setOrdenesMedicas(
+      data && data.AppInfo && data.AppInfo[0]
+        ? data.AppInfo[0].medic_orders
+        : ""
+    );
+    setMotivoConsulta(
+      data && data.AppInfo && data.AppInfo[0] ? data.AppInfo[0].motive : ""
+    );
   };
 
   const handleTerminarConsulta = async () => {
@@ -184,6 +204,7 @@ export function TableConsultas({ page }) {
           payment_amount: montoConsulta,
           medic_orders: ordenesMedicas,
           state_appointment: "TERMINADO",
+          motive: motivoConsulta,
         });
         toast.success("Consulta guardada con éxito", {
           position: toast.POSITION.TOP_CENTER,
@@ -211,7 +232,8 @@ export function TableConsultas({ page }) {
         localStorage.getItem("user_id"),
         observaciones,
         ordenesMedicas,
-        "INICIADO"
+        "INICIADO",
+        motivoConsulta
       );
 
       toast.success("Consulta guardada con éxito", {
@@ -393,6 +415,7 @@ export function TableConsultas({ page }) {
                   ))}
                 </Select>
               </div>
+
               <form className="pop-iniciar-consulta-form">
                 <label htmlFor="consultaMotivo">Motivo de Consulta:</label>
                 <textarea
@@ -408,11 +431,7 @@ export function TableConsultas({ page }) {
                   id="observaciones"
                   rows={3}
                   placeholder="Ingrese observaciones"
-                  value={
-                    dataAppointment.AppInfo
-                      ? dataAppointment.AppInfo[0].observations
-                      : observaciones
-                  }
+                  value={observaciones}
                   onChange={(e) => setObservaciones(e.target.value)}
                 />
                 <label htmlFor="montoConsulta">Monto de Consulta:</label>
@@ -442,11 +461,7 @@ export function TableConsultas({ page }) {
                   id="ordenesMedicas"
                   rows={3}
                   placeholder="Ingrese órdenes médicas"
-                  value={
-                    dataAppointment.AppInfo
-                      ? dataAppointment.AppInfo[0].medic_orders
-                      : ordenesMedicas
-                  }
+                  value={ordenesMedicas}
                   onChange={(e) => setOrdenesMedicas(e.target.value)}
                 />
               </form>

@@ -39,6 +39,7 @@ async function addConsultation(new_appo) {
       payment_amount: new_appo.payment_amount,
       medic_orders: new_appo.medic_orders,
       state_appointment: new_appo.state_appointment,
+      motive: new_appo.motive,
     });
 }
 
@@ -54,6 +55,7 @@ async function updateAppointmentWithoutAmount(new_appo) {
       observations: new_appo.observations,
       medic_orders: new_appo.medic_orders,
       state_appointment: new_appo.state_appointment,
+      motive: new_appo.motive,
     });
 }
 
