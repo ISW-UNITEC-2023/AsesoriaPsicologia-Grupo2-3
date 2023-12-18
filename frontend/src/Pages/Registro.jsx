@@ -75,7 +75,9 @@ function Wizard(props) {
                 onBlur={() =>
                   setTouchedFields({ ...touchedFields, name: true })
                 }
-                isInvalid={!regData.name.length > 0 && touchedFields.name}
+                isInvalid={
+                  touchedFields.name && !regData.name.length > 0
+                }
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -94,8 +96,9 @@ function Wizard(props) {
                   setTouchedFields({ ...touchedFields, phoneNum: true })
                 }
                 isInvalid={
-                  !regData.phoneNum.length > 0 && touchedFields.phoneNum
+                  touchedFields.name && !regData.name.length > 0
                 }
+                
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -116,8 +119,9 @@ function Wizard(props) {
                   })
                 }
                 isInvalid={
-                  !validations.isEmailValid && !regData.email.length > 0
+                  touchedFields.name && !regData.name.length > 0
                 }
+                
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -139,8 +143,9 @@ function Wizard(props) {
                   })
                 }
                 isInvalid={
-                  !validations.isPasswordValid && !regData.password.length > 0
+                  touchedFields.name && !regData.name.length > 0
                 }
+                
                 required
               />
               <Form.Control.Feedback type="invalid">
