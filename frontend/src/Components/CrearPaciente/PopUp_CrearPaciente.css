@@ -1,0 +1,40 @@
+.add_patient {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content{
+    
+}
+
+.add_patient-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.add_patient-form-group {
+    display: flex;
+    flex-direction: row;
+    align-self: start;
+    font-size: 20px;
+    font-weight: bold;
+    color: #26586c;
+    margin-bottom: 20px;
+}
+
+.add_patient-footer-summit-buttom {
+    background-color: #26586c !important;
+    border-color: #1d4251 !important;
+}
+
+.add_patient-footer-summit-buttom:hover {
+    background-color: #1d4251 !important;
+    border-color: #0c252e !important;
+}
