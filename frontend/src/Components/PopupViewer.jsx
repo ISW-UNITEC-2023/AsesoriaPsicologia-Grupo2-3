@@ -61,6 +61,7 @@ const PopupViewer = ({ file, onClose }) => {
 
   return (
     <Modal
+      className="modal-body-viewer"
       show={!!content}
       onHide={() => {
         setContent(null);
@@ -68,7 +69,7 @@ const PopupViewer = ({ file, onClose }) => {
       }}
       dialogClassName="modal-dialog-centered modal-dialog-scrollable"
     >
-      <Modal.Body>
+      <Modal.Body className="modal-body-viewer">
         {content}
         <style>
           {`
@@ -95,7 +96,7 @@ const PopupViewer = ({ file, onClose }) => {
           `}
         </style>
       </Modal.Body>
-      <Modal.Footer dialogClassName="modal-footer-pv">
+      <Modal.Footer dialogClassName="modal-footer-viewer">
         <Button
           variant="secondary"
           onClick={() => {

@@ -1,9 +1,9 @@
-.modal-content {
+.modal-content-viewer {
   background-color: #f8f9fa;
   border: none;
 }
 
-.modal-body {
+.modal-body-viewer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@
   padding: 0;
 }
 
-.modal-footer {
+.modal-footer-viewer {
   border-top: 1px solid #ced4da;
   padding: 20px;
 }
