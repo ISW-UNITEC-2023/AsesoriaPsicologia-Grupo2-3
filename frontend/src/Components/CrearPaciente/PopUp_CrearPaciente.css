@@ -30,10 +30,12 @@
 }
 
 .form-control-paciente-date {
+  color: #86888a !important;
   margin-left: 6rem !important;
 }
 
 .form-control-paciente-estado {
+  color: #86888a !important;
   padding: 0 2rem !important;
   text-align: center;
   align-self: center;
