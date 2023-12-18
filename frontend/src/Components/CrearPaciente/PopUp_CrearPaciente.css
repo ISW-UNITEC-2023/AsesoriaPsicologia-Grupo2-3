@@ -1,0 +1,93 @@
+.add_patient {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.add_patient-header {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 0rem !important;
+}
+
+.form-label-pacientes {
+  width: 10rem !important;
+  text-align: start !important;
+}
+
+.form-control-paciente-nombre {
+  text-align: center !important;
+}
+
+.form-control-paciente-date {
+  text-align: center !important;
+}
+
+.form-control-paciente-identidad {
+  text-align: center !important;
+}
+.form-control-paciente-direccion {
+  text-align: center !important;
+}
+.form-control-paciente {
+  align-items: end !important;
+  justify-content: end !important;
+}
+
+.form-control-paciente-date {
+  color: #86888a !important;
+  margin-left: 6rem !important;
+}
+
+.form-control-paciente-estado {
+  color: #86888a !important;
+  padding: 0 2rem !important;
+  text-align: center !important;
+  align-self: center !important;
+  margin-left: 7rem !important;
+}
+
+.add_patient-form {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 5% !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+}
+
+.add_patient-form-group {
+  display: flex !important;
+  flex-direction: row !important;
+  align-self: start !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  color: #26586c !important;
+  margin-bottom: 20px !important;
+}
+
+.add_patient-footer-summit-buttom {
+  background-color: #26586c !important;
+  border-color: #1d4251 !important;
+  width: 90% !important;
+  margin-bottom: 1rem !important;
+}
+
+.add_patient-footer-summit-buttom:hover {
+  background-color: #296379 !important;
+  border-color: #0c252e !important;
+  transition: background-color 0.4s ease-in-out !important;
+}
+@media (max-width: 580px) and (min-width: 1200px) {
+  .form-control-paciente-date {
+    margin-left: 4.5rem !important;
+    width: 60% !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .form-control-paciente-date {
+    margin-left: 6rem !important;
+    width: 70% !important;
+  }
+}
