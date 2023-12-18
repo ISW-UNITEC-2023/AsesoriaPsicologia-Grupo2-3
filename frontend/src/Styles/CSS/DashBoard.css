@@ -25,6 +25,7 @@
   background-color: rgb(255, 255, 255);
   border-bottom: 1px solid #e3e3e3;
   margin: 3px;
+  
 }
 
 .dashboard-titulo {
@@ -62,11 +63,38 @@ button.accordion-button.collapsed {
 
 .dashed-line {
   width: 86%;
-  height: 1px;
+  height: 2px;
   background-image: linear-gradient(to right, #113946 33%, transparent 33%),
   linear-gradient(to right, #113946 66%, transparent 66%);
-  background-size: 6px 100%;
+  background-size: 10px 100%;
   margin: 3px;
   background-repeat: repeat-x;
   margin: 0 auto;
+}
+
+.quick-access-text {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #113946;
+  font-weight: bold;
+  font-size: 20px;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.quick-access-button {
+  margin: 0 5px;
+  padding: 8px 16px;
+  background-color: #676666;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quick-access-button:hover {
+  background-color: #555;
 }
