@@ -16,6 +16,8 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
     const isFormDataEmpty = Object.values(formData).every(isFieldEmpty);
     const isAnyFieldEmpty = Object.values(formData).some(isFieldEmpty);
 
+    const isNumeroIdentidadValid = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/.test(formData.numeroIdentidad);
+
     useEffect(() => {
         console.log("Any empty: " + isAnyFieldEmpty + "\nAll empty: " + isFormDataEmpty);
     }, [isAnyFieldEmpty, isFormDataEmpty]);
@@ -31,14 +33,13 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (isAnyFieldEmpty || isFormDataEmpty) {
-            console.error('Todos los campos son obligatorios');
+        if (isAnyFieldEmpty || isFormDataEmpty || !isNumeroIdentidadValid) {
+            console.error('Todos los campos son obligatorios y/o el formato del número de identidad es incorrecto');
         } else {
             onSummit(formData);
             onClose();
         }
     };
-
 
     return (
         <Modal className="add_patient" show={isOpen} onHide={onClose}>
@@ -92,6 +93,11 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
                             required
                         />
                     </Form.Group>
+                    {!isNumeroIdentidadValid && (
+                        <Form.Label className="text-danger">
+                            El formato del número de identidad es incorrecto.
+                        </Form.Label>
+                    )}
                     <Form.Group
                         controlId="formDireccion"
                         className="add_patient-form-group"
@@ -135,7 +141,6 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
                 <Form.Label className="form-label-error" style={{ color: (isAnyFieldEmpty || isFormDataEmpty) ? 'red' : 'white' }}>
                     Todos los campos son obligatorios
                 </Form.Label>
-
                 <Button
                     variant="primary"
                     type="submit"
