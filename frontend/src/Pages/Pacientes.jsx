@@ -43,7 +43,8 @@ function PacientesForm(props) {
     };
 
     async function initialList() {
-        const arregloUsuarios = await Services.getPatients();
+      
+        const arregloUsuarios = await Services.getPatients(props.userData.user_data.id_clinic);
         const arregloMandar = [];
 
         arregloUsuarios.map((usuario) => {

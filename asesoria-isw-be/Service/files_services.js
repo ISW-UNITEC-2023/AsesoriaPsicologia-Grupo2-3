@@ -52,6 +52,13 @@ async function existFile(id) {
   return JSON.parse(file);
 }
 
+async function existFilebyEmail(email) {
+  let file = await knex("files").where("email", email).andWhere("active", 1).select("*");
+  file = JSON.stringify(file);
+  return JSON.parse(file);
+}
+
+
 async function updateLastName(file) {
   return knex("files").where("id_file", file.id).update({
     last_name: file.last_name,
@@ -161,7 +168,7 @@ async function getAllFiles() {
 }
 
 async function getClinicFiles(id) {
-  let file = await knex.select().from("files").where("id_clinic", id);
+  let file = await knex.select().from("files").where("id_clinic", id).andWhere("active", 1);
   file = JSON.stringify(file);
   return JSON.parse(file);
 }
@@ -192,4 +199,5 @@ module.exports = {
   updateFilescol,
   updateActive,
   updateIdClinic,
+  existFilebyEmail,
 };
