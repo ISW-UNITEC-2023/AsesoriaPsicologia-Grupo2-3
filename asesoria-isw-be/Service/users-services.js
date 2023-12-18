@@ -218,6 +218,7 @@ async function getAllUsersRoles(){
             'u.email_user',
             'u.active_user',
             'u.number_user',
+            'u.creation_date',
             'r.name_role AS rol'
           )
           .from('users as u')
