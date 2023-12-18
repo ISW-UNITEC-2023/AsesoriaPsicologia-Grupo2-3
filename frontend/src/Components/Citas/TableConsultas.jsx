@@ -20,7 +20,6 @@ import {
   updateAppointmentWithoutAmount,
   getStateInitials,
 } from "../../Utilities/appointment-services";
-import { set } from "date-fns";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({ page }) {

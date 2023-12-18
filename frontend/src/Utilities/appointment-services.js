@@ -1,5 +1,4 @@
 import axios from "axios";
-import { id } from "date-fns/locale";
 const host = process.env.REACT_APP_API_BASE_URL;
 
 export async function getChequeo(idClinic) {

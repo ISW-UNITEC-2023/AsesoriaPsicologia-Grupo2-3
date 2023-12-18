@@ -5,12 +5,14 @@ import { formatMoney } from "../../Helpers";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-const StatsSection = ({page}) => {
-    const {
-        data: salesWeek,
-        error: errorWeek,
-        isLoading: loadingWeek
-    } = useSWR('http://localhost:8000/stats/getStatsWeek', fetcher, {refreshInterval: 1000});
+const StatsSection = () => {
+  const {
+    data: salesWeek,
+    error: errorWeek,
+    isLoading: loadingWeek,
+  } = useSWR("http://localhost:8000/stats/getStatsWeek", fetcher, {
+    refreshInterval: 1000,
+  });
 
   const {
     data: salesDay,
