@@ -93,12 +93,12 @@ function Documents(props) {
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.onload = () => {
-        const arrayBuffer = Uint8Array.from(atob(reader.result.split(',')[1]), (c) =>
-        c.charCodeAt(0)
-      ).buffer;
+        const arrayBuffer = Uint8Array.from(
+          atob(reader.result.split(",")[1]),
+          (c) => c.charCodeAt(0)
+        ).buffer;
 
-      const blob = new Blob([arrayBuffer], { type: files[i].type });
-
+        const blob = new Blob([arrayBuffer], { type: files[i].type });
         const file = {
           id_document: null,
           document_name: files[i].name,
@@ -137,17 +137,25 @@ function Documents(props) {
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.onload = () => {
+        const arrayBuffer = Uint8Array.from(
+          atob(reader.result.split(",")[1]),
+          (c) => c.charCodeAt(0)
+        ).buffer;
+
+        const blob = new Blob([arrayBuffer], { type: files[i].type });
         const file = {
           id_document: null,
           document_name: files[i].name,
           document_size: files[i].size,
           document_type: files[i].type,
-          buffer: reader.result,
+          buffer: blob,
         };
+
         previews.push(reader.result);
         setSelectedPreviews(previews);
         setSelectedFiles((prevFiles) => [...prevFiles, file]);
       };
+
       reader.readAsDataURL(files[i]);
     }
   };
@@ -160,15 +168,15 @@ function Documents(props) {
   const subirArchivo = async () => {
     try {
       for (let i = 0; i < selectedFiles.length; i++) {
-        const file = selectedFiles[i];
-        await Services.uploadFile({
-          name: file.document_name,
-          size: file.document_size,
-          type: file.document_type,
-          buffer: file.buffer,
-          id_file,
-          user_creator: userData.user_data.id_user,
-        });
+        const formData = new FormData();
+        formData.append("id_file", id_file);
+        formData.append("user_creator", userData.user_data.id_user);
+        formData.append("id_document", selectedFiles[i].id_document);
+        formData.append("document_name", selectedFiles[i].document_name);
+        formData.append("document_size", selectedFiles[i].document_size);
+        formData.append("document_type", selectedFiles[i].document_type);
+        formData.append("archivo", selectedFiles[i].buffer);
+        await Services.uploadFile(formData);
       }
 
       setUploadFile(false);

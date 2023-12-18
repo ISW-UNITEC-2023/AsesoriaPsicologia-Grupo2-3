@@ -7,7 +7,7 @@ async function uploadFile(req, res) {
     nombreArchivo: req.body.document_name,
     tipoArchivo: req.body.document_type,
     tamañoArchivo: req.body.document_size,
-    contenidoArchivo: req.body.buffer,
+    contenidoArchivo: req.file.buffer,
     id_file: req.body.id_file,
     user_creator: req.body.user_creator,
   };

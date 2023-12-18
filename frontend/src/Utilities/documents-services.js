@@ -45,20 +45,11 @@ async function getDocumentId(id_file) {
 
 async function uploadFile(file) {
   try {
-    const formData = new FormData();
-    formData.append("document_name", file.name);
-    formData.append("document_type", file.type);
-    formData.append("document_size", file.size);
-    formData.append("buffer", file.buffer);
-    formData.append("id_file", file.id_file);
-    formData.append("user_creator", file.user_creator);
-
-    const response = await axios.post(`${host}/documents/subir-archivo`, formData, {
+    const response = await axios.post(`${host}/documents/subir-archivo`, file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
     return response.data;
   } catch (error) {
     console.error("Error al subir el archivo:", error);
