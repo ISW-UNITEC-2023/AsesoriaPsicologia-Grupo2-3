@@ -8,13 +8,22 @@ router.post("/create", appointmentControllers.createAppointment);
 
 //PUT
 router.put("/addConsultation", appointmentControllers.addConsultation);
+
 router.put("/updateOrder", appointmentControllers.updateOrder);
 router.put("/updatePayment", appointmentControllers.updatePaymentMedic);
 router.put("/updateObservations", appointmentControllers.updateObservations);
+
 router.put("/updateAppointment", appointmentControllers.updateAppointment);
+router.put(
+  "/updateAppointmentWithoutAmount",
+  appointmentControllers.updateAppointmentWithoutAmount
+);
+
 router.put("/updateState", appointmentControllers.updateStateMedic);
 router.put("/updateHour", appointmentControllers.updateHour);
+
 router.put("/updatePaymentType", appointmentControllers.updatePaymentTypeMedic);
+
 router.put("/updateZoomLink", appointmentControllers.updateZoomLink);
 
 //Get
