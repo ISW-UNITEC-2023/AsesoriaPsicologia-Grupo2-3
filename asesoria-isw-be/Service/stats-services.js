@@ -17,6 +17,9 @@ const {
   endOfMonth,
   format,
   parseISO,
+  setHours,
+  setMinutes,
+  setSeconds,
 } = require("date-fns");
 const esLocale = require("date-fns/locale/es");
 
@@ -24,12 +27,14 @@ const esLocale = require("date-fns/locale/es");
 async function getStatsDay() {
   const currentDate = new Date();
 
-  const formattedDate = startOfDay(currentDate);
+  const fixedTime = setSeconds(setMinutes(setHours(currentDate, 18), 0), 0);
+
+  const formattedDate = format(fixedTime, "yyyy-MM-dd HH:mm:ss");
 
   try {
     const result = await knex("appointments")
       .select(knex.raw("SUM(payment_amount) as total_payment_amount"))
-      .where("appointment_date", formattedDate)
+      .whereRaw("appointment_date = ?", [formattedDate])
       .andWhere("state_appointment", "PROCESADO");
 
     const totalPaymentAmount = result[0].total_payment_amount || 0;
