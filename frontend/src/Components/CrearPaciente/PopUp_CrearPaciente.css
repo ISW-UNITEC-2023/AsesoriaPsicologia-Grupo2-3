@@ -2,7 +2,6 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 .add_patient-header {
   display: flex !important;
