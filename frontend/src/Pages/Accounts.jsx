@@ -2,7 +2,7 @@
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
-import EmailPopUp from "../Components/emailPopUp";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import PopUpAdminRole from "../Components/PopUp_AdminRole";
 
 //Functions
@@ -103,7 +103,25 @@ function Accounts(props) {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`sort-tooltip-${type}`}>
+                Ordenar por{" "}
+                {type === "id_user"
+                  ? "ID"
+                  : type === "name_user"
+                  ? "Nombre"
+                  : type === "email_user"
+                  ? "Correo"
+                  : type === "number_user"
+                  ? "Número de teléfono"
+                  : "Fecha de creación"}
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          </OverlayTrigger>
         </button>
         <div
           id="accounts_dropdown_menu"
@@ -147,7 +165,17 @@ function Accounts(props) {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`filter-tooltip-${type}`}>
+                Filtrar por{" "}
+                {type === "roles" ? "Rol" : type === "state" ? "Estado" : ""}
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          </OverlayTrigger>
         </button>
         <div
           id="accounts_dropdown_menu"
@@ -358,13 +386,15 @@ function Accounts(props) {
         }
       });
     });
-    
+
     setUsers(fetchedUsers);
     setOriginalUsers(fetchedUsers);
 
     const roles = await role_services.getAllRoles();
     const filteredRoles = roles.filter((role) => {
-      return fetchedRoles.some((fetchedRole) => fetchedRole.id_role === role.id_role);
+      return fetchedRoles.some(
+        (fetchedRole) => fetchedRole.id_role === role.id_role
+      );
     });
     setRoles(filteredRoles);
   }
@@ -395,28 +425,29 @@ function Accounts(props) {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div> */}
-          <div
-            className="remove-filter-button"
-            onClick={() => {
-              limpiarFiltros();
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="limpiar-tooltip">
+                {sorted ? "Limpiar filtros" : "No se han aplicado filtros"}
+              </Tooltip>
+            }
           >
-            <FontAwesomeIcon icon={faFilterCircleXmark} />
-            {isHovering && sorted && (
-              <span className="limpiar-filtro-div">Limpiar filtros</span>
-            )}
-            {isHovering && !sorted && (
-              <span className="limpiar-filtro-div">
-                No se han aplicado filtros
-              </span>
-            )}
-          </div>
+            <div
+              className="remove-filter-button"
+              onClick={() => {
+                limpiarFiltros();
+              }}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
+              <FontAwesomeIcon icon={faFilterCircleXmark} />
+            </div>
+          </OverlayTrigger>
           <button
             className="crear-cuenta-button"
             onClick={() => {
-              setOpenCreate(1)
+              setOpenCreate(1);
             }}
           >
             Crear cuenta
@@ -424,8 +455,7 @@ function Accounts(props) {
           <PopUpCrearUser
             isOpen={openCreate}
             onClose={() => {
-              refreshUsers(),
-              setOpenCreate(0);
+              refreshUsers(), setOpenCreate(0);
             }}
             creator={props.userData.user_data.id_user}
           />
@@ -507,36 +537,44 @@ function Accounts(props) {
                 return (
                   <tr className="row-table-accounts" key={itemU.id_user}>
                     <td className="accounts-table-obj">
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        className="row-edit-user"
-                        onClick={() => {
-                          setOpenEdit({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      />
-                      {/* <FontAwesomeIcon
-                        icon={faEnvelope}
-                        className="row-send-email"
-                        onClick={() => {
-                          setOpenEmail({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      /> */}
-                      <FontAwesomeIcon
-                        icon={faUserGear}
-                        className="row-user-role"
-                        onClick={() => {
-                          setOpenRole({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      />
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <Tooltip id={`edit-tooltip-${itemU.id_user}`}>
+                            Editar Usuario
+                          </Tooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          className="row-edit-user"
+                          onClick={() => {
+                            setOpenEdit({
+                              open: 1,
+                              userInfo: itemU,
+                            });
+                          }}
+                        />
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <Tooltip id={`role-tooltip-${itemU.id_user}`}>
+                            Asignar Rol
+                          </Tooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faUserGear}
+                          className="row-user-role"
+                          onClick={() => {
+                            setOpenRole({
+                              open: 1,
+                              userInfo: itemU,
+                            });
+                          }}
+                        />
+                      </OverlayTrigger>
                     </td>
                     <td className="accounts-table-id">{itemU.id_user}</td>
                     <td className="accounts-table-item">{itemU.name_user}</td>

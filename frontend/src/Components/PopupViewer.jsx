@@ -17,8 +17,8 @@ const PopupViewer = ({ file, onClose }) => {
         file.document_type === "image/gif" ||
         file.document_type === "image/webp"
       ) {
-        const url = window.URL.createObjectURL(new Blob([response]));
-        setContent(<img src={url} alt={file.document_name} />);
+        console.log(response)
+        setContent(<img src={response} alt={file.document_name} />);
       } else if (file.document_type === "application/pdf") {
         const blob = new Blob([response], { type: "application/pdf" });
         const pdfUrl = URL.createObjectURL(blob);

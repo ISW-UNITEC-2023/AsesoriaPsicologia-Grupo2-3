@@ -5,6 +5,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Services from "../Utilities/documents-services";
 import PopupViewer from "../Components/PopupViewer";
 import { toast, ToastContainer } from "react-toastify";
+import { OverlayTrigger, Tooltip as BootstrapTooltip } from "react-bootstrap";
 
 //Items
 import { useLocation } from "react-router-dom";
@@ -17,7 +18,7 @@ import {
   faFileLines,
   faFileImage,
 } from "@fortawesome/free-solid-svg-icons";
-import { Modal, Toast } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 //Styles
 import "../Styles/CSS/Documents.css";
@@ -92,17 +93,25 @@ function Documents(props) {
     for (let i = 0; i < files.length; i++) {
       const reader = new FileReader();
       reader.onload = () => {
+        const arrayBuffer = Uint8Array.from(atob(reader.result.split(',')[1]), (c) =>
+        c.charCodeAt(0)
+      ).buffer;
+
+      const blob = new Blob([arrayBuffer], { type: files[i].type });
+
         const file = {
           id_document: null,
           document_name: files[i].name,
           document_size: files[i].size,
           document_type: files[i].type,
-          buffer: reader.result,
+          buffer: blob,
         };
+
         previews.push(reader.result);
         setSelectedPreviews(previews);
         setSelectedFiles((prevFiles) => [...prevFiles, file]);
       };
+
       reader.readAsDataURL(files[i]);
     }
   };
@@ -158,8 +167,8 @@ function Documents(props) {
           type: file.document_type,
           buffer: file.buffer,
           id_file,
-          user_creator: userData.user_data.id_user
-      });
+          user_creator: userData.user_data.id_user,
+        });
       }
 
       setUploadFile(false);
@@ -279,23 +288,56 @@ function Documents(props) {
                       </span>
                     </div>
                     <div className="archivo-actions">
-                      <FontAwesomeIcon
-                        className="archivo-visualizador-button"
-                        icon={faEye}
-                        onClick={() => {
-                          setSelectedFile(file);
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        className="archivo-visualizador-button"
-                        icon={faPencil}
-                        onClick={() => editarNombre(file, extension)}
-                      />
-                      <FontAwesomeIcon
-                        className="archivo-visualizador-button"
-                        icon={faTrash}
-                        onClick={() => eliminarArchivo(file)}
-                      />
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <BootstrapTooltip
+                            id={`view-tooltip-${file.id_document}`}
+                          >
+                            Ver archivo
+                          </BootstrapTooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          className="archivo-visualizador-button"
+                          icon={faEye}
+                          onClick={() => {
+                            setSelectedFile(file);
+                          }}
+                        />
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <BootstrapTooltip
+                            id={`edit-tooltip-${file.id_document}`}
+                          >
+                            Editar Nombre de Archivo
+                          </BootstrapTooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          className="archivo-visualizador-button"
+                          icon={faPencil}
+                          onClick={() => editarNombre(file, extension)}
+                        />
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <BootstrapTooltip
+                            id={`delete-tooltip-${file.id_document}`}
+                          >
+                            Borrar archivo
+                          </BootstrapTooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          className="archivo-visualizador-button"
+                          icon={faTrash}
+                          onClick={() => eliminarArchivo(file)}
+                        />
+                      </OverlayTrigger>
                     </div>
                   </ListGroup.Item>
                 );
