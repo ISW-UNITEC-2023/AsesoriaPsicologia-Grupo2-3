@@ -453,28 +453,40 @@ function Accounts(props) {
 
   //Recuperar usuarios para actualizar
   async function refreshUsers() {
-    const fetchedUsers = await user_services.getUsers();
-    const fetchedRoles = await user_services.getAllUsersRoles();
+    try {
+      const clinicId = props.userData.user_data.id_clinic;
+      const result = await userServices.getUsersByClinic(clinicId);
+      const fetchedRoles = await userServices.getAllUsersRoles();
+      console.log("Users:", result);
+      console.log("Roles:", fetchedRoles);
+      // Create a map to track users by their IDs
+      const userMap = new Map();
 
-    fetchedUsers.forEach((user) => {
-      user.roles = [];
-      fetchedRoles.forEach((role) => {
-        if (user.id_user === role.id_user) {
-          user.roles.push([role.id_role, role.name_role]);
+      // Iterate over the result array
+      result.forEach((user) => {
+        // If the user ID is not in the map, add it with an empty roles array
+        if (!userMap.has(user.id_user)) {
+          userMap.set(user.id_user, { ...user, roles: [] });
         }
+
+        // Add roles to the user in the map
+        fetchedRoles.forEach((role) => {
+          if (user.id_user === role.id_user) {
+            userMap
+              .get(user.id_user)
+              .roles.push([role.id_role, role.name_role]);
+          }
+        });
       });
-    });
 
-    setUsers(fetchedUsers);
-    setOriginalUsers(fetchedUsers);
+      // Convert the map values (users) back to an array
+      const uniqueUsers = Array.from(userMap.values());
 
-    const roles = await role_services.getAllRoles();
-    const filteredRoles = roles.filter((role) => {
-      return fetchedRoles.some(
-        (fetchedRole) => fetchedRole.id_role === role.id_role
-      );
-    });
-    setRoles(filteredRoles);
+      setUsers(uniqueUsers);
+      setOriginalUsers(uniqueUsers);
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   //Paginación
