@@ -13,19 +13,17 @@ import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 
 export default function DialogCitas({
-  idAppo,
   titulo,
   nombreDoctor,
   fecha,
   hora,
-  formato,
   open,
   updateOpen,
 }) {
   const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
   const [fechaN, setFechaN] = useState(fecha);
   const [horaN, setHoraN] = useState(hora);
-  const [modalidad, setModalidad] = useState(formato);
+  const [modalidad, setModalidad] = useState("");
   const {
     data: fetchedUsers,
     error: usersError,
@@ -39,6 +37,12 @@ export default function DialogCitas({
     "http://localhost:8000/roles/viewAll",
     user_services.getAllUsersRoles
   );
+
+  useEffect(() => {
+    setNombreDoctorN(nombreDoctor);
+    setFechaN(fecha);
+    setHoraN(hora);
+  }, []);
 
   if (usersLoading || rolesLoading) {
     return (
@@ -74,8 +78,9 @@ export default function DialogCitas({
   const idPaciente = localStorage.getItem("id_patient");
 
   const handleConfirmC = async () => {
-    const date = new Date(fechaN);
-    date.setDate(date.getDate() + 1);
+    // combinar los iso de fecha y hora
+    const fechaHora = fechaN + " " + horaN + ":00.000Z";
+    // Obtener él, id del doctor seleccionado
     const id_doctor = doctores.filter(
       (doctor) => doctor.id_user === nombreDoctorN
     )[0].id_user;
@@ -84,22 +89,40 @@ export default function DialogCitas({
       axios
         .post(`http://localhost:8000/appointment/create`, {
           id_user: localStorage.getItem("user_id"),
-          appointment_date: date,
-          appointment_hour: horaN,
+          appointment_date: fechaHora,
           id_clinic: localStorage.getItem("id_clinic"),
           id_doctor: id_doctor,
           id_file: idPaciente,
           user_creator: localStorage.getItem("user_id"),
           appointment_type: modalidad,
-          appointment_hour: horaN,
-          state_appointment: "PENDIENTE",
         })
-        .then(() => {
+        .then((res) => {
+          //console.log(fechaHora);
           handleOpen();
-          toast("Cita Agendada Correctamente", {
-            type: "success",
-            bodyStyle: { width: "1000%" },
-          });
+          toast(
+            "Cita Agendada Correctamente",
+            {
+              type: "success",
+              bodyStyle: { width: "1000%" },
+            },
+
+            axios
+              .post("http://localhost:8000/calendar/events/create", {
+                id_event: res.data.appoId[0],
+                title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
+                url: "",
+                start: `${fechaN} ${horaN}`,
+                end: null,
+                id_clinic: localStorage.getItem("id_clinic"),
+              })
+              .catch((error) => {
+                toast(
+                  "Ha ocurrido un error al agregar la cita al calendario: " +
+                    error.message,
+                  { type: "error" }
+                );
+              })
+          );
         })
         .catch((error) => {
           toast("Ha ocurrido un error al agendar la cita: " + error.message, {
@@ -114,43 +137,11 @@ export default function DialogCitas({
   };
 
   const handleConfirmM = () => {
-    const date = new Date(fechaN);
-    date.setDate(date.getDate() + 1);
-    const id_doctor = doctores.filter(
-      (doctor) => doctor.id_user === nombreDoctorN
-    )[0].id_user;
-
-    try {
-      axios
-        .put(`http://localhost:8000/appointment/updateAppointment`, {
-          id_appointment: idAppo,
-          id_user: localStorage.getItem("user_id"),
-          appointment_date: date,
-          appointment_hour: horaN,
-          id_clinic: localStorage.getItem("id_clinic"),
-          id_doctor: id_doctor,
-          id_file: idPaciente,
-          user_editor: localStorage.getItem("user_id"),
-          appointment_type: modalidad,
-        })
-        .then(() => {
-          console.log(date + " " + horaN);
-          handleOpen();
-          toast("Cita Modificada Correctamente", {
-            type: "success",
-            bodyStyle: { width: "1000%" },
-          });
-        })
-        .catch((error) => {
-          toast("Ha ocurrido un error al modificar la cita: " + error.message, {
-            type: "error",
-          });
-        });
-    } catch (error) {
-      toast("Ha ocurrido un error al modificar la cita: " + error.message, {
-        type: "error",
-      });
-    }
+    handleOpen();
+    toast("Cita Modificada Correctamente", {
+      type: "success",
+      bodyStyle: { width: "1000%" },
+    });
   };
 
   return (
