@@ -38,25 +38,31 @@ function DashBoard(props) {
 
     fetchData();
   };
-  async function initialList() {
-    const arregloUsuarios = await Services.getPatients(
-      props.userData.user_data.id_clinic
-    );
-    const arregloMandar = [];
+  useEffect(() => {
+    // Llama a initialList al montar el componente
+    initialList();
+  }, []); // Asegúrate de pasar un array vacío como dependencia para que solo se ejecute al montar
 
-    arregloUsuarios.map((usuario) => {
-      let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
-      return arregloMandar.push({
+  async function initialList() {
+    try {
+      const arregloUsuarios = await Services.getPatients(
+        props.userData.user_data.id_clinic
+      );
+
+      const arregloMandar = arregloUsuarios.map((usuario) => ({
         id_file: usuario.id_file,
-        nombre: nombre_user,
+        nombre: `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`,
         email: usuario.email,
         id_account: usuario.id_file,
         creationDate: usuario.creation_date,
         id_clinic: usuario.id_clinic,
-      });
-    });
+      }));
 
-    setNombre(arregloMandar);
+      setNombre(arregloMandar);
+    } catch (error) {
+      // Manejo de errores si es necesario
+      console.error("Error al obtener pacientes:", error);
+    }
   }
 
   const addPacienteAndUpdateList = async (newPaciente) => {
@@ -65,9 +71,10 @@ function DashBoard(props) {
 
   const handleSelectChange = (e) => {
     console.log(e);
+
     setSelectedOption(true);
     setShowButtons(true);
-    setSelectedName(e);
+    setSelectedName(e.target);
   };
 
   const handleScheduleClick = () => {
@@ -138,7 +145,7 @@ function DashBoard(props) {
                 <Select
                   label="Selecciona un paciente"
                   value={selectedName}
-                  onChange={(e) => handleSelectChange(e)}
+                  onChange={handleSelectChange}
                 >
                   {nombre.map((nombre) => (
                     <Option key={nombre.id_account} value={nombre.id_account}>
