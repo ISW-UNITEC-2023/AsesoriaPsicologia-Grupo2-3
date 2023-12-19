@@ -164,7 +164,7 @@ function TableReportes() {
   };
 
   const data = (appointment_date) => {
-    return format(appointment_date, "yyyy-MM-dd HH:mm:ss");
+    {format(parseISO(appointment_date), 'yyyy-MM-dd HH:mm:ss ')}
   };
 
   return (
