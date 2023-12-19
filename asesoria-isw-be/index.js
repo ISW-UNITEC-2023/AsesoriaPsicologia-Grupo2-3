@@ -70,6 +70,7 @@ const statsRoutes = require("./Routes/stats-routes");
 const zoomUsersRouter = require("./Routes/zoom/users");
 const zoomMeetingsRouter = require("./Routes/zoom/meetings");
 const zoomWebinarsRouter = require("./Routes/zoom/webinars");
+const reportsRoutes = require("./Routes/reports-routes");
 
 // Zoom
 app.use("/api/users", tokenCheck, zoomUsersRouter);
@@ -88,9 +89,10 @@ app.use("/announcements", announcementRouter);
 app.use("/files", fileRouter);
 app.use("/mail", mailRouter);
 app.use("/appointment", appointmentRouter);
-app.use("/calendar", calendarRouter);
+app.use("/calendar/events", calendarRouter);
 app.use("/documents", documentsRoutes);
 app.use("/stats", statsRoutes);
+app.use("/reports", reportsRoutes);
 
 const PORT = 8000;
 app.listen(PORT, () => {

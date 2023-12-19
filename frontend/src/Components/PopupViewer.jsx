@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
-import Services from "../../Utilities/documents-services";
-import "../../Styles/CSS/PopupViewer.css";
+import Services from "../Utilities/documents-services";
+import "../Styles/CSS/PopupViewer.css";
 
 const PopupViewer = ({ file, onClose }) => {
   const [content, setContent] = useState(null);
@@ -61,14 +61,15 @@ const PopupViewer = ({ file, onClose }) => {
 
   return (
     <Modal
+      className="modal-body-viewer"
       show={!!content}
       onHide={() => {
         setContent(null);
         onClose();
       }}
-      dialogClassName="modal-dialog-centered modal-dialog-scrollable"
+      dialogClassName="modal-dialog-centered modal-dialog-scrollable modal-dialog-viewer"
     >
-      <Modal.Body>
+      <Modal.Body className="modal-body-viewer">
         {content}
         <style>
           {`
@@ -95,7 +96,7 @@ const PopupViewer = ({ file, onClose }) => {
           `}
         </style>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer dialogClassName="modal-footer-viewer">
         <Button
           variant="secondary"
           onClick={() => {

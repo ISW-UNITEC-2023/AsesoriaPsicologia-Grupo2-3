@@ -42,6 +42,7 @@ export const ChartBarSalesM = () => {
             xAxis: {
                 type: "category",
                 data: orderedMonths,
+                
             },
             yAxis: {
                 type: "value",

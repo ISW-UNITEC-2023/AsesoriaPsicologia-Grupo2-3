@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const host = process.env.REACT_APP_API_BASE_URL;
+
 async function getAllRoles(){
     const options = {
         method: "GET",
-        url: "http://localhost:8000/roles/viewAll",
+        url: host+"/roles/viewAll",
         data: {}
     }
     let roles = await axios.request(options);
@@ -13,7 +15,7 @@ async function getAllRoles(){
 async function getAllPrivileges(){
     const options = {
         method: "GET",
-        url: "http://localhost:8000/privileges/viewAll",
+        url: host+"/privileges/viewAll",
         data: {}
     }
     let privileges = await axios.request(options);
@@ -23,7 +25,7 @@ async function getAllPrivileges(){
 async function getAllRolesPrivileges(id){
     const options = {
         method: "POST",
-        url: "http://localhost:8000/roles/viewPrivileges",
+        url: host+"/roles/viewPrivileges",
         data: {
             id: id
         }
@@ -35,7 +37,7 @@ async function getAllRolesPrivileges(id){
 async function assignPrivilegesToRole(id_role, id_privilege){
     const options = {
         method: "POST",
-        url: "http://localhost:8000/roles/assignPrivilege",
+        url: host+"/roles/assignPrivilege",
         data: {
             id_role: id_role,
             id_privilege: id_privilege,
@@ -49,7 +51,7 @@ async function assignPrivilegesToRole(id_role, id_privilege){
 async function removePrivilegeFromRole(id_role, id_privilege){
     const options = {
         method: "POST",
-        url: "http://localhost:8000/roles/removePrivilege",
+        url: host+"/roles/removePrivilege",
         data: {
             id_role: id_role,
             id_privilege: id_privilege
@@ -62,7 +64,7 @@ async function removePrivilegeFromRole(id_role, id_privilege){
 async function createRole(name, description){
     const options = {
         method: "POST",
-        url: "http://localhost:8000/roles/create",
+        url: host+"/roles/create",
         data: {
             name: name,
             description: description,
@@ -76,7 +78,7 @@ async function createRole(name, description){
 async function deleteRole(idRol){
     const options = {
         method: "DELETE",
-        url: "http://localhost:8000/roles/delete",
+        url: host+"/roles/delete",
         data: {
             id_role: idRol
         }

@@ -3,12 +3,10 @@ const calendarServices = require("../Service/calendar-services");
 
 const { outlook, google, yahoo } = require("calendar-link");
 
-const jwt = require("jsonwebtoken");
 
 //Post
 async function createEvent(req, res) {
-    const {title, url, start, end, id_clinic} = req.body;
-    console.log(req);
+    const {id_event, title, url, start, end, id_clinic} = req.body;
 
     try {
         const errorMessages = [];
@@ -17,21 +15,24 @@ async function createEvent(req, res) {
             res.status(HTTPCodes.BAD_REQUEST).send({error: errorMessages});
         } else {
 
-            let newEvent = null;    
+            let newEvent = null;
             newEvent = calendarServices.createEvent({
-                "title": title,
-                "url": url,
-                "start": start,
-                "end": end,
-                //"id_clinic": id_clinic    
+                id_event: id_event,
+                title: title,
+                url: url,
+                start: start,
+                end: end,
+                id_clinic: id_clinic    
             });
-
+          
+            
             res.send({
                 success: true,
                 newEvent,
+                
             });
         
-    } 
+        } 
 }catch (e) {
         res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
             error: "No se pudo crear el evento.",
@@ -40,8 +41,15 @@ async function createEvent(req, res) {
     }
 }
 
-async function deleteEventById(req, res){
-    
+async function updateEventById(req, res){
+    try {
+        const events = await calendarServices.updateEventById(req.data);
+        res.send("Se actualizo el evento");
+    } catch (e) {
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+            error: "No se pudieron obtener los eventos.",
+        });
+    }
 }
 
 //Get
@@ -52,21 +60,34 @@ async function getEvents(req, res) {
     } catch (e) {
         res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
             error: "No se pudieron obtener los eventos.",
+            e
         });
     }
 }
 
+async function getEventsByClinicId(req, res){
+    try {
+        const events = await calendarServices.getEventsByClinicId(req.data);
+        res.send(events);
+    } catch (e) {
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+            error: "No se pudieron obtener los eventos.",
+        });
+    }
+}
 
-async function getEventByID(req, res) {
-    const {id} = req.query;
+//Delete
+async function deleteEventById(req, res){
+
 
     try {
-        const name = await userServices.getUserCredentialsByid(id);
-        res.send(name);
+        const {id} = req.params;
 
-    } catch (error) {
+        await calendarServices.deleteEventById(id);
+        res.send("Se elimino el evento");
+    } catch (e) {
         res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-            error: "No se pudo obtener el nombre del usuario",
+            error: "No se pudo eliminar el evento.",
         });
     }
 }
@@ -99,5 +120,7 @@ async function generateEventLinks(req, res)
 module.exports = {
     createEvent,
     getEvents,
-
+    getEventsByClinicId,
+    updateEventById,
+    deleteEventById
 };

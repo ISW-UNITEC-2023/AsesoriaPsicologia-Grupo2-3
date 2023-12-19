@@ -5,7 +5,7 @@ export async function GetSections() {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: "http://localhost:8000/sections/getAll",
+    url: host+"/sections/getAll",
   };
 
   const response = await axios.request(options);
@@ -17,7 +17,7 @@ export async function createSection(section) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "POST",
-    url: "http://localhost:8000/sections/create",
+    url: host+"/sections/create",
     data: section,
   };
   const response = await axios.request(options);
@@ -28,7 +28,7 @@ export async function getInfoSection(id) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: "http://localhost:8000/sections/search",
+    url: host+"/sections/search",
     params: { course_id: id },
     withCredentials: true,
   };
@@ -41,7 +41,7 @@ export async function getInfoSectionMod() {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "GET",
-    url: "http://localhost:8000/sections/search2",
+    url: host+"/sections/search2",
   };
 
   const response = await axios.request(options);
@@ -53,7 +53,7 @@ export async function deleteSection(id) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "DELETE",
-    url: "http://localhost:8000/sections/delete",
+    url: host+"/sections/delete",
     data: { id: id },
     withCredentials: true,
   };
@@ -71,7 +71,7 @@ export async function updateTeacher(id, teacher_id) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/sections/updateTeacher",
+    url: host+"/sections/updateTeacher",
 
     data: { id_sections: id, id_teacher: teacher_id },
   };
@@ -88,7 +88,7 @@ export async function updateYear(id, year) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/sections/updateYear",
+    url: host+"/sections/updateYear",
 
     data: { id_sections: id, year: year },
   };
@@ -105,7 +105,7 @@ export async function updateQuarter(id, quarter) {
   const host = process.env.REACT_APP_API_BASE_URL;
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/sections/updateQuarter",
+    url: host+"/sections/updateQuarter",
 
     data: { id_sections: id, quarter: quarter },
   };
