@@ -1,11 +1,8 @@
-
-
 .page-container {
   max-width: 816px;
   max-height: 1056px;
   margin: 10px auto;
-  padding: 20px;
-
+  padding: 30px;
   background-color: #fff;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(141, 141, 141, 0.529);
@@ -17,19 +14,17 @@
   display: flex;
 }
 
-.Titulo h1{
+.Titulo h1 {
   font-size: 2em;
   color: #000000;
   text-align: center;
-  margin-top:30px;
+  margin-top: 30px;
 }
 
 .profile-container {
   display: flex;
   align-items: center;
 }
-
-
 
 .profile-image {
   width: 120px;
@@ -41,17 +36,16 @@
 
 .title-margin {
   font-size: 1.3em;
-
-
 }
 
 .paragraph-margin {
   font-size: 1.3em;
 }
 
-
-.fixed-download-button{
+.fixed-download-button {
   position: fixed;
+  background-color: #113946;
+  color: #fff;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
@@ -70,7 +64,8 @@
 .fixed-back-button {
   position: fixed;
   bottom: 70px;
-  background-color: red;
+  background-color: #113946;
+  color: #fff;
   right: 20px;
   z-index: 1000;
   width: 150px;
@@ -104,7 +99,19 @@
   width: 60%;
   padding: 12px;
 }
-.boton-volver{
-  
 
+.form-ordenes-medicas {
+  resize: none;
+  width: 100%;
+  height: 100px;
+  color: #455a64;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  border: 1px solid #455a64;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.form-ordenes-medicas:focus {
+  outline: none;
 }

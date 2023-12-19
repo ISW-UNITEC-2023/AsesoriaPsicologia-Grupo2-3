@@ -6,20 +6,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
-import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
+// import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
+import { formatDate } from "../Utilities/validator";
+
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 import axios from "axios";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 import user_services from "../Utilities/user-services";
-import { Spinner } from "@material-tailwind/react";
+import { Option, Select, Spinner } from "@material-tailwind/react";
+import Dropdown from "react-bootstrap/Dropdown";
 import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
-import patientsService from "../Utilities/patients-services";
 
 function PacientesForm(props) {
-  const host = process.env.REACT_APP_API_BASE_URL;
   const [nombres, setNombres] = useState([]);
   const [showCrearPopup, setShowCrearPopup] = useState(false);
   const [showEditarPopup, setShowEditarPopup] = useState(false);
@@ -34,7 +35,14 @@ function PacientesForm(props) {
     data: fetchedRoles,
     error: rolesError,
     isLoading: rolesLoading,
-  } = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
+  } = useSWR(
+    "http://localhost:8000/roles/viewAll",
+    user_services.getAllUsersRoles
+  );
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
   const [displayConfirmPopUp, setDisplayConfirmPopUp] = useState(false);
@@ -56,30 +64,14 @@ function PacientesForm(props) {
     setShowCrearPacientePopup(true);
   };
 
-  const handleCrearPaciente = async () => {
+  const handleCrearPaciente = async (pacienteInfo) => {
     try {
-      const result = await patientsService.CreatePatient(
-        selectedPatient.nombre,
-        "---",
-        "---",
-        "---",
-        selectedPatient.fechaNacimiento,
-        "prueba@gmail.com",
-        "0",
-        selectedPatient.direccion,
-        selectedPatient.estadoCivil,
-        "0",
-        "---",
-        "---",
-        "---"
-      );
-
-      if (result.message) {
-        console.log(result);
-        console.error("Error al crear el paciente:", result.message);
-      } else {
-        console.log("Paciente creado con éxito:", result);
+      const result = await patientsService.createPatient(pacienteInfo);
+      if (result.success) {
+        console.log("Paciente creado con éxito:", result.data);
         setDisplayConfirmPopUp(true);
+      } else {
+        console.error("Error al crear el paciente:", result.message);
       }
     } catch (error) {
       console.error("Error creating patient:", error);
@@ -237,13 +229,10 @@ function PacientesForm(props) {
                       </Link>
                       <Link
                         to='/Expedientes'
-                        onClick={() =>
-                          handleClick(
-                            nombre.id_account,
-                            nombre.nombre,
-                            nombre.id_clinic
-                          )
-                        }
+                        state={{
+                          id_file: nombre.id_account,
+                          userData: props.userData,
+                        }}
                         className='dropdown-item'
                       >
                         Ver Expediente

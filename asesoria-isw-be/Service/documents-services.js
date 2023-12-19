@@ -9,22 +9,15 @@ const knex = require("knex")({
   },
 });
 
-async function uploadFile(
-  nombreArchivo,
-  tipoArchivo,
-  tamañoArchivo,
-  contenidoArchivo,
-  id_file,
-  user_creator
-) {
+async function uploadFile(data) {
   try {
     await knex("documents").insert({
-      document_name: nombreArchivo,
-      document_type: tipoArchivo,
-      document_size: tamañoArchivo,
-      content: contenidoArchivo,
-      id_file: id_file,
-      user_creator: user_creator,
+      document_name: data.nombreArchivo,
+      document_type: data.tipoArchivo,
+      document_size: data.tamañoArchivo,
+      content: data.contenidoArchivo,
+      id_file: data.id_file,
+      user_creator: data.user_creator,
       creation_date: new Date(),
     });
   } catch (err) {
@@ -48,6 +41,7 @@ async function listFiles() {
     "id_file",
     "id_appointment",
     "user_creator",
+    "creation_date",
   ]);
   return archivos;
 }
@@ -63,6 +57,7 @@ async function listFilesId(id_file) {
       "id_file",
       "id_appointment",
       "user_creator",
+      "creation_date",
     ]);
   return archivo;
 }

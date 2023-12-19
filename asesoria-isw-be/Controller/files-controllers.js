@@ -12,12 +12,13 @@ async function createFile(req, res) {
     phone_number,
     address,
     civil_status,
-    medical_history,
+    observation,
     substance_usage,
     id_clinic,
     active,
     user_editor,
     user_creator,
+    identidad
   } = req.body;
   const errorMessages = [];
 
@@ -34,82 +35,111 @@ async function createFile(req, res) {
   const lengMedical = medical_history.toString();
   const lengSubtance = substance_usage.toString();
   const lengactive = active.toString();
+  const lengObservation = observation.toString();
+  const lengIdentidad = identidad.toString();
 
+  if (isNaN(lengphone_number) || !Number.isInteger(lengphone_number)) {
+    errorMessages.push(
+      "El campo de numeor de telefono esta mal debe ser un numero de celular"
+    );
+  }
 
   if (!isEmail(email)) {
     errorMessages.push("El correo electrónico no es valido");
-
-  }
-
-  const file = await fileServices.existFilebyEmail(email);
-  
-  if (file.length !== 0) {
-    errorMessages.push("Ya existe un paciente con este correo");
   }
 
   if (
-      lengFname.length > 45 ||
-      lengFname.length == 0 ||
-      typeof first_name != "string"
+    lengFname.length > 45 ||
+    lengFname.length == 0 ||
+    typeof first_name != "string"
   ) {
     errorMessages.push(
-        "Primer nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
-    );
-  }
-
-
-  if (
-      lengMname.length > 45 ||
-      lengMname.length == 0 ||
-      typeof middle_name != "string"
-  ) {
-    errorMessages.push(
-        "Segundo nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+      "Primer nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-      lengLname.length > 45 ||
-      lengLname.length == 0 ||
-      typeof last_name != "string"
+    lengMname.length > 45 ||
+    lengMname.length == 0 ||
+    typeof middle_name != "string"
   ) {
     errorMessages.push(
-        "Primer apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+      "Segundo nombre invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-      lengSname.length > 45 ||
-      lengSname.length == 0 ||
-      typeof second_surname != "string"
+    lengLname.length > 45 ||
+    lengLname.length == 0 ||
+    typeof last_name != "string"
   ) {
     errorMessages.push(
-        "Segundo apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
+      "Primer apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-      lengAdress.length > 100 ||
-      lengAdress.length == 0 ||
-      typeof address != "string"
+    lengSname.length > 45 ||
+    lengSname.length == 0 ||
+    typeof second_surname != "string"
   ) {
     errorMessages.push(
-        "La direccion es invalida, debe contener mas de un caracter pero menos de 100 caractes"
+      "Segundo apellido invalido, solo debe mas de 1 caracter pero menos de 45 caracteres "
     );
   }
 
   if (
-      lengCstatus.length > 10 ||
-      lengCstatus.length == 0 ||
-      typeof civil_status != "string"
+    lengAdress.length > 100 ||
+    lengAdress.length == 0 ||
+    typeof address != "string"
   ) {
     errorMessages.push(
-        "El estado civil es invalido, debe contener mas de 1 caracter pero menos de 10 caracteres"
+      "La direccion es invalida, debe contener mas de un caracter pero menos de 100 caractes"
+    );
+  }
+
+  if (
+    lengCstatus.length > 10 ||
+    lengCstatus.length == 0 ||
+    typeof civil_status != "string"
+  ) {
+    errorMessages.push(
+      "El estado civil es invalido, debe contener mas de 1 caracter pero menos de 10 caracteres"
+    );
+  }
+
+  if (
+    lengMedical.length > 500 ||
+    lengMedical.length == 0 ||
+    typeof medical_history != "string"
+  ) {
+    errorMessages.push(
+      "Historial medico es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres"
+    );
+  }
+
+  if (
+    lengSubtance.length > 200 ||
+    lengSubtance.length == 0 ||
+    typeof substance_usage != "string"
+  ) {
+    errorMessages.push(
+      'El campo de "Sustancias de uso" es invalido, debe contener mas de 1 caracter pero menos de 200 caracteres'
     );
   }
 
   if (lengactive > 1) {
     errorMessages.push("El campo de activo debe ser un numero 1 o 0");
+  }
+
+  if (lengObservation > 500) {
+    errorMessages.push("El campo de observaciones es muy largo");
+  }
+
+  if (lengIdentidad.length > 13 || lengIdentidad.length == 0) {
+    errorMessages.push(
+      "El campo de identidad es invalido, debe contener mas de 1 caracter pero menos de 13 caracteres"
+    );
   }
 
   if (errorMessages.length) {
@@ -126,12 +156,13 @@ async function createFile(req, res) {
         phone_number,
         address,
         civil_status,
-        medical_history,
+        observation,
         substance_usage,
         id_clinic,
         active,
         user_editor,
         user_creator,
+        identidad
       });
       res.send({ message: "Se ha creado el expediente" });
     } catch (error) {
@@ -457,8 +488,8 @@ async function updateCivilStatus(req, res) {
   }
 }
 
-async function updateMedicalHistory(req, res) {
-  const { id, medical_history, editor } = req.body;
+async function updateObservation(req, res) {
+  const { id, observation, editor } = req.body;
   const errors = [];
 
   const numericId = parseInt(id, 10);
@@ -472,8 +503,8 @@ async function updateMedicalHistory(req, res) {
     errors.push("Falta el editor");
   }
 
-  if (!medical_history) {
-    errors.push("Falta el historial médico");
+  if (!observation) {
+    errors.push("Faltan las observaciones");
   }
 
   const file = await fileServices.existFile(id);
@@ -487,7 +518,7 @@ async function updateMedicalHistory(req, res) {
   }
 
   try {
-    await fileServices.updateMedicalHistory({ id, medical_history, editor });
+    await fileServices.updateObservation({ id, observation, editor });
     res.send({ message: "Se ha actualizado el historial médico" });
   } catch (error) {
     res.send({
@@ -620,16 +651,18 @@ async function updateTreatment(req, res) {
 }
 
 async function getFileById(req, res) {
-  const file_id = req.query.id;
-
+  const { id } = req.query;
   try {
-    const file = await fileServices.getFileById(file_id);
+    const file = await fileServices.getFileById(id);
     res.send({
       fileInfo: file,
       message: "Se ha recuperado la información del archivo",
     });
   } catch (error) {
-    res.send({ message: "Error", error: error.message });
+    res.send({
+      message: "No fue posible recuperar la información del archivo",
+      error: error.message,
+    });
   }
 }
 
@@ -683,7 +716,10 @@ async function getClinicFiles(req, res) {
 
   try {
     const file = await fileServices.getClinicFiles(clinics_id);
-    res.send(file);
+    res.send({
+      fileInfo: file,
+      message: "Se han recuperado los archivos del paciente",
+    });
   } catch (error) {
     res.send({
       message: "No fue posible recuperar los archivos del paciente",
@@ -691,6 +727,7 @@ async function getClinicFiles(req, res) {
     });
   }
 }
+
 async function updateActive(req, res) {
   const { id, active, editor } = req.body;
   const errors = [];
@@ -781,12 +818,125 @@ async function updateIdClinic(req, res) {
   }
 }
 
+async function updateEmail(req, res) {
+  const { id, email, editor } = req.body;
+  const errors = [];
+
+  const numericId = parseInt(id, 10);
+  const numericEditor = parseInt(editor, 10);
+  if (!email) {
+    errors.push("Falta el email del expediente");
+  }
+
+  if (isNaN(numericId) || !Number.isInteger(numericId)) {
+    errors.push("Falta el id del expediente");
+  }
+  if (isNaN(numericEditor) || !Number.isInteger(numericEditor)) {
+    errors.push("Falta el id editor");
+  }
+  const file = await fileServices.existFile(id);
+  if (file.length === 0) {
+    errors.push("No existe el expediente");
+  }
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
+  try {
+    await fileServices.updateEmail({ id, email, editor });
+    res.send({ message: "Se ha actualizado el email del expediente" });
+  } catch (error) {
+    res.send({
+      message: "Error",
+      error: error.message,
+    });
+  }
+}
+
+async function updatePhoneNumber(req, res) {
+  const { id, phone_number, editor } = req.body;
+  const errors = [];
+
+  const numericId = parseInt(id, 10);
+  const numericEditor = parseInt(editor, 10);
+  if (!phone_number) {
+    errors.push("Falta el numero de telefono del expediente");
+  }
+
+  if (isNaN(numericId) || !Number.isInteger(numericId)) {
+    errors.push("Falta el id del expediente");
+  }
+  if (isNaN(numericEditor) || !Number.isInteger(numericEditor)) {
+    errors.push("Falta el id editor");
+  }
+  const file = await fileServices.existFile(id);
+  if (file.length === 0) {
+    errors.push("No existe el expediente");
+  }
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
+  try {
+    await fileServices.updatePhoneNumber({ id, phone_number, editor });
+    res.send({ message: "Se ha actualizado el numero de telefono del expediente" });
+  } catch (error) {
+    res.send({
+      message: "Error",
+      error: error.message,
+    });
+  }
+}
+
+async function updateIdentidad(req, res) {
+  const { id, identidad, editor } = req.body;
+  const errors = [];
+
+  const numericId = parseInt(id, 10);
+  const numericIdentidad = parseInt(identidad, 10);
+  const numericEditor = parseInt(editor, 10);
+
+  if (isNaN(numericIdentidad) || !Number.isInteger(numericIdentidad)) {
+    errors.push("Falta la identidad del expediente");
+  }
+
+  if (isNaN(numericId) || !Number.isInteger(numericId)) {
+    errors.push("Falta el id del expediente");
+  }
+  if (isNaN(numericEditor) || !Number.isInteger(numericEditor)) {
+    errors.push("Falta el id editor");
+  }
+  const file = await fileServices.existFile(id);
+  if (file.length === 0) {
+    errors.push("No existe el expediente");
+  }
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
+  try {
+    await fileServices.updateIdentidad({ id, identidad, editor });
+    res.send({ message: "Se ha actualizado la identidad del expediente" });
+  } catch (error) {
+    res.send({
+      message: "Error",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   createFile,
   updateBirthday,
   updateAddress,
   updateCivilStatus,
-  updateMedicalHistory,
+  updateObservation,
+  updateEmail,
+  updatePhoneNumber,
+  updateIdentidad,
   updateFirstImpressions,
   updateSubstanceUsage,
   updateTreatment,

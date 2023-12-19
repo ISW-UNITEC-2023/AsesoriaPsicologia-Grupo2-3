@@ -8,13 +8,16 @@ router.post("/create", fileControllers.createFile);
 
 //Put
 router.put("/updateFirtName", fileControllers.updateFirstName);
+router.put("updateObservation", fileControllers.updateObservation);
+router.put("/updateEmail", fileControllers.updateEmail);
+router.put("/updateIdentidad", fileControllers.updateIdentidad);
 router.put("/updateMiddleName", fileControllers.updateMiddleName);
 router.put("/updateLastName", fileControllers.updateLastName);
 router.put("/updateSecondName", fileControllers.updateSecondLastName);
 router.put("/updateBirthday", fileControllers.updateBirthday);
+router.put("/updatePhone", fileControllers.updatePhoneNumber);
 router.put("/updateAddress", fileControllers.updateAddress);
 router.put("/updateCivilStatus", fileControllers.updateCivilStatus);
-router.put("/updateMedicalHistory", fileControllers.updateMedicalHistory);
 router.put("/updateFirstImpresions", fileControllers.updateFirstImpressions);
 router.put("/updateSubstanceUsage", fileControllers.updateSubstanceUsage);
 router.put("/updateTreatment", fileControllers.updateTreatment);

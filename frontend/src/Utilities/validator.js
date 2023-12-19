@@ -11,3 +11,15 @@ export default {
   isEmail,
   isPassword,
 };
+
+export const formatDate = (announceDate) => {
+  const date = new Date(announceDate);
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  return date.toLocaleString("es-ES", options);
+};

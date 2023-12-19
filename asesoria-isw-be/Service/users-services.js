@@ -44,9 +44,6 @@ async function createPatient(user) {
     id_user: patientId,
     id_role: role_patient[0].id_role,
   });
-
-
-
 }
 
 async function updUserName(user) {
@@ -91,18 +88,15 @@ async function changeUserActive(user) {
 }
 
 async function assignRole(user) {
-  const role = await knex("roles")
-    .select("id_role")
-    .where("id_role", user.id_role);
-  if (!role) {
-    throw new Error("Role not found");
-  }
-
-  const userInfo = await knex("users")
-    .select("id_user")
-    .where("id_user", user.id_user);
-  if (!userInfo) {
-    throw new Error("User not found");
+  try {
+    return await knex("user_role").insert({
+      id_role: user.id_role,
+      id_user: user.id_user,
+      user_creator: user.user_creator,
+      creation_date: new Date(),
+    });
+  } catch (error) {
+    console.log(error.message);
   }
 
   return await knex("user_role").insert({
@@ -118,7 +112,6 @@ async function removeRole(user) {
     await knex("user_role")
       .where({ id_user: user.id_user, id_role: user.id_role })
       .del();
-    console.log("Role deleted successfully");
   } catch (error) {
     throw new Error(error.message);
   }
@@ -175,68 +168,69 @@ async function getPatients() {
   return JSON.parse(users);
 }
 
-async function getUserRoles(idUser){
+async function getUserRoles(idUser) {
   let roles = await knex.raw(
     `
       SELECT roles.id_role, roles.name_role
         FROM roles
           INNER JOIN user_role ON (user_role.id_role = roles.id_role)
           WHERE user_role.id_user = ?
-    `, [idUser]
-  )
-  roles = JSON.stringify(roles)
+    `,
+    [idUser]
+  );
+  roles = JSON.stringify(roles);
   return JSON.parse(roles);
 }
 
-async function getAllUsersRoles(){
+async function getAllUsersRoles() {
   let roles = await knex.raw(
     `
       SELECT roles.id_role, roles.name_role, user_role.id_user
         FROM roles
           INNER JOIN user_role ON user_role.id_role = roles.id_role
     `
-  )
+  );
   roles = JSON.stringify(roles);
   return JSON.parse(roles);
-  }
-  
-  async function getRoles(id) {
-    let roles = await knex
-      .select("name_role")
-      .from("user_role")
-      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
-      .where("id_user", "=", id);
-    roles = JSON.stringify(roles);
-    return JSON.parse(roles);
-  }
-  
-  async function getRoleId(id) {
-    let roles = await knex
-      .select("user_role.id_role")
-      .from("user_role")
-      .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
-      .where("id_user", "=", id);
-    roles = JSON.stringify(roles);
-    return JSON.parse(roles);
-  }
-  async function getByClinic(clinic) {
-        let users = await knex
-          .select(
-            'u.id_user',
-            'u.name_user',
-            'u.email_user',
-            'u.active_user',
-            'u.number_user',
-            'u.creation_date',
-            'r.name_role AS rol'
-          )
-          .from('users as u')
-          .join('user_role as ur', 'u.id_user', '=', 'ur.id_user')
-          .join('roles as r', 'ur.id_role', '=', 'r.id_role')
-          .where('u.id_clinic', clinic);
-    users = JSON.stringify(users);
-    return JSON.parse(users);
-  }
+}
+
+async function getRoles(id) {
+  let roles = await knex
+    .select("name_role")
+    .from("user_role")
+    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+    .where("id_user", "=", id);
+  roles = JSON.stringify(roles);
+  return JSON.parse(roles);
+}
+
+async function getRoleId(id) {
+  let roles = await knex
+    .select("user_role.id_role")
+    .from("user_role")
+    .innerJoin("roles", "user_role.id_role", "=", "roles.id_role")
+    .where("id_user", "=", id);
+  roles = JSON.stringify(roles);
+  return JSON.parse(roles);
+}
+async function getByClinic(clinic) {
+  let users = await knex
+    .select(
+      "u.id_user",
+      "u.name_user",
+      "u.email_user",
+      "u.active_user",
+      "u.number_user",
+      "u.creation_date",
+      "r.name_role AS rol"
+    )
+    .from("users as u")
+    .join("user_role as ur", "u.id_user", "=", "ur.id_user")
+    .join("roles as r", "ur.id_role", "=", "r.id_role")
+    .where("u.id_clinic", clinic);
+  users = JSON.stringify(users);
+  return JSON.parse(users);
+}
 
 module.exports = {
   createUser,
@@ -252,11 +246,11 @@ module.exports = {
   findExistingEmail,
   getAllusers,
   getTeachers,
-  getPatients, 
+  getPatients,
   getUserRoles,
   getAllUsersRoles,
   getUserCredentialsByid,
   getRoles,
   getRoleId,
-  getByClinic
+  getByClinic,
 };
