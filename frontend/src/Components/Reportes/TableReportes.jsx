@@ -164,7 +164,7 @@ function TableReportes() {
   };
 
   const data = (appointment_date) => {
-    {format(parseISO(appointment_date), 'yyyy-MM-dd HH:mm:ss ')}
+    return format(appointment_date, "yyyy-MM-dd HH:mm:ss");
   };
 
   return (
@@ -286,7 +286,7 @@ function TableReportes() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {appointment_date}
+                        {format(parseISO(appointment_date), 'yyyy-MM-dd HH:mm:ss ')}
                       </Typography>
                     </td>
                     <td className={classes}>
