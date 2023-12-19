@@ -2,11 +2,11 @@ import axios from "axios";
 
 const host = process.env.REACT_APP_API_BASE_URL;
 
-async function postLogin(email, password) {
+async function postLogin(email, password, registro) {
   const options = {
     method: "POST",
-    url: host+"/users/login",
-    data: { email, password },
+    url: "http://localhost:8000/users/login",
+    data: { email, password, registro },
     withCredentials: true, // Esto es para que axios envíe las cookies
   };
   const response = await axios.request(options);

@@ -1,15 +1,13 @@
 import "../Styles/CSS/DashBoard.css";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import NavigationB from "../Components/Navbar";
-import { loadModules } from "../Utilities/course-services";
-import { Button, Accordion } from "react-bootstrap";
+import {loadModules} from "../Utilities/course-services";
 import DashboardLayout from "../Layout/DashboardLayout";
 import ChartBarSalesM from "../Components/Estadisticas/ChartBarSalesM"
 import StatsSection from "../Components/Estadisticas/StatsSection"
 import { Select, Option } from "@material-tailwind/react";
 import Services from "../Utilities/login-services";
 import { useNavigate } from "react-router-dom";
-
 
 function DashBoard(props) {
   const [displayedModules, setModules] = useState([]);
@@ -142,12 +140,21 @@ const handleClick = (id, nombre, id_clinic) => {
                                 </div>
                             </div>
                         </div>
+
+                    </div>
+                    <div className="quick-access-text mb-4">Vista Rapida</div>
+                    <div className="w-full max-w-screen-lg mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-ju">
+                            <ChartBarSalesM className="w-auto h-auto"/>
+                            <StatsSection page={"Dash"}/>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          
-        </div>
-    
-    </DashboardLayout>
-  );
+
+        </DashboardLayout>
+    );
 }
 
 export default DashBoard;

@@ -24,6 +24,8 @@ router.get("/viewPatients", userController.getPatients);
 router.get("/viewRoles", userController.getAllUsersRoles);
 router.get("/getUserById", userController.getUserByID);
 router.get("/getVerify", userController.getVerify);
+router.get("/getUserByclinic", userController.getByClinic);
+
 
 //COOKIES
 

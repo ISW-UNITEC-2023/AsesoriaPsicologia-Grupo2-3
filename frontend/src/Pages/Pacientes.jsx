@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../Styles/CSS/Pacientes.css";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Services from "../Utilities/login-services";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
 import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import useSWR from "swr";
 import user_services from "../Utilities/user-services";
-import { Option, Select, Spinner } from "@material-tailwind/react";
-import Dropdown from "react-bootstrap/Dropdown";
+import {Spinner} from "@material-tailwind/react";
 import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
 
@@ -397,3 +396,5 @@ function PacientesForm(props) {
 }
 
 export default PacientesForm;
+
+

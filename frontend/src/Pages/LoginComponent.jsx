@@ -69,11 +69,12 @@ function Login(props) {
   const [form, setform] = useState({
     email: "",
     password: "",
+    registro: "",
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await Services.postLogin(form.email, form.password);
+    const response = await Services.postLogin(form.email, form.password, form.registro);
     if (response.errorMessage !== undefined) {
       setErrors({
         general: response.errorMessage[0],
@@ -115,10 +116,21 @@ function Login(props) {
               <input
                 id="login_component_formulario_login_correo_electronico"
                 type="text"
+                name="Numero de clinica "
+                className="input"
+                placeholder="Numero de clinica "
+                value={form.registro}
+                onChange={(e) => {
+                  setform({ ...form, registro: e.target.value });
+                }}
+                required
+              />
+              <input
+                type="text"
                 name="email"
                 className="input"
                 value={form.email}
-                placeholder="Correo Electronico"
+                placeholder="Correo Electrónico"
                 onChange={(e) => {
                   setform({ ...form, email: e.target.value });
                 }}

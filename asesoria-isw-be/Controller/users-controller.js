@@ -75,29 +75,47 @@ async function registerUser(req, res) {
 
 async function loginUser(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password, registro } = req.body;
 
     const errorMessage = [];
 
-    //Validaciones
-    if (!isEmail) {
-      errorMessage.push("El correo debe ser un correo valido");
-    }
+        //Validaciones
+        if (!isEmail) {
+            errorMessage.push("El correo debe ser un correo valido");
+        }
 
-    const email_exists = await userServices.findExistingEmail(email);
+        const email_exists = await userServices.findExistingEmail(email);
+
 
     if (email_exists.length === 0) {
-      errorMessage.push("No existe un correo con este email");
+      errorMessage.push("No existe un usuario con este email.");
       res.send({
         errorMessage,
       });
       return res;
     }
+    const roles = await userServices.getUserRoles(email_exists[0].id_user);
+    //console.log("Roles", roles[0]);
+    const allroles = await rolesServices.getRoles();
+    
+    const allroles2= allroles.map((roles) => roles.name_role);
+
+    let privileges = await Promise.all(
+      roles[0].map(async (role) => {
+        return await rolesServices.getRolePrivileges(role.id_role);
+      })
+    );
+
+    const privilegios = privileges[0].map((privilege) => privilege.id_privilege);
+    
+    //console.log("Privilegios retornados", privilegios);
+    const roleNames = roles[0].map((role) => role.name_role);
 
     const userData = {
       email: email,
-      id_user: email_exists[0].id_user,
-      id_clinic: email_exists[0].id_clinic,
+      roles: roleNames,
+      privileges: privilegios,
+      allRoles: allroles2,
     };
     if (errorMessage.length) {
       res.send({
@@ -111,6 +129,7 @@ async function loginUser(req, res) {
       );
 
       if (userEncryptedDetails.encryptedPassword === email_now.password_user) {
+        if(email_exists[0].id_clinic === parseInt(registro)){
         const accessToken = jwt.sign(
           {
             id: email_now.id_user,
@@ -135,8 +154,8 @@ async function loginUser(req, res) {
 
         res.cookie("user_data", userData, {
           maxAge: 259200000, // Duración de 3 días en milisegundos
-          httpOnly: false,
-          secure: false,
+          httpOnly: true,
+          secure: true,
           sameSite: "lax",
           signed: true,
         });
@@ -147,6 +166,9 @@ async function loginUser(req, res) {
           refreshToken,
           id: email_now.id_user,
         });
+      } else {
+        res.send({ errorMessage: ["El usuario no está asignado a esa clínica."] });
+      }
       } else {
         res.send({ errorMessage: ["Contraseña incorrecta"] });
       }
@@ -483,6 +505,20 @@ async function getUserByID(req, res) {
     });
   }
 }
+async function getByClinic(req, res) {
+    const {clinic} = req.query;
+
+    try {
+        const users = await userServices.getByClinic(clinic);
+        res.send(users);
+
+    } catch (error) {
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+            error: "No se pudo obtener la info del usuario segun clinica",
+        });
+    }
+}
+
 
 async function deleteCookies(req, res) {
   try {
@@ -529,25 +565,28 @@ async function getVerify(req, res) {
 }
 
 module.exports = {
-  registerUser,
-  loginUser,
-  updateUserPassword,
-  updateUserName,
-  updateUserPhone,
-  updateUserEmail,
-  updateUserActive,
-  assignRole,
-  removeRole,
-  getAllusers,
-  getTeachers,
-  getCookie,
-  getRoles,
-  getPatients,
-  removeCookie,
-  getUserRoles,
-  getAllUsersRoles,
-  deleteCookies,
-  getPrivilegesById,
-  getUserByID,
-  getVerify,
+    registerUser,
+    loginUser,
+    updateUserPassword,
+    updateUserName,
+    updateUserPhone,
+    updateUserEmail,
+    updateUserActive,
+    assignRole,
+    removeRole,
+    getAllusers,
+    getTeachers,
+    getCookie,
+    getRoles,
+    getPatients,
+    removeCookie,
+    getUserRoles,
+    getAllUsersRoles,
+    deleteCookies,
+    getPrivilegesById,
+    getUserByID,
+    getVerify,
+    getByClinic,
+
+
 };
