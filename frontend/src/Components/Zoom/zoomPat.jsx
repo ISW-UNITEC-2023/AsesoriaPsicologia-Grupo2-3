@@ -26,7 +26,6 @@ function MyZoomPat(props) {
     try {
       const data = await getVerify(props.userData.user_data.id_user);
       verifyRef.current = data;
-      console.log(data);
     } catch (error) {
       console.error("Error updating privileges:", error);
     }
@@ -53,6 +52,7 @@ function MyZoomPat(props) {
       <div className='zoom-div'>
         <Row className='zoom-row'>
           <Col>
+            {console.log(verifyRef)}
             <h1 className='title-pacientes'>Zoom</h1>
             {havePrivilege(verifyRef.current, [31]) ? (
               <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>

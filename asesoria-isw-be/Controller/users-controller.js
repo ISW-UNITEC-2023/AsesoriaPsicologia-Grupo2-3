@@ -551,7 +551,7 @@ async function getVerify(req, res) {
     const privilegios = [];
     privileges.map((privilege_list) => {
       privilege_list.map((privilegio) => {
-        privilegios.push(privilegio);
+        privilegios.push(privilegio.id_privilege);
       });
     });
 
