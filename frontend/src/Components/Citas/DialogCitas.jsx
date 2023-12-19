@@ -6,6 +6,8 @@ import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 
+const host = process.env.REACT_APP_API_URL;
+
 export default function DialogCitas({
                                         titulo,
                                         nombreDoctor,
@@ -14,6 +16,7 @@ export default function DialogCitas({
                                         open,
                                         updateOpen,
                                     }) {
+    const host = process.env.REACT_APP_API_URL;
     const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
     const [fechaN, setFechaN] = useState(fecha);
     const [horaN, setHoraN] = useState(hora);
@@ -22,13 +25,13 @@ export default function DialogCitas({
         data: fetchedUsers,
         error: usersError,
         isLoading: usersLoading,
-    } = useSWR("http://localhost:8000/users/viewUsers", user_services.getUsers);
+    } = useSWR(host + "/users/viewUsers", user_services.getUsers);
     const {
         data: fetchedRoles,
         error: rolesError,
         isLoading: rolesLoading,
     } = useSWR(
-        "http://localhost:8000/roles/viewAll",
+        host + "/roles/viewAll",
         user_services.getAllUsersRoles
     );
 
@@ -81,7 +84,7 @@ export default function DialogCitas({
 
         try {
             axios
-                .post(`http://localhost:8000/appointment/create`, {
+                .post(host + "/appointment/create", {
                     id_user: localStorage.getItem("user_id"),
                     appointment_date: fechaHora,
                     id_clinic: localStorage.getItem("id_clinic"),
@@ -101,7 +104,7 @@ export default function DialogCitas({
                         },
 
                         axios
-                            .post("http://localhost:8000/calendar/events/create", {
+                            .post(host + "/calendar/events/create", {
                                 id_event: res.data.appoId[0],
                                 title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
                                 url: "",

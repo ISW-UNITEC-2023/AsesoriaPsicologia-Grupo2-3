@@ -5,13 +5,14 @@ import useSWR from "swr";
 import {Spinner} from "@material-tailwind/react";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
+const host = process.env.REACT_APP_API_URL;
 
 const ChartBarSalesW = () => {
     const {
         data: salesWeek,
         error: errorWeek,
         isLoading: loadingWeek
-    } = useSWR('http://localhost:8000/stats/getWeekSales', fetcher, {refreshInterval: 1000});
+    } = useSWR(host + '/stats/getWeekSales', fetcher, {refreshInterval: 1000});
 
     const chartRef = useRef(null);
 

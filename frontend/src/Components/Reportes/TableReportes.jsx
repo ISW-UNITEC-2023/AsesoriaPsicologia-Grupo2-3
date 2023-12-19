@@ -11,6 +11,7 @@ import {formatMoney} from "../../Helpers";
 const TABLE_HEAD = ["Cliente", "Monto", "Fecha", "Estado", "Metodo de pago"];
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
+const host = process.env.REACT_APP_API_URL;
 
 function TableReportes() {
     const [date1, setDate1] = useState("");
@@ -29,9 +30,9 @@ function TableReportes() {
     } = useSWR(
         () => {
             if (date1 !== "" && date2 !== "") {
-                return `http://localhost:8000/reports/getReport?startDate=${date1}&endDate=${date2}`;
+                return `${host}/reports/getReport?startDate=${date1}&endDate=${date2}`;
             } else {
-                return `http://localhost:8000/reports/getReport?startDate=${startDateF}&endDate=${endDateF}`;
+                return `${host}/reports/getReport?startDate=${startDateF}&endDate=${endDateF}`;
             }
         },
         fetcher,
@@ -48,8 +49,8 @@ function TableReportes() {
     const handleSearchDateRange = async () => {
         if (date1 !== "" && date2 !== "") {
             try {
-                const {data} = await axios.get(`http://localhost:8000/reports/getReport?startDate=${date1}&endDate=${date2}`);
-                await mutate(`http://localhost:8000/reports/getReport?startDate=${date1}&endDate=${date2}`, data, false);
+                const {data} = await axios.get(`${host}/reports/getReport?startDate=${date1}&endDate=${date2}`);
+                await mutate(`${host}/reports/getReport?startDate=${date1}&endDate=${date2}`, data, false);
             } catch (error) {
                 toast.error("Error al cargar los reportes");
             }

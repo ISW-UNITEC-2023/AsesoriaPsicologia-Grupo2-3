@@ -22,6 +22,7 @@ import {
 } from "../../Utilities/appointment-services";
 import { set } from "date-fns";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
+const host = process.env.REACT_APP_API_URL;
 
 export function TableConsultas({ page }) {
   const [open, setOpen] = useState(false);
@@ -45,21 +46,21 @@ export function TableConsultas({ page }) {
     error: rolesError,
     isLoading: rolesLoading,
   } = useSWR(
-    "http://localhost:8000/roles/viewAll",
+    host + "/roles/viewAll",
     user_services.getAllUsersRoles
   );
   const {
     data: data,
     error,
     isLoading,
-  } = useSWR(`http://localhost:8000/appointment/getById/${id}`, fetcher, {
+  } = useSWR(host + `/appointment/getById/${id}`, fetcher, {
     refreshInterval: 1000,
   });
   const {
     data: fetchedUsers,
     error: usersError,
     isLoading: usersLoading,
-  } = useSWR("http://localhost:8000/users/viewUsers", user_services.getUsers);
+  } = useSWR(host + "/users/viewUsers", user_services.getUsers);
 
   // Obtiene el nombre del paciente del localStorage
   const nombre = localStorage.getItem("namePatient");
@@ -98,7 +99,7 @@ export function TableConsultas({ page }) {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8000/appointment/deleteById/${id}`)
+      .delete(host + `/appointment/deleteById/${id}`)
       .then(() => {
         toast.success("Cita eliminada con éxito");
       })
@@ -107,7 +108,7 @@ export function TableConsultas({ page }) {
       });
 
     axios
-      .delete(`http://localhost:8000/calendar/events/deleteById/${id}`)
+      .delete(host + `/calendar/events/deleteById/${id}`)
       .catch((err) => {
         toast.error(
           "Ha ocurrido un error al eliminar la cita del calendario " + err
@@ -201,7 +202,7 @@ export function TableConsultas({ page }) {
       setMontoError(true);
     } else {
       try {
-        await axios.put("http://localhost:8000/appointment/addConsultation", {
+        await axios.put(host + "/appointment/addConsultation", {
           id_appointment: id_appointmentRef,
           id_file: localStorage.getItem("id_patient"),
           id_doctor: localStorage.getItem("id_doctor"),

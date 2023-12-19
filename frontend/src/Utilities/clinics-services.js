@@ -26,7 +26,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:8000/clinics/create',
+      url: host + '/clinics/create',
       headers: { 
         'Content-Type': 'application/json'
       },

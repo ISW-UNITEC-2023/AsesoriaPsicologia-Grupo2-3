@@ -4,25 +4,26 @@ import {Spinner} from "@material-tailwind/react";
 import {formatMoney} from "../../Helpers";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
+const host = process.env.REACT_APP_API_URL;
 
 const StatsSection = ({page}) => {
     const {
         data: salesWeek,
         error: errorWeek,
         isLoading: loadingWeek
-    } = useSWR('http://localhost:8000/stats/getStatsWeek', fetcher, {refreshInterval: 1000});
+    } = useSWR(host + '/stats/getStatsWeek', fetcher, {refreshInterval: 1000});
 
     const {
         data: salesDay,
         error: errorDay,
         isLoading: loadingDay
-    } = useSWR('http://localhost:8000/stats/getStatsDay', fetcher, {refreshInterval: 1000});
+    } = useSWR(host + '/stats/getStatsDay', fetcher, {refreshInterval: 1000});
 
     const {
         data: salesMonth,
         error: errorMonth,
         isLoading: loadingMonth
-    } = useSWR('http://localhost:8000/stats/getStatsMonth', fetcher, {refreshInterval: 1000});
+    } = useSWR(host + '/stats/getStatsMonth', fetcher, {refreshInterval: 1000});
 
     if (loadingWeek || loadingDay || loadingMonth) {
         return (
