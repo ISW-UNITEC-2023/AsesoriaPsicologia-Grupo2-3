@@ -22,6 +22,7 @@ export default function DialogCitas({
   open,
   updateOpen,
 }) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
   const [fechaN, setFechaN] = useState(fecha);
   const [horaN, setHoraN] = useState(hora);
@@ -30,13 +31,13 @@ export default function DialogCitas({
     data: fetchedUsers,
     error: usersError,
     isLoading: usersLoading,
-  } = useSWR("http://localhost:8000/users/viewUsers", user_services.getUsers);
+  } = useSWR(`${host}/users/viewUsers`, user_services.getUsers);
   const {
     data: fetchedRoles,
     error: rolesError,
     isLoading: rolesLoading,
   } = useSWR(
-    "http://localhost:8000/roles/viewAll",
+    `${host}/roles/viewAll`,
     user_services.getAllUsersRoles
   );
 
@@ -88,7 +89,7 @@ export default function DialogCitas({
 
     try {
       axios
-        .post(`http://localhost:8000/appointment/create`, {
+        .post(`${host}/appointment/create`, {
           id_user: localStorage.getItem("user_id"),
           appointment_date: fechaHora,
           appointment_hour: horaN,
@@ -110,7 +111,7 @@ export default function DialogCitas({
                 bodyStyle: { width: "1000%" },
               },
               axios
-                .post("http://localhost:8000/calendar/events/create", {
+                .post(`${host}/calendar/events/create`, {
                   id_event: eventId,
                   title: `${modalidad} - ${localStorage.getItem(
                     "namePatient"
@@ -153,7 +154,7 @@ export default function DialogCitas({
     )[0].id_user;
     try {
       axios
-        .put(`http://localhost:8000/appointment/updateAppointment`, {
+        .put(`${host}/appointment/updateAppointment`, {
           id_appointment: idAppo,
           id_user: localStorage.getItem("user_id"),
           appointment_date: date,
@@ -185,7 +186,7 @@ export default function DialogCitas({
 
     try {
       axios
-        .put(`http://localhost:8000/calendar/events/update`, {
+        .put(`${host}/calendar/events/update`, {
           id_event: idAppo,
           title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
           start: fechaN + " " + horaN,

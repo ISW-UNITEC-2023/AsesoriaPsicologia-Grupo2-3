@@ -24,6 +24,7 @@ import { set } from "date-fns";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export function TableConsultas({ page }) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [montoConsulta, setMontoConsulta] = useState("");
@@ -45,14 +46,14 @@ export function TableConsultas({ page }) {
     error: rolesError,
     isLoading: rolesLoading,
   } = useSWR(
-    "http://localhost:8000/roles/viewAll",
+    `${host}/roles/viewAll`,
     user_services.getAllUsersRoles
   );
   const {
     data: data,
     error,
     isLoading,
-  } = useSWR(`http://localhost:8000/appointment/getById/${id}`, fetcher, {
+  } = useSWR(`${host}/appointment/getById/${id}`, fetcher, {
     refreshInterval: 1000,
   });
   const {
@@ -98,7 +99,7 @@ export function TableConsultas({ page }) {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8000/appointment/deleteById/${id}`)
+      .delete(`${host}/appointment/deleteById/${id}`)
       .then(() => {
         toast.success("Cita eliminada con éxito");
       })
@@ -107,7 +108,7 @@ export function TableConsultas({ page }) {
       });
 
     axios
-      .delete(`http://localhost:8000/calendar/events/deleteById/${id}`)
+      .delete(`${host}/calendar/events/deleteById/${id}`)
       .catch((err) => {
         toast.error(
           "Ha ocurrido un error al eliminar la cita del calendario " + err
