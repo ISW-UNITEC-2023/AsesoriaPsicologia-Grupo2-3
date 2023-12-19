@@ -6,6 +6,7 @@ import Services from "../Utilities/documents-services";
 import PopupViewer from "../Components/PopupViewer";
 import { toast, ToastContainer } from "react-toastify";
 import { OverlayTrigger, Tooltip as BootstrapTooltip } from "react-bootstrap";
+import { Input } from "@material-tailwind/react";
 
 //Items
 import { useLocation } from "react-router-dom";
@@ -19,6 +20,7 @@ import {
   faFileImage,
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
+import { startOfWeek, endOfWeek, format } from "date-fns";
 
 //Styles
 import "../Styles/CSS/Documents.css";
@@ -29,10 +31,14 @@ function Documents(props) {
   const [archivos, setArchivos] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [selectedPreviews, setSelectedPreviews] = useState([]);
-
   const [selectedFile, setSelectedFile] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [uploadFile, setUploadFile] = useState(false);
+  const [openModal, setOpenModal] = useState({
+    open: false,
+    file: null,
+    type: "",
+  });
 
   //Cargar archivos
   useEffect(() => {
@@ -62,9 +68,13 @@ function Documents(props) {
   }, [searchTerm, allArchivos]);
 
   const filtrarArchivos = (archivosToFilter, term) => {
-    const filteredArchivos = archivosToFilter.filter((file) =>
-      file.document_name.toLowerCase().includes(term.toLowerCase())
-    );
+    const filteredArchivos = archivosToFilter.filter((file) => {
+      const matchesSearchTerm = file.document_name
+        .toLowerCase()
+        .includes(term.toLowerCase());
+        return matchesSearchTerm;
+    });
+
     setArchivos(filteredArchivos);
   };
 
@@ -208,22 +218,16 @@ function Documents(props) {
   };
 
   //cambiar nombre
-  const editarNombre = async (file, extension) => {
+  const editarNombre = async (file, nuevoNombre) => {
     try {
-      const nuevoNombre = prompt(
-        "Ingrese el nuevo nombre:",
-        file.document_name
+      const extension = file.document_type.split("/")[1];
+      const nuevaRuta = `${nuevoNombre}.${extension}`;
+      await Services.updateDocumentName(
+        file.id_document,
+        nuevaRuta,
+        userData.user_data.id_user
       );
-
-      if (nuevoNombre !== null) {
-        const nuevaRuta = `${nuevoNombre}.${extension}`;
-        await Services.updateDocumentName(
-          file.id_document,
-          nuevaRuta,
-          userData.user_data.id_user
-        );
-        cargarArchivos();
-      }
+      cargarArchivos();
     } catch (error) {
       console.error("Ocurrió un error al intentar editar el nombre:", error);
     }
@@ -231,17 +235,96 @@ function Documents(props) {
 
   //eliminar archivo
   const eliminarArchivo = async (file) => {
-    const confirmarEliminacion = window.confirm(
-      "¿Está seguro de que desea eliminar este archivo?"
-    );
-
-    if (confirmarEliminacion) {
-      await Services.deleteDocument(file.id_document);
-      cargarArchivos();
-      alert("¡Archivo eliminado exitosamente!");
-    }
+    await Services.deleteDocument(file.id_document);
+    cargarArchivos();
   };
 
+  const ModalDelEdit = () => {
+    const { open, file, type } = openModal;
+    const [nombre, setNombre] = useState("");
+    const handleEdit = (e) => {
+      const nuevoNombre = e.target.value;
+      setNombre(nuevoNombre);
+    };
+    if (type === "edit") {
+      const partesNombreArchivo = file.document_name.split(".");
+      const extension = partesNombreArchivo[partesNombreArchivo.length - 1];
+      const nombreSinExtension = file.document_name.replace(
+        `.${extension}`,
+        ""
+      );
+      if (nombre === "") {
+        setNombre(nombreSinExtension);
+      }
+    }
+
+    return (
+      <Modal
+        show={open}
+        onHide={() => {
+          setOpenModal({
+            open: false,
+          });
+        }}
+        dialogClassName="modal-delete-file"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {type === "delete"
+              ? "Eliminar Archivo"
+              : "Editar Nombre de Archivo"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {type === "delete" ? (
+            <p>¿Está seguro de que desea eliminar este archivo?</p>
+          ) : (
+            <div className="edit-doc-modal">
+              <p>Ingrese un nuevo nombre</p>
+              <input value={nombre} onChange={(e) => handleEdit(e)}></input>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          {type === "delete" ? (
+            <button
+              onClick={() => {
+                eliminarArchivo(file);
+                setOpenModal({
+                  open: false,
+                });
+              }}
+              className="confirm-delete-button"
+            >
+              Eliminar
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                editarNombre(file, nombre);
+                setOpenModal({
+                  open: false,
+                });
+              }}
+              className="confirm-delete-button"
+            >
+              Editar
+            </button>
+          )}
+          <button
+            onClick={() => {
+              setOpenModal({
+                open: false,
+              });
+            }}
+            className="cancel-delete-button"
+          >
+            Cancelar
+          </button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
   //Convertir size del archivo
   const convertSize = (size) => {
     const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -250,6 +333,19 @@ function Documents(props) {
     }
     const i = parseInt(Math.floor(Math.log(size) / Math.log(1024)));
     return Math.round(size / Math.pow(1024, i), 2) + " " + sizes[i];
+  };
+
+  //Formato fecha
+  const formatDate = (filedate) => {
+    const date = new Date(filedate);
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return date.toLocaleString("es-ES", options);
   };
 
   return (
@@ -278,10 +374,6 @@ function Documents(props) {
           <div className="archivo-visualizador-container">
             <ListGroup className="archivo-visualizador-title-list">
               {archivos.map((file) => {
-                const partesNombreArchivo = file.document_name.split(".");
-                const extension =
-                  partesNombreArchivo[partesNombreArchivo.length - 1];
-
                 return (
                   <ListGroup.Item
                     key={file.id_document}
@@ -290,6 +382,9 @@ function Documents(props) {
                     <div className="archivo-info">
                       <span className="archivo-visualizador-title">
                         {file.document_name}
+                      </span>
+                      <span className="archivo-visualizador-size">
+                        Fecha de creación: {formatDate(file.creation_date)}
                       </span>
                       <span className="archivo-visualizador-size">
                         Tamaño: {convertSize(file.document_size)}
@@ -327,7 +422,13 @@ function Documents(props) {
                         <FontAwesomeIcon
                           className="archivo-visualizador-button"
                           icon={faPencil}
-                          onClick={() => editarNombre(file, extension)}
+                          onClick={() =>
+                            setOpenModal({
+                              open: true,
+                              type: "edit",
+                              file: file,
+                            })
+                          }
                         />
                       </OverlayTrigger>
                       <OverlayTrigger
@@ -343,7 +444,13 @@ function Documents(props) {
                         <FontAwesomeIcon
                           className="archivo-visualizador-button"
                           icon={faTrash}
-                          onClick={() => eliminarArchivo(file)}
+                          onClick={() =>
+                            setOpenModal({
+                              open: true,
+                              type: "delete",
+                              file: file,
+                            })
+                          }
                         />
                       </OverlayTrigger>
                     </div>
@@ -357,6 +464,7 @@ function Documents(props) {
                 onClose={() => setSelectedFile(null)}
               />
             )}
+            <ModalDelEdit />
             <Modal
               show={uploadFile}
               onClose={() => {

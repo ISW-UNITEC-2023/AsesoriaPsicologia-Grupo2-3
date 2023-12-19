@@ -41,6 +41,7 @@ async function listFiles() {
     "id_file",
     "id_appointment",
     "user_creator",
+    "creation_date",
   ]);
   return archivos;
 }
@@ -56,6 +57,7 @@ async function listFilesId(id_file) {
       "id_file",
       "id_appointment",
       "user_creator",
+      "creation_date",
     ]);
   return archivo;
 }
