@@ -23,8 +23,9 @@
 .visualization-container {
   display: flex;
   flex-direction: column;
-  column-count: 2;
   gap: 20px;
+  max-height: 84vh;
+  overflow: auto;
 }
 
 .archivo-box {
@@ -47,8 +48,9 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 30px;
+  height: 6vh;
+  margin-bottom: 4vh;
+  margin-top: 4vh;
 }
 
 .archivo-visualizador-title-list {
@@ -377,4 +379,18 @@
   color: white;
   text-align: center;
   line-height: 20px;
+}
+
+.no-files-found{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2vh;
+  height: 84vh;
+}
+
+.no-files-found span{
+  font-size: 2rem;
+  color: #113946ac;
+  text-align: center;
 }

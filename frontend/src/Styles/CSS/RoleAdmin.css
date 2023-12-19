@@ -15,8 +15,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3% 6.5% 0px 6.5%;
-  font-size: 2rem;
+  padding: 2% 6.5% 0px 6.5%;
+  font-size: 2.5rem;
   font-family: sans-serif;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .title-columns-ra {
-  font-size: 1.5rem;
+  font-size: 2rem;
   align-self: flex-start;
   color:#373737;
 }
@@ -96,14 +96,13 @@
 }
 
 .span-descripcion-ra {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #6b6b6b;
   text-align: justify;
   width: 90%;
   text-wrap: wrap;
   height: 70px;
   margin-bottom: 15px;
-  line-height: normal;
 }
 
 .select-privileges-box {
@@ -175,7 +174,7 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .boton-editar-role{
@@ -204,7 +203,8 @@
   border:1px solid #113946;
   background-color: #c8d5d982;
   color: #113946;
-  padding: 8px;
+  padding: 5px;
+  font-size: 1.2rem;
   margin-bottom: 10px;
   width: 100%;
   border-radius: 4px;
@@ -217,6 +217,7 @@
   padding: 8px;
   resize: none;
   width: 100%;
+  font-size: 1.2rem;
   border-radius: 4px;
 }
 
@@ -224,6 +225,7 @@
   width: 25%;
   margin-left: 5%;
   padding: 10px;
+  border-radius: 8px;
   background-color: #113946;
   border: none;
   color: #fff;

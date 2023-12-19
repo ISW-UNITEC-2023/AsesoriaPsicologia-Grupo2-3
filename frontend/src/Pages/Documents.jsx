@@ -6,7 +6,6 @@ import Services from "../Utilities/documents-services";
 import PopupViewer from "../Components/PopupViewer";
 import { toast, ToastContainer } from "react-toastify";
 import { OverlayTrigger, Tooltip as BootstrapTooltip } from "react-bootstrap";
-import { Input } from "@material-tailwind/react";
 
 //Items
 import { useLocation } from "react-router-dom";
@@ -20,10 +19,10 @@ import {
   faFileImage,
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal } from "react-bootstrap";
-import { startOfWeek, endOfWeek, format } from "date-fns";
 
 //Styles
 import "../Styles/CSS/Documents.css";
+import imgNotFound from "../Styles/Images/Filing-system.gif"
 
 function Documents(props) {
   const { id_file, userData } = useLocation().state;
@@ -372,6 +371,7 @@ function Documents(props) {
         </div>
         <div className="visualization-container">
           <div className="archivo-visualizador-container">
+            {archivos.length > 0 ? (
             <ListGroup className="archivo-visualizador-title-list">
               {archivos.map((file) => {
                 return (
@@ -458,6 +458,12 @@ function Documents(props) {
                 );
               })}
             </ListGroup>
+            ) : (
+              <div className="no-files-found">
+                <img src={imgNotFound} alt="No se encontraron archivos" />
+                <span>No se encontraron archivos</span>
+              </div>
+            )}
             {selectedFile && (
               <PopupViewer
                 file={selectedFile}

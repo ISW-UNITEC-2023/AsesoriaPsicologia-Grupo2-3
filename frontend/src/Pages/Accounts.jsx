@@ -39,7 +39,7 @@ function Accounts(props) {
   const [selectedState, setSelectedState] = useState([]);
   const [openCreate, setOpenCreate] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const accountsPerPage = 12;
+  const accountsPerPage = 15;
   const [openEdit, setOpenEdit] = useState({
     open: 0,
     userInfo: null,
