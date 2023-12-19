@@ -25,7 +25,6 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 const host = process.env.REACT_APP_API_BASE_URL;
 
 export function TableConsultas({ page }) {
-  const host = process.env.REACT_APP_API_BASE_URL;
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [montoConsulta, setMontoConsulta] = useState("");
@@ -46,12 +45,12 @@ export function TableConsultas({ page }) {
     data: fetchedRoles,
     error: rolesError,
     isLoading: rolesLoading,
-  } = useSWR(`${host}/roles/viewAll`, user_services.getAllUsersRoles);
+  } = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
   const {
     data: data,
     error,
     isLoading,
-  } = useSWR(`${host}/appointment/getById/${id}`, fetcher, {
+  } = useSWR(host + `/appointment/getById/${id}`, fetcher, {
     refreshInterval: 1000,
   });
   const {
@@ -97,7 +96,7 @@ export function TableConsultas({ page }) {
 
   const handleDelete = (id) => {
     axios
-      .delete(`${host}/appointment/deleteById/${id}`)
+      .delete(host + `/appointment/deleteById/${id}`)
       .then(() => {
         toast.success("Cita eliminada con éxito");
       })
@@ -105,7 +104,7 @@ export function TableConsultas({ page }) {
         toast.error("Ha ocurrido un error al eliminar la cita " + err);
       });
 
-    axios.delete(`${host}/calendar/events/deleteById/${id}`).catch((err) => {
+    axios.delete(host + `/calendar/events/deleteById/${id}`).catch((err) => {
       toast.error(
         "Ha ocurrido un error al eliminar la cita del calendario " + err
       );
@@ -129,7 +128,7 @@ export function TableConsultas({ page }) {
 
   if (isLoading || usersLoading || rolesLoading) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
     );
@@ -137,7 +136,7 @@ export function TableConsultas({ page }) {
 
   if (error || usersError || rolesError) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <p>Ha ocurrido un error al cargar las citas</p>
       </div>
     );
@@ -259,11 +258,11 @@ export function TableConsultas({ page }) {
   };
 
   return (
-    <Card className='h-auto w-auto ml-2 mr-2 md:ml-20 md:mr-20'>
-      <CardHeader floated={false} shadow={false} className='rounded-none'>
-        <div className='flex flex-row justify-between items-center w-full'>
+    <Card className="h-auto w-auto ml-2 mr-2 md:ml-20 md:mr-20">
+      <CardHeader floated={false} shadow={false} className="rounded-none">
+        <div className="flex flex-row justify-between items-center w-full">
           {page === "Cita" && (
-            <div className='flex flex-row gap-2 items-center'>
+            <div className="flex flex-row gap-2 items-center">
               <BreadCrumbsC />
             </div>
           )}
@@ -279,12 +278,12 @@ export function TableConsultas({ page }) {
             </div>
           )}
         </div>
-        <div className='flex flex-col justify-between mt-4 md:flex-row md:items-center'>
-          <div className='flex flex-row'>
+        <div className="flex flex-col justify-between mt-4 md:flex-row md:items-center">
+          <div className="flex flex-row">
             <Typography
-              color='blue-gray'
+              color="blue-gray"
               style={{ color: "#113946" }}
-              variant='h6'
+              variant="h6"
             >
               Historial de Citas
             </Typography>
@@ -292,7 +291,7 @@ export function TableConsultas({ page }) {
         </div>
       </CardHeader>
       <CardBody
-        className='overflow-x-auto px-0 p-0'
+        className="overflow-x-auto px-0 p-0"
         style={{ maxHeight: "calc(100vh - 130px)" }}
       >
         {data.data.map(
@@ -305,46 +304,46 @@ export function TableConsultas({ page }) {
             {
               return (
                 <div
-                  className='ml-2 mr-2 md:ml-10 md:mr-10 mt-4 mb-4 p-4 flex flex-col justify-between
-                                 md:flex-row md:items-center bg-white rounded-md border border-black'
+                  className="ml-2 mr-2 md:ml-10 md:mr-10 mt-4 mb-4 p-4 flex flex-col justify-between
+                                 md:flex-row md:items-center bg-white rounded-md border border-black"
                 >
-                  <div className='flex flex-col justify-between gap-2'>
+                  <div className="flex flex-col justify-between gap-2">
                     <Typography
-                      color='blue-gray'
+                      color="blue-gray"
                       style={{ color: "#113946" }}
-                      variant='h6'
+                      variant="h6"
                     >
                       Paciente: {nombre}
                     </Typography>
                     <Typography
-                      color='blue-gray'
+                      color="blue-gray"
                       style={{ color: "#113946" }}
-                      variant='h6'
+                      variant="h6"
                     >
                       Doctor: {getDoctorName(id_doctor)}
                     </Typography>
                     <Typography
-                      color='blue-gray'
+                      color="blue-gray"
                       style={{ color: "#113946" }}
-                      variant='h6'
+                      variant="h6"
                     >
                       Fecha y hora de cita: {formatDate(appointment_date)}{" "}
                       {appointment_hour}
                     </Typography>
                   </div>
-                  <div className='flex flex-col justify-between gap-2 items-center'>
-                    <div className='flex flex-row gap-2'>
+                  <div className="flex flex-col justify-between gap-2 items-center">
+                    <div className="flex flex-row gap-2">
                       <Button
-                        className='w-32'
+                        className="w-32"
                         style={{ background: "#113946" }}
-                        variant='gradient'
-                        type='button'
+                        variant="gradient"
+                        type="button"
                         onClick={() => handleShow(id_appointment)}
                       >
                         Iniciar Consulta
                       </Button>
                       <Button
-                        className='w-32'
+                        className="w-32"
                         style={{ background: "#cb3939" }}
                         variant={"gradient"}
                         onClick={() => handleOpenE(id_appointment)}
@@ -352,9 +351,9 @@ export function TableConsultas({ page }) {
                         Modificar Cita
                       </Button>
                     </div>
-                    <div className='flex flex-row gap-2'>
+                    <div className="flex flex-row gap-2">
                       <Button
-                        className='w-32'
+                        className="w-32"
                         style={{ background: "#cb3939" }}
                         variant={"gradient"}
                         onClick={() => handleDelete(id_appointment)}
@@ -363,10 +362,10 @@ export function TableConsultas({ page }) {
                       </Button>
                       <Link to={"/expedientes"}>
                         <Button
-                          className='w-32'
+                          className="w-32"
                           style={{ background: "#cb3939" }}
-                          variant='gradient'
-                          type='button'
+                          variant="gradient"
+                          type="button"
                         >
                           Ver expediente
                         </Button>
@@ -391,20 +390,20 @@ export function TableConsultas({ page }) {
           />
         )}
         <div className={`pop-iniciar-consulta ${showModal ? "show" : ""}`}>
-          <div className='pop-iniciar-consulta-content'>
-            <div className='pop-iniciar-consulta-header'>
+          <div className="pop-iniciar-consulta-content">
+            <div className="pop-iniciar-consulta-header">
               <h1>Consulta Médica</h1>
-              <buttons className='button-save' onClick={handleGuardarConsulta}>
+              <buttons className="button-save" onClick={handleGuardarConsulta}>
                 Guardar Consulta
               </buttons>
             </div>
-            <div className='pop-iniciar-consulta-body'>
+            <div className="pop-iniciar-consulta-body">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <label htmlFor='doctorName'>Nombre del Médico:</label>
+                <label htmlFor="doctorName">Nombre del Médico:</label>
                 <Select
-                  label='Nombre del médico'
-                  className='select-doctor'
-                  placeholder='Seleccione un médico'
+                  label="Nombre del médico"
+                  className="select-doctor"
+                  placeholder="Seleccione un médico"
                 >
                   {doctores.map((doctor) => (
                     <Option
@@ -420,31 +419,31 @@ export function TableConsultas({ page }) {
                 </Select>
               </div>
 
-              <form className='pop-iniciar-consulta-form'>
-                <label htmlFor='consultaMotivo'>Motivo de Consulta:</label>
+              <form className="pop-iniciar-consulta-form">
+                <label htmlFor="consultaMotivo">Motivo de Consulta:</label>
                 <textarea
-                  id='consultaMotivo'
+                  id="consultaMotivo"
                   rows={3}
-                  placeholder='Ingrese motivo de consulta'
+                  placeholder="Ingrese motivo de consulta"
                   value={motivoConsulta}
                   onChange={(e) => setMotivoConsulta(e.target.value)}
                 />
 
-                <label htmlFor='observaciones'>Observaciones:</label>
+                <label htmlFor="observaciones">Observaciones:</label>
                 <textarea
-                  id='observaciones'
+                  id="observaciones"
                   rows={3}
-                  placeholder='Ingrese observaciones'
+                  placeholder="Ingrese observaciones"
                   value={observaciones}
                   onChange={(e) => setObservaciones(e.target.value)}
                 />
-                <label htmlFor='montoConsulta'>Monto de Consulta:</label>
+                <label htmlFor="montoConsulta">Monto de Consulta:</label>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <span style={{ marginRight: "0.3rem" }}>Lps.</span>
                   <input
-                    type='text'
-                    id='montoConsulta'
-                    placeholder='Ingrese monto de consulta'
+                    type="text"
+                    id="montoConsulta"
+                    placeholder="Ingrese monto de consulta"
                     value={montoConsulta}
                     onChange={(e) => setMontoConsulta(e.target.value)}
                   />
@@ -460,26 +459,26 @@ export function TableConsultas({ page }) {
                     El campo de Monto de Consulta no puede estar vacío
                   </p>
                 )}
-                <label htmlFor='ordenesMedicas'>Órdenes Médicas:</label>
+                <label htmlFor="ordenesMedicas">Órdenes Médicas:</label>
                 <textarea
-                  id='ordenesMedicas'
+                  id="ordenesMedicas"
                   rows={3}
-                  placeholder='Ingrese órdenes médicas'
+                  placeholder="Ingrese órdenes médicas"
                   value={ordenesMedicas}
                   onChange={(e) => setOrdenesMedicas(e.target.value)}
                 />
               </form>
             </div>
-            <div className='pop-iniciar-consulta-footer'>
+            <div className="pop-iniciar-consulta-footer">
               <buttons
-                className='close-button-sesiones btn btn-outline-danger'
-                type='button'
+                className="close-button-sesiones btn btn-outline-danger"
+                type="button"
                 onClick={handleClose}
               >
                 Cerrar
               </buttons>
               <buttons
-                className='button-terminar'
+                className="button-terminar"
                 onClick={handleTerminarConsulta}
               >
                 Terminar Consulta
