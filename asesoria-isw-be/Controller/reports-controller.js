@@ -13,7 +13,7 @@ async function getReport(req, res) {
     try {
         const response = await reportServices.getReports(startDate,endDate);
 
-        res.send(response);
+        res.send({ message: "Success", data: response });
       } catch (error) {
         res.send({ message: "Error", error: error.message });
       }
@@ -27,4 +27,3 @@ async function getReport(req, res) {
 module.exports = {
     getReport
   };
-  
