@@ -109,7 +109,9 @@ export function TableConsultas({ page }) {
     axios
       .delete(`http://localhost:8000/calendar/events/deleteById/${id}`)
       .catch((err) => {
-        toast.error("Ha ocurrido un error al eliminar la cita del calendario " + err);
+        toast.error(
+          "Ha ocurrido un error al eliminar la cita del calendario " + err
+        );
       });
   };
 
