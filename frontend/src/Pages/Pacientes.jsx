@@ -239,6 +239,10 @@ function PacientesForm(props) {
                       </Link>
                       <Link
                         to='/Expedientes'
+                        state={{
+                          id_file: nombre.id_account,
+                          userData: props.userData,
+                        }}
                         onClick={() =>
                           handleClick(
                             nombre.id_account,
