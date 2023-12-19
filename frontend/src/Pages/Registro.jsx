@@ -112,7 +112,7 @@ function Wizard(props) {
             </Form.Group>
 
 
-            <Form.Group controlId="formphoneNum" className="mb-3">
+            <Form.Group controlId="formphoneNum" className="mb-2">
               <Form.Label>Numero de Telefono</Form.Label>
               <Form.Control
                 type="number"
@@ -132,7 +132,7 @@ function Wizard(props) {
                 Este campo solo acepta numeros
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formEmail" className="mb-3">
+            <Form.Group controlId="formEmail" className="mb-2">
               <Form.Label>Correo Electrónico </Form.Label>
               <Form.Control
                 type="text"
@@ -155,7 +155,7 @@ function Wizard(props) {
                 El correo electrónico debe ser válido.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formPassword" className="mb-3">
+            <Form.Group controlId="formPassword" className="mb-2">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
@@ -175,12 +175,12 @@ function Wizard(props) {
                 
                 required
               />
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback classnametype="invalid">
                 La contraseña debe tener al menos 8 caracteres y contener al
                 menos una letra y un número.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formImage" className="mb-3">
+            <Form.Group controlId="formImage" className="mb-2">
               <Form.Label>Subir imagen</Form.Label>
               <Form.Control
                 type="file"
