@@ -8,6 +8,7 @@ import PopUpAdminRole from "../Components/PopUp_AdminRole";
 //Functions
 import { useEffect, useState } from "react";
 import user_services from "../Utilities/user-services";
+import userServices from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
 
 //Styles and Icons
@@ -29,6 +30,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Accounts(props) {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
   const [roles, setRoles] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -93,18 +96,18 @@ function Accounts(props) {
     };
 
     return (
-      <div id="accounts_dropdown" className="dropdown">
+      <div id='accounts_dropdown' className='dropdown'>
         <button
-          id="accounts_dropdown_toggle"
-          className="custom-dropdown-toggle"
-          type="button"
+          id='accounts_dropdown_toggle'
+          className='custom-dropdown-toggle'
+          type='button'
           //id={`dropdownMenu$}`}
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          data-toggle='dropdown'
+          aria-haspopup='true'
+          aria-expanded='false'
         >
           <OverlayTrigger
-            placement="bottom"
+            placement='bottom'
             overlay={
               <Tooltip id={`sort-tooltip-${type}`}>
                 Ordenar por{" "}
@@ -120,32 +123,32 @@ function Accounts(props) {
               </Tooltip>
             }
           >
-            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+            <FontAwesomeIcon icon={faFilter} className='filter-icon' />
           </OverlayTrigger>
         </button>
         <div
-          id="accounts_dropdown_menu"
-          className="dropdown-menu"
+          id='accounts_dropdown_menu'
+          className='dropdown-menu'
           aria-labelledby={`dropdownMenu${type}`}
         >
           <button
-            id="accounts_dropdown_menu_sort-asc"
-            className="dropdown-item"
+            id='accounts_dropdown_menu_sort-asc'
+            className='dropdown-item'
             onClick={() => {
               sortUsers("asc");
             }}
           >
-            <FontAwesomeIcon icon={faArrowUp} className="filter-icon" />
+            <FontAwesomeIcon icon={faArrowUp} className='filter-icon' />
             ASC
           </button>
           <button
-            id="accounts_dropdown_menu_sort-desc"
-            className="dropdown-item"
+            id='accounts_dropdown_menu_sort-desc'
+            className='dropdown-item'
             onClick={() => {
               sortUsers("desc");
             }}
           >
-            <FontAwesomeIcon icon={faArrowDown} className="filter-icon" />
+            <FontAwesomeIcon icon={faArrowDown} className='filter-icon' />
             DESC
           </button>
         </div>
@@ -155,18 +158,18 @@ function Accounts(props) {
 
   const CustomCbFilter = ({ type }) => {
     return (
-      <div id="accounts_dropdown" className="dropdown">
+      <div id='accounts_dropdown' className='dropdown'>
         <button
-          id="accounts_dropdown_toggle"
-          className="custom-dropdown-toggle"
-          type="button"
+          id='accounts_dropdown_toggle'
+          className='custom-dropdown-toggle'
+          type='button'
           //id={`dropdownMenu$}`}
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          data-toggle='dropdown'
+          aria-haspopup='true'
+          aria-expanded='false'
         >
           <OverlayTrigger
-            placement="bottom"
+            placement='bottom'
             overlay={
               <Tooltip id={`filter-tooltip-${type}`}>
                 Filtrar por{" "}
@@ -174,30 +177,30 @@ function Accounts(props) {
               </Tooltip>
             }
           >
-            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+            <FontAwesomeIcon icon={faFilter} className='filter-icon' />
           </OverlayTrigger>
         </button>
         <div
-          id="accounts_dropdown_menu"
-          className="dropdown-menu"
+          id='accounts_dropdown_menu'
+          className='dropdown-menu'
           aria-labelledby={`dropdownMenu${type}`}
         >
           {type === "roles" ? (
             <div
-              id="accounts_dropdown_menu_filtro"
-              className="form-check-filter"
+              id='accounts_dropdown_menu_filtro'
+              className='form-check-filter'
             >
               {roles.length > 0 &&
                 roles.map((role) => {
                   return (
                     <label
-                      className="filter-check-label"
+                      className='filter-check-label'
                       htmlFor={role.id_role}
                     >
                       <input
                         id={`accounts_dropdown_menu_filtro_${role.id_role}`}
-                        className="check-input-filter"
-                        type="checkbox"
+                        className='check-input-filter'
+                        type='checkbox'
                         name={type}
                         value={role.name_role}
                         //id={role.id_role}
@@ -210,11 +213,11 @@ function Accounts(props) {
                     </label>
                   );
                 })}
-              <label className="filter-check-label">
+              <label className='filter-check-label'>
                 <input
-                  id="accounts_dropdown_menu_filtro_role-ninguno"
-                  className="check-input-filter"
-                  type="checkbox"
+                  id='accounts_dropdown_menu_filtro_role-ninguno'
+                  className='check-input-filter'
+                  type='checkbox'
                   name={type}
                   value={"Sin rol"}
                   //id={0}
@@ -228,15 +231,15 @@ function Accounts(props) {
             </div>
           ) : (
             <div
-              id="accounts_dropdown_menu_filtro"
-              className="form-check-filter"
+              id='accounts_dropdown_menu_filtro'
+              className='form-check-filter'
             >
-              <label className="filter-check-label" htmlFor="active">
+              <label className='filter-check-label' htmlFor='active'>
                 <input
-                  id="accounts_dropdown_menu_filtro_rol-activo"
-                  className="check-input-filter"
-                  type="checkbox"
-                  name="state"
+                  id='accounts_dropdown_menu_filtro_rol-activo'
+                  className='check-input-filter'
+                  type='checkbox'
+                  name='state'
                   value={1}
                   //id="active"
                   checked={selectedState.includes(1)}
@@ -246,11 +249,11 @@ function Accounts(props) {
                 />
                 Activo
               </label>
-              <label className="filter-check-label" htmlFor="inactive">
+              <label className='filter-check-label' htmlFor='inactive'>
                 <input
-                  id="accounts_dropdown_menu_filtro_rol-inactivo"
-                  className="check-input-filter"
-                  type="checkbox"
+                  id='accounts_dropdown_menu_filtro_rol-inactivo'
+                  className='check-input-filter'
+                  type='checkbox'
                   name={type}
                   value={0}
                   //id="inactive"
@@ -268,6 +271,24 @@ function Accounts(props) {
     );
   };
 
+  const renderRoles = (user) => {
+    const uniqueRoles = [...new Set(user.roles.map((role) => role[1]))];
+
+    if (uniqueRoles.length === 1) {
+      return <span>{uniqueRoles[0]}</span>;
+    } else if (uniqueRoles.length === 0) {
+      return <span>Sin rol</span>;
+    } else {
+      return (
+        <select className='select-role-item'>
+          {uniqueRoles.map((role) => (
+            <option key={role}>{role}</option>
+          ))}
+        </select>
+      );
+    }
+  };
+
   //Formato de fecha
   const formatDate = (announceDate) => {
     const date = new Date(announceDate);
@@ -281,11 +302,68 @@ function Accounts(props) {
     return date.toLocaleString("es-ES", options);
   };
 
-  //Fetch de Usuarios
   useEffect(() => {
-    refreshUsers();
+    const fetchData = async () => {
+      try {
+        const clinicId = props.userData.user_data.id_clinic;
+        const result = await userServices.getUsersByClinic(clinicId);
+        const fetchedRoles = await userServices.getAllUsersRoles();
+        console.log("Users:", result);
+        console.log("Roles:", fetchedRoles);
+        // Create a map to track users by their IDs
+        const userMap = new Map();
+
+        // Iterate over the result array
+        result.forEach((user) => {
+          // If the user ID is not in the map, add it with an empty roles array
+          if (!userMap.has(user.id_user)) {
+            userMap.set(user.id_user, { ...user, roles: [] });
+          }
+
+          // Add roles to the user in the map
+          fetchedRoles.forEach((role) => {
+            if (user.id_user === role.id_user) {
+              userMap
+                .get(user.id_user)
+                .roles.push([role.id_role, role.name_role]);
+            }
+          });
+        });
+
+        // Convert the map values (users) back to an array
+        const uniqueUsers = Array.from(userMap.values());
+
+        setUsers(uniqueUsers);
+        setOriginalUsers(uniqueUsers);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  //************************************* */
+  //Fetch de Roles
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const fetchedRoles = await role_services.getAllRoles();
+  //     setRoles(fetchedRoles);
+  //   };
+  //   fetchData().then(r => r);
+  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedRoles = await role_services.getAllRoles();
+        setRoles(fetchedRoles);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   //Filtrado de Nombre
   useEffect(() => {
     // filtrarUsuarios(users, searchTerm);
@@ -325,7 +403,7 @@ function Accounts(props) {
         }
       }
       setSelectedRoles(newRoles);
-      originalUsers.filter((user) => {
+      originalUsers.forEach((user) => {
         newRoles.forEach((role) => {
           user.roles.map((item) => {
             if (item.includes(role)) {
@@ -356,7 +434,7 @@ function Accounts(props) {
         states.push(selectedItem);
       }
       setSelectedState(states);
-      originalUsers.filter((user) => {
+      originalUsers.forEach((user) => {
         states.forEach((state) => {
           if (user.active_user === state) {
             if (!filteredUsers.includes(user)) {
@@ -411,11 +489,11 @@ function Accounts(props) {
   };
 
   return (
-    <div className="account-container">
+    <div className='account-container'>
       <Navbar userData={props.userData} />
-      <div className="account-box">
-        <div className="account-header">
-          <span className="account-title">Administración de Cuentas</span>
+      <div className='account-box'>
+        <div className='account-header'>
+          <span className='account-title'>Administración de Cuentas</span>
           {/* <div className="search-user-box">
             <FontAwesomeIcon icon={faSearch} className="iconSearch-box" />
             <input
@@ -426,15 +504,15 @@ function Accounts(props) {
             />
           </div> */}
           <OverlayTrigger
-            placement="bottom"
+            placement='bottom'
             overlay={
-              <Tooltip id="limpiar-tooltip">
+              <Tooltip id='limpiar-tooltip'>
                 {sorted ? "Limpiar filtros" : "No se han aplicado filtros"}
               </Tooltip>
             }
           >
             <div
-              className="remove-filter-button"
+              className='remove-filter-button'
               onClick={() => {
                 limpiarFiltros();
               }}
@@ -445,7 +523,7 @@ function Accounts(props) {
             </div>
           </OverlayTrigger>
           <button
-            className="crear-cuenta-button"
+            className='crear-cuenta-button'
             onClick={() => {
               setOpenCreate(1);
             }}
@@ -483,49 +561,49 @@ function Accounts(props) {
             />
           )}
         </div>
-        <table className="table table-bordered account-table">
-          <thead className="accounts-table-header">
+        <table className='table table-bordered account-table'>
+          <thead className='accounts-table-header'>
             <tr>
               <th></th>
               <th>
-                <div className="th-div-account">
-                  <CustomBtFilter type="id_user" />
+                <div className='th-div-account'>
+                  <CustomBtFilter type='id_user' />
                   ID
                 </div>
               </th>
               <th>
-                <div className="th-div-account">
-                  <CustomBtFilter type="name_user" />
+                <div className='th-div-account'>
+                  <CustomBtFilter type='name_user' />
                   Nombre
                 </div>
               </th>
               <th>
-                <div className="th-div-account">
-                  <CustomBtFilter type="email_user" />
+                <div className='th-div-account'>
+                  <CustomBtFilter type='email_user' />
                   Correo
                 </div>
               </th>
               <th>
-                <div className="th-div-account">
-                  <CustomBtFilter type="number_user" />
+                <div className='th-div-account'>
+                  <CustomBtFilter type='number_user' />
                   Número de teléfono
                 </div>
               </th>
               <th>
-                <div className="th-div-account">
-                  <CustomCbFilter type="roles" />
+                <div className='th-div-account'>
+                  <CustomCbFilter type='roles' />
                   Rol
                 </div>
               </th>
               <th>
-                <div className="th-div-account">
-                  <CustomCbFilter type="state" />
+                <div className='th-div-account'>
+                  <CustomCbFilter type='state' />
                   Estado
                 </div>
               </th>
               <th>
-                <div className="th-div-account">
-                  <CustomBtFilter type="creation_date" />
+                <div className='th-div-account'>
+                  <CustomBtFilter type='creation_date' />
                   Fecha de creación
                 </div>
               </th>
@@ -535,10 +613,10 @@ function Accounts(props) {
             {getCurrentAccounts().length > 0 &&
               getCurrentAccounts().map((itemU) => {
                 return (
-                  <tr className="row-table-accounts" key={itemU.id_user}>
-                    <td className="accounts-table-obj">
+                  <tr className='row-table-accounts' key={itemU.id_user}>
+                    <td className='accounts-table-obj'>
                       <OverlayTrigger
-                        placement="top"
+                        placement='top'
                         overlay={
                           <Tooltip id={`edit-tooltip-${itemU.id_user}`}>
                             Editar Usuario
@@ -547,7 +625,7 @@ function Accounts(props) {
                       >
                         <FontAwesomeIcon
                           icon={faPenToSquare}
-                          className="row-edit-user"
+                          className='row-edit-user'
                           onClick={() => {
                             setOpenEdit({
                               open: 1,
@@ -557,7 +635,7 @@ function Accounts(props) {
                         />
                       </OverlayTrigger>
                       <OverlayTrigger
-                        placement="top"
+                        placement='top'
                         overlay={
                           <Tooltip id={`role-tooltip-${itemU.id_user}`}>
                             Asignar Rol
@@ -566,7 +644,7 @@ function Accounts(props) {
                       >
                         <FontAwesomeIcon
                           icon={faUserGear}
-                          className="row-user-role"
+                          className='row-user-role'
                           onClick={() => {
                             setOpenRole({
                               open: 1,
@@ -576,27 +654,18 @@ function Accounts(props) {
                         />
                       </OverlayTrigger>
                     </td>
-                    <td className="accounts-table-id">{itemU.id_user}</td>
-                    <td className="accounts-table-item">{itemU.name_user}</td>
-                    <td className="accounts-table-item">{itemU.email_user}</td>
-                    <td className="accounts-table-item">{itemU.number_user}</td>
-                    <td className="accounts-table-item">
-                      {itemU.roles.length === 1 && (
-                        <span>{itemU.roles[0][1]}</span>
-                      )}
-                      {itemU.roles.length === 0 && <span>Sin rol</span>}
-                      {itemU.roles.length > 1 && (
-                        <select className="select-role-item">
-                          {itemU.roles.map((role) => {
-                            return <option>{role[1]}</option>;
-                          })}
-                        </select>
-                      )}
+                    <td className='accounts-table-id'>{itemU.id_user}</td>
+                    <td className='accounts-table-item'>{itemU.name_user}</td>
+                    <td className='accounts-table-item'>{itemU.email_user}</td>
+                    <td className='accounts-table-item'>{itemU.number_user}</td>
+                    <td className='accounts-table-item'>
+                      {renderRoles(itemU)}
                     </td>
-                    <td className="accounts-table-item">
+
+                    <td className='accounts-table-item'>
                       {itemU.active_user === 1 ? "Activo" : "Inactivo"}
                     </td>
-                    <td className="accounts-table-item">
+                    <td className='accounts-table-item'>
                       {formatDate(itemU.creation_date)}
                     </td>
                   </tr>
@@ -604,8 +673,8 @@ function Accounts(props) {
               })}
           </tbody>
         </table>
-        <div className="pagination">
-          <span className="pagination-text">
+        <div className='pagination'>
+          <span className='pagination-text'>
             Mostrando {getCurrentAccounts().length} de {users.length} cuentas
           </span>
           <button

@@ -12,13 +12,15 @@ import axios from "axios";
 import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 
-const host = process.env.REACT_APP_API_URL;
+const host = process.env.REACT_APP_API_BASE_URL;
 
 export default function DialogCitas({
+  idAppo,
   titulo,
   nombreDoctor,
   fecha,
   hora,
+  formato,
   open,
   updateOpen,
 }) {
@@ -46,7 +48,7 @@ export default function DialogCitas({
 
   if (usersLoading || rolesLoading) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <Spinner />
       </div>
     );
@@ -54,7 +56,7 @@ export default function DialogCitas({
 
   if (usersError || rolesError) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className="flex justify-center items-center h-screen">
         <p>Ha ocurrido un error al cargar los usuarios</p>
       </div>
     );
@@ -78,9 +80,8 @@ export default function DialogCitas({
   const idPaciente = localStorage.getItem("id_patient");
 
   const handleConfirmC = async () => {
-    // combinar los iso de fecha y hora
     const fechaHora = fechaN + " " + horaN + ":00.000Z";
-    // Obtener él, id del doctor seleccionado
+
     const id_doctor = doctores.filter(
       (doctor) => doctor.id_user === nombreDoctorN
     )[0].id_user;
@@ -90,40 +91,48 @@ export default function DialogCitas({
         .post(`${host}/appointment/create`, {
           id_user: localStorage.getItem("user_id"),
           appointment_date: fechaHora,
+          appointment_hour: horaN,
           id_clinic: localStorage.getItem("id_clinic"),
           id_doctor: id_doctor,
           id_file: idPaciente,
           user_creator: localStorage.getItem("user_id"),
           appointment_type: modalidad,
+          state_appointment: "PENDIENTE",
         })
         .then((res) => {
-          //console.log(fechaHora);
-          handleOpen();
-          toast(
-            "Cita Agendada Correctamente",
-            {
-              type: "success",
-              bodyStyle: { width: "1000%" },
-            },
-
-            axios
-              .post(host + "/calendar/events/create", {
-                id_event: res.data.appoId[0],
-                title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
-                url: "",
-                start: `${fechaN} ${horaN}`,
-                end: null,
-                id_clinic: localStorage.getItem("id_clinic"),
-              })
-              .catch((error) => {
-                toast(
-                  "Ha ocurrido un error al agregar la cita al calendario: " +
-                    error.message,
-                  { type: "error" }
-                );
-              })
-          );
+          if (res.data) {
+            const eventId = res.data.eventId;
+            handleOpen();
+            toast(
+              "Cita Agendada Correctamente",
+              {
+                type: "success",
+                bodyStyle: { width: "1000%" },
+              },
+              axios
+                .post(`${host}/calendar/events/create`, {
+                  id_event: eventId,
+                  title: `${modalidad} - ${localStorage.getItem(
+                    "namePatient"
+                  )}`,
+                  url: "",
+                  start: `${fechaN} ${horaN}`,
+                  end: null,
+                  id_clinic: localStorage.getItem("id_clinic"),
+                })
+                .catch((error) => {
+                  toast(
+                    "Ha ocurrido un error al agregar la cita al calendario: " +
+                      error.message,
+                    { type: "error" }
+                  );
+                })
+            );
+          } else {
+            toast("Error al leer la respuesta del servidor", { type: "error" });
+          }
         })
+
         .catch((error) => {
           toast("Ha ocurrido un error al agendar la cita: " + error.message, {
             type: "error",
@@ -156,7 +165,6 @@ export default function DialogCitas({
           appointment_type: modalidad,
         })
         .then(() => {
-          console.log(date + " " + horaN);
           handleOpen();
           toast("Cita Modificada Correctamente", {
             type: "success",
@@ -199,51 +207,51 @@ export default function DialogCitas({
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={handleOpen}>
+      <Dialog as="div" className="relative z-10" onClose={handleOpen}>
         <Transition.Child
           as={Fragment}
-          enter='ease-out duration-300'
-          enterFrom='opacity-0'
-          enterTo='opacity-100'
-          leave='ease-in duration-200'
-          leaveFrom='opacity-100'
-          leaveTo='opacity-0'
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
         >
-          <div className='fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity' />
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-        <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
-          <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
-              enter='ease-out duration-300'
-              enterFrom='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
-              enterTo='opacity-100 translate-y-0 sm:scale-100'
-              leave='ease-in duration-200'
-              leaveFrom='opacity-100 translate-y-0 sm:scale-100'
-              leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg'>
-                <div className='bg-gray-100 sm:p-6 sm:pb-4'>
-                  <div className=''>
-                    <div className='mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left'>
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="bg-gray-100 sm:p-6 sm:pb-4">
+                  <div className="">
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                       <Dialog.Title
-                        as='h3'
-                        className='text-xl font-semibold leading-6 text-gray-900'
+                        as="h3"
+                        className="text-xl font-semibold leading-6 text-gray-900"
                       >
                         {titulo}
                       </Dialog.Title>
-                      <div className='mt-4'>
-                        <div className='flex flex-col gap-3'>
-                          <div className='flex flex-row gap-2 items-center'>
+                      <div className="mt-4">
+                        <div className="flex flex-col gap-3">
+                          <div className="flex flex-row gap-2 items-center">
                             <Typography
-                              className='whitespace-nowrap text-sm text-black'
-                              variant='h6'
-                              color='blue-gray'
+                              className="whitespace-nowrap text-sm text-black"
+                              variant="h6"
+                              color="blue-gray"
                             >
                               Nombre Doctor:
                             </Typography>
                             <Select
-                              label='Nombre del doctor'
+                              label="Nombre del doctor"
                               value={nombreDoctorN}
                               onChange={(e) => setNombreDoctorN(e)}
                             >
@@ -254,48 +262,48 @@ export default function DialogCitas({
                               ))}
                             </Select>
                           </div>
-                          <div className='flex flex-row gap-2 items-center'>
+                          <div className="flex flex-row gap-2 items-center">
                             <Typography
-                              className='whitespace-nowrap text-sm text-black mt-2'
-                              variant='h6'
-                              color='blue-gray'
+                              className="whitespace-nowrap text-sm text-black mt-2"
+                              variant="h6"
+                              color="blue-gray"
                             >
                               Fecha - Calendario:
                             </Typography>
                             <Input
-                              type='date'
-                              variant='standard'
-                              label='Fecha de la Cita'
+                              type="date"
+                              variant="standard"
+                              label="Fecha de la Cita"
                               value={fechaN}
                               onChange={(e) => setFechaN(e.target.value)}
                             />
                           </div>
-                          <div className='flex flex-row gap-3 items-center'>
+                          <div className="flex flex-row gap-3 items-center">
                             <Typography
-                              className='whitespace-nowrap text-sm text-black mt-2'
-                              variant='h6'
-                              color='blue-gray'
+                              className="whitespace-nowrap text-sm text-black mt-2"
+                              variant="h6"
+                              color="blue-gray"
                             >
                               Hora de la Cita:
                             </Typography>
                             <Input
-                              type='time'
-                              variant='standard'
-                              label='Hora de la Cita'
+                              type="time"
+                              variant="standard"
+                              label="Hora de la Cita"
                               value={horaN}
                               onChange={(e) => setHoraN(e.target.value)}
                             />
                           </div>
-                          <div className='flex flex-row gap-3 items-center'>
+                          <div className="flex flex-row gap-3 items-center">
                             <Typography
-                              className='whitespace-nowrap text-sm text-black mt-2'
-                              variant='h6'
-                              color='blue-gray'
+                              className="whitespace-nowrap text-sm text-black mt-2"
+                              variant="h6"
+                              color="blue-gray"
                             >
                               Modalidad de la Cita:
                             </Typography>
                             <Select
-                              label='Formato'
+                              label="Formato"
                               value={modalidad}
                               onChange={(e) => setModalidad(e)}
                             >
@@ -312,33 +320,33 @@ export default function DialogCitas({
                     </div>
                   </div>
                 </div>
-                <div className='gap-5 px-4 py-3 flex flex-row justify-end'>
+                <div className="gap-5 px-4 py-3 flex flex-row justify-end">
                   <Button
-                    size='sm'
-                    variant='outlined'
-                    color='red'
-                    className='hover:bg-red-700  text-red-700'
-                    type='button'
+                    size="sm"
+                    variant="outlined"
+                    color="red"
+                    className="hover:bg-red-700  text-red-700"
+                    type="button"
                     onClick={handleOpen}
                   >
                     Cancelar
                   </Button>
                   {titulo === "Agendar Cita" ? (
                     <Button
-                      size='sm'
-                      variant='filled'
-                      color='green'
-                      type='button'
+                      size="sm"
+                      variant="filled"
+                      color="green"
+                      type="button"
                       onClick={handleConfirmC}
                     >
                       Agendar Cita
                     </Button>
                   ) : (
                     <Button
-                      size='sm'
-                      variant='filled'
-                      color='green'
-                      type='button'
+                      size="sm"
+                      variant="filled"
+                      color="green"
+                      type="button"
                       onClick={handleConfirmM}
                     >
                       Modificar Cita
