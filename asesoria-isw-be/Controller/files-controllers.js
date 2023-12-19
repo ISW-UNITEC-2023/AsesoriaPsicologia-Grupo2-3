@@ -18,7 +18,7 @@ async function createFile(req, res) {
     active,
     user_editor,
     user_creator,
-    identidad
+    identidad,
   } = req.body;
   const errorMessages = [];
 
@@ -32,7 +32,6 @@ async function createFile(req, res) {
 
   const lengAdress = address.toString();
   const lengCstatus = civil_status.toString();
-  const lengMedical = medical_history.toString();
   const lengSubtance = substance_usage.toString();
   const lengactive = active.toString();
   const lengObservation = observation.toString();
@@ -109,16 +108,6 @@ async function createFile(req, res) {
   }
 
   if (
-    lengMedical.length > 500 ||
-    lengMedical.length == 0 ||
-    typeof medical_history != "string"
-  ) {
-    errorMessages.push(
-      "Historial medico es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres"
-    );
-  }
-
-  if (
     lengSubtance.length > 200 ||
     lengSubtance.length == 0 ||
     typeof substance_usage != "string"
@@ -162,7 +151,7 @@ async function createFile(req, res) {
         active,
         user_editor,
         user_creator,
-        identidad
+        identidad,
       });
       res.send({ message: "Se ha creado el expediente" });
     } catch (error) {
@@ -881,7 +870,9 @@ async function updatePhoneNumber(req, res) {
 
   try {
     await fileServices.updatePhoneNumber({ id, phone_number, editor });
-    res.send({ message: "Se ha actualizado el numero de telefono del expediente" });
+    res.send({
+      message: "Se ha actualizado el numero de telefono del expediente",
+    });
   } catch (error) {
     res.send({
       message: "Error",

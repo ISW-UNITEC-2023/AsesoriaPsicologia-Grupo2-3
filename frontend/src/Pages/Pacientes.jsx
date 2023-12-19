@@ -6,21 +6,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
-// import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
-import { formatDate } from "../Utilities/validator";
-
+import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 import axios from "axios";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 import user_services from "../Utilities/user-services";
-import { Option, Select, Spinner } from "@material-tailwind/react";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Spinner } from "@material-tailwind/react";
 import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
+import patientsService from "../Utilities/patients-services";
 
 function PacientesForm(props) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const [nombres, setNombres] = useState([]);
   const [showCrearPopup, setShowCrearPopup] = useState(false);
   const [showEditarPopup, setShowEditarPopup] = useState(false);
@@ -35,14 +34,7 @@ function PacientesForm(props) {
     data: fetchedRoles,
     error: rolesError,
     isLoading: rolesLoading,
-  } = useSWR(
-    "http://localhost:8000/roles/viewAll",
-    user_services.getAllUsersRoles
-  );
-
-  const handleClose = () => {
-    setShowModal(false);
-  };
+  } = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
 
   const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
   const [displayConfirmPopUp, setDisplayConfirmPopUp] = useState(false);
@@ -64,14 +56,32 @@ function PacientesForm(props) {
     setShowCrearPacientePopup(true);
   };
 
-  const handleCrearPaciente = async (pacienteInfo) => {
+  const handleCrearPaciente = async () => {
     try {
-      const result = await patientsService.createPatient(pacienteInfo);
-      if (result.success) {
-        console.log("Paciente creado con éxito:", result.data);
-        setDisplayConfirmPopUp(true);
-      } else {
+      const nombre_completo = selectedPatient.nombre.split(" ");
+      const result = await patientsService.CreatePatient(
+        nombre_completo[0],
+        nombre_completo[1],
+        nombre_completo[2],
+        nombre_completo[3],
+        selectedPatient.fechaNacimiento,
+        "prueba@gmail.com",
+        "96569414",
+        selectedPatient.direccion,
+        selectedPatient.estadoCivil,
+        "---",
+        "---",
+        props.userData.user_data.id_clinic,
+        props.userData.user_data.id_user,
+        selectedPatient.numeroIdentidad
+      );
+
+      if (result.message) {
+        console.log(result);
         console.error("Error al crear el paciente:", result.message);
+      } else {
+        console.log("Paciente creado con éxito:", result);
+        setDisplayConfirmPopUp(true);
       }
     } catch (error) {
       console.error("Error creating patient:", error);
@@ -95,7 +105,7 @@ function PacientesForm(props) {
     );
     const arregloMandar = [];
 
-    arregloUsuarios.map((usuario) => {
+    arregloUsuarios.fileInfo.map((usuario) => {
       let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
       return arregloMandar.push({
         nombre: nombre_user,
@@ -229,10 +239,13 @@ function PacientesForm(props) {
                       </Link>
                       <Link
                         to='/Expedientes'
-                        state={{
-                          id_file: nombre.id_account,
-                          userData: props.userData,
-                        }}
+                        onClick={() =>
+                          handleClick(
+                            nombre.id_account,
+                            nombre.nombre,
+                            nombre.id_clinic
+                          )
+                        }
                         className='dropdown-item'
                       >
                         Ver Expediente

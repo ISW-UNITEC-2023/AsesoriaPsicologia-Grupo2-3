@@ -43,7 +43,28 @@ async function createUser(user) {
       password: user.password,
       type: user.type,
       active: user.active,
-      creator: user.creator,
+      creator: parseInt(localStorage.getItem("user_id")),
+    },
+  };
+  let users = await axios.request(options);
+  return users.data;
+}
+
+async function createUserByclinic(user) {
+  console.log("user", user);
+
+  const options = {
+    method: "POST",
+    url: host + "/users/register",
+    data: {
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      password: user.password,
+      type: user.type,
+      active: user.active,
+      creator: 13,
+      clinicid: user.clinicid,
     },
   };
   let users = await axios.request(options);
@@ -57,7 +78,7 @@ async function editName(user) {
     data: {
       id: user.id,
       name: user.name,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -71,7 +92,7 @@ async function editPhone(user) {
     data: {
       id: user.id,
       phone: user.phone,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -85,7 +106,7 @@ async function editEmail(user) {
     data: {
       id: user.id,
       newEmail: user.email,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -99,7 +120,7 @@ async function editActive(user) {
     data: {
       id: user.id,
       active: user.active,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -113,7 +134,7 @@ async function editPassword(user) {
     data: {
       id: user.id,
       newPassword: user.password,
-      editor: user.editor,
+      editor: parseInt(localStorage.getItem("user_id")),
     },
   };
   const response = await axios.request(options);
@@ -127,7 +148,8 @@ async function assignRole(user) {
     data: {
       id_user: user.id,
       id_role: user.role,
-      user_creator: user.creator,
+      creator: user.editor,
+      editor: user.creator,
     },
   };
   const response = await axios.request(options);
