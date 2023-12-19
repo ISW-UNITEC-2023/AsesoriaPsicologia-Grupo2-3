@@ -196,7 +196,6 @@ export function TableConsultas({ page }) {
       data && data.AppInfo && data.AppInfo[0] ? data.AppInfo[0].motive : ""
     );
   };
-
   const handleTerminarConsulta = async () => {
     if (montoConsulta.trim() === "") {
       setMontoError(true);
