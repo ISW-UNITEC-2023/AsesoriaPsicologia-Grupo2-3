@@ -139,7 +139,6 @@ export default function DialogCitas({
   };
 
   const handleConfirmM = () => {
-    console.log(idAppo + " idappooooooo")
     const date = new Date(fechaN);
     date.setDate(date.getDate() + 1);
     const id_doctor = doctores.filter(
@@ -176,8 +175,26 @@ export default function DialogCitas({
         type: "error",
       });
     }
-  };
 
+    try {
+      axios
+        .put(`http://localhost:8000/calendar/events/update`, {
+          id_event: idAppo,
+          title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
+          start: fechaN + " " + horaN,
+        })
+        .catch((error) => {
+          toast("Ha ocurrido un error al modificar la cita en el calendario: " + error.message, {
+            type: "error",
+          });
+        });
+
+    } catch (error) {
+      toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+        type: "error",
+      });
+    }
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>

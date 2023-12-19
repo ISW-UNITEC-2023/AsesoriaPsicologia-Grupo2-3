@@ -42,12 +42,18 @@ async function createEvent(req, res) {
 }
 
 async function updateEventById(req, res){
+    const {id_event, title, start} = req.body;
     try {
-        const events = await calendarServices.updateEventById(req.data);
+        await calendarServices.updateEventById({
+            id_event: id_event,
+            title: title,
+            start: start,   
+        });
         res.send("Se actualizo el evento");
     } catch (e) {
-        res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-            error: "No se pudieron obtener los eventos.",
+      
+        res.status(HTTPCodes.INTERNAL_SERVER_ERROR, e).send({
+            error: "No se pudo actualizar el evento.",
         });
     }
 }

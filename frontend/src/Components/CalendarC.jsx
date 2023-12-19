@@ -30,11 +30,12 @@ function CalendarC() {
     <FullCalendar
       plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin]}
       initialView="dayGridMonth"
-      height="auto"
+      //height="auto"
       locale={esLocale}
       timeZone="local"
       nowIndicator={true}
       dayMaxEvents={true}
+      aspectRatio={2.5}
       //datesSet={handleDateChange}
       events={events}
       headerToolbar={{

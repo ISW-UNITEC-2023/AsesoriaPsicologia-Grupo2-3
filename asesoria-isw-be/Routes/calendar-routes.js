@@ -6,7 +6,9 @@ const calendarController = require("../Controller/calendar-controller");
 //Post
 router.post("/create", calendarController.createEvent);
 
-router.post("/update", calendarController.updateEventById)
+
+//Put
+router.put("/update", calendarController.updateEventById)
 
 //Get
 router.get("/get", calendarController.getEvents);
