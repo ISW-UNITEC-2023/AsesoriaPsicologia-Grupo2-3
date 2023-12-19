@@ -40,7 +40,6 @@ const StatsSection = () => {
         );
     }
 
-
     return (
         <div className="container my-6 mx-auto md:px-6">
             <section className="mb-10 text-center">

@@ -228,19 +228,21 @@ function PacientesForm(props) {
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
                                                   className="dropdown-item">Ver Expediente</Link>
-                                                  <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
+                                            <Link to="/Documentos" className="dropdown-item"
+                                                  state={{id_file: nombre.id_account, userData: props.userData}}>Ver
+                                                Documentos</Link>
                                             {/* <Link to="/Documento"
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
                                                   className="dropdown-item">Ver Documentos</Link> */}
 
-{/* =======
+                                            {/* =======
                                         <div className="dropdown-menu" aria-labelledby={`dropdown-${nombre.id_account}`}>
                                             <Link to="/citas" className="dropdown-item">Manejar Cita</Link>
                                             <Link to="/Expedientes" className="dropdown-item">Ver Expediente</Link>
                                             <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
                                              */}
-{/* >>>>>>> Axel-KL-Documents */}
+                                            {/* >>>>>>> Axel-KL-Documents */}
                                         </div>
                                     </div>
                                 </div>
