@@ -77,6 +77,18 @@
   display: inline-block;
   margin-top: auto;
 }
+.dropdown-botton{
+  background-color: #113946;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+}
 
 .dropdown-menu {
   position: absolute;
@@ -98,11 +110,14 @@
   color: white;
   transition: background-color 0.3s;
   line-height: 1;
+  
 }
 
 .dropdown-item:hover {
   background-color: #395eaf;
 }
+
+
 .IniciarConsulta {
   display: flex;
   justify-content: flex-end;

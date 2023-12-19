@@ -5,7 +5,7 @@ export default function PacientesLayout({children, pagina}) {
     return (
         <>
             <Helmet>
-                <title>{`Unitec - ${pagina}`}</title>
+                <title>{`Clinica - ${pagina}`}</title>
             </Helmet>
 
             <main>

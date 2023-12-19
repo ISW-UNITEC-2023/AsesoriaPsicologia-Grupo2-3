@@ -26,6 +26,7 @@ html {
   border: 1px solid black;
   box-sizing: border-box !important;
   outline: none;
+  
   background-color: #d9d9d9;
   color: rgb(0, 0, 0);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -58,7 +59,7 @@ html {
   cursor: pointer;
   width: 60%;
   padding: 5px;
-  margin: 30px;
+  margin: 10px;
   align-items: center;
 }
 
