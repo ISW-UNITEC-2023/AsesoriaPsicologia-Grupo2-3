@@ -18,7 +18,7 @@ async function getEventsByClinicId(id_clinic) {
         url: "http://localhost:8000/calendar/events/getByClinicId",
         data: {id_clinic: id_clinic},
     };
-    let events = await axios.request(options);
+    let events = await axios.request(options); 
     return events;
 }
 
