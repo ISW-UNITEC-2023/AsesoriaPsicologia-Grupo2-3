@@ -124,7 +124,7 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles, creator }) => {
     for (let i = 0; i < toAdd.length; i++) {
       console.log(creator);
       await userServices.assignRole({
-        id: user.id_user,
+        id_user: user.id_user,
         role: toAdd[i].id_role,
         creator: creator,
       });

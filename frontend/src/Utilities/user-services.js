@@ -146,10 +146,9 @@ async function assignRole(user) {
     method: "POST",
     url: host + "/users/assignRole",
     data: {
-      id_user: user.id,
+      id_user: user.id_user,
       id_role: user.role,
-      creator: user.editor,
-      editor: user.creator,
+      creator: user.creator,
     },
   };
   const response = await axios.request(options);

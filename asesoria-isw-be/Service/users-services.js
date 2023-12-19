@@ -92,19 +92,12 @@ async function assignRole(user) {
     return await knex("user_role").insert({
       id_role: user.id_role,
       id_user: user.id_user,
-      user_creator: user.user_creator,
+      user_creator: user.creator,
       creation_date: new Date(),
     });
   } catch (error) {
     console.log(error.message);
   }
-
-  return await knex("user_role").insert({
-    id_role: user.id_role,
-    id_user: user.id_user,
-    user_editor: user.editor,
-    user_creator: user.creator,
-  });
 }
 
 async function removeRole(user) {

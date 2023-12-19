@@ -38,20 +38,20 @@ function NavigationBar(props) {
   const renderLinks = () => {
     if (size > 1024) {
       return (
-        <Nav className="flex flex-col lg:flex-row items-center justify-end">
-          <Link className="link-navbar" to="/Inicio">
+        <Nav className='flex flex-col lg:flex-row items-center justify-end'>
+          <Link className='link-navbar' to='/Inicio'>
             Inicio
           </Link>
-          <Link className="link-navbar" to="/SobreNosotros">
+          <Link className='link-navbar' to='/SobreNosotros'>
             Sobre Nosotros
           </Link>
           <Link
-            className="link-navbar iniciar-sesion-navbar"
-            to="/InicioSesion"
+            className='link-navbar iniciar-sesion-navbar'
+            to='/InicioSesion'
           >
             Iniciar Sesión
           </Link>
-          <Link className="link-navbar comienza-ya-navbar" to="/Registro">
+          <Link className='link-navbar comienza-ya-navbar' to='/Registro'>
             Comienza Ya
           </Link>
         </Nav>
@@ -59,22 +59,22 @@ function NavigationBar(props) {
     } else {
       return (
         <Collapse open={collapsed}>
-          <Nav className="flex flex-col lg:flex-row items-center justify-end">
-            <Link className="link-navbar mt-2 mb-2" to="/Inicio">
+          <Nav className='flex flex-col lg:flex-row items-center justify-end'>
+            <Link className='link-navbar mt-2 mb-2' to='/Inicio'>
               Inicio
             </Link>
-            <Link className="link-navbar mb-2" to="/SobreNosotros">
+            <Link className='link-navbar mb-2' to='/SobreNosotros'>
               Sobre Nosotros
             </Link>
             <Link
-              className="link-navbar iniciar-sesion-navbar mb-2"
-              to="/InicioSesion"
+              className='link-navbar iniciar-sesion-navbar mb-2'
+              to='/InicioSesion'
             >
               Iniciar Sesión
             </Link>
             <Link
-              className="link-navbar comienza-ya-navbar mb-2"
-              to="/Registro"
+              className='link-navbar comienza-ya-navbar mb-2'
+              to='/Registro'
             >
               Comienza Ya
             </Link>
@@ -86,19 +86,19 @@ function NavigationBar(props) {
 
   return (
     <div className={`navigation-bar ${collapsed ? "menu-closed" : ""}`}>
-      <Navbar bg="transparent" variant="dark" expand="lg">
-        <Navbar.Brand className="nav-brand">
+      <Navbar bg='transparent' variant='dark' expand='lg'>
+        <Navbar.Brand className='nav-brand'>
           <img
-            className="navigation-bar__logo"
+            className='navigation-bar__logo'
             src={unitecLogo}
-            alt=""
-            href="localhost:3000"
+            alt=''
+            href='localhost:3000'
           />
         </Navbar.Brand>
         <Navbar.Toggle
-          className="navbar-toggle"
+          className='navbar-toggle'
           onClick={handleToggleMenu}
-          aria-controls="basic-navbar-nav"
+          aria-controls='basic-navbar-nav'
         />
 
         {renderLinks()}

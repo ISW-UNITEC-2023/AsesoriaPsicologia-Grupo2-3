@@ -325,7 +325,7 @@ async function updateUserActive(req, res) {
 
 async function assignRole(req, res) {
   const { id_user, id_role, editor, creator } = req.body;
-
+  console.log("Este es el id del usuario mandado", creator);
   try {
     await userServices.assignRole({
       id_user: id_user,
@@ -335,7 +335,7 @@ async function assignRole(req, res) {
     });
   } catch (e) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: e,
+      e,
       error: "No se pudo asignar el rol.",
     });
   }
