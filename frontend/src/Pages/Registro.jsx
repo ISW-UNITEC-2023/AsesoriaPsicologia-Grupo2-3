@@ -5,14 +5,12 @@ import "../Styles/CSS/Registro.css";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../Components/NavigationBar";
 import RegisterDoctorImage from "../Styles/Images/RegisterDoctor.png";
-import services from "../Utilities/clinics-services"
+import services from "../Utilities/clinics-services";
 import servicesUser from "../Utilities/user-services";
-
 
 function Wizard(props) {
   const navigate = useNavigate();
 
-  
   const [regData, setRegData] = useState({
     nameclinic: "",
     name: "",
@@ -23,7 +21,7 @@ function Wizard(props) {
     image: null,
   });
   const [touchedFields, setTouchedFields] = useState({
-    nameclinic:false,
+    nameclinic: false,
     name: false,
     phoneNum: false,
   });
@@ -54,8 +52,13 @@ function Wizard(props) {
     });
   };
 
-  const crearClinic = async(name_clinic, name_user,email_user, phone, password) =>
-  {
+  const crearClinic = async (
+    name_clinic,
+    name_user,
+    email_user,
+    phone,
+    password
+  ) => {
     let clinic = await services.crearClinica(name_clinic, 13);
 
     let user = await servicesUser.createUserByclinic({
@@ -66,19 +69,18 @@ function Wizard(props) {
       type: " ",
       active: 1,
       creator: 13,
-      clinicid: clinic
-    })
+      clinicid: clinic,
+    });
 
     await servicesUser.assignRole({
-      id:user.newUserId[0],
-      role:1,
+      id: user.newUserId[0],
+      role: 1,
       editor: user.newUserId[0],
-      creator:user.newUserId[0]
-    })
-
+      creator: user.newUserId[0],
+    });
 
     navigate("/InicioSesion");
-  }
+  };
 
   return (
     <div className="containerReg">
@@ -93,7 +95,7 @@ function Wizard(props) {
         />
         <div className="form-container">
           <Form>
-            <Form.Group controlId="formName" className="mb-3">
+            <Form.Group controlId="formName" className="mb-4">
               <Form.Label>Nombre Clinica </Form.Label>
               <Form.Control
                 type="text"
@@ -105,32 +107,26 @@ function Wizard(props) {
                 onBlur={() =>
                   setTouchedFields({ ...touchedFields, name: true })
                 }
-                isInvalid={
-                  touchedFields.name && !regData.name.length > 0
-                }
+                isInvalid={touchedFields.name && !regData.name.length > 0}
                 required
               />
               <Form.Control.Feedback type="invalid">
-                El nombre no puede estar vacío.
+                El nombre de la clinica no puede estar vacío.
               </Form.Control.Feedback>
             </Form.Group>
-            
 
-            <Form.Group controlId="formName" className="mb-3">
+            <Form.Group controlId="formName" className="mb-4">
               <Form.Label>Nombre Completo</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
-
                 value={regData.name}
                 onChange={(e) => handleRegChange(e)}
                 placeholder="Ingrese su nombre completo"
                 onBlur={() =>
                   setTouchedFields({ ...touchedFields, name: true })
                 }
-                isInvalid={
-                  touchedFields.name && !regData.name.length > 0
-                }
+                isInvalid={touchedFields.name && !regData.name.length > 0}
                 required
               />
               <Form.Control.Feedback type="invalid">
@@ -138,8 +134,7 @@ function Wizard(props) {
               </Form.Control.Feedback>
             </Form.Group>
 
-
-            <Form.Group controlId="formphoneNum" className="mb-2">
+            <Form.Group controlId="formphoneNum" className="mb-4">
               <Form.Label>Numero de Telefono</Form.Label>
               <Form.Control
                 type="number"
@@ -149,17 +144,14 @@ function Wizard(props) {
                 onBlur={() =>
                   setTouchedFields({ ...touchedFields, phoneNum: true })
                 }
-                isInvalid={
-                  touchedFields.name && !regData.name.length > 0
-                }
-                
+                isInvalid={touchedFields.name && !regData.name.length > 0}
                 required
               />
               <Form.Control.Feedback type="invalid">
                 Este campo solo acepta numeros
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formEmail" className="mb-2">
+            <Form.Group controlId="formEmail" className="mb-4">
               <Form.Label>Correo Electrónico </Form.Label>
               <Form.Control
                 type="text"
@@ -172,17 +164,14 @@ function Wizard(props) {
                     isEmailValid: validateData("email"),
                   })
                 }
-                isInvalid={
-                  touchedFields.name && !regData.name.length > 0
-                }
-                
+                isInvalid={touchedFields.name && !regData.name.length > 0}
                 required
               />
               <Form.Control.Feedback type="invalid">
                 El correo electrónico debe ser válido.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formPassword" className="mb-2">
+            <Form.Group controlId="formPassword" className="mb-4">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
@@ -196,25 +185,13 @@ function Wizard(props) {
                     isPasswordValid: validateData("password"),
                   })
                 }
-                isInvalid={
-                  touchedFields.name && !regData.name.length > 0
-                }
-                
+                isInvalid={touchedFields.name && !regData.name.length > 0}
                 required
               />
               <Form.Control.Feedback classnametype="invalid">
                 La contraseña debe tener al menos 8 caracteres y contener al
                 menos una letra y un número.
               </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="formImage" className="mb-2">
-              <Form.Label>Subir imagen</Form.Label>
-              <Form.Control
-                type="file"
-                name="image"
-                onChange={handleImageChange}
-                accept="image/*"
-              />
             </Form.Group>
             <Button className="button-reg" type="submit">
               Crear cuenta
