@@ -19,7 +19,7 @@ import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionC
 import patientsService from "../Utilities/patients-services";
 
 function PacientesForm(props) {
-  const host = process.env.REACT_APP_API_URL;
+  const host = process.env.REACT_APP_API_BASE_URL;
   const [nombres, setNombres] = useState([]);
   const [showCrearPopup, setShowCrearPopup] = useState(false);
   const [showEditarPopup, setShowEditarPopup] = useState(false);
