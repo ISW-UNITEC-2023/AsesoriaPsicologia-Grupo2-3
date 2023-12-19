@@ -268,6 +268,10 @@ function PacientesForm(props) {
 													{
 														havePrivilege(verifyRef.current, [57]) &&
 														<Link to="/Expedientes"
+															state={{
+																id_file: nombre.id_account,
+																userData: props.userData,
+															}}
 															onClick={() => handleClick(nombre.id_account, nombre.nombre, nombre.id_clinic)}
 															className="dropdown-item">
 															Ver Expediente
