@@ -1,7 +1,6 @@
 import "../Styles/CSS/DashBoard.css";
 import { useEffect, useState } from "react";
 import NavigationB from "../Components/Navbar";
-
 import { loadModules } from "../Utilities/course-services";
 import { Button, Accordion } from "react-bootstrap";
 import DashboardLayout from "../Layout/DashboardLayout";
@@ -43,7 +42,7 @@ function DashBoard(props) {
     
   };
   async function initialList() {
-    const arregloUsuarios = await Services.getPatients();
+    const arregloUsuarios = await Services.getPatients(props.userData.user_data.id_clinic);
     const arregloMandar = [];
 
     arregloUsuarios.map((usuario) => {

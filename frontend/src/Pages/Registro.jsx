@@ -7,6 +7,7 @@ import RegisterDoctorImage from "../Styles/Images/RegisterDoctor.png";
 
 function Wizard(props) {
   const [regData, setRegData] = useState({
+    nameclinic: "",
     name: "",
     date: "",
     phoneNum: "",
@@ -15,6 +16,7 @@ function Wizard(props) {
     image: null,
   });
   const [touchedFields, setTouchedFields] = useState({
+    nameclinic:false,
     name: false,
     phoneNum: false,
   });
@@ -69,7 +71,8 @@ function Wizard(props) {
               <Form.Control
                 type="text"
                 name="name"
-                value={regData.name}
+                /*RECORDAR CAMBIAR POR EL ATRIBUTO EN LA BASE DE DATOS*/
+                value={regData.nameclinic}
                 onChange={(e) => handleRegChange(e)}
                 placeholder="Ingrese nombre para su Clinica"
                 onBlur={() =>
@@ -87,10 +90,11 @@ function Wizard(props) {
             
 
             <Form.Group controlId="formName" className="mb-3">
-              <Form.Label>Nombre Completo </Form.Label>
+              <Form.Label>Nombre Completo</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
+
                 value={regData.name}
                 onChange={(e) => handleRegChange(e)}
                 placeholder="Ingrese su nombre completo"
