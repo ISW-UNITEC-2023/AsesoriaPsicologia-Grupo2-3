@@ -3,28 +3,21 @@ import "../Styles/CSS/Calendar.css";
 import CalendarC from "../Components/CalendarC";
 import React from "react";
 
-function Calendar(props){
-    return (
-<div className="style-db-container">
-    <NavigationBar userData={props.userData} />
-    <div style={{width: "90%"}}>
-        <div className="style-header-container" >
-            <h1 className="style-title" style={{ width: "400%" }}>
-        Calendario
-            </h1>
-            
+function Calendar(props) {
+  return (
+    <div className="style-db-container">
+      <NavigationBar userData={props.userData} />
+      <div style={{ width: "90%" }}>
+        <h1 className="style-title" style={{ width: "400%" }}>
+          Calendario
+        </h1>
+        <div className="style-calendar-container">
+          <CalendarC/>
         </div>
-        <div style={{paddingLeft: "2.5%"}}>
-
-        <CalendarC>
-            
-       
-            </CalendarC> 
-        </div>
-        </div>
+      </div>
     </div>
-    );
-};
+  );
+}
 export default Calendar;
 
 /* events={[

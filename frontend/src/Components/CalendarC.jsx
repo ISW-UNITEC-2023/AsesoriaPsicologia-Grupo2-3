@@ -40,7 +40,9 @@ function CalendarC() {
       timeZone='local'
       nowIndicator={true}
       dayMaxEvents={true}
-      aspectRatio={2.5}
+      //aspectRatio={2.5}
+      //contentHeight={"auto"}
+      //height={"auto"}
       events={events}
       headerToolbar={{
         left: "prev,next",
