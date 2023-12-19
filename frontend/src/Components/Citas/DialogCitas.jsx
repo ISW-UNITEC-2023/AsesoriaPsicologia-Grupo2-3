@@ -13,10 +13,12 @@ import useSWR from "swr";
 import user_services from "../../Utilities/user-services";
 
 export default function DialogCitas({
+  idAppo,
   titulo,
   nombreDoctor,
   fecha,
   hora,
+  formato,
   open,
   updateOpen,
 }) {
@@ -78,9 +80,8 @@ export default function DialogCitas({
   const idPaciente = localStorage.getItem("id_patient");
 
   const handleConfirmC = async () => {
-    // combinar los iso de fecha y hora
     const fechaHora = fechaN + " " + horaN + ":00.000Z";
-    // Obtener él, id del doctor seleccionado
+
     const id_doctor = doctores.filter(
       (doctor) => doctor.id_user === nombreDoctorN
     )[0].id_user;
@@ -90,40 +91,48 @@ export default function DialogCitas({
         .post(`http://localhost:8000/appointment/create`, {
           id_user: localStorage.getItem("user_id"),
           appointment_date: fechaHora,
+          appointment_hour: horaN,
           id_clinic: localStorage.getItem("id_clinic"),
           id_doctor: id_doctor,
           id_file: idPaciente,
           user_creator: localStorage.getItem("user_id"),
           appointment_type: modalidad,
+          state_appointment: "PENDIENTE",
         })
         .then((res) => {
-          //console.log(fechaHora);
-          handleOpen();
-          toast(
-            "Cita Agendada Correctamente",
-            {
-              type: "success",
-              bodyStyle: { width: "1000%" },
-            },
-
-            axios
-              .post("http://localhost:8000/calendar/events/create", {
-                id_event: res.data.appoId[0],
-                title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
-                url: "",
-                start: `${fechaN} ${horaN}`,
-                end: null,
-                id_clinic: localStorage.getItem("id_clinic"),
-              })
-              .catch((error) => {
-                toast(
-                  "Ha ocurrido un error al agregar la cita al calendario: " +
-                    error.message,
-                  { type: "error" }
-                );
-              })
-          );
+          if (res.data) {
+            const eventId = res.data.eventId;
+            handleOpen();
+            toast(
+              "Cita Agendada Correctamente",
+              {
+                type: "success",
+                bodyStyle: { width: "1000%" },
+              },
+              axios
+                .post("http://localhost:8000/calendar/events/create", {
+                  id_event: eventId,
+                  title: `${modalidad} - ${localStorage.getItem(
+                    "namePatient"
+                  )}`,
+                  url: "",
+                  start: `${fechaN} ${horaN}`,
+                  end: null,
+                  id_clinic: localStorage.getItem("id_clinic"),
+                })
+                .catch((error) => {
+                  toast(
+                    "Ha ocurrido un error al agregar la cita al calendario: " +
+                      error.message,
+                    { type: "error" }
+                  );
+                })
+            );
+          } else {
+            toast("Error al leer la respuesta del servidor", { type: "error" });
+          }
         })
+
         .catch((error) => {
           toast("Ha ocurrido un error al agendar la cita: " + error.message, {
             type: "error",
@@ -137,11 +146,64 @@ export default function DialogCitas({
   };
 
   const handleConfirmM = () => {
-    handleOpen();
-    toast("Cita Modificada Correctamente", {
-      type: "success",
-      bodyStyle: { width: "1000%" },
-    });
+    const date = new Date(fechaN);
+    date.setDate(date.getDate() + 1);
+    const id_doctor = doctores.filter(
+      (doctor) => doctor.id_user === nombreDoctorN
+    )[0].id_user;
+    try {
+      axios
+        .put(`http://localhost:8000/appointment/updateAppointment`, {
+          id_appointment: idAppo,
+          id_user: localStorage.getItem("user_id"),
+          appointment_date: date,
+          appointment_hour: horaN,
+          id_clinic: localStorage.getItem("id_clinic"),
+          id_doctor: id_doctor,
+          id_file: idPaciente,
+          user_editor: localStorage.getItem("user_id"),
+          appointment_type: modalidad,
+        })
+        .then(() => {
+          console.log(date + " " + horaN);
+          handleOpen();
+          toast("Cita Modificada Correctamente", {
+            type: "success",
+            bodyStyle: { width: "1000%" },
+          });
+        })
+        .catch((error) => {
+          toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+            type: "error",
+          });
+        });
+    } catch (error) {
+      toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+        type: "error",
+      });
+    }
+
+    try {
+      axios
+        .put(`http://localhost:8000/calendar/events/update`, {
+          id_event: idAppo,
+          title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
+          start: fechaN + " " + horaN,
+        })
+        .catch((error) => {
+          toast(
+            "Ha ocurrido un error al modificar la cita en el calendario: " +
+              error.message,
+            {
+              type: "error",
+            }
+          );
+        });
+    } catch (error) {
+      toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+        type: "error",
+      });
+    }
   };
 
   return (

@@ -23,12 +23,10 @@ const knex = require("knex")({
   }
 
   async function updateEventById(event){
-    await knex("events").where("poner id aqui", event.id).update({
+  await knex("events").where({id_event: event.id_event}).update({
       title: event.title,
-      url: event.url,
       start: event.start,
-      end: event.end
-    });
+    })
   }
 
   //Get

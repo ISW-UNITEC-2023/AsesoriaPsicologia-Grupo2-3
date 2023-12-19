@@ -12,16 +12,18 @@ const knex = require("knex")({
 //Post
 
 async function createAppo(new_appo) {
-    return( await knex("appointments").insert({
-        appointment_date: new_appo.fecha,
-        appointment_hour: new_appo.hora,
-        id_file: new_appo.id_file,
-        id_doctor: new_appo.id_doctor,
-        id_clinic: new_appo.id_clinic,
-        user_creator: new_appo.user_creator,
-        creation_date: new Date(),
-        appointment_type: new_appo.appointment_type,
-    }))
+  await knex("appointments").insert({
+    appointment_date: new_appo.fecha,
+    appointment_hour: new_appo.appointment_hour,
+    id_file: new_appo.id_file,
+    id_doctor: new_appo.id_doctor,
+    id_clinic: new_appo.id_clinic,
+    user_creator: new_appo.user_creator,
+    creation_date: new Date(),
+    appointment_type: new_appo.appointment_type,
+    appointment_hour: new_appo.appointment_hour,
+    state_appointment: new_appo.state_appointment,
+  });
 }
 
 async function addConsultation(new_appo) {
