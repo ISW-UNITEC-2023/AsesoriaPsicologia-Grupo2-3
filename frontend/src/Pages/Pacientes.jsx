@@ -78,10 +78,10 @@ function PacientesForm(props) {
 
       if (result.message) {
         console.log(result);
-        console.error("Error al crear el paciente:", result.message);
+        console.log("Error al crear el paciente:", result.message);
+        setDisplayActionPopUp(false);
       } else {
-        console.log("Paciente creado con éxito:", result);
-        setDisplayConfirmPopUp(true);
+        console.log("Error al crear al paciente:", result);
       }
     } catch (error) {
       console.error("Error creating patient:", error);
@@ -325,7 +325,7 @@ function PacientesForm(props) {
               pageName='Paciente'
               itemName={selectedPatient.nombre}
               itemId={selectedPatient.numeroIdentidad}
-              onConfirm={() => handleActionConfirm(false)}
+              onConfirm={() => handleActionConfirm()}
             />
           )}
         </div>
