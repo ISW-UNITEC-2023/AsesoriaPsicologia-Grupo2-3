@@ -7,7 +7,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 async function registerUser(req, res) {
-  const { name, email, phone, password, type, active, creator } = req.body;
+  const { name, email, phone, password, type, active, creator, clinicid } = req.body;
 
   try {
     const errorMessages = [];
@@ -27,6 +27,7 @@ async function registerUser(req, res) {
     if (errorMessages.length) {
       res.status(HTTPCodes.BAD_REQUEST).send({ error: errorMessages });
     } else {
+
       const salt = crypto.randomBytes(128).toString("base64");
       const encryptedPassword = crypto
         .pbkdf2Sync(
@@ -37,9 +38,9 @@ async function registerUser(req, res) {
           "sha256"
         )
         .toString("base64");
-      let newUserId = null;
+      let newUserId = 0;
       if (type === "patient") {
-        newUserId = userServices.createPatient({
+        newUserId = await userServices.createPatient({
           name: name,
           email: email,
           phone: phone,
@@ -48,7 +49,7 @@ async function registerUser(req, res) {
         });
         //console.log("es paciente");
       } else {
-        newUserId = userServices.createUser({
+        newUserId = await userServices.createUser({
           name: name,
           email: email,
           phone: phone,
@@ -56,10 +57,12 @@ async function registerUser(req, res) {
           salt: salt,
           active: active,
           creator: creator,
+          id_clinic: clinicid,
         });
         //console.log("sin rol");
       }
 
+      console.log(newUserId);
       res.send({
         success: true,
         newUserId,
@@ -318,12 +321,14 @@ async function updateUserActive(req, res) {
 }
 
 async function assignRole(req, res) {
-  const { id_user, id_role } = req.body;
+  const { id_user, id_role,editor,creator } = req.body;
 
   try {
     await userServices.assignRole({
       id_user: id_user,
       id_role: id_role,
+      editor:editor,
+      creator:creator,
     });
 
     res.send({
@@ -332,7 +337,7 @@ async function assignRole(req, res) {
     });
   } catch (e) {
     res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
-      error: "No se pudo asignar el rol.",
+      error: e,
     });
   }
 }

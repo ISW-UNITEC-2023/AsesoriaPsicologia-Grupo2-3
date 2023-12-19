@@ -35,11 +35,6 @@ async function createFile(req, res) {
   const lengSubtance = substance_usage.toString();
   const lengactive = active.toString();
 
-  
-
-  if (isNaN(lengphone_number) || !Number.isInteger(lengphone_number)) {
-    errorMessages.push("El campo de numeor de telefono esta mal debe ser un numero de celular");
-  }
 
   if (!isEmail(email)) {
     errorMessages.push("El correo electrónico no es valido");
@@ -110,26 +105,6 @@ async function createFile(req, res) {
   ) {
     errorMessages.push(
         "El estado civil es invalido, debe contener mas de 1 caracter pero menos de 10 caracteres"
-    );
-  }
-
-  if (
-      lengMedical.length > 500 ||
-      lengMedical.length == 0 ||
-      typeof medical_history != "string"
-  ) {
-    errorMessages.push(
-        "Historial medico es invalido, debe contener mas de 1 caracter pero menos de 500 caracteres"
-    );
-  }
-
-  if (
-      lengSubtance.length > 200 ||
-      lengSubtance.length == 0 ||
-      typeof substance_usage != "string"
-  ) {
-    errorMessages.push(
-        'El campo de "Sustancias de uso" es invalido, debe contener mas de 1 caracter pero menos de 200 caracteres'
     );
   }
 

@@ -15,6 +15,7 @@ async function getSectionByCourse(req, res) {
   const { course_id } = req.query;
 
   try {
+    
     const section = await sectionServices.getSectionByCourse(course_id);
     res.send(section);
   } catch (error) {

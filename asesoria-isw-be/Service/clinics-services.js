@@ -11,11 +11,15 @@ const knex = require("knex")({
 
 //Post
 async function createClinic(clinic) {
-  await knex("clinics").insert({
+  let clinics = await knex("clinics").insert({
     active_clinic: clinic.active_clinic,
     user_creator: clinic.user_creator,
+    name_clinic: clinic.name,
     creation_date: new Date(),
   });
+  
+  clinics = JSON.stringify(clinics);
+  return JSON.parse(clinics);
 }
 
 async function setActiveClinic(clinic) {
@@ -44,70 +48,45 @@ async function existClinic(id) {
   return true;
 }
 
-async function viewAllAppointments(id) {
-  let appointments = await knex("clinics")
-    .join("appointments", "clinics.id_clinic", "=", "appointments.id_clinic")
-    .select("*")
-    .where("clinics.id_clinic", id);
 
-  appointments = JSON.stringify(appointments);
-  return JSON.parse(appointments);
+//funciones para la imagen de clinica
+
+async function uploadFile(
+  nombreArchivo,
+  tipoArchivo,
+  tamañoArchivo,
+  contenidoArchivo,
+  id_clinic,
+  user_creator
+) {
+  try {
+    await knex("clinic_image").insert({
+      document_name: nombreArchivo,
+      document_type: tipoArchivo,
+      document_size: tamañoArchivo,
+      content: contenidoArchivo,
+      id_clinic: id_clinic,
+      user_creator: user_creator,
+      creation_date: new Date(),
+    });
+  } catch (err) {
+    throw err;
+  }
 }
 
-async function deleteClinic(id) {
-  await knex("clinics").where("id_clinic", id).del();
+async function getDownloadFile(archivoId) {
+  const archivo = await knex("clinic_image")
+    .where("idclinic_image", archivoId)
+    .first();
+  return archivo;
 }
 
-async function viewAllUserClinics(id) {
-  let clinics = await knex("users")
-    .join("clinics", "clinics.id_clinic", "=", "users.id_clinic")
-    .select(
-      "users.id_user",
-      "users.name_user",
-      "users.email_user",
-      "users.number_user",
-      "users.active_user",
-      "clinics.id_clinic",
-      "clinics.active_clinic"
-    )
-    .where("users.id_user", id);
-
-  clinics = JSON.stringify(clinics);
-  return JSON.parse(clinics);
-}
-
-//Marcados para borrar
-async function changePsychologist(clinic) {
-  await knex("clinics")
-    .update({
-      id_psychologist: clinic.psychologist,
-      user_editor: clinic.editor,
-      last_modification: new Date(),
-    })
-    .where("id_clinic", clinic.id_clinic);
-}
-
-async function viewAllSectionClinics(id) {
-  let clinics = await knex("clinics").select("*").where("id_section", id);
-  clinics = JSON.stringify(clinics);
-  return JSON.parse(clinics);
-}
-
-async function viewAllPsychologistClinics(id) {
-  let clinics = await knex("clinics").select("*").where("id_psychologist", id);
-  clinics = JSON.stringify(clinics);
-  return JSON.parse(clinics);
-}
 
 module.exports = {
   createClinic,
-  viewAllSectionClinics,
-  viewAllPsychologistClinics,
   setActiveClinic,
-  changePsychologist,
   viewAllClinics,
+  uploadFile,
   existClinic,
-  viewAllAppointments,
-  deleteClinic,
-  viewAllUserClinics,
+  getDownloadFile
 };

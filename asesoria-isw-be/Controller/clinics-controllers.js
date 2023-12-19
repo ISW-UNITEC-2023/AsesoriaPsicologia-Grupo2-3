@@ -1,7 +1,7 @@
 const clinicServices = require("../Service/clinics-services");
 
 async function createClinic(req, res) {
-  const { user_creator } = req.body;
+  const { name_clinic,user_creator } = req.body;
   const errors = [];
 
   const numericId = parseInt(user_creator, 10);
@@ -15,12 +15,18 @@ async function createClinic(req, res) {
     return;
   }
 
+
+
+
   try {
-    await clinicServices.createClinic({
+    let clinic_id = await clinicServices.createClinic({
+      name: name_clinic,
       active_clinic: 1,
       user_creator: user_creator,
     });
-    res.send({ message: "Se ha creado la clinica exitosamente" });
+    let id_clinic = `${clinic_id}`;
+   
+    res.send(clinic_id);
   } catch (err) {
     res.send({ message: err.message });
   }
@@ -69,35 +75,6 @@ async function setActiveClinic(req, res) {
   }
 }
 
-async function viewAllAppointments(req, res) {
-  const { id } = req.query;
-  const errors = [];
-
-  const numericId = parseInt(id, 10);
-
-  if (isNaN(numericId) || !Number.isInteger(numericId)) {
-    errors.push("Falta el id_clinic de la clinica");
-  }
-
-  if (errors.length > 0) {
-    res.status(400).send({ errors });
-    return;
-  }
-
-  const exist = await clinicServices.existClinic(id);
-  if (!exist) {
-    res.status(400).send({ message: "No existe la clinica" });
-    return;
-  }
-
-  try {
-    const clinics = await clinicServices.viewAllAppointments(id);
-    res.send({ clinicsInfo: clinics });
-  } catch (err) {
-    res.send({ message: err.message });
-  }
-}
-
 async function viewAllClinics(req, res) {
   try {
     const clinics = await clinicServices.viewAllClinics();
@@ -130,103 +107,60 @@ async function existClinic(req, res) {
   }
 }
 
-async function deleteClinic(req, res) {
-  const { id } = req.body;
-  const errors = [];
 
-  const numericId = parseInt(id, 10);
 
-  if (isNaN(numericId) || !Number.isInteger(numericId)) {
-    errors.push("Falta el id_clinic de la clinica");
-  }
-
-  if (errors.length > 0) {
-    res.status(400).send({ errors });
-    return;
-  }
-
-  const exist = await clinicServices.existClinic(id);
-  if (!exist) {
-    res.status(400).send({ message: "No existe la clinica" });
-    return;
-  }
+async function uploadFile(req, res) {
+  const nombreArchivo = req.file.originalname;
+  const tipoArchivo = req.file.mimetype;
+  const tamañoArchivo = req.file.size;
+  const contenidoArchivo = req.file.buffer;
+  const id_clinic = req.body.id_clinic;
+  const user_creator = req.body.user_creator;
 
   try {
-    await clinicServices.deleteClinic(id);
-    res.send({ message: "Se ha eliminado la clinica exitosamente" });
-  } catch (err) {
-    res.send({ message: err.message });
+    await documentsServices.uploadFile(
+      nombreArchivo,
+      tipoArchivo,
+      tamañoArchivo,
+      contenidoArchivo,
+      id_clinic,
+      user_creator
+    );
+    res.send({ message: "Se agrego exitosamente!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 }
 
-async function viewAllUserClinics(req, res) {
-  const { id } = req.query;
-
-  const errors = [];
-
-  const numericId = parseInt(id, 10);
-
-  if (isNaN(numericId) || !Number.isInteger(numericId)) {
-    errors.push("Falta el id_user del usuario");
-  }
-
-  if (errors.length > 0) {
-    res.status(400).send({ errors });
-    return;
-  }
+async function downloadFile(req, res) {
+  const archivoId = req.params.id;
 
   try {
-    const clinics = await clinicServices.viewAllUserClinics(id);
-    res.send({ clinicsInfo: clinics });
+    const archivo = await documentsServices.getDownloadFile(archivoId);
+    if (!archivo) {
+      return res.status(404).send("Archivo no encontrado");
+    }
+
+    const contenidoArchivo = archivo.content;
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${archivo.document_name}"`
+    );
+    res.send(contenidoArchivo);
   } catch (err) {
-    res.send({ message: err.message });
+    res.status(500).send("Error interno del servidor");
   }
 }
 
-//marcados para borrar
-async function changePsychologist(req, res) {
-  const { id, psychologist, editor } = req.body;
-  try {
-    await clinicServices.changePsychologist({
-      id: id,
-      psychologist: psychologist,
-      editor: editor,
-    });
-    res.send({ message: "Se ha actualizado la clinica exitosamente" });
-  } catch (err) {
-    res.send({ message: err.message });
-  }
-}
 
-async function viewAllSectionClinics(req, res) {
-  const { id } = req.body;
-  try {
-    const clinics = await clinicServices.viewAllSectionClinics(id);
-    res.send({ clinicsInfo: clinics });
-  } catch (err) {
-    res.send({ message: err.message });
-  }
-}
-
-async function viewAllPsychologistClinics(req, res) {
-  const { id } = req.body;
-  try {
-    const clinics = await clinicServices.viewAllPsychologistClinics(id);
-    res.send({ clinicsInfo: clinics });
-  } catch (err) {
-    res.send({ message: err.message });
-  }
-}
 
 module.exports = {
   createClinic,
-  viewAllSectionClinics,
-  viewAllPsychologistClinics,
   setActiveClinic,
-  changePsychologist,
   viewAllClinics,
   existClinic,
-  viewAllAppointments,
-  deleteClinic,
-  viewAllUserClinics,
+  uploadFile,
+  downloadFile,
 };

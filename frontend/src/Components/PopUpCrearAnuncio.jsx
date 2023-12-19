@@ -4,7 +4,7 @@ import "../Styles/CSS/PopUpEditarAnuncio.css";
 import "../Styles/CSS/PopUpCrearAnuncio.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CreateAnnounce } from "../Utilities/announces-services";
-import { getClinics } from "../Utilities/clinics-services";
+import servicios from "../Utilities/clinics-services";
 
 const PopUpCrearAnuncio = ({ show, onHide }) => {
   const [titulo, setTitulo] = useState("");
@@ -20,7 +20,7 @@ const PopUpCrearAnuncio = ({ show, onHide }) => {
   async function obtainClinics() {
     const fetchData = async () => {
       try {
-        const clinicsResponse = await getClinics(); //Obtener secciones para el usuario especifico
+        const clinicsResponse = await servicios.getClinics(); //Obtener secciones para el usuario especifico
         console.log(clinicsResponse)
         const clinics = clinicsResponse.clinicsInfo.map((section) => ({
           clinicId: section.id_clinic,

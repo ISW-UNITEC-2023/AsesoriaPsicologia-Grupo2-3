@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../Styles/CSS/Registro.css";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "../Components/NavigationBar";
 import RegisterDoctorImage from "../Styles/Images/RegisterDoctor.png";
+import services from "../Utilities/clinics-services"
+import servicesUser from "../Utilities/user-services";
+
 
 function Wizard(props) {
+  const navigate = useNavigate();
+
+  
   const [regData, setRegData] = useState({
     name: "",
     date: "",
@@ -45,11 +52,31 @@ function Wizard(props) {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const crearClinic = async(name_clinic, name_user,email_user, phone, password) =>
+  {
+    let clinic = await services.crearClinica(name_clinic, 13);
 
-    console.log(regData);
-  };
+    let user = await servicesUser.createUserByclinic({
+      name: name_user,
+      email: email_user,
+      phone: phone,
+      password: password,
+      type: " ",
+      active: 1,
+      creator: 13,
+      clinicid: clinic
+    })
+
+    await servicesUser.assignRole({
+      id:user.newUserId[0],
+      role:1,
+      editor: user.newUserId[0],
+      creator:user.newUserId[0]
+    })
+
+
+    navigate("/InicioSesion");
+  }
 
   return (
     <div className="containerReg">
@@ -153,16 +180,10 @@ function Wizard(props) {
                 menos una letra y un número.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formImage" className="mb-3">
-              <Form.Label>Subir imagen</Form.Label>
-              <Form.Control
-                type="file"
-                name="image"
-                onChange={handleImageChange}
-                accept="image/*"
-              />
-            </Form.Group>
-            <Button className="button-reg" type="submit">
+            
+            <Button className="button-reg" onClick={async ()=>{
+              await crearClinic(regData.name,regData.name,regData.email,regData.phoneNum, regData.password)
+            }}> 
               Crear cuenta
             </Button>
           </Form>

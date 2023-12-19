@@ -34,6 +34,7 @@ async function getAllUsersRoles() {
 }
 
 async function createUser(user) {
+    
     const options = {
         method: "POST",
         url: host+"/users/register",
@@ -45,6 +46,27 @@ async function createUser(user) {
             type: user.type,
             active: user.active,
             creator: parseInt(localStorage.getItem("user_id"))
+        },
+    };
+    let users = await axios.request(options);
+    return users.data;
+}
+
+async function createUserByclinic(user) {
+    console.log("user", user);
+
+    const options = {
+        method: "POST",
+        url: host+"/users/register",
+        data: {
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            password: user.password,
+            type: user.type,
+            active: user.active,
+            creator: 13,
+            clinicid: user.clinicid,
         },
     };
     let users = await axios.request(options);
@@ -128,6 +150,8 @@ async function assignRole(user) {
         data: {
             id_user: user.id,
             id_role: user.role,
+            creator: user.editor,
+            editor: user.creator,
         },
     };
     const response = await axios.request(options);
@@ -238,5 +262,6 @@ export default {
     removeRole,
     postLogin,
     getUserById,
+    createUserByclinic
 
 };
