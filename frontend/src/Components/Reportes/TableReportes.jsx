@@ -1,122 +1,11 @@
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-import {
-  Avatar,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Chip,
-  Input,
-  Typography,
-} from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import {ArrowDownTrayIcon} from "@heroicons/react/24/outline";
+import {Button, Card, CardBody, CardHeader, Chip, Input, Typography,} from "@material-tailwind/react";
+import {useEffect, useState} from "react";
 import services from "../../Utilities/reports-service";
-import { startOfWeek, endOfWeek, format,parseISO } from "date-fns";
+import {endOfWeek, format, parseISO, startOfWeek} from "date-fns";
+import {toast} from "react-toastify";
 
 const TABLE_HEAD = ["Account", "Amount", "Date", "Status", "Transaction"];
-
-// const TABLE_ROWS = [
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
-//         name: "Spotify",
-//         amount: "$2,500",
-//         date: "Wed 3:00pm",
-//         status: "paid",
-//         account: "visa",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
-//         name: "Amazon",
-//         amount: "$5,000",
-//         date: "Wed 1:00pm",
-//         status: "paid",
-//         account: "master-card",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
-//         name: "Pinterest",
-//         amount: "$3,400",
-//         date: "Mon 7:40pm",
-//         status: "pending",
-//         account: "master-card",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
-//         name: "Google",
-//         amount: "$1,000",
-//         date: "Wed 5:00pm",
-//         status: "paid",
-//         account: "visa",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-netflix.svg",
-//         name: "netflix",
-//         amount: "$14,000",
-//         date: "Wed 3:30am",
-//         status: "cancelled",
-//         account: "visa",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-slack.svg",
-//         name: "Slack",
-//         amount: "$2,500",
-//         date: "Wed 3:00pm",
-//         status: "paid",
-//         account: "visa",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
-//         name: "Spotify",
-//         amount: "$2,500",
-//         date: "Wed 3:00pm",
-//         status: "paid",
-//         account: "visa",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
-//         name: "Amazon",
-//         amount: "$5,000",
-//         date: "Wed 1:00pm",
-//         status: "paid",
-//         account: "master-card",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
-//         name: "Pinterest",
-//         amount: "$3,400",
-//         date: "Mon 7:40pm",
-//         status: "pending",
-//         account: "master-card",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-//     {
-//         img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
-//         name: "Google",
-//         amount: "$1,000",
-//         date: "Wed 5:00pm",
-//         status: "paid",
-//         account: "visa",
-//         accountNumber: "1234",
-//         expiry: "06/2026",
-//     },
-// ];
 
 function TableReportes() {
   const [date1, setDate1] = useState("");
@@ -146,7 +35,6 @@ function TableReportes() {
   }
 
   useEffect(() => {
-    // Cuando dejan de estar vacíos los dos campos de fecha, se activa el rango de fechas
     if (date1 && date2) {
       setDateRange(true);
 
@@ -159,6 +47,10 @@ function TableReportes() {
   const handleDownloadExcel = () => {
     setIsDownloading(true);
     setTimeout(() => {
+      toast("Reporte descargado con éxito", {
+        type: "success",
+        position: "top-left",
+        });
       setIsDownloading(false);
     }, 3000);
   };

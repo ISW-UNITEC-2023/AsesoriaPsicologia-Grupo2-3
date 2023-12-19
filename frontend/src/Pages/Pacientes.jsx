@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../Styles/CSS/Pacientes.css";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Services from "../Utilities/login-services";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
 import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import useSWR from "swr";
 import user_services from "../Utilities/user-services";
-import { Option, Select, Spinner } from "@material-tailwind/react";
-import Dropdown from "react-bootstrap/Dropdown";
+import {Spinner} from "@material-tailwind/react";
 import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
 
@@ -72,7 +71,7 @@ function PacientesForm(props) {
         try {
             const result = await patientsService.createPatient(pacienteInfo);
             if (result.success) {
-               console.log("Paciente creado con éxito:", result.data);
+                console.log("Paciente creado con éxito:", result.data);
                 setDisplayConfirmPopUp(true);
             } else {
                 console.error("Error al crear el paciente:", result.message);
@@ -214,7 +213,7 @@ function PacientesForm(props) {
     if (usersLoading || rolesLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <Spinner />
+                <Spinner/>
             </div>
         );
     }
@@ -231,7 +230,7 @@ function PacientesForm(props) {
         const userRoles = fetchedRoles
             .filter((role) => user.id_user === role.id_user)
             .map((role) => [role.id_role, role.name_role]);
-        return { ...user, roles: userRoles };
+        return {...user, roles: userRoles};
     });
 
     const doctores = Array.isArray(usersWithRoles)
@@ -241,7 +240,7 @@ function PacientesForm(props) {
     return (
         <PacientesLayout pagina="Pacientes">
             <div className="navbar2">
-                <NavigationB />
+                <NavigationB/>
 
                 <div className="pacientes-container">
                     <div className="pacientes-header">
