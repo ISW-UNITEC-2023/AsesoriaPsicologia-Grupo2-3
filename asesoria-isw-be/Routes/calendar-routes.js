@@ -12,7 +12,7 @@ router.put("/update", calendarController.updateEventById)
 
 //Get
 router.get("/get", calendarController.getEvents);
-router.get("/getByClinicId", calendarController.getEventsByClinicId)
+router.get("/getByClinicId/:id", calendarController.getEventsByClinicId)
 
 //Delete
 router.delete("/deleteById/:id", calendarController.deleteEventById);

@@ -22,6 +22,7 @@ export default function DialogCitas({
   open,
   updateOpen,
 }) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
   const [fechaN, setFechaN] = useState(fecha);
   const [horaN, setHoraN] = useState(hora);
@@ -30,12 +31,12 @@ export default function DialogCitas({
     data: fetchedUsers,
     error: usersError,
     isLoading: usersLoading,
-  } = useSWR(host + "/users/viewUsers", user_services.getUsers);
+  } = useSWR(`${host}/users/viewUsers`, user_services.getUsers);
   const {
     data: fetchedRoles,
     error: rolesError,
     isLoading: rolesLoading,
-  } = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
+  } = useSWR(`${host}/roles/viewAll`, user_services.getAllUsersRoles);
 
   useEffect(() => {
     setNombreDoctorN(nombreDoctor);
@@ -86,7 +87,7 @@ export default function DialogCitas({
 
     try {
       axios
-        .post(host + "/appointment/create", {
+        .post(`${host}/appointment/create`, {
           id_user: localStorage.getItem("user_id"),
           appointment_date: fechaHora,
           id_clinic: localStorage.getItem("id_clinic"),
@@ -136,11 +137,64 @@ export default function DialogCitas({
   };
 
   const handleConfirmM = () => {
-    handleOpen();
-    toast("Cita Modificada Correctamente", {
-      type: "success",
-      bodyStyle: { width: "1000%" },
-    });
+    const date = new Date(fechaN);
+    date.setDate(date.getDate() + 1);
+    const id_doctor = doctores.filter(
+      (doctor) => doctor.id_user === nombreDoctorN
+    )[0].id_user;
+    try {
+      axios
+        .put(`${host}/appointment/updateAppointment`, {
+          id_appointment: idAppo,
+          id_user: localStorage.getItem("user_id"),
+          appointment_date: date,
+          appointment_hour: horaN,
+          id_clinic: localStorage.getItem("id_clinic"),
+          id_doctor: id_doctor,
+          id_file: idPaciente,
+          user_editor: localStorage.getItem("user_id"),
+          appointment_type: modalidad,
+        })
+        .then(() => {
+          console.log(date + " " + horaN);
+          handleOpen();
+          toast("Cita Modificada Correctamente", {
+            type: "success",
+            bodyStyle: { width: "1000%" },
+          });
+        })
+        .catch((error) => {
+          toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+            type: "error",
+          });
+        });
+    } catch (error) {
+      toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+        type: "error",
+      });
+    }
+
+    try {
+      axios
+        .put(`${host}/calendar/events/update`, {
+          id_event: idAppo,
+          title: `${modalidad} - ${localStorage.getItem("namePatient")}`,
+          start: fechaN + " " + horaN,
+        })
+        .catch((error) => {
+          toast(
+            "Ha ocurrido un error al modificar la cita en el calendario: " +
+              error.message,
+            {
+              type: "error",
+            }
+          );
+        });
+    } catch (error) {
+      toast("Ha ocurrido un error al modificar la cita: " + error.message, {
+        type: "error",
+      });
+    }
   };
 
   return (

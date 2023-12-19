@@ -72,8 +72,9 @@ async function getEvents(req, res) {
 }
 
 async function getEventsByClinicId(req, res){
+    let {id} = req.params;
     try {
-        const events = await calendarServices.getEventsByClinicId(req.data);
+        const events = await calendarServices.getEventsByClinicId(id);
         res.send(events);
     } catch (e) {
         res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
@@ -84,8 +85,6 @@ async function getEventsByClinicId(req, res){
 
 //Delete
 async function deleteEventById(req, res){
-
-
     try {
         const {id} = req.params;
 
