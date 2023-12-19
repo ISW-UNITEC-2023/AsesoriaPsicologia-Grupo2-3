@@ -42,3 +42,53 @@ export async function updatePaymentType(
     return { message: e.response.data.error };
   }
 }
+
+export async function updateAppointmentWithoutAmount(
+  id_appointment,
+  id_file,
+  id_doctor,
+  id_clinic,
+  user_editor,
+  observations,
+  medic_orders,
+  state_appointment,
+  motive
+) {
+  const options = {
+    method: "PUT",
+    url: "http://localhost:8000/appointment/updateAppointmentWithoutAmount",
+    data: {
+      id_appointment: id_appointment,
+      id_file: id_file,
+      id_doctor: id_doctor,
+      id_clinic: id_clinic,
+      user_editor: user_editor,
+      observations: observations,
+      medic_orders: medic_orders,
+      state_appointment: state_appointment,
+      motive: motive,
+    },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}
+
+export async function getStateInitials(id_appointment) {
+  const options = {
+    method: "GET",
+    url: "http://localhost:8000/appointment/getStateInitial",
+    params: { id_appointment: id_appointment },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (e) {
+    return { message: e.response.data.error };
+  }
+}

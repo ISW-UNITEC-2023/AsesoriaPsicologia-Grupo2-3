@@ -202,12 +202,15 @@ async function getStudents() {
   }
 }
 
-async function getPatients() {
-  const options = {
-    method: "GET",
-    url: host+"/files/getAllFiles",
-  };
+async function getPatients(id) {
 
+  let options = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: `http://localhost:8000/files/getClinicFiles?id=${id}`,
+    headers: { }
+  };
+  
   try {
     const response = await axios.request(options);
 

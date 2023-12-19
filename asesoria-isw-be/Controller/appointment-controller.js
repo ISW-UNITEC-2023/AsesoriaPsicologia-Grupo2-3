@@ -1,28 +1,15 @@
 const appointmentServices = require("../Service/appointment-services");
 
 async function createAppointment(req, res) {
-  try {
-    const {
-      appointment_date,
-      id_file,
-      id_doctor,
-      id_clinic,
-      user_creator,
-      appointment_type,
-    } = req.body;
-    const fecha = new Date(appointment_date);
-    await appointmentServices.createAppo({
-      fecha,
-      id_file,
-      id_doctor,
-      id_clinic,
-      user_creator,
-      appointment_type,
-    });
-    res.send({ message: "Se ha creado una nueva cita" });
-  } catch (error) {
-    res.send({ message: "No se pudo crear la cita", err: error.message });
-  }
+    try {
+        const {appointment_date, id_file, hour, id_doctor, id_clinic, user_creator, appointment_type} = req.body;
+        const fecha = new Date(appointment_date);
+        let appoId = await appointmentServices.createAppo({fecha, id_file, id_doctor, id_clinic, user_creator, appointment_type});
+
+        res.send({message: "Se ha creado una nueva cita", appoId})
+    } catch (error) {
+        res.send({message: "No se pudo crear la cita", err: error.message});
+    }
 }
 
 async function addConsultation(req, res) {
@@ -32,20 +19,25 @@ async function addConsultation(req, res) {
       id_file,
       id_doctor,
       id_clinic,
-      user_creator,
+      user_editor,
       observations,
       payment_amount,
       medic_orders,
+      state_appointment,
+      motive,
     } = req.body;
+
     await appointmentServices.addConsultation({
       id_appointment,
       id_file,
       id_doctor,
       id_clinic,
-      user_creator,
+      user_editor,
       observations,
       payment_amount,
       medic_orders,
+      state_appointment,
+      motive,
     });
     res.send({ message: "Se han agregado los datos de la consulta" });
   } catch (error) {
@@ -146,6 +138,7 @@ async function updateAppointment(req, res) {
       user_editor,
       id_doctor,
       id_file,
+      appointment_type,
     } = req.body;
     const fecha = new Date(appointment_date);
     await appointmentServices.updateAppo({
@@ -155,6 +148,7 @@ async function updateAppointment(req, res) {
       user_editor,
       id_doctor,
       id_file,
+      appointment_type,
     });
     res.send({ message: "Se ha actualizado la cita" });
   } catch (error) {
@@ -388,6 +382,70 @@ async function getChequeo(req, res) {
   }
 }
 
+async function updateAppointmentWithoutAmount(req, res) {
+  try {
+    const {
+      id_appointment,
+      id_file,
+      id_doctor,
+      id_clinic,
+      user_editor,
+      observations,
+      medic_orders,
+      state_appointment,
+      motive,
+    } = req.body;
+
+    await appointmentServices.updateAppointmentWithoutAmount({
+      id_appointment,
+      id_file,
+      id_doctor,
+      id_clinic,
+      user_editor,
+      observations,
+      medic_orders,
+      state_appointment,
+      motive,
+    });
+    res.send({ message: "Se han agregado los datos de la consulta" });
+  } catch (error) {
+    res.send({ message: "No se pudo crear la consulta", err: error.message });
+  }
+}
+
+async function getStateInitial(req, res) {
+  const { id_appointment } = req.query;
+  const errors = [];
+
+  if (!id_appointment) {
+    errors.push("Falta el id_clinic de la clinica");
+  }
+
+  if (errors.length > 0) {
+    res.status(400).send({ errors });
+    return;
+  }
+
+  try {
+    const App = await appointmentServices.getStateInitial(id_appointment);
+    if (App.length === 0) {
+      return res.status(HTTPCodes.NOT_FOUND).send({
+        error: "No se encontraron datos para el chequeo",
+      });
+    }
+
+    res.send({
+      message: "Se obtuvieron los datos para el chequeo",
+      AppInfo: App,
+    });
+  } catch (e) {
+    console.error("Error en getChequeo:", e);
+    res.status(HTTPCodes.INTERNAL_SERVER_ERROR).send({
+      error: "No se pudo obtener los datos del chequeo",
+    });
+  }
+}
+
 module.exports = {
   getAppointments,
   getById,
@@ -406,4 +464,6 @@ module.exports = {
   getChequeo,
   updatePaymentTypeMedic,
   updateZoomLink,
+  updateAppointmentWithoutAmount,
+  getStateInitial,
 };

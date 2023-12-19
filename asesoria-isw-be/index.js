@@ -89,7 +89,7 @@ app.use("/announcements", announcementRouter);
 app.use("/files", fileRouter);
 app.use("/mail", mailRouter);
 app.use("/appointment", appointmentRouter);
-app.use("/calendar", calendarRouter);
+app.use("/calendar/events", calendarRouter);
 app.use("/documents", documentsRoutes);
 app.use("/stats", statsRoutes);
 app.use("/reports", reportsRoutes);

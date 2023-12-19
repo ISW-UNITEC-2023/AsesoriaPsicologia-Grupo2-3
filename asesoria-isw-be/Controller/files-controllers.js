@@ -35,6 +35,8 @@ async function createFile(req, res) {
   const lengSubtance = substance_usage.toString();
   const lengactive = active.toString();
 
+  
+
   if (isNaN(lengphone_number) || !Number.isInteger(lengphone_number)) {
     errorMessages.push("El campo de numeor de telefono esta mal debe ser un numero de celular");
   }
@@ -42,6 +44,12 @@ async function createFile(req, res) {
   if (!isEmail(email)) {
     errorMessages.push("El correo electrónico no es valido");
 
+  }
+
+  const file = await fileServices.existFilebyEmail(email);
+  
+  if (file.length !== 0) {
+    errorMessages.push("Ya existe un paciente con este correo");
   }
 
   if (
@@ -700,10 +708,7 @@ async function getClinicFiles(req, res) {
 
   try {
     const file = await fileServices.getClinicFiles(clinics_id);
-    res.send({
-      fileInfo: file,
-      message: "Se han recuperado los archivos del paciente",
-    });
+    res.send(file);
   } catch (error) {
     res.send({
       message: "No fue posible recuperar los archivos del paciente",

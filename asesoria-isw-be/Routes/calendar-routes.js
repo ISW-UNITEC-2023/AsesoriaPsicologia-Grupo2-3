@@ -4,17 +4,16 @@ const router = express.Router();
 const calendarController = require("../Controller/calendar-controller");
 
 //Post
-router.post("/createEvent", calendarController.createEvent);
+router.post("/create", calendarController.createEvent);
 
-
-//Cookies
-//router.get("/getCookies", calendarController.getCookie);
-
+router.post("/update", calendarController.updateEventById)
 
 //Get
-router.get("/getEvents", calendarController.getEvents);
+router.get("/get", calendarController.getEvents);
+router.get("/getByClinicId", calendarController.getEventsByClinicId)
 
-
+//Delete
+router.delete("/deleteById/:id", calendarController.deleteEventById);
 
 
 module.exports = router;
