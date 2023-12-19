@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import services from "../../Utilities/reports-service";
-import { startOfWeek, endOfWeek, format } from "date-fns";
+import { startOfWeek, endOfWeek, format,parseISO } from "date-fns";
 
 const TABLE_HEAD = ["Account", "Amount", "Date", "Status", "Transaction"];
 
@@ -286,7 +286,7 @@ function TableReportes() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {appointment_date}
+                        {format(parseISO(appointment_date), 'yyyy-MM-dd HH:mm:ss ')}
                       </Typography>
                     </td>
                     <td className={classes}>
