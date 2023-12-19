@@ -20,34 +20,25 @@ import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionC
 import patientsService from "../Utilities/patients-services";
 
 function PacientesForm(props) {
+	const host = process.env.REACT_APP_API_URL;
 	const [nombres, setNombres] = useState([]);
 	const [showCrearPopup, setShowCrearPopup] = useState(false);
 	const [showEditarPopup, setShowEditarPopup] = useState(false);
 	const [showCrearPacientePopup, setShowCrearPacientePopup] = useState(false);
 	const [selectedUser, setSelectedUser] = useState(null);
-	const [showModal, setShowModal] = useState(false);
-	const [montoConsulta, setMontoConsulta] = useState("");
-	const [montoError, setMontoError] = useState(false);
-	const [motivoConsulta, setMotivoConsulta] = useState("");
-	const [observaciones, setObservaciones] = useState("");
-	const [ordenesMedicas, setOrdenesMedicas] = useState("");
 	const {
 		data: fetchedUsers,
 		error: usersError,
 		isLoading: usersLoading,
-	} = useSWR("http://localhost:8000/users/viewUsers", user_services.getUsers);
+	} = useSWR(host+"/users/viewUsers", user_services.getUsers);
 	const {
 		data: fetchedRoles,
 		error: rolesError,
 		isLoading: rolesLoading,
 	} = useSWR(
-		"http://localhost:8000/roles/viewAll",
+		host+"/roles/viewAll",
 		user_services.getAllUsersRoles
 	);
-
-	const handleClose = () => {
-		setShowModal(false);
-	};
 
 	const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
 	const [displayConfirmPopUp, setDisplayConfirmPopUp] = useState(false);
@@ -129,57 +120,7 @@ function PacientesForm(props) {
 
 		setNombres(arregloMandar);
 	}
-
-	const handleShow = () => setShowModal(true);
-
-	const handleTerminarConsulta = () => {
-		if (montoConsulta.trim() === "") {
-			setMontoError(true);
-		} else {
-			try {
-				axios
-					.put("http://localhost:8000/appointment/addConsultation", {
-						id_appointment: 16,
-						id_file: localStorage.getItem("id_patient"),
-						id_doctor: localStorage.getItem("id_doctor"),
-						id_clinic: localStorage.getItem("id_clinic"),
-						user_creator: localStorage.getItem("user_id"),
-						observations: observaciones,
-						amount: montoConsulta,
-						medic_orders: ordenesMedicas,
-					})
-					.then((r) => r);
-				toast.success("Consulta guardada con éxito", {
-					position: toast.POSITION.TOP_CENTER,
-					autoClose: 2000,
-				});
-				setShowModal(false);
-				setMontoError(false);
-			} catch (error) {
-				console.log(error);
-			}
-		}
-	};
-
-	const handleGuardarConsulta = () => {
-		setMontoError(false);
-		const doctorName = document.getElementById("doctorName").value;
-		const motivoConsulta = document.getElementById("consultaMotivo").value;
-		const observaciones = document.getElementById("observaciones").value;
-		const ordenesMedicas = document.getElementById("ordenesMedicas").value;
-		const consulta = {
-			doctorName,
-			motivoConsulta,
-			observaciones,
-			montoConsulta,
-			ordenesMedicas,
-		};
-
-		localStorage.setItem("consultaGuardada", JSON.stringify(consulta));
-		console.log("Consulta guardada:", consulta);
-		localStorage.clear();
-		setShowModal(false);
-	};
+	
 
 	const formatDate = (date) => {
 		const d = new Date(date);
@@ -201,21 +142,8 @@ function PacientesForm(props) {
 		setNombres([...nombres, newPaciente]);
 	};
 
-	const openCrearPopup = () => {
-		setShowCrearPopup(true);
-	};
-
 	const closeCrearPopup = () => {
 		setShowCrearPopup(false);
-	};
-
-	const openEditarPopup = (user) => {
-		localStorage.setItem("selectedUserId", user.id_account);
-		localStorage.setItem("selectedUserName", user.nombre);
-		localStorage.setItem("selectedUserEmail", user.email);
-
-		setSelectedUser(user);
-		setShowEditarPopup(true);
 	};
 
 	const closeEditarPopup = () => {
@@ -251,10 +179,6 @@ function PacientesForm(props) {
 			.map((role) => [role.id_role, role.name_role]);
 		return { ...user, roles: userRoles };
 	});
-
-	const doctores = Array.isArray(usersWithRoles)
-		? usersWithRoles.filter((user) => user.roles.some((role) => role[0] === 3))
-		: [];
 
 	return (
 		<PacientesLayout pagina="Pacientes">

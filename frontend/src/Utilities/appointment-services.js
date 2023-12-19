@@ -56,7 +56,7 @@ export async function updateAppointmentWithoutAmount(
 ) {
   const options = {
     method: "PUT",
-    url: "http://localhost:8000/appointment/updateAppointmentWithoutAmount",
+    url: host + "/appointment/updateAppointmentWithoutAmount",
     data: {
       id_appointment: id_appointment,
       id_file: id_file,
@@ -81,7 +81,7 @@ export async function updateAppointmentWithoutAmount(
 export async function getStateInitials(id_appointment) {
   const options = {
     method: "GET",
-    url: "http://localhost:8000/appointment/getStateInitial",
+    url: host + "/appointment/getStateInitial",
     params: { id_appointment: id_appointment },
   };
 

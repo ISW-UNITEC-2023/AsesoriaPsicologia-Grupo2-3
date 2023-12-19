@@ -5,7 +5,7 @@ const host = process.env.REACT_APP_API_BASE_URL;
 async function getEvents() {
     const options = {
         method: "GET",
-        url: "http://localhost:8000/calendar/events/get",
+        url: host + "/calendar/events/get",
         data: {},
     };
     let events = await axios.request(options);
@@ -15,7 +15,7 @@ async function getEvents() {
 async function getEventsByClinicId(id_clinic) {
     const options = {
         method: "GET",
-        url: "http://localhost:8000/calendar/events/getByClinicId",
+        url: host + "/calendar/events/getByClinicId",
         data: {id_clinic: id_clinic},
     };
     let events = await axios.request(options); 
@@ -25,7 +25,7 @@ async function getEventsByClinicId(id_clinic) {
 async function createEvent(event) {
     const options = {
         method: "POST",
-        url: "http://localhost:8000/calendar/events/create",
+        url: host + "/calendar/events/create",
         data: {
             id: event.id,
             title: event.title,

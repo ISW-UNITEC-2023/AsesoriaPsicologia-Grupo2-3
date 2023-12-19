@@ -26,7 +26,7 @@ async function CreatePatient(first_name, middle_name, last_name, second_last_nam
 	let options = {
 		method: 'post',
 		maxBodyLength: Infinity,
-		url: 'http://localhost:8000/files/create',
+		url: host + '/files/create',
 		headers: {
 			'Content-Type': 'application/json'
 		},
