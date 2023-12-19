@@ -111,12 +111,11 @@ async function loginUser(req, res) {
     //console.log("Privilegios retornados", privilegios);
     const roleNames = roles[0].map((role) => role.name_role);
 
-    const userData = {
-      email: email,
-      roles: roleNames,
-      privileges: privilegios,
-      allRoles: allroles2,
-    };
+     const userData = {
+            email: email,
+            id_user: email_exists[0].id_user,
+            id_clinic: email_exists[0].id_clinic,
+        };
     if (errorMessage.length) {
       res.send({
         errorMessage,

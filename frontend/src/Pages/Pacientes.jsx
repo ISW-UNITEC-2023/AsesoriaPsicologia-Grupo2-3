@@ -94,7 +94,7 @@ function PacientesForm(props) {
     };
 
     async function initialList() {
-      
+      console.log(props);
         const arregloUsuarios = await Services.getPatients(props.userData.user_data.id_clinic);
         const arregloMandar = [];
 
