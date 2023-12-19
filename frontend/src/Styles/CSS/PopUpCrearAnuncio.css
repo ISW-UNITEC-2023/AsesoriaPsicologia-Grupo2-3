@@ -49,11 +49,6 @@ div.modal-body {
   width: 100% !important;
 }
 
-[type="button"]:not(:disabled):is(:hover, :active, :focus) {
-  background-color: 2px solid #d5deea !important;
-  color: white !important;
-  transition: background-color 0.3s ease;
-}
 
 div.modal-footer {
   padding: 0px !important;

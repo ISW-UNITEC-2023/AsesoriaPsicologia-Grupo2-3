@@ -1,6 +1,7 @@
 import "../Styles/CSS/DashBoard.css";
 import { useEffect, useState } from "react";
 import NavigationB from "../Components/Navbar";
+
 import { loadModules } from "../Utilities/course-services";
 import { Button, Accordion } from "react-bootstrap";
 import DashboardLayout from "../Layout/DashboardLayout";
@@ -9,6 +10,7 @@ import StatsSection from "../Components/Estadisticas/StatsSection"
 import { Select, Option } from "@material-tailwind/react";
 import Services from "../Utilities/login-services";
 import { useNavigate } from "react-router-dom";
+
 
 function DashBoard(props) {
   const [displayedModules, setModules] = useState([]);
@@ -124,7 +126,6 @@ const handleClick = (id, nombre, id_clinic) => {
                                   <div className="mb-2 font-bold text-xl" style={{ color: "#113946" }}>
                                     <p>Lista de Pacientes</p>
                                   </div>
-                                  <div className="Select-Design">
                                   <Select label="Selecciona un paciente" value={selectedName} onChange={(e)=>(handleSelectChange(e))}>
                                     {nombre.map((nombre) => (
                                       <Option key={nombre.id_account} value={nombre.id_account}>
@@ -132,7 +133,6 @@ const handleClick = (id, nombre, id_clinic) => {
                                       </Option>
                                     ))}
                                   </Select>
-                                  </div>
                                   {showButtons && selectedOption && (
                                     <div className="custom-button">
                                       <Button onClick={handleScheduleClick}>Agendar Citas</Button>

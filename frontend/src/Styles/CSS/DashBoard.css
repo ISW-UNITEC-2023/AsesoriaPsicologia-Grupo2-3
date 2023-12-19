@@ -91,39 +91,3 @@ button.accordion-button.collapsed {
   background-color: #bba37f;
   
 }
-.Select-Design .select-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.Select-Design select {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  appearance: none; /* Para quitar los estilos de selección nativos */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-color: #fff;
-  cursor: pointer;
-}
-
-/* Estilos para cuando el select está enfocado */
-.Select-Design select:focus {
-  border-color: #007bff; /* Cambia el color del borde al estar enfocado */
-}
-
-/* Estilos para las opciones dentro del select */
-.Select-Design select option {
-  padding: 0.5rem;
-}
-
-/* Estilos para el hover de las opciones dentro del select */
-.Select-Design select option:hover {
-  background-color: #f0f0f0;
-}
-
-
