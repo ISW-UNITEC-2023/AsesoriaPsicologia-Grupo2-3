@@ -181,7 +181,18 @@ const RoleAdmin = (props) => {
     await rolesServices.createRole(openCreate.name, openCreate.description);
     const data = await rolesServices.getAllRoles();
     setRoles(data);
-    await refreshPrivileges(data);
+    const data2 = await rolesServices.getAllPrivileges();
+    setPrivileges(data2);
+    await refreshPrivileges(data, data2);
+    toast.success("Rol creado exitosamente!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "light",
+    });
     setOpenCreate({
       open: 0,
       name: "",
@@ -449,6 +460,7 @@ const RoleAdmin = (props) => {
                 className="nombre-crear-rol"
                 placeholder="Escribe un nombre"
                 required
+                value={openCreate.name}
                 onChange={(e) => {
                   setOpenCreate({
                     ...openCreate,
@@ -460,6 +472,7 @@ const RoleAdmin = (props) => {
                 className="descripcion-crear-rol"
                 placeholder="Escribe una descripción"
                 required
+                value={openCreate.description}
                 onChange={(e) => {
                   setOpenCreate({
                     ...openCreate,

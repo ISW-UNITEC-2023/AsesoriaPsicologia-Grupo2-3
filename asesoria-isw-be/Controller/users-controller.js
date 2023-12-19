@@ -548,6 +548,8 @@ async function getVerify(req, res) {
       })
     );
 
+    console.log("Privilegios obtenidos", privileges);
+
     const privilegios = privileges[0]
       ? privileges[0].map((privilege) => privilege.id_privilege)
       : [];

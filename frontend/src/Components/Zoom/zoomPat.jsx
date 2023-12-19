@@ -26,6 +26,7 @@ function MyZoomPat(props) {
     try {
       const data = await getVerify(props.userData.user_data.id_user);
       verifyRef.current = data;
+      console.log(data);
     } catch (error) {
       console.error("Error updating privileges:", error);
     }
