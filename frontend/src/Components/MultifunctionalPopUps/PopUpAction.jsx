@@ -14,7 +14,7 @@ const PopUpAction = ({
 }) => {
 
 	const handleAction = () => {
-		onConfirm(itemId);
+		onConfirm();
 	};
 
 	return (

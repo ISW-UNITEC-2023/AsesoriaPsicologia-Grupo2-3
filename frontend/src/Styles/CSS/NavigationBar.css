@@ -74,14 +74,14 @@
   text-align: center;
   margin-right: 20px;
   color: white;
-  background-color: rgb(198, 22, 28);
+  background-color: #bba37f;
   border-radius: 25px;
   padding: 0.8rem 1rem;
 }
 
 .iniciar-sesion-navbar {
   background-color: transparent;
-  border: 2px solid rgb(198, 22, 28);
+  border: 2px solid #bba37f;
 }
 
 .navbar-nav {

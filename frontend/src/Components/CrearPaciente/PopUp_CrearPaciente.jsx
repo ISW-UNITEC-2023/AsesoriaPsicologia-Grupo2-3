@@ -17,7 +17,6 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
     const isAnyFieldEmpty = Object.values(formData).some(isFieldEmpty);
 
     useEffect(() => {
-        console.log("Any empty: " + isAnyFieldEmpty + "\nAll empty: " + isFormDataEmpty);
     }, [isAnyFieldEmpty, isFormDataEmpty]);
 
     const handleInputChange = (e) => {

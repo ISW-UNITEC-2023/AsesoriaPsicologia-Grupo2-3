@@ -14,6 +14,7 @@ function Wizard(props) {
 
   
   const [regData, setRegData] = useState({
+    nameclinic: "",
     name: "",
     date: "",
     phoneNum: "",
@@ -22,6 +23,7 @@ function Wizard(props) {
     image: null,
   });
   const [touchedFields, setTouchedFields] = useState({
+    nameclinic:false,
     name: false,
     phoneNum: false,
   });
@@ -92,10 +94,34 @@ function Wizard(props) {
         <div className="form-container">
           <Form>
             <Form.Group controlId="formName" className="mb-3">
-              <Form.Label>Nombre De Clinica </Form.Label>
+              <Form.Label>Nombre Clinica </Form.Label>
               <Form.Control
                 type="text"
                 name="name"
+                /*RECORDAR CAMBIAR POR EL ATRIBUTO EN LA BASE DE DATOS*/
+                value={regData.nameclinic}
+                onChange={(e) => handleRegChange(e)}
+                placeholder="Ingrese nombre para su Clinica"
+                onBlur={() =>
+                  setTouchedFields({ ...touchedFields, name: true })
+                }
+                isInvalid={
+                  touchedFields.name && !regData.name.length > 0
+                }
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                El nombre no puede estar vacío.
+              </Form.Control.Feedback>
+            </Form.Group>
+            
+
+            <Form.Group controlId="formName" className="mb-3">
+              <Form.Label>Nombre Completo</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+
                 value={regData.name}
                 onChange={(e) => handleRegChange(e)}
                 placeholder="Ingrese su nombre completo"
@@ -112,8 +138,9 @@ function Wizard(props) {
               </Form.Control.Feedback>
             </Form.Group>
 
+
             <Form.Group controlId="formphoneNum" className="mb-3">
-              <Form.Label>Numero de Telefono de Clinica</Form.Label>
+              <Form.Label>Numero de Telefono</Form.Label>
               <Form.Control
                 type="number"
                 name="phoneNum"
@@ -133,7 +160,7 @@ function Wizard(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="formEmail" className="mb-3">
-              <Form.Label>Correo Electrónico de Clínica</Form.Label>
+              <Form.Label>Correo Electrónico </Form.Label>
               <Form.Control
                 type="text"
                 name="email"
