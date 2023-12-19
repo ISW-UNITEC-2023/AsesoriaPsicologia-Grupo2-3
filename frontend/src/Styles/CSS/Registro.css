@@ -42,9 +42,9 @@ html {
 }
 
 .error-message-reg {
-
+  color: red;
   font-size: 6px;
-
+  align-self: flex-end;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -123,5 +123,5 @@ html {
   padding: 5px 20px;
   text-align: center;
   z-index: 999;
-  height: 40px;
+
 }
