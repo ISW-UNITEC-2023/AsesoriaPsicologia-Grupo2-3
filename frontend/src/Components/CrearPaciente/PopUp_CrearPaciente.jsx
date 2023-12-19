@@ -16,7 +16,7 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
   const isFormDataEmpty = Object.values(formData).every(isFieldEmpty);
   const isAnyFieldEmpty = Object.values(formData).some(isFieldEmpty);
 
-  const isNumeroIdentidadValid = /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/.test(
+  const isNumeroIdentidadValid = /^[0-9]{4}-[0-9]{4}-[0-9]{5}$/.test(
     formData.numeroIdentidad
   );
 
@@ -87,7 +87,7 @@ const CrearPaciente = ({ onClose, onSummit, isOpen }) => {
             </Form.Label>
             <Form.Control
               type='text'
-              placeholder='XXXX-XXXX-XXXX'
+              placeholder='XXXX-XXXX-XXXXX'
               name='numeroIdentidad'
               value={formData.numeroIdentidad}
               onChange={handleInputChange}

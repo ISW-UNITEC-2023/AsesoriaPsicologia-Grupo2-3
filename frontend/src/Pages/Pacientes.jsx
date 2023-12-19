@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../Styles/CSS/Pacientes.css";
 import { Link } from "react-router-dom";
 import Services from "../Utilities/login-services";
@@ -17,321 +17,350 @@ import { Spinner } from "@material-tailwind/react";
 import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
 import patientsService from "../Utilities/patients-services";
+import { getVerify } from "../Utilities/user-services";
+
+
+function havePrivilege(userPrivilege, privilege) {
+	const isAuthorized = userPrivilege && userPrivilege.privileges && privilege.some((privilege) =>
+		userPrivilege.privileges.includes(privilege)
+	);
+	return isAuthorized;
+}
 
 function PacientesForm(props) {
-  const host = process.env.REACT_APP_API_BASE_URL;
-  const [nombres, setNombres] = useState([]);
-  const [showCrearPopup, setShowCrearPopup] = useState(false);
-  const [showEditarPopup, setShowEditarPopup] = useState(false);
-  const [showCrearPacientePopup, setShowCrearPacientePopup] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const {
-    data: fetchedUsers,
-    error: usersError,
-    isLoading: usersLoading,
-  } = useSWR(host + "/users/viewUsers", user_services.getUsers);
-  const {
-    data: fetchedRoles,
-    error: rolesError,
-    isLoading: rolesLoading,
-  } = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
+	//Privilegios del usuario logueado
+	const verifyRef = useRef(null);
+	const updatePrivileges = async () => {
+		try {
+			const data = await getVerify(props.userData.user_data.id_user);
+			verifyRef.current = data;
+		} catch (error) {
+			console.error("Error updating privileges:", error);
+		}
+	};
 
-  const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
-  const [displayConfirmPopUp, setDisplayConfirmPopUp] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState({
-    nombre: "",
-    fechaNacimiento: "",
-    numeroIdentidad: "",
-    direccion: "",
-    estadoCivil: "",
-  });
+	useEffect(() => {
+		async function update() {
+			await updatePrivileges();
+		}
+		update();
+	}, []);
 
-  const handleActionConfirm = () => {
-    setDisplayActionPopUp(false);
-    setDisplayConfirmPopUp(false);
-  };
+	const host = process.env.REACT_APP_API_BASE_URL;
+	const [nombres, setNombres] = useState([]);
+	const [showCrearPopup, setShowCrearPopup] = useState(false);
+	const [showEditarPopup, setShowEditarPopup] = useState(false);
+	const [showCrearPacientePopup, setShowCrearPacientePopup] = useState(false);
+	const [selectedUser, setSelectedUser] = useState(null);
+	const {
+		data: fetchedUsers,
+		error: usersError,
+		isLoading: usersLoading,
+	} = useSWR(host + "/users/viewUsers", user_services.getUsers);
+	const {
+		data: fetchedRoles,
+		error: rolesError,
+		isLoading: rolesLoading,
+	} = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
 
-  const handleShowAgregarPacientePopUp = (patient) => {
-    setSelectedPatient(patient);
-    setShowCrearPacientePopup(true);
-  };
+	const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
+	const [displayConfirmPopUp, setDisplayConfirmPopUp] = useState(false);
+	const [selectedPatient, setSelectedPatient] = useState({
+		nombre: "",
+		fechaNacimiento: "",
+		numeroIdentidad: "",
+		direccion: "",
+		estadoCivil: "",
+	});
 
-  const handleCrearPaciente = async () => {
-    try {
-      const nombre_completo = selectedPatient.nombre.split(" ");
-      const result = await patientsService.CreatePatient(
-        nombre_completo[0],
-        nombre_completo[1],
-        nombre_completo[2],
-        nombre_completo[3],
-        selectedPatient.fechaNacimiento,
-        "prueba@gmail.com",
-        "96569414",
-        selectedPatient.direccion,
-        selectedPatient.estadoCivil,
-        "---",
-        "---",
-        props.userData.user_data.id_clinic,
-        props.userData.user_data.id_user,
-        selectedPatient.numeroIdentidad
-      );
+	const handleActionConfirm = () => {
+		setDisplayActionPopUp(false);
+		setDisplayConfirmPopUp(false);
+	};
 
-      if (result.message) {
-        console.log(result);
-        console.log("Error al crear el paciente:", result.message);
-        setDisplayActionPopUp(false);
-      } else {
-        console.log("Error al crear al paciente:", result);
-      }
-    } catch (error) {
-      console.error("Error creating patient:", error);
-    } finally {
-    }
-  };
+	const handleShowAgregarPacientePopUp = (patient) => {
+		setSelectedPatient(patient);
+		setShowCrearPacientePopup(true);
+	};
 
-  const handleActionPopUp = (pacienteInfo) => {
-    setSelectedPatient(pacienteInfo);
-    setShowCrearPacientePopup(false);
-    setDisplayActionPopUp(true);
-  };
+	const handleCrearPaciente = async () => {
+		try {
+			const nombre_completo = selectedPatient.nombre.split(" ");
+			const result = await patientsService.CreatePatient(
+				nombre_completo[0],
+				nombre_completo[1],
+				nombre_completo[2],
+				nombre_completo[3],
+				selectedPatient.fechaNacimiento,
+				"prueba@gmail.com",
+				"96569414",
+				selectedPatient.direccion,
+				selectedPatient.estadoCivil,
+				"---",
+				"---",
+				props.userData.user_data.id_clinic,
+				props.userData.user_data.id_user,
+				selectedPatient.numeroIdentidad
+			);
 
-  const closeCrearPacientePopup = () => {
-    setShowCrearPacientePopup(false);
-  };
+			if (result.message) {
+				console.log(result);
+				console.log("Error al crear el paciente:", result.message);
+				setDisplayActionPopUp(false);
+			} else {
+				console.log("Error al crear al paciente:", result);
+			}
+		} catch (error) {
+			console.error("Error creating patient:", error);
+		} finally {
+		}
+	};
 
-  async function initialList() {
-    const arregloUsuarios = await Services.getPatients(
-      props.userData.user_data.id_clinic
-    );
-    const arregloMandar = [];
+	const handleActionPopUp = (pacienteInfo) => {
+		setSelectedPatient(pacienteInfo);
+		setShowCrearPacientePopup(false);
+		setDisplayActionPopUp(true);
+	};
 
-    arregloUsuarios.fileInfo.map((usuario) => {
-      let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
-      return arregloMandar.push({
-        nombre: nombre_user,
-        email: usuario.email,
-        id_account: usuario.id_file,
-        creationDate: usuario.creation_date,
-        id_clinic: usuario.id_clinic,
-      });
-    });
+	const closeCrearPacientePopup = () => {
+		setShowCrearPacientePopup(false);
+	};
 
-    setNombres(arregloMandar);
-  }
+	async function initialList() {
+		const arregloUsuarios = await Services.getPatients(
+			props.userData.user_data.id_clinic
+		);
+		const arregloMandar = [];
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    let month = "" + (d.getMonth() + 1);
-    let day = "" + d.getDate();
-    const year = d.getFullYear();
+		arregloUsuarios.fileInfo.map((usuario) => {
+			let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
+			return arregloMandar.push({
+				nombre: nombre_user,
+				email: usuario.email,
+				id_account: usuario.id_file,
+				creationDate: usuario.creation_date,
+				id_clinic: usuario.id_clinic,
+			});
+		});
 
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
+		setNombres(arregloMandar);
+	}
 
-    return [day, month, year].join("/");
-  };
+	const formatDate = (date) => {
+		const d = new Date(date);
+		let month = "" + (d.getMonth() + 1);
+		let day = "" + d.getDate();
+		const year = d.getFullYear();
 
-  useEffect(() => {
-    initialList().then((r) => r);
-  }, []);
+		if (month.length < 2) month = "0" + month;
+		if (day.length < 2) day = "0" + day;
 
-  const addPacienteAndUpdateList = async (newPaciente) => {
-    setNombres([...nombres, newPaciente]);
-  };
+		return [day, month, year].join("/");
+	};
 
-  const closeCrearPopup = () => {
-    setShowCrearPopup(false);
-  };
+	useEffect(() => {
+		initialList().then((r) => r);
+	}, []);
 
-  const closeEditarPopup = () => {
-    setShowEditarPopup(false);
-    setSelectedUser(null);
-  };
+	const addPacienteAndUpdateList = async (newPaciente) => {
+		setNombres([...nombres, newPaciente]);
+	};
 
-  const handleClick = (id, nombre, id_clinic) => {
-    localStorage.setItem("id_patient", id);
-    localStorage.setItem("namePatient", nombre);
-    localStorage.setItem("id_clinic", id_clinic);
-  };
+	const closeCrearPopup = () => {
+		setShowCrearPopup(false);
+	};
 
-  if (usersLoading || rolesLoading) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <Spinner />
-      </div>
-    );
-  }
+	const closeEditarPopup = () => {
+		setShowEditarPopup(false);
+		setSelectedUser(null);
+	};
 
-  if (usersError || rolesError) {
-    return (
-      <div className='flex justify-center items-center h-screen'>
-        <p>Ha ocurrido un error al cargar los usuarios</p>
-      </div>
-    );
-  }
+	const handleClick = (id, nombre, id_clinic) => {
+		localStorage.setItem("id_patient", id);
+		localStorage.setItem("namePatient", nombre);
+		localStorage.setItem("id_clinic", id_clinic);
+	};
 
-  const usersWithRoles = fetchedUsers.map((user) => {
-    const userRoles = fetchedRoles
-      .filter((role) => user.id_user === role.id_user)
-      .map((role) => [role.id_role, role.name_role]);
-    return { ...user, roles: userRoles };
-  });
+	if (usersLoading || rolesLoading) {
+		return (
+			<div className='flex justify-center items-center h-screen'>
+				<Spinner />
+			</div>
+		);
+	}
 
-  return (
-    <PacientesLayout pagina='Pacientes'>
-      <div className='navbar2'>
-        <NavigationB />
+	if (usersError || rolesError) {
+		return (
+			<div className='flex justify-center items-center h-screen'>
+				<p>Ha ocurrido un error al cargar los usuarios</p>
+			</div>
+		);
+	}
 
-        <div className='pacientes-container'>
-          <div className='pacientes-header'>
-            <h1 className='title-pacientes2'>Pacientes</h1>
-            <div className='IniciarConsulta'>
-              <button
-                className='consultation-btn'
-                onClick={() => handleShowAgregarPacientePopUp(selectedPatient)}
-              >
-                Agregar Paciente
-              </button>
-            </div>
-          </div>
-          <div className='card-container'>
-            {nombres.map((nombre) => (
-              <div key={nombre.id_account} className='card'>
-                <div className='card-body'>
-                  <FontAwesomeIcon
-                    icon={faUserCircle}
-                    className='icon-persona'
-                  />
-                  <h3 className='card-title'>{nombre.nombre}</h3>
-                  <div className='conteiner-card-text'>
-                    <h4 className='card-text'>
-                      {formatDate(nombre.creationDate)}
-                    </h4>
-                  </div>
-                  <div className='dropdown'>
-                    <button
-                      className='dropdown-botton'
-                      type='button'
-                      id={`dropdown-${nombre.id_account}`}
-                      data-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                    >
-                      Acciones
-                    </button>
+	const usersWithRoles = fetchedUsers.map((user) => {
+		const userRoles = fetchedRoles
+			.filter((role) => user.id_user === role.id_user)
+			.map((role) => [role.id_role, role.name_role]);
+		return { ...user, roles: userRoles };
+	});
 
-                    <div
-                      className='dropdown-menu'
-                      aria-labelledby={`dropdown-${nombre.id_account}`}
-                    >
-                      <Link
-                        to='/citas'
-                        onClick={() =>
-                          handleClick(
-                            nombre.id_account,
-                            nombre.nombre,
-                            nombre.id_clinic
-                          )
-                        }
-                        className='dropdown-item'
-                      >
-                        Agendar Cita
-                      </Link>
-                      <Link
-                        to='/Expedientes'
-                        onClick={() =>
-                          handleClick(
-                            nombre.id_account,
-                            nombre.nombre,
-                            nombre.id_clinic
-                          )
-                        }
-                        className='dropdown-item'
-                      >
-                        Ver Expediente
-                      </Link>
-                      <Link
-                        to='/Documentos'
-                        className='dropdown-item'
-                        state={{
-                          id_file: nombre.id_account,
-                          userData: props.userData,
-                        }}
-                      >
-                        Ver Documentos
-                      </Link>
-                      {/* <Link to="/Documento"
+	return (
+		<PacientesLayout pagina='Pacientes'>
+			<div className='navbar2'>
+				<NavigationB />
+
+				<div className='pacientes-container'>
+					<div className='pacientes-header'>
+						<h1 className='title-pacientes2'>Pacientes</h1>
+						<div className='IniciarConsulta'>
+							{
+								havePrivilege(verifyRef.current, [53]) &&
+								<button
+									className='consultation-btn'
+									onClick={() => handleShowAgregarPacientePopUp(selectedPatient)}
+								>
+									Agregar Paciente
+								</button>
+							}
+						</div>
+					</div>
+					{
+						havePrivilege(verifyRef.current, [56]) ?
+							<div className='card-container'>
+								{nombres.map((nombre) => (
+									<div key={nombre.id_account} className='card'>
+										<div className='card-body'>
+											<FontAwesomeIcon
+												icon={faUserCircle}
+												className='icon-persona'
+											/>
+											<h3 className='card-title'>{nombre.nombre}</h3>
+											<div className='conteiner-card-text'>
+												<h4 className='card-text'>
+													{formatDate(nombre.creationDate)}
+												</h4>
+											</div>
+											<div className='dropdown'>
+												<button
+													className='dropdown-botton'
+													type='button'
+													id={`dropdown-${nombre.id_account}`}
+													data-toggle='dropdown'
+													aria-haspopup='true'
+													aria-expanded='false'
+												>
+													Acciones
+												</button>
+
+												<div
+													className='dropdown-menu'
+													aria-labelledby={`dropdown-${nombre.id_account}`}
+												>
+													{
+														havePrivilege(verifyRef.current, [61]) &&
+														<Link to="/citas"
+															onClick={() => handleClick(nombre.id_account, nombre.nombre,
+																nombre.id_clinic)}
+															className="dropdown-item">
+															Agendar Cita
+														</Link>
+													}
+													{
+														havePrivilege(verifyRef.current, [57]) &&
+														<Link to="/Expedientes"
+															onClick={() => handleClick(nombre.id_account, nombre.nombre, nombre.id_clinic)}
+															className="dropdown-item">
+															Ver Expediente
+														</Link>
+													}
+													{
+														havePrivilege(verifyRef.current, [66]) &&
+														<Link to="/Documentos"
+															className="dropdown-item"
+															state={{ id_file: nombre.id_account, userData: props.userData }}>
+															Ver Documentos
+														</Link>
+
+													}
+													{/* <Link to="/Documento"
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
                                                   className="dropdown-item">Ver Documentos</Link> */}
 
-                      {/* =======
+													{/* =======
                                         <div className="dropdown-menu" aria-labelledby={`dropdown-${nombre.id_account}`}>
                                             <Link to="/citas" className="dropdown-item">Manejar Cita</Link>
                                             <Link to="/Expedientes" className="dropdown-item">Ver Expediente</Link>
                                             <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
                                              */}
-                      {/* >>>>>>> Axel-KL-Documents */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+													{/* >>>>>>> Axel-KL-Documents */}
+												</div>
+											</div>
+										</div>
+									</div>
+								))}
+							</div>
+							:
+							<div>
+								<div className="flex justify-center items-center h-screen">
+									<p>Ha ocurrido un error al cargar los usuarios, parece que no tienes los permisos necesarios.</p>
+								</div>
+							</div>
+					}
 
-          {showCrearPopup && (
-            <CrearUser
-              onClose={closeCrearPopup}
-              isOpen={showCrearPopup}
-              onUpdatePacientesList={addPacienteAndUpdateList}
-            />
-          )}
-          {showEditarPopup && selectedUser && (
-            <EditarUser
-              onClose={closeEditarPopup}
-              isOpen={showEditarPopup}
-              user={selectedUser}
-            />
-          )}
-          {showCrearPacientePopup && (
-            <CrearPaciente
-              onClose={closeCrearPacientePopup}
-              onSummit={addPacienteAndUpdateList}
-              isOpen={showCrearPacientePopup}
-            />
-          )}
-          {showCrearPacientePopup && (
-            <CrearPaciente
-              onClose={() => setShowCrearPacientePopup(false)}
-              onSummit={handleActionPopUp}
-              isOpen={showCrearPacientePopup}
-            />
-          )}
-          {displayActionPopUp && (
-            <PopUpAction
-              isOpen={displayActionPopUp}
-              actionType='Agregar'
-              pageName='Paciente'
-              itemName={selectedPatient.nombre}
-              itemId={selectedPatient.numeroIdentidad}
-              onCancel={() => setDisplayActionPopUp(false)}
-              onConfirm={() => handleCrearPaciente()}
-            />
-          )}
-          {displayConfirmPopUp && (
-            <PopUpActionConfirm
-              isOpen={displayConfirmPopUp}
-              actionType='Agregar'
-              pageName='Paciente'
-              itemName={selectedPatient.nombre}
-              itemId={selectedPatient.numeroIdentidad}
-              onConfirm={() => handleActionConfirm()}
-            />
-          )}
-        </div>
-      </div>
-    </PacientesLayout>
-  );
+					{showCrearPopup && (
+						<CrearUser
+							onClose={closeCrearPopup}
+							isOpen={showCrearPopup}
+							onUpdatePacientesList={addPacienteAndUpdateList}
+						/>
+					)}
+					{showEditarPopup && selectedUser && (
+						<EditarUser
+							onClose={closeEditarPopup}
+							isOpen={showEditarPopup}
+							user={selectedUser}
+						/>
+					)}
+					{showCrearPacientePopup && (
+						<CrearPaciente
+							onClose={closeCrearPacientePopup}
+							onSummit={addPacienteAndUpdateList}
+							isOpen={showCrearPacientePopup}
+						/>
+					)}
+					{showCrearPacientePopup && (
+						<CrearPaciente
+							onClose={() => setShowCrearPacientePopup(false)}
+							onSummit={handleActionPopUp}
+							isOpen={showCrearPacientePopup}
+						/>
+					)}
+					{displayActionPopUp && (
+						<PopUpAction
+							isOpen={displayActionPopUp}
+							actionType='Agregar'
+							pageName='Paciente'
+							itemName={selectedPatient.nombre}
+							itemId={selectedPatient.numeroIdentidad}
+							onCancel={() => setDisplayActionPopUp(false)}
+							onConfirm={() => handleCrearPaciente()}
+						/>
+					)}
+					{displayConfirmPopUp && (
+						<PopUpActionConfirm
+							isOpen={displayConfirmPopUp}
+							actionType='Agregar'
+							pageName='Paciente'
+							itemName={selectedPatient.nombre}
+							itemId={selectedPatient.numeroIdentidad}
+							onConfirm={() => handleActionConfirm()}
+						/>
+					)}
+				</div>
+			</div>
+		</PacientesLayout>
+	);
 }
 
 export default PacientesForm;
