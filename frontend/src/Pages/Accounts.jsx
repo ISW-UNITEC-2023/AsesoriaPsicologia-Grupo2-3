@@ -8,6 +8,7 @@ import PopUpAdminRole from "../Components/PopUp_AdminRole";
 //Functions
 import { useEffect, useState } from "react";
 import user_services from "../Utilities/user-services";
+import userServices from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
 
 //Styles and Icons
@@ -29,6 +30,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Accounts(props) {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
   const [roles, setRoles] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -240,6 +243,24 @@ function Accounts(props) {
     );
   };
 
+  const renderRoles = (user) => {
+    const uniqueRoles = [...new Set(user.roles.map((role) => role[1]))];
+  
+    if (uniqueRoles.length === 1) {
+      return <span>{uniqueRoles[0]}</span>;
+    } else if (uniqueRoles.length === 0) {
+      return <span>Sin rol</span>;
+    } else {
+      return (
+        <select className="select-role-item">
+          {uniqueRoles.map((role) => (
+            <option key={role}>{role}</option>
+          ))}
+        </select>
+      );
+    }
+  };
+  
   const SearchDropdown = ({ matchingNames }) => {
     return (
       <div
@@ -287,34 +308,85 @@ function Accounts(props) {
   };
 
   //Fetch de Usuarios
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const fetchedUsers = await user_services.getUsers();
+  //     const fetchedRoles = await user_services.getAllUsersRoles();
 
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
+  //     fetchedUsers.forEach((user) => {
+  //       user.roles = [];
+  //       fetchedRoles.forEach((role) => {
+  //         if (user.id_user === role.id_user) {
+  //           user.roles.push([role.id_role, role.name_role]);
+  //         }
+  //       });
+  //     });
+  //     setUsers(fetchedUsers);
+  //     setOriginalUsers(fetchedUsers);
+  //   };
+  //   fetchData().then(r => r);
+  // }, []);
+//**************************** */
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const clinicId = props.userData.user_data.id_clinic; 
+      const result = await userServices.getUsersByClinic(clinicId);
+      const fetchedRoles = await userServices.getAllUsersRoles();
+      console.log('Users:', result);
+      console.log('Roles:', fetchedRoles);
+      // Create a map to track users by their IDs
+      const userMap = new Map();
+
+      // Iterate over the result array
+      result.forEach((user) => {
+        // If the user ID is not in the map, add it with an empty roles array
+        if (!userMap.has(user.id_user)) {
+          userMap.set(user.id_user, { ...user, roles: [] });
+        }
+
+        // Add roles to the user in the map
         fetchedRoles.forEach((role) => {
           if (user.id_user === role.id_user) {
-            user.roles.push([role.id_role, role.name_role]);
+            userMap.get(user.id_user).roles.push([role.id_role, role.name_role]);
           }
         });
       });
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    fetchData().then(r => r);
-  }, []);
 
+      // Convert the map values (users) back to an array
+      const uniqueUsers = Array.from(userMap.values());
+
+      setUsers(uniqueUsers);
+      setOriginalUsers(uniqueUsers);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  fetchData();
+}, []);
+
+//************************************* */
   //Fetch de Roles
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const fetchedRoles = await role_services.getAllRoles();
+  //     setRoles(fetchedRoles);
+  //   };
+  //   fetchData().then(r => r);
+  // }, []);
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedRoles = await role_services.getAllRoles();
-      setRoles(fetchedRoles);
+      try {
+        const fetchedRoles = await role_services.getAllRoles();
+        setRoles(fetchedRoles);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
     };
-    fetchData().then(r => r);
-  }, []);
 
+    fetchData();
+  }, []);
   //Filtrado de Nombre
   useEffect(() => {
     // Filter names that match the search term
@@ -359,69 +431,70 @@ function Accounts(props) {
   }
 
   function filterSelectedItem(e) {
-    let selectedItem = e.target.value;
-    let filteredUsers = [];
-    if (e.target.name === "roles") {
-      const newRoles = [...selectedRoles];
-      if (selectedRoles.includes(selectedItem)) {
-        const index = newRoles.indexOf(selectedItem);
-        newRoles.splice(index, 1);
-      } else {
-        if (selectedItem === "Sin rol") {
-          newRoles.push("Sin rol");
-        }
-        if (!newRoles.includes(selectedItem)) {
-          newRoles.push(selectedItem);
-        }
+  let selectedItem = e.target.value;
+  let filteredUsers = [];
+  if (e.target.name === "roles") {
+    const newRoles = [...selectedRoles];
+    if (selectedRoles.includes(selectedItem)) {
+      const index = newRoles.indexOf(selectedItem);
+      newRoles.splice(index, 1);
+    } else {
+      if (selectedItem === "Sin rol") {
+        newRoles.push("Sin rol");
       }
-      setSelectedRoles(newRoles);
-      originalUsers.filter((user) => {
-        newRoles.forEach((role) => {
-          user.roles.map((item) => {
-            if (item.includes(role)) {
-              if (!filteredUsers.includes(user)) {
-                filteredUsers.push(user);
-              }
-            }
-          });
-          if (user.roles.length === 0 && role === "Sin rol") {
-            if (!filteredUsers.includes(user)) {
-              filteredUsers.push(user);
-            }
-          }
-        });
-      });
-      setSorted(true);
-      setUsers(filteredUsers);
-      if (newRoles.length === 0) {
-        limpiarFiltros();
-      }
-    } else if (e.target.name === "state") {
-      const states = [...selectedState];
-      selectedItem === "1" ? (selectedItem = 1) : (selectedItem = 0);
-      if (selectedState.includes(selectedItem)) {
-        const index = states.indexOf(selectedItem);
-        states.splice(index, 1);
-      } else {
-        states.push(selectedItem);
-      }
-      setSelectedState(states);
-      originalUsers.filter((user) => {
-        states.forEach((state) => {
-          if (user.active_user === state) {
-            if (!filteredUsers.includes(user)) {
-              filteredUsers.push(user);
-            }
-          }
-        });
-      });
-      setSorted(true);
-      setUsers(filteredUsers);
-      if (states.length === 0) {
-        limpiarFiltros();
+      if (!newRoles.includes(selectedItem)) {
+        newRoles.push(selectedItem);
       }
     }
+    setSelectedRoles(newRoles);
+    originalUsers.forEach((user) => {
+      newRoles.forEach((role) => {
+        user.roles.map((item) => {
+          if (item.includes(role)) {
+            if (!filteredUsers.includes(user)) {
+              filteredUsers.push(user);
+            }
+          }
+        });
+        if (user.roles.length === 0 && role === "Sin rol") {
+          if (!filteredUsers.includes(user)) {
+            filteredUsers.push(user);
+          }
+        }
+      });
+    });
+    setSorted(true);
+    setUsers(filteredUsers);
+    if (newRoles.length === 0) {
+      limpiarFiltros();
+    }
+  } else if (e.target.name === "state") {
+    const states = [...selectedState];
+    selectedItem === "1" ? (selectedItem = 1) : (selectedItem = 0);
+    if (selectedState.includes(selectedItem)) {
+      const index = states.indexOf(selectedItem);
+      states.splice(index, 1);
+    } else {
+      states.push(selectedItem);
+    }
+    setSelectedState(states);
+    originalUsers.forEach((user) => {
+      states.forEach((state) => {
+        if (user.active_user === state) {
+          if (!filteredUsers.includes(user)) {
+            filteredUsers.push(user);
+          }
+        }
+      });
+    });
+    setSorted(true);
+    setUsers(filteredUsers);
+    if (states.length === 0) {
+      limpiarFiltros();
+    }
   }
+}
+
 
   //Recuperar usuarios para actualizar
   async function refreshUsers() {
@@ -625,18 +698,10 @@ function Accounts(props) {
                     <td className="accounts-table-item">{itemU.email_user}</td>
                     <td className="accounts-table-item">{itemU.number_user}</td>
                     <td className="accounts-table-item">
-                      {itemU.roles.length === 1 && (
-                        <span>{itemU.roles[0][1]}</span>
-                      )}
-                      {itemU.roles.length === 0 && <span>Sin rol</span>}
-                      {itemU.roles.length > 1 && (
-                        <select className="select-role-item">
-                          {itemU.roles.map((role) => {
-                            return <option>{role[1]}</option>;
-                          })}
-                        </select>
-                      )}
-                    </td>
+  {renderRoles(itemU)}
+</td>
+
+
                     <td className="accounts-table-item">
                       {itemU.active_user === 1 ? "Activo" : "Inactivo"}
                     </td>
