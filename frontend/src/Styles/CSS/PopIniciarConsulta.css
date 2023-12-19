@@ -17,12 +17,12 @@
 .pop-iniciar-consulta-content {
   overflow: auto;
   background-color: #fefefe;
-  margin-left: 33%;
-  margin-top: 1.5rem;
+  margin-left: 28%;
+  margin-top: 1rem;
   padding: 20px;
   border: 1px solid #888;
-  width: 40%;
-  height: 93% !important;
+  width: 48%;
+  height: 91%;
 }
 
 .pop-iniciar-consulta-header {
@@ -32,12 +32,12 @@
   margin-top: 5px;
   margin-bottom: 10px;
   padding: 10px;
-  margin: 10px;
+  margin: 5px;
 }
 .pop-iniciar-consulta-body {
   display: flex;
   flex-direction: column;
-  margin-left: 1.5rem;
+  margin: 1.5rem;
 }
 
 .pop-iniciar-consulta-body textarea{
@@ -45,36 +45,41 @@
   width: 70%;
   padding: 3px;
   margin-bottom: 0.5rem;
+  border-radius: 3px;
 }
 .pop-iniciar-consulta-form textarea {
   border: 1px solid #3e3d3d;
-  width: 95%;
+  width: 100%;
   padding: 3px;
   margin-bottom: 0.5rem;
+  border-radius: 3px;
 }
 .pop-iniciar-consulta-body input{
   margin-left: 3px;
   border-bottom: 1px solid #3e3d3d;
-  width: 50%;
+  width: 88%;
   padding: 3px;
   margin-bottom: 0.5rem;
   border: none;
   outline: none; 
   border-bottom: 1px solid black;  
+  border-radius: 3px;
 }
 .pop-iniciar-consulta-form input
 {
   border: 1px solid #3e3d3d;
-  width: 88%;
+  width: 97%;
   padding: 5px;
   margin-bottom: 0.5rem;
+  border-radius: 3px;
 }
 
 
 .pop-iniciar-consulta-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 15px;
 }
 
 .pop-iniciar-consulta-footer {
@@ -82,7 +87,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1rem;
-  margin-left: 1.5rem;
+  margin-left: 1rem;
   margin-right: 25px;
 }
 /*boton de guardar consulta*/ 
@@ -112,14 +117,14 @@ align-items: center;
 }
 /*boton terminar consulta tiene que ser solid*/
 .button-terminar {
-  width: 100%;
-  max-width: 200px;
+  width: 40%;
   border-radius: 5px;
-  cursor: pointer;text-align: center;
+  cursor: pointer;
+  text-align: center;
   color: #fff;
   background-color: #327434;
   border: 1px solid #327434;
-  display: flex; 
+  display: flex;
 justify-content: center; 
 align-items: center; 
 }
@@ -131,17 +136,6 @@ align-items: center;
   transform: translateY(2px);
 }
 .close-button-sesiones {
- width: 100%;
-  max-width: 200px;
-  border-radius: 5px;
-  cursor: pointer;text-align: center;
-  color: #fff;
-  background-color: #327434;
-  border: 1px solid #327434;
-  display: flex; 
-justify-content: center; 
-align-items: center; 
-
   background-color: #f44336;
   color: white;
   border: none;
@@ -150,7 +144,7 @@ align-items: center;
   text-decoration: none;
   display: inline-block;
   font-size: 10px;
-  width: 10%;
+  width: 23%;
   cursor: pointer;
 }
 
@@ -164,4 +158,11 @@ align-items: center;
 
 .pop-iniciar-consulta-header h1 {
   text-align: center;
+}
+
+.mensaje-error
+{
+  color: red;
+   font-size:0.8rem;
+   font: bold;
 }

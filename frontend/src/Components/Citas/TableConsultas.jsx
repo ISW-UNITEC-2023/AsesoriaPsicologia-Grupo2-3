@@ -23,6 +23,7 @@ import {
 import { set } from "date-fns";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 const host = process.env.REACT_APP_API_BASE_URL;
+const montoConsultaRegex = /^\d+(\.\d{1,2})?$/;
 
 export function TableConsultas({ page }) {
   const host = process.env.REACT_APP_API_BASE_URL;
@@ -194,7 +195,7 @@ export function TableConsultas({ page }) {
     );
   };
   const handleTerminarConsulta = async () => {
-    if (montoConsulta.trim() === "") {
+    if (montoConsulta.trim() === ""|| !montoConsultaRegex.test(montoConsulta) || motivoConsulta.trim()==="" ||observaciones.trim()===""||ordenesMedicas.trim()==="") {
       setMontoError(true);
     } else {
       try {
@@ -399,8 +400,8 @@ export function TableConsultas({ page }) {
               </buttons>
             </div>
             <div className='pop-iniciar-consulta-body'>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <label htmlFor='doctorName'>Nombre del Médico:</label>
+              <div style={{ display: "flex", alignItems: "center"}}>
+                <label style={{marginRight:"10px"}} htmlFor='doctorName'>Médico:</label>
                 <Select
                   label='Nombre del médico'
                   className='select-doctor'
@@ -429,7 +430,6 @@ export function TableConsultas({ page }) {
                   value={motivoConsulta}
                   onChange={(e) => setMotivoConsulta(e.target.value)}
                 />
-
                 <label htmlFor='observaciones'>Observaciones:</label>
                 <textarea
                   id='observaciones'
@@ -453,13 +453,12 @@ export function TableConsultas({ page }) {
                   <p
                     style={{
                       color: "red",
-                      fontSize: "0.8rem",
-                      marginTop: "0.5rem",
+                      fontSize: "1rem",
                     }}
                   >
-                    El campo de Monto de Consulta no puede estar vacío
+                   Ingresa correctamente, el valor de pago.
                   </p>
-                )}
+            )}
                 <label htmlFor='ordenesMedicas'>Órdenes Médicas:</label>
                 <textarea
                   id='ordenesMedicas'
@@ -470,6 +469,18 @@ export function TableConsultas({ page }) {
                 />
               </form>
             </div>
+            {montoError && (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "1rem",
+                      marginTop: "1px",
+                      textAlign: "center",
+                    }}
+                  >
+                    Todos los campos son obligatorios
+                  </p>
+            )}
             <div className='pop-iniciar-consulta-footer'>
               <buttons
                 className='close-button-sesiones btn btn-outline-danger'
