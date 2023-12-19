@@ -39,9 +39,8 @@ function DashBoard(props) {
     fetchData();
   };
   useEffect(() => {
-    // Llama a initialList al montar el componente
     initialList();
-  }, []); // Asegúrate de pasar un array vacío como dependencia para que solo se ejecute al montar
+  }, []);
 
   async function initialList() {
     try {
@@ -60,7 +59,6 @@ function DashBoard(props) {
 
       setNombre(arregloMandar);
     } catch (error) {
-      // Manejo de errores si es necesario
       console.error("Error al obtener pacientes:", error);
     }
   }
@@ -71,7 +69,6 @@ function DashBoard(props) {
 
   const handleSelectChange = (e) => {
     console.log(e);
-
     setSelectedOption(true);
     setShowButtons(true);
     setSelectedName(e.target);
