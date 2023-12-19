@@ -48,14 +48,19 @@ function DashBoard(props) {
         props.userData.user_data.id_clinic
       );
 
-      const arregloMandar = arregloUsuarios.map((usuario) => ({
-        id_file: usuario.id_file,
-        nombre: `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`,
-        email: usuario.email,
-        id_account: usuario.id_file,
-        creationDate: usuario.creation_date,
-        id_clinic: usuario.id_clinic,
-      }));
+      //      const arregloMandar = arregloUsuarios.map((usuario) => ({
+
+      arregloUsuarios.fileInfo.map((usuario) => {
+        let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
+        return {
+          id_file: usuario.id_file,
+          nombre: nombre_user,
+          email: usuario.email,
+          id_account: usuario.id_file,
+          creationDate: usuario.creation_date,
+          id_clinic: usuario.id_clinic,
+        };
+      });
 
       setNombre(arregloMandar);
     } catch (error) {

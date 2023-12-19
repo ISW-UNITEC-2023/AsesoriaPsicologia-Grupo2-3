@@ -3,22 +3,17 @@ const multer = require("multer");
 const upload = multer();
 
 async function uploadFile(req, res) {
-  const nombreArchivo = req.file.originalname;
-  const tipoArchivo = req.file.mimetype;
-  const tamañoArchivo = req.file.size;
-  const contenidoArchivo = req.file.buffer;
-  const id_file = req.body.id_file;
-  const user_creator = req.body.user_creator;
+  const data = {
+    nombreArchivo: req.body.document_name,
+    tipoArchivo: req.body.document_type,
+    tamañoArchivo: req.body.document_size,
+    contenidoArchivo: req.file.buffer,
+    id_file: req.body.id_file,
+    user_creator: req.body.user_creator,
+  };
 
   try {
-    await documentsServices.uploadFile(
-      nombreArchivo,
-      tipoArchivo,
-      tamañoArchivo,
-      contenidoArchivo,
-      id_file,
-      user_creator
-    );
+    await documentsServices.uploadFile(data);
     res.send({ message: "Se agrego exitosamente!" });
   } catch (error) {
     console.error(error);

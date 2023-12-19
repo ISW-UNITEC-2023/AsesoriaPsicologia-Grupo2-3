@@ -146,10 +146,9 @@ async function assignRole(user) {
     method: "POST",
     url: host + "/users/assignRole",
     data: {
-      id_user: user.id,
+      id_user: user.id_user,
       id_role: user.role,
-      creator: user.editor,
-      editor: user.creator,
+      creator: user.creator,
     },
   };
   const response = await axios.request(options);
@@ -245,18 +244,18 @@ export async function getVerify(id) {
 
 async function getUsersByClinic(clinic) {
   try {
-      const options = {
-          method: "GET",
-          url: `${host}/users/getUserByclinic`,
-          params: { clinic: clinic },
-      };
-      const response = await axios.request(options);
-      return response.data;
+    const options = {
+      method: "GET",
+      url: `${host}/users/getUserByclinic`,
+      params: { clinic: clinic },
+    };
+    const response = await axios.request(options);
+    return response.data;
   } catch (error) {
-      console.error("Error fetching users by clinic:", error);
-      throw error; }
+    console.error("Error fetching users by clinic:", error);
+    throw error;
+  }
 }
-
 
 export default {
   getUsers,
@@ -273,5 +272,4 @@ export default {
   postLogin,
   getUserById,
   getUsersByClinic,
-
 };

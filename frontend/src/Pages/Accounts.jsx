@@ -2,13 +2,12 @@
 import Navbar from "../Components/Navbar";
 import PopUpCrearUser from "../Components/PopUp_CrearUser";
 import PopUpEditUser from "../Components/PopUp_EditarUser";
-import EmailPopUp from "../Components/emailPopUp";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import PopUpAdminRole from "../Components/PopUp_AdminRole";
 
 //Functions
 import { useEffect, useState } from "react";
 import user_services from "../Utilities/user-services";
-import userServices from "../Utilities/user-services";
 import role_services from "../Utilities/roles-services";
 
 //Styles and Icons
@@ -30,8 +29,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Accounts(props) {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null);
-
   const [roles, setRoles] = useState([]);
   const [originalUsers, setOriginalUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,7 +39,7 @@ function Accounts(props) {
   const [selectedState, setSelectedState] = useState([]);
   const [openCreate, setOpenCreate] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const accountsPerPage = 12;
+  const accountsPerPage = 15;
   const [openEdit, setOpenEdit] = useState({
     open: 0,
     userInfo: null,
@@ -106,7 +103,25 @@ function Accounts(props) {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`sort-tooltip-${type}`}>
+                Ordenar por{" "}
+                {type === "id_user"
+                  ? "ID"
+                  : type === "name_user"
+                  ? "Nombre"
+                  : type === "email_user"
+                  ? "Correo"
+                  : type === "number_user"
+                  ? "Número de teléfono"
+                  : "Fecha de creación"}
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          </OverlayTrigger>
         </button>
         <div
           id="accounts_dropdown_menu"
@@ -150,7 +165,17 @@ function Accounts(props) {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`filter-tooltip-${type}`}>
+                Filtrar por{" "}
+                {type === "roles" ? "Rol" : type === "state" ? "Estado" : ""}
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          </OverlayTrigger>
         </button>
         <div
           id="accounts_dropdown_menu"
@@ -243,182 +268,35 @@ function Accounts(props) {
     );
   };
 
-  const renderRoles = (user) => {
-    const uniqueRoles = [...new Set(user.roles.map((role) => role[1]))];
-  
-    if (uniqueRoles.length === 1) {
-      return <span>{uniqueRoles[0]}</span>;
-    } else if (uniqueRoles.length === 0) {
-      return <span>Sin rol</span>;
-    } else {
-      return (
-        <select className="select-role-item">
-          {uniqueRoles.map((role) => (
-            <option key={role}>{role}</option>
-          ))}
-        </select>
-      );
-    }
-  };
-  
-  const SearchDropdown = ({ matchingNames }) => {
-    return (
-      <div
-        id="search-dropdown"
-        className="dropdown-menu show mt-2.5"
-        aria-labelledby="search_dropdown_menu"
-        style={{ maxHeight: "200px", overflowY: "auto" }}
-      >
-        {matchingNames.length > 0 ? (
-          matchingNames.map((name) => (
-            <button
-              id={`search_dropdown_menu_name_${name}`}
-              className="dropdown-item"
-              type="button"
-              key={name}
-            >
-              {name}
-            </button>
-          ))
-        ) : (
-          <button
-            id={`search_dropdown_menu_name_no-name`}
-            className="dropdown-item"
-            type="button"
-            disabled
-          >
-            No se encontraron resultados
-          </button>
-        )}
-      </div>
-    );
-  };
-
   //Formato de fecha
   const formatDate = (announceDate) => {
-      const date = new Date(announceDate);
-      const options = {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-      };
-      return date.toLocaleString("es-ES", options);
+    const date = new Date(announceDate);
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return date.toLocaleString("es-ES", options);
   };
 
   //Fetch de Usuarios
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const fetchedUsers = await user_services.getUsers();
-  //     const fetchedRoles = await user_services.getAllUsersRoles();
-
-  //     fetchedUsers.forEach((user) => {
-  //       user.roles = [];
-  //       fetchedRoles.forEach((role) => {
-  //         if (user.id_user === role.id_user) {
-  //           user.roles.push([role.id_role, role.name_role]);
-  //         }
-  //       });
-  //     });
-  //     setUsers(fetchedUsers);
-  //     setOriginalUsers(fetchedUsers);
-  //   };
-  //   fetchData().then(r => r);
-  // }, []);
-//**************************** */
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const clinicId = props.userData.user_data.id_clinic; 
-      const result = await userServices.getUsersByClinic(clinicId);
-      const fetchedRoles = await userServices.getAllUsersRoles();
-      console.log('Users:', result);
-      console.log('Roles:', fetchedRoles);
-      // Create a map to track users by their IDs
-      const userMap = new Map();
-
-      // Iterate over the result array
-      result.forEach((user) => {
-        // If the user ID is not in the map, add it with an empty roles array
-        if (!userMap.has(user.id_user)) {
-          userMap.set(user.id_user, { ...user, roles: [] });
-        }
-
-        // Add roles to the user in the map
-        fetchedRoles.forEach((role) => {
-          if (user.id_user === role.id_user) {
-            userMap.get(user.id_user).roles.push([role.id_role, role.name_role]);
-          }
-        });
-      });
-
-      // Convert the map values (users) back to an array
-      const uniqueUsers = Array.from(userMap.values());
-
-      setUsers(uniqueUsers);
-      setOriginalUsers(uniqueUsers);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  fetchData();
-}, []);
-
-//************************************* */
-  //Fetch de Roles
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const fetchedRoles = await role_services.getAllRoles();
-  //     setRoles(fetchedRoles);
-  //   };
-  //   fetchData().then(r => r);
-  // }, []);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedRoles = await role_services.getAllRoles();
-        setRoles(fetchedRoles);
-      } catch (error) {
-        console.error("Error fetching roles:", error);
-      }
-    };
-
-    fetchData();
+    refreshUsers();
   }, []);
+
   //Filtrado de Nombre
   useEffect(() => {
-    // Filter names that match the search term
-    const names = users
-      .filter((user) =>
-        user.name_user.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .map((user) => user.name_user);
-
-    setMatchingNames(names);
+    // filtrarUsuarios(users, searchTerm);
   }, [searchTerm, users]);
 
-  //Dropdown search
-  useEffect(() => {
-    const handleInputFocus = () => {
-      setDisplayResults(true);
-    };
-
-    const handleInputBlur = () => {
-      setDisplayResults(false);
-    };
-
-    const inputElement = document.querySelector(".search-user-box input");
-
-    inputElement.addEventListener("focus", handleInputFocus);
-    inputElement.addEventListener("blur", handleInputBlur);
-
-    return () => {
-      inputElement.removeEventListener("focus", handleInputFocus);
-      inputElement.removeEventListener("blur", handleInputBlur);
-    };
-  }, []);
+  const filtrarUsuarios = (usersCol, term) => {
+    const filteredUsersCol = usersCol.filter((data) =>
+      data.name_user.toLowerCase().includes(term.toLowerCase())
+    );
+    setUsers(filteredUsersCol);
+  };
 
   //Limpiar filtros
   function limpiarFiltros() {
@@ -431,91 +309,95 @@ useEffect(() => {
   }
 
   function filterSelectedItem(e) {
-  let selectedItem = e.target.value;
-  let filteredUsers = [];
-  if (e.target.name === "roles") {
-    const newRoles = [...selectedRoles];
-    if (selectedRoles.includes(selectedItem)) {
-      const index = newRoles.indexOf(selectedItem);
-      newRoles.splice(index, 1);
-    } else {
-      if (selectedItem === "Sin rol") {
-        newRoles.push("Sin rol");
+    let selectedItem = e.target.value;
+    let filteredUsers = [];
+    if (e.target.name === "roles") {
+      const newRoles = [...selectedRoles];
+      if (selectedRoles.includes(selectedItem)) {
+        const index = newRoles.indexOf(selectedItem);
+        newRoles.splice(index, 1);
+      } else {
+        if (selectedItem === "Sin rol") {
+          newRoles.push("Sin rol");
+        }
+        if (!newRoles.includes(selectedItem)) {
+          newRoles.push(selectedItem);
+        }
       }
-      if (!newRoles.includes(selectedItem)) {
-        newRoles.push(selectedItem);
-      }
-    }
-    setSelectedRoles(newRoles);
-    originalUsers.forEach((user) => {
-      newRoles.forEach((role) => {
-        user.roles.map((item) => {
-          if (item.includes(role)) {
+      setSelectedRoles(newRoles);
+      originalUsers.filter((user) => {
+        newRoles.forEach((role) => {
+          user.roles.map((item) => {
+            if (item.includes(role)) {
+              if (!filteredUsers.includes(user)) {
+                filteredUsers.push(user);
+              }
+            }
+          });
+          if (user.roles.length === 0 && role === "Sin rol") {
             if (!filteredUsers.includes(user)) {
               filteredUsers.push(user);
             }
           }
         });
-        if (user.roles.length === 0 && role === "Sin rol") {
-          if (!filteredUsers.includes(user)) {
-            filteredUsers.push(user);
-          }
-        }
       });
-    });
-    setSorted(true);
-    setUsers(filteredUsers);
-    if (newRoles.length === 0) {
-      limpiarFiltros();
-    }
-  } else if (e.target.name === "state") {
-    const states = [...selectedState];
-    selectedItem === "1" ? (selectedItem = 1) : (selectedItem = 0);
-    if (selectedState.includes(selectedItem)) {
-      const index = states.indexOf(selectedItem);
-      states.splice(index, 1);
-    } else {
-      states.push(selectedItem);
-    }
-    setSelectedState(states);
-    originalUsers.forEach((user) => {
-      states.forEach((state) => {
-        if (user.active_user === state) {
-          if (!filteredUsers.includes(user)) {
-            filteredUsers.push(user);
-          }
-        }
-      });
-    });
-    setSorted(true);
-    setUsers(filteredUsers);
-    if (states.length === 0) {
-      limpiarFiltros();
-    }
-  }
-}
-
-
-  //Recuperar usuarios para actualizar
-  async function refreshUsers() {
-    const fetchData = async () => {
-      const fetchedUsers = await user_services.getUsers();
-      const fetchedRoles = await user_services.getAllUsersRoles();
-
-      fetchedUsers.forEach((user) => {
-        user.roles = [];
-        fetchedRoles.forEach((role) => {
-          if (user.id_user === role.id_user) {
-            user.roles.push([role.id_role, role.name_role]);
+      setSorted(true);
+      setUsers(filteredUsers);
+      if (newRoles.length === 0) {
+        limpiarFiltros();
+      }
+    } else if (e.target.name === "state") {
+      const states = [...selectedState];
+      selectedItem === "1" ? (selectedItem = 1) : (selectedItem = 0);
+      if (selectedState.includes(selectedItem)) {
+        const index = states.indexOf(selectedItem);
+        states.splice(index, 1);
+      } else {
+        states.push(selectedItem);
+      }
+      setSelectedState(states);
+      originalUsers.filter((user) => {
+        states.forEach((state) => {
+          if (user.active_user === state) {
+            if (!filteredUsers.includes(user)) {
+              filteredUsers.push(user);
+            }
           }
         });
       });
-      
-      setUsers(fetchedUsers);
-      setOriginalUsers(fetchedUsers);
-    };
-    await fetchData();
+      setSorted(true);
+      setUsers(filteredUsers);
+      if (states.length === 0) {
+        limpiarFiltros();
+      }
     }
+  }
+
+  //Recuperar usuarios para actualizar
+  async function refreshUsers() {
+    const fetchedUsers = await user_services.getUsers();
+    const fetchedRoles = await user_services.getAllUsersRoles();
+
+    fetchedUsers.forEach((user) => {
+      user.roles = [];
+      fetchedRoles.forEach((role) => {
+        if (user.id_user === role.id_user) {
+          user.roles.push([role.id_role, role.name_role]);
+        }
+      });
+    });
+
+    setUsers(fetchedUsers);
+    setOriginalUsers(fetchedUsers);
+
+    const roles = await role_services.getAllRoles();
+    const filteredRoles = roles.filter((role) => {
+      return fetchedRoles.some(
+        (fetchedRole) => fetchedRole.id_role === role.id_role
+      );
+    });
+    setRoles(filteredRoles);
+  }
 
   //Paginación
   const getCurrentAccounts = () => {
@@ -534,7 +416,7 @@ useEffect(() => {
       <div className="account-box">
         <div className="account-header">
           <span className="account-title">Administración de Cuentas</span>
-          <div className="search-user-box">
+          {/* <div className="search-user-box">
             <FontAwesomeIcon icon={faSearch} className="iconSearch-box" />
             <input
               type="text"
@@ -542,26 +424,26 @@ useEffect(() => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            {displayResults && <SearchDropdown matchingNames={matchingNames} />}
-          </div>
-          <div
-            className="remove-filter-button"
-            onClick={() => {
-              limpiarFiltros();
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
+          </div> */}
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id="limpiar-tooltip">
+                {sorted ? "Limpiar filtros" : "No se han aplicado filtros"}
+              </Tooltip>
+            }
           >
-            <FontAwesomeIcon icon={faFilterCircleXmark} />
-            {isHovering && sorted && (
-              <span className="limpiar-filtro-div">Limpiar filtros</span>
-            )}
-            {isHovering && !sorted && (
-              <span className="limpiar-filtro-div">
-                No se han aplicado filtros
-              </span>
-            )}
-          </div>
+            <div
+              className="remove-filter-button"
+              onClick={() => {
+                limpiarFiltros();
+              }}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
+              <FontAwesomeIcon icon={faFilterCircleXmark} />
+            </div>
+          </OverlayTrigger>
           <button
             className="crear-cuenta-button"
             onClick={() => {
@@ -573,38 +455,31 @@ useEffect(() => {
           <PopUpCrearUser
             isOpen={openCreate}
             onClose={() => {
-              setOpenCreate(0);
+              refreshUsers(), setOpenCreate(0);
             }}
-            refreshUsers={() => {
-              refreshUsers();
-            }}
+            creator={props.userData.user_data.id_user}
           />
           {openEdit.open === 1 && (
             <PopUpEditUser
               isOpen={openEdit.open}
               onClose={() => {
                 setOpenEdit({ open: 0, userInfo: null });
+                refreshUsers();
               }}
               user={openEdit.userInfo}
+              editor={props.userData.user_data.id_user}
             />
           )}
-          {/*openEmail.open === 1 && (
-            <EmailPopUp
-              isOpen={openEmail.open}
-              onClose={() => {
-                setOpenEmail({ open: 0, userInfo: null });
-              }}
-              user={openEmail.userInfo}
-            />
-            )*/}
           {openRole.open === 1 && (
             <PopUpAdminRole
               isOpen={openRole.open}
               onClose={() => {
+                refreshUsers();
                 setOpenRole({ open: 0, userInfo: null });
               }}
               user={openRole.userInfo}
               roles={roles}
+              creator={props.userData.user_data.id_user}
             />
           )}
         </div>
@@ -629,7 +504,7 @@ useEffect(() => {
                   <CustomBtFilter type="email_user" />
                   Correo
                 </div>
-            </th>
+              </th>
               <th>
                 <div className="th-div-account">
                   <CustomBtFilter type="number_user" />
@@ -662,46 +537,62 @@ useEffect(() => {
                 return (
                   <tr className="row-table-accounts" key={itemU.id_user}>
                     <td className="accounts-table-obj">
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        className="row-edit-user"
-                        onClick={() => {
-                          setOpenEdit({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      />
-                      {/* <FontAwesomeIcon
-                        icon={faEnvelope}
-                        className="row-send-email"
-                        onClick={() => {
-                          setOpenEmail({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      /> */}
-                      <FontAwesomeIcon
-                        icon={faUserGear}
-                        className="row-user-role"
-                        onClick={() => {
-                          setOpenRole({
-                            open: 1,
-                            userInfo: itemU,
-                          });
-                        }}
-                      />
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <Tooltip id={`edit-tooltip-${itemU.id_user}`}>
+                            Editar Usuario
+                          </Tooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          className="row-edit-user"
+                          onClick={() => {
+                            setOpenEdit({
+                              open: 1,
+                              userInfo: itemU,
+                            });
+                          }}
+                        />
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={
+                          <Tooltip id={`role-tooltip-${itemU.id_user}`}>
+                            Asignar Rol
+                          </Tooltip>
+                        }
+                      >
+                        <FontAwesomeIcon
+                          icon={faUserGear}
+                          className="row-user-role"
+                          onClick={() => {
+                            setOpenRole({
+                              open: 1,
+                              userInfo: itemU,
+                            });
+                          }}
+                        />
+                      </OverlayTrigger>
                     </td>
                     <td className="accounts-table-id">{itemU.id_user}</td>
                     <td className="accounts-table-item">{itemU.name_user}</td>
                     <td className="accounts-table-item">{itemU.email_user}</td>
                     <td className="accounts-table-item">{itemU.number_user}</td>
                     <td className="accounts-table-item">
-  {renderRoles(itemU)}
-</td>
-
-
+                      {itemU.roles.length === 1 && (
+                        <span>{itemU.roles[0][1]}</span>
+                      )}
+                      {itemU.roles.length === 0 && <span>Sin rol</span>}
+                      {itemU.roles.length > 1 && (
+                        <select className="select-role-item">
+                          {itemU.roles.map((role) => {
+                            return <option>{role[1]}</option>;
+                          })}
+                        </select>
+                      )}
+                    </td>
                     <td className="accounts-table-item">
                       {itemU.active_user === 1 ? "Activo" : "Inactivo"}
                     </td>

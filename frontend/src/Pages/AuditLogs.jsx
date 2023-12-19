@@ -7,6 +7,8 @@ import {
   faArrowLeft,
   faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../Styles/CSS/AuditLogs.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -109,7 +111,18 @@ function AuditLogs(props) {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`tooltip-${type}`}>
+                {type === "id_log" && "Ordenar por ID"}
+                {type === "user_log" && "Ordenar por Usuario"}
+                {type === "creation_date" && "Ordenar por Fecha"}
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          </OverlayTrigger>
         </button>
         <div className="dropdown-menu" aria-labelledby={`dropdownMenu${type}`}>
           <button
@@ -146,7 +159,17 @@ function AuditLogs(props) {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`tooltip-${type}`}>
+                {type === "action" && "Filtrar por Acción"}
+                {type === "table" && "Filtrar por Tabla"}
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={faFilter} className="filter-icon" />
+          </OverlayTrigger>
         </button>
         <div className="dropdown-menu" aria-labelledby={`dropdownMenu${type}`}>
           {type === "action" ? (
@@ -371,24 +394,25 @@ function AuditLogs(props) {
       <div className="historial-box">
         <div className="historial-header">
           <span className="historial-title">Historial Administrativo</span>
-          <div
-            className="remove-filter-historial"
-            onClick={() => {
-              limpiarFiltros();
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
+          <OverlayTrigger
+            placement="bottom"
+            overlay={
+              <Tooltip id={`tooltip-limpiar`}>
+                {sorted ? "Limpiar filtros" : "No se han aplicado filtros"}
+              </Tooltip>
+            }
           >
-            <FontAwesomeIcon icon={faFilterCircleXmark} />
-            {isHovering && sorted && (
-              <span className="limpiar-filtro-div">Limpiar filtros</span>
-            )}
-            {isHovering && !sorted && (
-              <span className="limpiar-filtro-div">
-                No se han aplicado filtros
-              </span>
-            )}
-          </div>
+            <div
+              className="remove-filter-historial"
+              onClick={() => {
+                limpiarFiltros();
+              }}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
+              <FontAwesomeIcon icon={faFilterCircleXmark} />
+            </div>
+          </OverlayTrigger>
           <button
             className="boton-descargar-log"
             onClick={() => downloadLogs("pdf")}
@@ -407,7 +431,7 @@ function AuditLogs(props) {
             <tr>
               <th>
                 <div className="th-div-historial">
-                  <CustomBtFilter type="id_user" />
+                  <CustomBtFilter type="id_log" />
                   Id
                 </div>
               </th>

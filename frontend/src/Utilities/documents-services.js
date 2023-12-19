@@ -50,13 +50,9 @@ async function uploadFile(file) {
         "Content-Type": "multipart/form-data",
       },
     });
-
     return response.data;
   } catch (error) {
-    console.error(
-      "Error al subir el archivo:",
-      error.response ? error.response.data : error.message
-    );
+    console.error("Error al subir el archivo:", error);
     throw error;
   }
 }

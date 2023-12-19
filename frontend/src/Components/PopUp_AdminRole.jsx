@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import userServices from "../Utilities/user-services";
 
-const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
+const PopUpAdminRole = ({ isOpen, onClose, user, roles, creator }) => {
   const overlayStyle = {
     opacity: isOpen ? 1 : 0,
     pointerEvents: isOpen ? "auto" : "none",
@@ -122,11 +122,11 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
     });
     //Asignar y Remover Roles
     for (let i = 0; i < toAdd.length; i++) {
+      console.log(creator);
       await userServices.assignRole({
-        id: user.id_user,
+        id_user: user.id_user,
         role: toAdd[i].id_role,
-        creator:"13",
-        editor:"13"
+        creator: creator,
       });
     }
     for (let i = 0; i < toRemove.length; i++) {
@@ -139,22 +139,22 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
   }
 
   return (
-    <div className="popup-overlay-ar" style={overlayStyle}>
-      <div className="popup-ar" style={popupStyle}>
-        <div className="form-header-ar">
-          <h2 className="form-title-ar">Administración de Roles</h2>
+    <div className='popup-overlay-ar' style={overlayStyle}>
+      <div className='popup-ar' style={popupStyle}>
+        <div className='form-header-ar'>
+          <h2 className='form-title-ar'>Administración de Roles</h2>
           <FontAwesomeIcon
-            className="close-icon-ar"
+            className='close-icon-ar'
             icon={faRightFromBracket}
             onClick={onClose}
           />
         </div>
-        <div className="form-body-ar">
-          <div className="row-rol-usuario">
-            <label className="label-select-box">Roles de Usuario</label>
-            <div className="row-select-button">
+        <div className='form-body-ar'>
+          <div className='row-rol-usuario'>
+            <label className='label-select-box'>Roles de Usuario</label>
+            <div className='row-select-button'>
               <select
-                className="select-box-rol"
+                className='select-box-rol'
                 value={removedRoles.current}
                 onChange={(e) => {
                   setRemovedRoles({
@@ -175,28 +175,28 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
               </select>
               {defaultData.userRoles.length > 0 ? (
                 <button
-                  className="eliminar-rol-user"
+                  className='eliminar-rol-user'
                   onClick={() => {
                     handleRemoveRole();
                   }}
                 >
                   Eliminar Rol
-                  <FontAwesomeIcon icon={faTrash} className="admin-rol-icon" />
+                  <FontAwesomeIcon icon={faTrash} className='admin-rol-icon' />
                 </button>
               ) : (
-                <button className="eliminar-rol-user" disabled>
+                <button className='eliminar-rol-user' disabled>
                   Eliminar Rol
-                  <FontAwesomeIcon icon={faTrash} className="admin-rol-icon" />
+                  <FontAwesomeIcon icon={faTrash} className='admin-rol-icon' />
                 </button>
               )}
             </div>
           </div>
-          <div className="row-rol-disponibles">
-            <label className="label-select-box">Roles disponibles</label>
-            <div className="row-select-button">
+          <div className='row-rol-disponibles'>
+            <label className='label-select-box'>Roles disponibles</label>
+            <div className='row-select-button'>
               <select
                 value={newRoles.current}
-                className="select-box-rol"
+                className='select-box-rol'
                 onChange={(e) => {
                   setNewRoles({
                     ...newRoles,
@@ -217,23 +217,23 @@ const PopUpAdminRole = ({ isOpen, onClose, user, roles }) => {
                 )}
               </select>
               {defaultData.availableRoles.length > 0 ? (
-                <button className="agregar-rol-user" onClick={handleAddRole}>
+                <button className='agregar-rol-user' onClick={handleAddRole}>
                   Agregar Rol
-                  <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
+                  <FontAwesomeIcon icon={faPlus} className='admin-rol-icon' />
                 </button>
               ) : (
-                <button className="agregar-rol-user" disabled>
+                <button className='agregar-rol-user' disabled>
                   Agregar Rol
-                  <FontAwesomeIcon icon={faPlus} className="admin-rol-icon" />
+                  <FontAwesomeIcon icon={faPlus} className='admin-rol-icon' />
                 </button>
               )}
             </div>
           </div>
-          <div className="form-buttons-ar">
-            <button className="form-cancel-ar" onClick={onClose}>
+          <div className='form-buttons-ar'>
+            <button className='form-cancel-ar' onClick={onClose}>
               Cancelar
             </button>
-            <button className="form-guardar-ar" onClick={guardarRoles}>
+            <button className='form-guardar-ar' onClick={guardarRoles}>
               Guardar
             </button>
           </div>
