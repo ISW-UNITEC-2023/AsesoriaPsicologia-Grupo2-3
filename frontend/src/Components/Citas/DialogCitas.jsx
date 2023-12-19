@@ -24,6 +24,7 @@ export default function DialogCitas({
   open,
   updateOpen,
 }) {
+  const host = process.env.REACT_APP_API_BASE_URL;
   const [nombreDoctorN, setNombreDoctorN] = useState(nombreDoctor);
   const [fechaN, setFechaN] = useState(fecha);
   const [horaN, setHoraN] = useState(hora);
@@ -32,12 +33,12 @@ export default function DialogCitas({
     data: fetchedUsers,
     error: usersError,
     isLoading: usersLoading,
-  } = useSWR(host + "/users/viewUsers", user_services.getUsers);
+  } = useSWR(`${host}/users/viewUsers`, user_services.getUsers);
   const {
     data: fetchedRoles,
     error: rolesError,
     isLoading: rolesLoading,
-  } = useSWR(host + "/roles/viewAll", user_services.getAllUsersRoles);
+  } = useSWR(`${host}/roles/viewAll`, user_services.getAllUsersRoles);
 
   useEffect(() => {
     setNombreDoctorN(nombreDoctor);
