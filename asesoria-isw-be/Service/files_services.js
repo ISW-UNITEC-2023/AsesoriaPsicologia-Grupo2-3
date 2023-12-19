@@ -21,7 +21,8 @@ async function createFile(file) {
     phone_number: file.phone_number,
     address: file.address,
     civil_status: file.civil_status,
-    medical_history: file.medical_history,
+    observation: file.observation,
+    identidad: file.identidad,
     substance_usage: file.substance_usage,
     id_clinic: file.id_clinic,
     active: file.active,
@@ -84,6 +85,31 @@ async function updateAddress(file) {
   });
 }
 
+async function updateEmail(file) {
+  return knex("files").where("id_file", file.id).update({
+    email: file.email,
+    user_editor: file.editor,
+    last_modification: new Date(),
+  });
+}
+
+
+async function updatePhoneNumber(file) {
+  return knex("files").where("id_file", file.id).update({
+    phone_number: file.phone_number,
+    user_editor: file.editor,
+    last_modification: new Date(),
+  });
+}
+
+async function updateIdentidad(file) {
+  return knex("files").where("id_file", file.id).update({
+    identidad: file.identidad,
+    user_editor: file.editor,
+    last_modification: new Date(),
+  });
+}
+
 async function updateCivilStatus(file) {
   return knex("files").where("id_file", file.id).update({
     civil_status: file.civil_status,
@@ -92,9 +118,9 @@ async function updateCivilStatus(file) {
   });
 }
 
-async function updateMedicalHistory(file) {
+async function updateObservation(file) {
   return knex("files").where("id_file", file.id).update({
-    medical_history: file.medical_history,
+    observation: file.observation,
     user_editor: file.editor,
     last_modification: new Date(),
   });
@@ -175,8 +201,11 @@ module.exports = {
   createFile,
   updateBirthday,
   updateAddress,
+  updateEmail,
+  updatePhoneNumber,
+  updateIdentidad,
   updateCivilStatus,
-  updateMedicalHistory,
+  updateObservation,
   updateSubstanceUsage,
   updateFirstImpressions,
   updateTreatment,

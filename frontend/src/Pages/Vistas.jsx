@@ -1,44 +1,87 @@
 import { Col, Container, Row } from "react-bootstrap";
 import "../Styles/CSS/Vistas.css";
 import tempImage from "../Styles/Images/Encabezado.png";
-import { useState } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { useEffect, useState } from "react";
+import html2pdf from "html2pdf.js";
 import { Input } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import { getFileById } from "../Utilities/files-services";
 
 function Vistas() {
+  const navigate = useNavigate();
+  const { id_file, user_data } = useLocation().state;
+  const containerRef = useRef(null);
   const [patientInfo, setPatientInfo] = useState({
     nombre: "",
     fechaNacimiento: "",
+    correo: "",
     identidad: "",
+    numeroTelefono: "",
     direccion: "",
     estadoCivil: "",
+    motivo: "",
+    observaciones: "",
+    ordenesMedicas: "",
   });
 
-  const navigate = useNavigate();
-  const [reasonForConsultation, setReasonForConsultation] = useState("");
-  const [observations, setObservations] = useState("");
-  const [consultationAmount, setConsultationAmount] = useState("");
-  const [medicalOrders, setMedicalOrders] = useState("");
+  useEffect(() => {
+    try{
+        getFileById(id_file).then((response) => {
+        const data = response.fileInfo[0];
+
+        const nombreCompleto = `${data.first_name} ${data.middle_name} ${data.last_name} ${data.second_surname}`;
+        setPatientInfo({
+          nombre: nombreCompleto,
+          fechaNacimiento: data.birthdate,
+          correo: data.email,
+          identidad: data.identidad,
+          numeroTelefono: data.phone_number,
+          direccion: data.address,
+          estadoCivil: data.civil_status,
+          observaciones: data.observation,
+          ordenesMedicas: data.substance_usage
+        });
+      });
+    }
+    catch(error){
+      console.log(error);
+    }
+  }, [id_file]);
 
   const downloadPDF = () => {
-    const input = document.getElementById("pdf-container");
+    if(!containerRef.current){
+      return;
+    }
 
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("Expediente.pdf");
+    const pdfOptions = {
+      margin: 10,
+      filename: "Expediente.pdf",
+      image: { type: "png", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+  
+    const content = containerRef.current;
+  
+    html2pdf().from(content).set(pdfOptions).outputPdf((pdf) => {
+      pdf.save();
     });
+  }
+
+  const formatDate = (announceDate) => {
+    const date = new Date(announceDate);
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleString("es-ES", options);
   };
 
   return (
     <div className="page-container">
-      <Container id="pdf-container">
+      <Container id="pdf-container" ref={containerRef}>
         <img src={tempImage} alt="Encabezado" className="encabezado-image" />
         <div className="Titulo">
           <h1>Información del Paciente</h1>
@@ -67,7 +110,19 @@ function Vistas() {
                       type="text"
                       className="form-control"
                       placeholder="Fecha de Nacimiento"
-                      value={patientInfo.fechaNacimiento}
+                      value={formatDate(patientInfo.fechaNacimiento)}
+                      readOnly
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="left-column">Correo Eléctronico:</td>
+                  <td className="right-column">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Correo Eléctronico"
+                      value={patientInfo.correo}
                       readOnly
                     />
                   </td>
@@ -80,6 +135,18 @@ function Vistas() {
                       className="form-control"
                       placeholder="Identidad"
                       value={patientInfo.identidad}
+                      readOnly
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="left-column">Número de Teléfono:</td>
+                  <td className="right-column">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Número de Teléfono"
+                      value={patientInfo.numeroTelefono}
                       readOnly
                     />
                   </td>
@@ -114,51 +181,14 @@ function Vistas() {
         </Row>
         <Row>
           <Col md={12}>
-            <h3 className="title-margin">
-              Motivo de Consulta:{" "}
-              {
-                <Input
-                  type="text"
-                  variant="standard"
-                  color="blue-gray"
-                  placeholder="Motivo de Consulta"
-                  value={reasonForConsultation}
-                  onChange={(e) => setReasonForConsultation(e.target.value)}
-                />
-              }
-            </h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
             <p className="paragraph-margin">
               Observaciones:{" "}
               {
-                <Input
-                  className="h-12"
-                  type="text"
-                  variant="standard"
-                  color="blue-gray"
+                <textarea
+                className="form-ordenes-medicas"
                   placeholder="Observaciones"
-                  value={observations}
-                  onChange={(e) => setObservations(e.target.value)}
-                />
-              }
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className="paragraph-margin">
-              Monto de Consulta:{" "}
-              {
-                <Input
-                  type="number"
-                  variant="standard"
-                  color="blue-gray"
-                  placeholder="Monto de Consulta"
-                  value={consultationAmount}
-                  onChange={(e) => setConsultationAmount(e.target.value)}
+                  value={patientInfo.observaciones}
+                  onChange={(e) => setPatientInfo({...patientInfo, observaciones: e.target.value})}
                 />
               }
             </p>
@@ -175,8 +205,8 @@ function Vistas() {
                   variant="standard"
                   color="blue-gray"
                   placeholder="Órdenes Médicas"
-                  value={medicalOrders}
-                  onChange={(e) => setMedicalOrders(e.target.value)}
+                  value={patientInfo.ordenesMedicas}
+                  onChange={(e) => setPatientInfo({...patientInfo, ordenesMedicas: e.target.value})}
                 />
               }
             </p>

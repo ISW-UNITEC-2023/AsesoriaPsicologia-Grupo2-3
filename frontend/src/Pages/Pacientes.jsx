@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import EditarUser from "../Components/PopUp_EditarUser";
 import CrearUser from "../Components/PopUp_CrearUser";
+// import CrearPaciente from "../Components/CrearPaciente/PopUp_CrearPaciente";
+import { formatDate } from "../Utilities/validator"
+
 import NavigationB from "../Components/Navbar";
 import PacientesLayout from "../Layout/PacientesLayout";
 import axios from "axios";
@@ -14,11 +17,14 @@ import useSWR from "swr";
 import user_services from "../Utilities/user-services";
 import { Option, Select, Spinner } from "@material-tailwind/react";
 import Dropdown from "react-bootstrap/Dropdown";
+import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
+import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
 
 function PacientesForm(props) {
   const [nombres, setNombres] = useState([]);
   const [showCrearPopup, setShowCrearPopup] = useState(false);
   const [showEditarPopup, setShowEditarPopup] = useState(false);
+  const [showCrearPacientePopup, setShowCrearPacientePopup] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [montoConsulta, setMontoConsulta] = useState("");
@@ -44,8 +50,55 @@ function PacientesForm(props) {
     setShowModal(false);
   };
 
+  const [displayActionPopUp, setDisplayActionPopUp] = useState(false);
+  const [displayConfirmPopUp, setDisplayConfirmPopUp] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState({
+    nombre: "",
+    fechaNacimiento: "",
+    numeroIdentidad: "",
+    direccion: "",
+    estadoCivil: "",
+  });
+
+  const handleActionConfirm = () => {
+    setDisplayActionPopUp(false);
+    setDisplayConfirmPopUp(false);
+  };
+
+  const handleShowAgregarPacientePopUp = (patient) => {
+    setSelectedPatient(patient);
+    setShowCrearPacientePopup(true);
+  };
+
+  const handleCrearPaciente = async (pacienteInfo) => {
+    try {
+      const result = await patientsService.createPatient(pacienteInfo);
+      if (result.success) {
+        console.log("Paciente creado con éxito:", result.data);
+        setDisplayConfirmPopUp(true);
+      } else {
+        console.error("Error al crear el paciente:", result.message);
+      }
+    } catch (error) {
+      console.error("Error creating patient:", error);
+    } finally {
+    }
+  };
+
+  const handleActionPopUp = (pacienteInfo) => {
+    setSelectedPatient(pacienteInfo);
+    setShowCrearPacientePopup(false);
+    setDisplayActionPopUp(true);
+  };
+
+  const closeCrearPacientePopup = () => {
+    setShowCrearPacientePopup(false);
+  };
+
   async function initialList() {
-    const arregloUsuarios = await Services.getPatients();
+    const arregloUsuarios = await Services.getPatients(
+      props.userData.user_data.id_clinic
+    );
     const arregloMandar = [];
 
     arregloUsuarios.map((usuario) => {
@@ -63,6 +116,7 @@ function PacientesForm(props) {
   }
 
   const handleShow = () => setShowModal(true);
+
   const handleTerminarConsulta = () => {
     if (montoConsulta.trim() === "") {
       setMontoError(true);
@@ -91,6 +145,7 @@ function PacientesForm(props) {
       }
     }
   };
+
   const handleGuardarConsulta = () => {
     setMontoError(false);
     const doctorName = document.getElementById("doctorName").value;
@@ -190,13 +245,15 @@ function PacientesForm(props) {
     <PacientesLayout pagina="Pacientes">
       <div className="navbar2">
         <NavigationB />
-
         <div className="pacientes-container">
           <div className="pacientes-header">
             <h1 className="title-pacientes2">Pacientes</h1>
             <div className="IniciarConsulta">
-              <button className="consultation-btn" onClick={handleShow}>
-                Iniciar consulta
+              <button
+                className="consultation-btn"
+                onClick={() => handleShowAgregarPacientePopUp(selectedPatient)}
+              >
+                Agregar Paciente
               </button>
             </div>
           </div>
@@ -216,7 +273,7 @@ function PacientesForm(props) {
                   </div>
                   <div className="dropdown">
                     <button
-                      className="btn btn-secondary dropdown-toggle"
+                      className="dropdown-botton"
                       type="button"
                       id={`dropdown-${nombre.id_account}`}
                       data-toggle="dropdown"
@@ -245,16 +302,9 @@ function PacientesForm(props) {
                       </Link>
                       <Link
                         to="/Expedientes"
-                        onClick={() =>
-                          handleClick(
-                            nombre.id_account,
-                            nombre.nombre,
-                            nombre.id_clinic
-                          )
-                        }
                         state={{
-                            id_file: nombre.id_account,
-                            userData: props.userData,
+                          id_file: nombre.id_account,
+                          userData: props.userData,
                         }}
                         className="dropdown-item"
                       >
@@ -270,6 +320,18 @@ function PacientesForm(props) {
                       >
                         Ver Documentos
                       </Link>
+                      {/* <Link to="/Documento"
+                                                  onClick={() => handleClick(nombre.id_account, nombre.nombre,
+                                                      nombre.id_clinic)}
+                                                  className="dropdown-item">Ver Documentos</Link> */}
+
+                      {/* =======
+                                        <div className="dropdown-menu" aria-labelledby={`dropdown-${nombre.id_account}`}>
+                                            <Link to="/citas" className="dropdown-item">Manejar Cita</Link>
+                                            <Link to="/Expedientes" className="dropdown-item">Ver Expediente</Link>
+                                            <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
+                                             */}
+                      {/* >>>>>>> Axel-KL-Documents */}
                     </div>
                   </div>
                 </div>
@@ -291,106 +353,41 @@ function PacientesForm(props) {
               user={selectedUser}
             />
           )}
-          <div className={`pop-iniciar-consulta ${showModal ? "show" : ""}`}>
-            <div className="pop-iniciar-consulta-content">
-              <div className="pop-iniciar-consulta-header">
-                <h1>Consulta Médica</h1>
-                <buttons
-                  className="button-save"
-                  onClick={handleGuardarConsulta}
-                >
-                  Guardar Consulta
-                </buttons>
-              </div>
-              <div className="pop-iniciar-consulta-body">
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <label htmlFor="doctorName">Nombre del Médico:</label>
-                  <Select
-                    label="Nombre del médico"
-                    className="select-doctor"
-                    placeholder="Seleccione un médico"
-                  >
-                    {doctores.map((doctor) => (
-                      <Option
-                        key={doctor.id_user}
-                        value={doctor.id_user}
-                        onClick={() => {
-                          localStorage.setItem("id_doctor", doctor.id_user);
-                        }}
-                      >
-                        {doctor.name_user}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <form className="pop-iniciar-consulta-form">
-                  <label htmlFor="consultaMotivo">Motivo de Consulta:</label>
-                  <textarea
-                    id="consultaMotivo"
-                    rows={3}
-                    placeholder="Ingrese motivo de consulta"
-                    value={motivoConsulta}
-                    onChange={(e) => setMotivoConsulta(e.target.value)}
-                  />
-
-                  <label htmlFor="observaciones">Observaciones:</label>
-                  <textarea
-                    id="observaciones"
-                    rows={3}
-                    placeholder="Ingrese observaciones"
-                    value={observaciones}
-                    onChange={(e) => setObservaciones(e.target.value)}
-                  />
-                  <label htmlFor="montoConsulta">Monto de Consulta:</label>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <span style={{ marginRight: "0.3rem" }}>Lps.</span>
-                    <input
-                      type="text"
-                      id="montoConsulta"
-                      placeholder="Ingrese monto de consulta"
-                      value={montoConsulta}
-                      onChange={(e) => setMontoConsulta(e.target.value)}
-                    />
-                  </div>
-                  {montoError && (
-                    <p
-                      style={{
-                        color: "red",
-                        fontSize: "0.8rem",
-                        marginTop: "0.5rem",
-                      }}
-                    >
-                      El campo de Monto de Consulta no puede estar vacío
-                    </p>
-                  )}
-                  <label htmlFor="ordenesMedicas">Órdenes Médicas:</label>
-                  <textarea
-                    id="ordenesMedicas"
-                    rows={3}
-                    placeholder="Ingrese órdenes médicas"
-                    value={ordenesMedicas}
-                    onChange={(e) => setOrdenesMedicas(e.target.value)}
-                  />
-                </form>
-              </div>
-              <div className="pop-iniciar-consulta-footer">
-                <buttons
-                  className="close-button-sesiones"
-                  type="button"
-                  class="btn btn-outline-danger"
-                  onClick={handleClose}
-                >
-                  Cerrar
-                </buttons>
-                <buttons
-                  className="button-terminar"
-                  onClick={handleTerminarConsulta}
-                >
-                  Terminar Consulta
-                </buttons>
-              </div>
-            </div>
-          </div>
+          {showCrearPacientePopup && (
+            <CrearPaciente
+              onClose={closeCrearPacientePopup}
+              onSummit={addPacienteAndUpdateList}
+              isOpen={showCrearPacientePopup}
+            />
+          )}
+          {showCrearPacientePopup && (
+            <CrearPaciente
+              onClose={() => setShowCrearPacientePopup(false)}
+              onSummit={handleActionPopUp}
+              isOpen={showCrearPacientePopup}
+            />
+          )}
+          {displayActionPopUp && (
+            <PopUpAction
+              isOpen={displayActionPopUp}
+              actionType="Agregar"
+              pageName="Paciente"
+              itemName={selectedPatient.nombre}
+              itemId={selectedPatient.numeroIdentidad}
+              onCancel={() => setDisplayActionPopUp(false)}
+              onConfirm={() => handleCrearPaciente()}
+            />
+          )}
+          {displayConfirmPopUp && (
+            <PopUpActionConfirm
+              isOpen={displayConfirmPopUp}
+              actionType="Agregar"
+              pageName="Paciente"
+              itemName={selectedPatient.nombre}
+              itemId={selectedPatient.numeroIdentidad}
+              onConfirm={() => handleActionConfirm(false)}
+            />
+          )}
         </div>
       </div>
     </PacientesLayout>
