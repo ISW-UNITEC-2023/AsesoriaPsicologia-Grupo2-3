@@ -4,15 +4,28 @@ import CalendarC from "../Components/CalendarC";
 import React from "react";
 
 function Calendar(props) {
+  function havePrivilege(privilege) {
+    // console.log("Esto es lo que voy a comparar", props.verifyRef);
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   return (
-    <div className="style-db-container">
+    <div className='style-db-container'>
       <NavigationBar userData={props.userData} />
       <div style={{ width: "90%" }}>
-        <h1 className="style-title" style={{ width: "400%" }}>
+        <h1 className='style-title' style={{ width: "400%" }}>
           Calendario
         </h1>
-        <div className="style-calendar-container">
-          <CalendarC/>
+        <div className='style-calendar-container'>
+          {havePrivilege(69) ? (
+            <CalendarC />
+          ) : (
+            <div>No tienes permisos para ver el calendario</div>
+          )}
         </div>
       </div>
     </div>

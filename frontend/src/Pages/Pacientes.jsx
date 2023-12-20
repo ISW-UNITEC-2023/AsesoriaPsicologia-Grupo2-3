@@ -22,9 +22,6 @@ import { getVerify } from "../Utilities/user-services";
 function PacientesForm(props) {
   // console.log("Nuevas propiedades", props);
 
-  const aprobado = props.verifyRef;
-  // console.log("Esto es lo que viene dentro", aprobado);
-
   function havePrivilege(privilege) {
     // console.log("Esto es lo que voy a comparar", props.verifyRef);
     if (privilege) {
