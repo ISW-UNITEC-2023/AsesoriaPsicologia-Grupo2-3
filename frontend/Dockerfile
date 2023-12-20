@@ -7,6 +7,9 @@ COPY . .
 COPY .env .
 
 RUN npm install
+RUN apt-get update
+RUN apt-get install nano
+RUN apt-get install net-tools
 
 EXPOSE 3000
 

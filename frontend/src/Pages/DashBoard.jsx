@@ -38,25 +38,34 @@ function DashBoard(props) {
 
     fetchData();
   };
+  useEffect(() => {
+    initialList();
+  }, []);
+
   async function initialList() {
-    const arregloUsuarios = await Services.getPatients(
-      props.userData.user_data.id_clinic
-    );
-    const arregloMandar = [];
+    try {
+      const arregloUsuarios = await Services.getPatients(
+        props.userData.user_data.id_clinic
+      );
 
-    arregloUsuarios.fileInfo.map((usuario) => {
-      let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
-      return arregloMandar.push({
-        id_file: usuario.id_file,
-        nombre: nombre_user,
-        email: usuario.email,
-        id_account: usuario.id_file,
-        creationDate: usuario.creation_date,
-        id_clinic: usuario.id_clinic,
+      //      const arregloMandar = arregloUsuarios.map((usuario) => ({
+
+      arregloUsuarios.fileInfo.map((usuario) => {
+        let nombre_user = `${usuario.first_name} ${usuario.middle_name} ${usuario.last_name} ${usuario.second_surname}`;
+        return {
+          id_file: usuario.id_file,
+          nombre: nombre_user,
+          email: usuario.email,
+          id_account: usuario.id_file,
+          creationDate: usuario.creation_date,
+          id_clinic: usuario.id_clinic,
+        };
       });
-    });
 
-    setNombre(arregloMandar);
+      setNombre(arregloMandar);
+    } catch (error) {
+      console.error("Error al obtener pacientes:", error);
+    }
   }
 
   const addPacienteAndUpdateList = async (newPaciente) => {
@@ -67,7 +76,7 @@ function DashBoard(props) {
     console.log(e);
     setSelectedOption(true);
     setShowButtons(true);
-    setSelectedName(e);
+    setSelectedName(e.target);
   };
 
   const handleScheduleClick = () => {
@@ -106,39 +115,39 @@ function DashBoard(props) {
   };
 
   return (
-    <DashboardLayout id='dashboard' pagina='Dashboard'>
-      <div className='dashboard-container'>
-        <NavigationB key='navB' userData={props.userData} />
-        <div className='dashboard-box'>
-          <div className='dashboard-header flex flex-col md:flex-row justify-between'>
-            <h1 className='dashboard-titulo'>{`Bienvenido ${nameUser}`}</h1>
+    <DashboardLayout id="dashboard" pagina="Dashboard">
+      <div className="dashboard-container">
+        <NavigationB key="navB" userData={props.userData} />
+        <div className="dashboard-box">
+          <div className="dashboard-header flex flex-col md:flex-row justify-between">
+            <h1 className="dashboard-titulo">{`Bienvenido ${nameUser}`}</h1>
           </div>
 
-          <div className='information-container'>
-            <div className='information'>
-              <img src={PortadaDash} alt='Descripción de la imagen' />
+          <div className="information-container">
+            <div className="information">
+              <img src={PortadaDash} alt="Descripción de la imagen" />
             </div>
           </div>
-          <div className='quick-access-text mb-4'>Vista Rapida</div>
-          <div className='w-full max-w-screen-lg mx-auto'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 items-ju'>
-              <div className='mt-2'>
-                <ChartBarSalesM className='w-auto h-auto' />
+          <div className="quick-access-text mb-4">Vista Rapida</div>
+          <div className="w-full max-w-screen-lg mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-ju">
+              <div className="mt-2">
+                <ChartBarSalesM className="w-auto h-auto" />
               </div>
-              <div className='pb-3'>
+              <div className="pb-3">
                 <StatsSection page={"Dash"} />
               </div>
-              <div className='mt-4'>
+              <div className="mt-4">
                 <div
-                  className='mb-2 font-bold text-xl'
+                  className="mb-2 font-bold text-xl"
                   style={{ color: "#113946" }}
                 >
                   <p>Lista de Pacientes</p>
                 </div>
                 <Select
-                  label='Selecciona un paciente'
+                  label="Selecciona un paciente"
                   value={selectedName}
-                  onChange={(e) => handleSelectChange(e)}
+                  onChange={handleSelectChange}
                 >
                   {nombre.map((nombre) => (
                     <Option key={nombre.id_account} value={nombre.id_account}>
@@ -147,7 +156,7 @@ function DashBoard(props) {
                   ))}
                 </Select>
                 {showButtons && selectedOption && (
-                  <div className='custom-button'>
+                  <div className="custom-button">
                     <Button onClick={handleScheduleClick}>Agendar Citas</Button>
                     <Button onClick={handleViewRecordsClick}>
                       Ver Expedientes
