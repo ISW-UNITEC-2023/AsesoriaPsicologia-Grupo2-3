@@ -16,7 +16,6 @@ router.post("/assignRole", userController.assignRole);
 //Cookies
 router.get("/getCookies", userController.getCookie);
 
-
 //Get
 router.get("/viewUsers", userController.getAllusers);
 router.get("/viewTeachers", userController.getTeachers);
@@ -26,12 +25,10 @@ router.get("/getUserById", userController.getUserByID);
 router.get("/getVerify", userController.getVerify);
 router.get("/getUserByclinic", userController.getByClinic);
 
-
 //COOKIES
 
-router.post("/getRoles", userController.getUserRoles)
+router.post("/getRoles", userController.getUserRoles);
 router.get("/getPrivileges", userController.getPrivilegesById);
-
 
 //COOKIES
 router.delete("/removeCookie", userController.removeCookie);

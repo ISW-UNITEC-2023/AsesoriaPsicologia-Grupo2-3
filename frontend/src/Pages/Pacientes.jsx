@@ -22,17 +22,14 @@ import { getVerify } from "../Utilities/user-services";
 function PacientesForm(props) {
 	// console.log("Nuevas propiedades", props);
 
-	const aprobado = props.verifyRef;
-	// console.log("Esto es lo que viene dentro", aprobado);
-
-	function havePrivilege(privilege) {
-		// console.log("Esto es lo que voy a comparar", props.verifyRef);
-		if (privilege) {
-			return props.verifyRef.current.privileges.includes(privilege);
-		} else {
-			return false;
-		}
-	}
+  function havePrivilege(privilege) {
+    // console.log("Esto es lo que voy a comparar", props.verifyRef);
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
 
 	const host = process.env.REACT_APP_API_BASE_URL;
 	const [nombres, setNombres] = useState([]);

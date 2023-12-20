@@ -7,36 +7,25 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import NavigationB from "../Navbar";
 import { gMeeting } from "../../Utilities/zoom-services";
-import { useNavigate } from "react-router-dom";
-import { getVerify } from "../../Utilities/user-services";
-
-function havePrivilege(userPrivilege, privilege) {
-  const isAuthorized =
-    userPrivilege &&
-    userPrivilege.privileges &&
-    privilege.some((privilege) => userPrivilege.privileges.includes(privilege));
-  return isAuthorized;
-}
+import { Link, useNavigate } from "react-router-dom";
 
 function MyZoomPat(props) {
   //Privilegios del usuario logueado
 
-  const verifyRef = useRef(null);
-  const updatePrivileges = async () => {
-    try {
-      const data = await getVerify(props.userData.user_data.id_user);
-      verifyRef.current = data;
-    } catch (error) {
-      console.error("Error updating privileges:", error);
+  function havePrivilege(privilege) {
+    // console.log("Esto es lo que voy a comparar", props.verifyRef);
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
     }
-  };
+  }
 
   const [meetings, setMeetings] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await updatePrivileges();
         const meetingsData = await gMeeting();
         setMeetings(meetingsData.meetings || []);
       } catch (error) {
@@ -46,15 +35,15 @@ function MyZoomPat(props) {
 
     fetchData();
   }, []);
+
   return (
     <div className='zoom-container'>
       <NavigationB key='navB' userData={props.userData} />
       <div className='zoom-div'>
         <Row className='zoom-row'>
           <Col>
-            {console.log(verifyRef)}
             <h1 className='title-pacientes'>Zoom</h1>
-            {havePrivilege(verifyRef.current, [31]) ? (
+            {havePrivilege(31) ? (
               <Form.Label className='titulo2'>Sesiones Programadas</Form.Label>
             ) : (
               <Form.Label className='titulo2'>
@@ -65,21 +54,22 @@ function MyZoomPat(props) {
           </Col>
           <Col></Col>
           <Col>
-            {havePrivilege(verifyRef.current, [32]) && (
-              <Button
-                className='buttons'
-                variant='outline-primary'
-                href='/ZoomC'
-                onClick={() => {}}
-                style={{ marginLeft: "235px" }}
-              >
-                Crear Sesion
-              </Button>
+            {havePrivilege(32) && (
+              <Link to='/ZoomC'>
+                <Button
+                  className='buttons'
+                  variant='outline-primary'
+                  onClick={() => {}}
+                  style={{ marginLeft: "235px" }}
+                >
+                  Crear Sesion
+                </Button>
+              </Link>
             )}
           </Col>
         </Row>
 
-        {havePrivilege(verifyRef.current, [31]) && (
+        {havePrivilege(31) && (
           <div>
             <Container fluid='md' className='zoomscroll-content'>
               <Row>
@@ -125,7 +115,7 @@ function MyZoomPat(props) {
                       <Form.Label>{meeting.id}</Form.Label>
                     </Col>
                     <Col className='column2'>
-                      {havePrivilege(verifyRef.current, [31]) && (
+                      {havePrivilege(31) && (
                         <Button
                           className='buttons2'
                           variant='outline-primary'
