@@ -18,6 +18,14 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 function AuditLogs(props) {
+  function havePrivilege(privilege) {
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   const [logs, setLogs] = useState([]);
   const [originalLogs, setOriginalLogs] = useState([]);
   const [sorted, setSorted] = useState(false);
@@ -413,113 +421,131 @@ function AuditLogs(props) {
               <FontAwesomeIcon icon={faFilterCircleXmark} />
             </div>
           </OverlayTrigger>
-          <button
-            className="boton-descargar-log"
-            onClick={() => downloadLogs("pdf")}
-          >
-            Descargar Historial en PDF
-          </button>
-          <button
-            className="boton-descargar-excel"
-            onClick={() => downloadLogs("excel")}
-          >
-            Descargar Historial en Excel
-          </button>
+          {
+            havePrivilege(83) &&
+            <button
+              className="boton-descargar-log"
+              onClick={() => downloadLogs("pdf")}
+            >
+              Descargar Historial en PDF
+            </button>
+          }
+          {
+            havePrivilege(82) &&
+            <button
+              className="boton-descargar-excel"
+              onClick={() => downloadLogs("excel")}
+            >
+              Descargar Historial en Excel
+            </button>
+          }
         </div>
-        <table className="table table-bordered historial-table">
-          <thead className="historial-table-header">
-            <tr>
-              <th>
-                <div className="th-div-historial">
-                  <CustomBtFilter type="id_log" />
-                  Id
-                </div>
-              </th>
-              <th>
-                <div className="th-div-historial">
-                  <CustomBtFilter type="user_log" />
-                  Usuario
-                </div>
-              </th>
-              <th>
-                <div className="th-div-historial">
-                  <CustomCbFilter type="action" />
-                  Acción
-                </div>
-              </th>
-              <th>
-                <div className="th-div-historial">
-                  <CustomCbFilter type="table" />
-                  Tabla
-                </div>
-              </th>
-              <th>Info de Acción</th>
-              <th>
-                <div className="th-div-historial">
-                  <CustomBtFilter type="creation_date" />
-                  Fecha
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {getCurrentLogs().length > 0 &&
-              getCurrentLogs().map((dato) => (
-                <tr className="row-table-historial" key={dato.ID}>
-                  <td className="td-items-historial">{dato.ID}</td>
-                  <td className="td-items-historial">{dato.Usuario}</td>
-                  <td className="td-items-historial">{dato.Accion}</td>
-                  <td className="td-items-historial">{dato.Tabla}</td>
-                  <td className="td-info-accion">{dato.Info_Accion}</td>
-                  <td className="td-items-historial">
-                    {formatDate(dato.Fecha_Hora)}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-        <div className="pagination">
-          <span className="pagination-text">
-            Mostrando {getCurrentLogs().length} de {logs.length} registros
-          </span>
-          <button
-            onClick={() => handlePageClick(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
+        {
+          havePrivilege(54) &&
+          <table className="table table-bordered historial-table">
+            <thead className="historial-table-header">
+              <tr>
+                <th>
+                  <div className="th-div-historial">
+                    <CustomBtFilter type="id_log" />
+                    Id
+                  </div>
+                </th>
+                <th>
+                  <div className="th-div-historial">
+                    <CustomBtFilter type="user_log" />
+                    Usuario
+                  </div>
+                </th>
+                <th>
+                  <div className="th-div-historial">
+                    <CustomCbFilter type="action" />
+                    Acción
+                  </div>
+                </th>
+                <th>
+                  <div className="th-div-historial">
+                    <CustomCbFilter type="table" />
+                    Tabla
+                  </div>
+                </th>
+                <th>Info de Acción</th>
+                <th>
+                  <div className="th-div-historial">
+                    <CustomBtFilter type="creation_date" />
+                    Fecha
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {getCurrentLogs().length > 0 &&
+                getCurrentLogs().map((dato) => (
+                  <tr className="row-table-historial" key={dato.ID}>
+                    <td className="td-items-historial">{dato.ID}</td>
+                    <td className="td-items-historial">{dato.Usuario}</td>
+                    <td className="td-items-historial">{dato.Accion}</td>
+                    <td className="td-items-historial">{dato.Tabla}</td>
+                    <td className="td-info-accion">{dato.Info_Accion}</td>
+                    <td className="td-items-historial">
+                      {formatDate(dato.Fecha_Hora)}
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        }
+        {
+          havePrivilege(54) ?
+          <div className="pagination">
+            <span className="pagination-text">
+              Mostrando {getCurrentLogs().length} de {logs.length} registros
+            </span>
+            <button
+              onClick={() => handlePageClick(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
 
-          {Array.from(
-            { length: Math.ceil(logs.length / logsPerPage) },
-            (_, index) => {
-              const page = index + 1;
-              const isCurrentPage = currentPage === page;
-              const shouldDisplay =
-                page === 1 ||
-                page === currentPage - 1 ||
-                page === currentPage ||
-                page === currentPage + 1 ||
-                page === Math.ceil(logs.length / logsPerPage);
+            {Array.from(
+              { length: Math.ceil(logs.length / logsPerPage) },
+              (_, index) => {
+                const page = index + 1;
+                const isCurrentPage = currentPage === page;
+                const shouldDisplay =
+                  page === 1 ||
+                  page === currentPage - 1 ||
+                  page === currentPage ||
+                  page === currentPage + 1 ||
+                  page === Math.ceil(logs.length / logsPerPage);
 
-              return shouldDisplay ? (
-                <button
-                  key={page}
-                  onClick={() => handlePageClick(page)}
-                  className={isCurrentPage ? "active" : ""}
-                >
-                  {page}
-                </button>
-              ) : null;
-            }
-          )}
+                return shouldDisplay ? (
+                  <button
+                    key={page}
+                    onClick={() => handlePageClick(page)}
+                    className={isCurrentPage ? "active" : ""}
+                  >
+                    {page}
+                  </button>
+                ) : null;
+              }
+            )}
 
-          <button
-            onClick={() => handlePageClick(currentPage + 1)}
-            disabled={getCurrentLogs().length < logsPerPage}
-          >
-            <FontAwesomeIcon icon={faArrowRight} />
-          </button>
-        </div>
+            <button
+              onClick={() => handlePageClick(currentPage + 1)}
+              disabled={getCurrentLogs().length < logsPerPage}
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+          </div>
+          :
+          <div className="pagination">
+            <span className="pagination-text" style={{color:'red'}}>
+              No se muestran los registros debido a que no tienes los permisos necesarios.
+            </span>
+          </div>
+        }
       </div>
     </div>
   );

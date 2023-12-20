@@ -21,7 +21,15 @@ const TABLE_HEAD = ["Cliente", "Monto", "Fecha", "Estado", "Metodo de pago"];
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-function TableReportes() {
+function TableReportes(props) {
+  function havePrivilege(privilege) {
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   const [date1, setDate1] = useState("");
   const [date2, setDate2] = useState("");
   const [isDownloading, setIsDownloading] = useState(false);
@@ -207,161 +215,180 @@ function TableReportes() {
                 style={{ borderColor: "#C4C4C4" }}
               />
             </div>
-            <Button
-              type={"button"}
-              id='downloadButton'
-              className='flex items-center gap-2 md:gap-3'
-              size='sm'
-              disabled={isDownloading}
-              onClick={handleDownloadExcel}
-              style={{ backgroundColor: "#153946" }}
-            >
-              <ArrowDownTrayIcon strokeWidth={2} className='h-4 w-4' />
-              Descargar
-            </Button>
+            {
+              havePrivilege(71) &&
+              <Button
+                type={"button"}
+                id='downloadButton'
+                className='flex items-center gap-2 md:gap-3'
+                size='sm'
+                disabled={isDownloading}
+                onClick={handleDownloadExcel}
+                style={{ backgroundColor: "#153946" }}
+              >
+                <ArrowDownTrayIcon strokeWidth={2} className='h-4 w-4' />
+                Descargar
+              </Button>
+            }
           </div>
         </div>
       </CardHeader>
-      <CardBody
-        className='overflow-x-auto px-0 border-b border-blue-gray-50'
-        style={{ maxHeight: "calc(100vh - 150px)" }}
-      >
-        <table className='w-full min-w-max table-auto text-left'>
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className='border-y border-blue-gray-100 bg-blue-gray-50/50 p-4'
-                >
-                  <Typography
-                    variant='small'
-                    color='blue-gray'
-                    className='font-normal leading-none opacity-70'
-                  >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(reports.data) ? (
-              reports.data.map(
-                (
-                  {
-                    id_file,
-                    first_name,
-                    middle_name,
-                    last_name,
-                    second_surname,
-                    payment_amount,
-                    appointment_date,
-                    state_appointment,
-                    payment_type,
-                  },
-                  index
-                ) => {
-                  const isLast = index === reports.data.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
+      {
+        havePrivilege(71) ?
+          <CardBody
+            className='overflow-x-auto px-0 border-b border-blue-gray-50'
+            style={{ maxHeight: "calc(100vh - 150px)" }}
+          >
+            <table className='w-full min-w-max table-auto text-left'>
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th
+                      key={head}
+                      className='border-y border-blue-gray-100 bg-blue-gray-50/50 p-4'
+                    >
+                      <Typography
+                        variant='small'
+                        color='blue-gray'
+                        className='font-normal leading-none opacity-70'
+                      >
+                        {head}
+                      </Typography>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(reports.data) ? (
+                  reports.data.map(
+                    (
+                      {
+                        id_file,
+                        first_name,
+                        middle_name,
+                        last_name,
+                        second_surname,
+                        payment_amount,
+                        appointment_date,
+                        state_appointment,
+                        payment_type,
+                      },
+                      index
+                    ) => {
+                      const isLast = index === reports.data.length - 1;
+                      const classes = isLast
+                        ? "p-4"
+                        : "p-4 border-b border-blue-gray-50";
 
-                  return (
-                    <tr key={id_file}>
-                      <td className={classes}>
-                        <div className='flex items-center gap-3'>
-                          <Typography
-                            variant='small'
-                            color='blue-gray'
-                            className='font-bold'
-                          >
-                            {`${first_name} ${middle_name} ${last_name} ${second_surname}`}
-                          </Typography>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant='small'
-                          color='blue-gray'
-                          className='font-normal'
-                        >
-                          {formatMoney(payment_amount)}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <Typography
-                          variant='small'
-                          color='blue-gray'
-                          className='font-normal'
-                        >
-                          {format(
-                            parseISO(appointment_date),
-                            "yyyy-MM-dd HH:mm:ss "
-                          )}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
-                        <div className='w-max'>
-                          <Chip
-                            size='sm'
-                            variant='ghost'
-                            value={
-                              state_appointment === null
-                                ? "PENDIENTE"
-                                : state_appointment
-                            }
-                            color={
-                              state_appointment === "PROCESADO"
-                                ? "green"
-                                : state_appointment === null
-                                ? "amber"
-                                : state_appointment === "CANCELADA"
-                                ? "red"
-                                : "brown"
-                                ? "amber"
-                                : state_appointment === "INICIADO"
-                                ? "amber"
-                                : state_appointment === "PENDIENTE"
-                            }
-                          />
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className='flex items-center gap-3'>
-                          <div className='flex flex-col'>
+                      return (
+                        <tr key={id_file}>
+                          <td className={classes}>
+                            <div className='flex items-center gap-3'>
+                              <Typography
+                                variant='small'
+                                color='blue-gray'
+                                className='font-bold'
+                              >
+                                {`${first_name} ${middle_name} ${last_name} ${second_surname}`}
+                              </Typography>
+                            </div>
+                          </td>
+                          <td className={classes}>
                             <Typography
                               variant='small'
                               color='blue-gray'
-                              className='font-bold'
+                              className='font-normal'
                             >
-                              {payment_type === 1
-                                ? "Efectivo"
-                                : payment_type === 2
-                                ? "Transferencia"
-                                : payment_type === 3
-                                ? "Tarjeta de Crédito"
-                                : payment_type === 4
-                                ? "Tarjeta de Débito"
-                                : "Sin Metodo de Pago"}
+                              {formatMoney(payment_amount)}
                             </Typography>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                }
-              )
-            ) : (
-              <tr>
-                <td colSpan={TABLE_HEAD.length} className='p-4 text-center'>
-                  No hay datos disponibles.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </CardBody>
+                          </td>
+                          <td className={classes}>
+                            <Typography
+                              variant='small'
+                              color='blue-gray'
+                              className='font-normal'
+                            >
+                              {format(
+                                parseISO(appointment_date),
+                                "yyyy-MM-dd HH:mm:ss "
+                              )}
+                            </Typography>
+                          </td>
+                          <td className={classes}>
+                            <div className='w-max'>
+                              <Chip
+                                size='sm'
+                                variant='ghost'
+                                value={
+                                  state_appointment === null
+                                    ? "PENDIENTE"
+                                    : state_appointment
+                                }
+                                color={
+                                  state_appointment === "PROCESADO"
+                                    ? "green"
+                                    : state_appointment === null
+                                      ? "amber"
+                                      : state_appointment === "CANCELADA"
+                                        ? "red"
+                                        : "brown"
+                                          ? "amber"
+                                          : state_appointment === "INICIADO"
+                                            ? "amber"
+                                            : state_appointment === "PENDIENTE"
+                                }
+                              />
+                            </div>
+                          </td>
+                          <td className={classes}>
+                            <div className='flex items-center gap-3'>
+                              <div className='flex flex-col'>
+                                <Typography
+                                  variant='small'
+                                  color='blue-gray'
+                                  className='font-bold'
+                                >
+                                  {payment_type === 1
+                                    ? "Efectivo"
+                                    : payment_type === 2
+                                      ? "Transferencia"
+                                      : payment_type === 3
+                                        ? "Tarjeta de Crédito"
+                                        : payment_type === 4
+                                          ? "Tarjeta de Débito"
+                                          : "Sin Metodo de Pago"}
+                                </Typography>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  )
+                ) : (
+                  <tr>
+                    <td colSpan={TABLE_HEAD.length} className='p-4 text-center'>
+                      No hay datos disponibles.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </CardBody>
+          :
+          <CardBody
+            className='overflow-x-auto px-0 border-b border-blue-gray-50'
+            style={{ maxHeight: "calc(100vh - 150px)" }}
+          >
+            <Typography
+              variant='small'
+              className='font-bold'
+              style={{ color: 'red', textAlign: 'center' }}
+            >
+              No se muestran los reportes debido a que no tienes los permisos necesarios.
+            </Typography>
+          </CardBody>
+      }
     </Card>
   );
 }

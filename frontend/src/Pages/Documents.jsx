@@ -25,6 +25,13 @@ import "../Styles/CSS/Documents.css";
 import imgNotFound from "../Styles/Images/Filing-system.gif"
 
 function Documents(props) {
+  function havePrivilege(privilege) {
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
   const { id_file, userData } = useLocation().state;
   const [allArchivos, setAllArchivos] = useState([]);
   const [archivos, setArchivos] = useState([]);
@@ -71,7 +78,7 @@ function Documents(props) {
       const matchesSearchTerm = file.document_name
         .toLowerCase()
         .includes(term.toLowerCase());
-        return matchesSearchTerm;
+      return matchesSearchTerm;
     });
 
     setArchivos(filteredArchivos);
@@ -360,229 +367,250 @@ function Documents(props) {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
-          <button
-            onClick={() => {
-              setUploadFile(true);
-            }}
-            className="upload-file-button"
-          >
-            Subir Archivo
-          </button>
+          {
+            havePrivilege(65) &&
+            <button
+              onClick={() => {
+                setUploadFile(true);
+              }}
+              className="upload-file-button"
+            >
+              Subir Archivo
+            </button>
+          }
         </div>
         <div className="visualization-container">
-          <div className="archivo-visualizador-container">
-            {archivos.length > 0 ? (
-            <ListGroup className="archivo-visualizador-title-list">
-              {archivos.map((file) => {
-                return (
+          {
+            havePrivilege(66) ?
+              <div className="archivo-visualizador-container">
+                {archivos.length > 0 ? (
+                  <ListGroup className="archivo-visualizador-title-list">
+                    {archivos.map((file) => {
+                      return (
+                        <ListGroup.Item
+                          key={file.id_document}
+                          className="archivo-box"
+                        >
+                          <div className="archivo-info">
+                            <span className="archivo-visualizador-title">
+                              {file.document_name}
+                            </span>
+                            <span className="archivo-visualizador-size">
+                              Fecha de creación: {formatDate(file.creation_date)}
+                            </span>
+                            <span className="archivo-visualizador-size">
+                              Tamaño: {convertSize(file.document_size)}
+                            </span>
+                          </div>
+                          <div className="archivo-actions">
+                            <OverlayTrigger
+                              placement="top"
+                              overlay={
+                                <BootstrapTooltip
+                                  id={`view-tooltip-${file.id_document}`}
+                                >
+                                  Ver archivo
+                                </BootstrapTooltip>
+                              }
+                            >
+                              <FontAwesomeIcon
+                                className="archivo-visualizador-button"
+                                icon={faEye}
+                                onClick={() => {
+                                  setSelectedFile(file);
+                                }}
+                              />
+                            </OverlayTrigger>
+                            <OverlayTrigger
+                              placement="top"
+                              overlay={
+                                <BootstrapTooltip
+                                  id={`edit-tooltip-${file.id_document}`}
+                                >
+                                  Editar Nombre de Archivo
+                                </BootstrapTooltip>
+                              }
+                            >
+                              <FontAwesomeIcon
+                                className="archivo-visualizador-button"
+                                icon={faPencil}
+                                onClick={() =>
+                                  setOpenModal({
+                                    open: true,
+                                    type: "edit",
+                                    file: file,
+                                  })
+                                }
+                              />
+                            </OverlayTrigger>
+                            <OverlayTrigger
+                              placement="top"
+                              overlay={
+                                <BootstrapTooltip
+                                  id={`delete-tooltip-${file.id_document}`}
+                                >
+                                  Borrar archivo
+                                </BootstrapTooltip>
+                              }
+                            >
+                              <FontAwesomeIcon
+                                className="archivo-visualizador-button"
+                                icon={faTrash}
+                                onClick={() =>
+                                  setOpenModal({
+                                    open: true,
+                                    type: "delete",
+                                    file: file,
+                                  })
+                                }
+                              />
+                            </OverlayTrigger>
+                          </div>
+                        </ListGroup.Item>
+                      );
+                    })}
+                  </ListGroup>
+                ) : (
+                  <div className="no-files-found">
+                    <img src={imgNotFound} alt="No se encontraron archivos" />
+                    <span>No se encontraron archivos</span>
+                  </div>
+                )}
+                {selectedFile && (
+                  <PopupViewer
+                    file={selectedFile}
+                    onClose={() => setSelectedFile(null)}
+                  />
+                )}
+                <ModalDelEdit />
+                <Modal
+                  show={uploadFile}
+                  onClose={() => {
+                    setUploadFile(false);
+                    setArchivos(null);
+                  }}
+                  dialogClassName="modal-upload-file"
+                >
+                  <div className="modal-upload-header">
+                    <h2 className="modal-upload-title">Cargar archivos</h2>
+                  </div>
+                  <div className="custom-file-upload">
+                    <label
+                      className="label-file-box"
+                      onDragOver={(e) => {
+                        handleDragOver(e);
+                      }}
+                      onDrop={(e) => {
+                        handleDrop(e);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        className="cloud-upload-icon"
+                        icon={faCloudArrowUp}
+                      />
+                      <span className="drop-title">
+                        Arrastra archivos a esta zona
+                      </span>
+                      o
+                      <label className="select-files-label" for="file-upload">
+                        Selecciona archivos
+                        <input
+                          id="file-upload"
+                          type="file"
+                          accept={[
+                            "application/pdf",
+                            "image/*",
+                            "text/*",
+                            ".docx",
+                            ".doc",
+                          ]}
+                          multiple={true}
+                          max={5}
+                          className="file-upload-input"
+                          onChange={(e) => {
+                            handleFileChange(e);
+                          }}
+                        />
+                      </label>
+                    </label>
+                  </div>
+                  <label className="preview-file-title">
+                    Archivos Seleccionados {selectedFiles.length} / 5
+                  </label>
+                  <div className="preview-file-container">
+                    {selectedFiles.length === 0 && (
+                      <span className="no-files-selected">
+                        No se han seleccionado archivos
+                      </span>
+                    )}
+                    {selectedFiles.length > 0 &&
+                      selectedFiles.map((file, index) => (
+                        <div key={index} className="file-preview">
+                          {file.document_type === "image/png" ||
+                            file.document_type === "image/jpg" ||
+                            file.document_type === "image/jpeg" ||
+                            file.document_type === "image/webp" ||
+                            file.document_type === "image/svg" ||
+                            file.document_type === "image/gif" ? (
+                            <FontAwesomeIcon
+                              className="preview-file-icon"
+                              icon={faFileImage}
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              className="preview-file-icon"
+                              icon={faFileLines}
+                            />
+                          )}
+                          <span className="preview-file-name">
+                            {file.document_name}
+                          </span>
+                          <button
+                            className="preview-file-remove"
+                            onClick={() => {
+                              removeFile(file);
+                            }}
+                          >
+                            Quitar
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="footer-upload-buttons">
+                    <button
+                      onClick={() => {
+                        setUploadFile(false);
+                        setSelectedFiles([]);
+                      }}
+                      className="close-upload-button"
+                    >
+                      Cerrar
+                    </button>
+                    <button
+                      onClick={subirArchivo}
+                      className="confirm-upload-button"
+                    >
+                      Subir
+                    </button>
+                  </div>
+                </Modal>
+              </div>
+              :
+              <div className="archivo-visualizador-container">
+                <ListGroup className="archivo-visualizador-title-list">
                   <ListGroup.Item
-                    key={file.id_document}
                     className="archivo-box"
                   >
                     <div className="archivo-info">
-                      <span className="archivo-visualizador-title">
-                        {file.document_name}
+                      <span className="archivo-visualizador-title" style={{ color: 'red' }}>
+                        No se muestran los documentos debido a que no tiene los permisos necesarios.
                       </span>
-                      <span className="archivo-visualizador-size">
-                        Fecha de creación: {formatDate(file.creation_date)}
-                      </span>
-                      <span className="archivo-visualizador-size">
-                        Tamaño: {convertSize(file.document_size)}
-                      </span>
-                    </div>
-                    <div className="archivo-actions">
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <BootstrapTooltip
-                            id={`view-tooltip-${file.id_document}`}
-                          >
-                            Ver archivo
-                          </BootstrapTooltip>
-                        }
-                      >
-                        <FontAwesomeIcon
-                          className="archivo-visualizador-button"
-                          icon={faEye}
-                          onClick={() => {
-                            setSelectedFile(file);
-                          }}
-                        />
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <BootstrapTooltip
-                            id={`edit-tooltip-${file.id_document}`}
-                          >
-                            Editar Nombre de Archivo
-                          </BootstrapTooltip>
-                        }
-                      >
-                        <FontAwesomeIcon
-                          className="archivo-visualizador-button"
-                          icon={faPencil}
-                          onClick={() =>
-                            setOpenModal({
-                              open: true,
-                              type: "edit",
-                              file: file,
-                            })
-                          }
-                        />
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <BootstrapTooltip
-                            id={`delete-tooltip-${file.id_document}`}
-                          >
-                            Borrar archivo
-                          </BootstrapTooltip>
-                        }
-                      >
-                        <FontAwesomeIcon
-                          className="archivo-visualizador-button"
-                          icon={faTrash}
-                          onClick={() =>
-                            setOpenModal({
-                              open: true,
-                              type: "delete",
-                              file: file,
-                            })
-                          }
-                        />
-                      </OverlayTrigger>
                     </div>
                   </ListGroup.Item>
-                );
-              })}
-            </ListGroup>
-            ) : (
-              <div className="no-files-found">
-                <img src={imgNotFound} alt="No se encontraron archivos" />
-                <span>No se encontraron archivos</span>
+
+                </ListGroup>
               </div>
-            )}
-            {selectedFile && (
-              <PopupViewer
-                file={selectedFile}
-                onClose={() => setSelectedFile(null)}
-              />
-            )}
-            <ModalDelEdit />
-            <Modal
-              show={uploadFile}
-              onClose={() => {
-                setUploadFile(false);
-                setArchivos(null);
-              }}
-              dialogClassName="modal-upload-file"
-            >
-              <div className="modal-upload-header">
-                <h2 className="modal-upload-title">Cargar archivos</h2>
-              </div>
-              <div className="custom-file-upload">
-                <label
-                  className="label-file-box"
-                  onDragOver={(e) => {
-                    handleDragOver(e);
-                  }}
-                  onDrop={(e) => {
-                    handleDrop(e);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    className="cloud-upload-icon"
-                    icon={faCloudArrowUp}
-                  />
-                  <span className="drop-title">
-                    Arrastra archivos a esta zona
-                  </span>
-                  o
-                  <label className="select-files-label" for="file-upload">
-                    Selecciona archivos
-                    <input
-                      id="file-upload"
-                      type="file"
-                      accept={[
-                        "application/pdf",
-                        "image/*",
-                        "text/*",
-                        ".docx",
-                        ".doc",
-                      ]}
-                      multiple={true}
-                      max={5}
-                      className="file-upload-input"
-                      onChange={(e) => {
-                        handleFileChange(e);
-                      }}
-                    />
-                  </label>
-                </label>
-              </div>
-              <label className="preview-file-title">
-                Archivos Seleccionados {selectedFiles.length} / 5
-              </label>
-              <div className="preview-file-container">
-                {selectedFiles.length === 0 && (
-                  <span className="no-files-selected">
-                    No se han seleccionado archivos
-                  </span>
-                )}
-                {selectedFiles.length > 0 &&
-                  selectedFiles.map((file, index) => (
-                    <div key={index} className="file-preview">
-                      {file.document_type === "image/png" ||
-                      file.document_type === "image/jpg" ||
-                      file.document_type === "image/jpeg" ||
-                      file.document_type === "image/webp" ||
-                      file.document_type === "image/svg" ||
-                      file.document_type === "image/gif" ? (
-                        <FontAwesomeIcon
-                          className="preview-file-icon"
-                          icon={faFileImage}
-                        />
-                      ) : (
-                        <FontAwesomeIcon
-                          className="preview-file-icon"
-                          icon={faFileLines}
-                        />
-                      )}
-                      <span className="preview-file-name">
-                        {file.document_name}
-                      </span>
-                      <button
-                        className="preview-file-remove"
-                        onClick={() => {
-                          removeFile(file);
-                        }}
-                      >
-                        Quitar
-                      </button>
-                    </div>
-                  ))}
-              </div>
-              <div className="footer-upload-buttons">
-                <button
-                  onClick={() => {
-                    setUploadFile(false);
-                    setSelectedFiles([]);
-                  }}
-                  className="close-upload-button"
-                >
-                  Cerrar
-                </button>
-                <button
-                  onClick={subirArchivo}
-                  className="confirm-upload-button"
-                >
-                  Subir
-                </button>
-              </div>
-            </Modal>
-          </div>
+          }
         </div>
       </div>
       <ToastContainer />

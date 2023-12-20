@@ -25,7 +25,15 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 const host = process.env.REACT_APP_API_BASE_URL;
 const montoConsultaRegex = /^\d+(\.\d{1,2})?$/;
 
-export function TableConsultas({ page }) {
+export function TableConsultas({ page, verifyRef }) {
+  function havePrivilege(privilege) {
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [montoConsulta, setMontoConsulta] = useState("");

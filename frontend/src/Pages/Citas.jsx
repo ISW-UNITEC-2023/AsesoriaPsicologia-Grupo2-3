@@ -10,7 +10,7 @@ export const Citas = (props) => {
                 <Navbar userData={props.userData}/>
                 <div className="flex-grow flex flex-col ">
                     <div className="px-0 md:px-20">
-                        <TableConsultas page={"Cita"}/>
+                        <TableConsultas page={"Cita"} verifyRef={props.verifyRef}/>
                     </div>
                 </div>
             </div>

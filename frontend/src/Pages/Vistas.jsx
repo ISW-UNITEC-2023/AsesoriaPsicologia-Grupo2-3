@@ -7,8 +7,17 @@ import { Input } from "@material-tailwind/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { getFileById } from "../Utilities/files-services";
+import ListGroup from "react-bootstrap/ListGroup";
 
 function Vistas(props) {
+  function havePrivilege(privilege) {
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   const navigate = useNavigate();
   const { id_file, user_data } = useLocation().state;
   const containerRef = useRef(null);
@@ -83,155 +92,176 @@ function Vistas(props) {
 
   return (
     <div className='page-container'>
-      <Container id='pdf-container' ref={containerRef}>
-        <img src={tempImage} alt='Encabezado' className='encabezado-image' />
-        <div className='Titulo'>
-          <h1>Información del Paciente</h1>
-          <p>Detalles importantes sobre el paciente</p>
-        </div>
-        <Row>
-          <Col md={12}>
-            <table className='patient-info-table'>
-              <tbody>
-                <tr>
-                  <td className='left-column'>Nombre:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Nombre'
-                      value={patientInfo.nombre}
-                      readOnly
+      {
+        havePrivilege(57) ?
+          <Container id='pdf-container' ref={containerRef}>
+            <img src={tempImage} alt='Encabezado' className='encabezado-image' />
+            <div className='Titulo'>
+              <h1>Información del Paciente</h1>
+              <p>Detalles importantes sobre el paciente</p>
+            </div>
+            <Row>
+              <Col md={12}>
+                <table className='patient-info-table'>
+                  <tbody>
+                    <tr>
+                      <td className='left-column'>Nombre:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Nombre'
+                          value={patientInfo.nombre}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='left-column'>Fecha de Nacimiento:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Fecha de Nacimiento'
+                          value={formatDate(patientInfo.fechaNacimiento)}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='left-column'>Correo Eléctronico:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Correo Eléctronico'
+                          value={patientInfo.correo}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='left-column'>Identidad:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Identidad'
+                          value={patientInfo.identidad}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='left-column'>Número de Teléfono:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Número de Teléfono'
+                          value={patientInfo.numeroTelefono}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='left-column'>Dirección:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Direccion'
+                          value={patientInfo.direccion}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className='left-column'>Estado Civil:</td>
+                      <td className='right-column'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          placeholder='Estado Civil'
+                          value={patientInfo.estadoCivil}
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <p className='paragraph-margin'>
+                  Observaciones:{" "}
+                  {
+                    <textarea
+                      className='form-ordenes-medicas'
+                      placeholder='Observaciones'
+                      value={patientInfo.observaciones}
+                      onChange={(e) =>
+                        setPatientInfo({
+                          ...patientInfo,
+                          observaciones: e.target.value,
+                        })
+                      }
                     />
-                  </td>
-                </tr>
-                <tr>
-                  <td className='left-column'>Fecha de Nacimiento:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Fecha de Nacimiento'
-                      value={formatDate(patientInfo.fechaNacimiento)}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className='left-column'>Correo Eléctronico:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Correo Eléctronico'
-                      value={patientInfo.correo}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className='left-column'>Identidad:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Identidad'
-                      value={patientInfo.identidad}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className='left-column'>Número de Teléfono:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Número de Teléfono'
-                      value={patientInfo.numeroTelefono}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className='left-column'>Dirección:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Direccion'
-                      value={patientInfo.direccion}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td className='left-column'>Estado Civil:</td>
-                  <td className='right-column'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      placeholder='Estado Civil'
-                      value={patientInfo.estadoCivil}
-                      readOnly
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className='paragraph-margin'>
-              Observaciones:{" "}
-              {
-                <textarea
-                  className='form-ordenes-medicas'
-                  placeholder='Observaciones'
-                  value={patientInfo.observaciones}
-                  onChange={(e) =>
-                    setPatientInfo({
-                      ...patientInfo,
-                      observaciones: e.target.value,
-                    })
                   }
-                />
-              }
-            </p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
-            <p className='paragraph-margin'>
-              Órdenes Médicas:{" "}
-              {
-                <Input
-                  type='text'
-                  size='sm'
-                  variant='standard'
-                  color='blue-gray'
-                  placeholder='Órdenes Médicas'
-                  value={patientInfo.ordenesMedicas}
-                  onChange={(e) =>
-                    setPatientInfo({
-                      ...patientInfo,
-                      ordenesMedicas: e.target.value,
-                    })
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <p className='paragraph-margin'>
+                  Órdenes Médicas:{" "}
+                  {
+                    <Input
+                      type='text'
+                      size='sm'
+                      variant='standard'
+                      color='blue-gray'
+                      placeholder='Órdenes Médicas'
+                      value={patientInfo.ordenesMedicas}
+                      onChange={(e) =>
+                        setPatientInfo({
+                          ...patientInfo,
+                          ordenesMedicas: e.target.value,
+                        })
+                      }
+                    />
                   }
-                />
-              }
-            </p>
-          </Col>
-        </Row>
-      </Container>
+                </p>
+              </Col>
+            </Row>
+          </Container>
+          :
+          <div className="archivo-visualizador-container">
+            <ListGroup className="archivo-visualizador-title-list">
+              <ListGroup.Item
+                className="archivo-box"
+              >
+                <div className="archivo-info">
+                  <span className="archivo-visualizador-title" style={{ color: 'red' }}>
+                    No se muestran los documentos debido a que no tiene los permisos necesarios.
+                  </span>
+                </div>
+              </ListGroup.Item>
+
+            </ListGroup>
+          </div>
+      }
       <div className='fixed-buttons-container'>
-        <button
-          className='btn btn-primary fixed-download-button'
-          onClick={downloadPDF}
-        >
-          Descargar PDF
-        </button>
+        {
+          havePrivilege(57) &&
+          <button
+            className='btn btn-primary fixed-download-button'
+            onClick={downloadPDF}
+          >
+            Descargar PDF
+          </button>
+        }
         <button
           className='btn btn-secondary fixed-back-button'
           onClick={() => navigate(-1)}

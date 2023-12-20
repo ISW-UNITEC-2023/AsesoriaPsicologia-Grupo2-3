@@ -11,6 +11,14 @@ import "../Styles/CSS/Chequeo.css";
 import "../Styles/CSS/PopUpChequeo.css";
 
 function Chequeo(props) {
+  function havePrivilege(privilege) {
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   const paymentMethods = {
     1: "Efectivo",
     2: "Transferencia",
@@ -24,9 +32,8 @@ function Chequeo(props) {
         <div className="pop-metodo-pago-header">
           <h1>Asignar método de pago a</h1>
           <div className="consulta-text">
-            <h1>{`Consulta ${
-              consultaSeleccionada ? consultaSeleccionada.id_appointment : ""
-            }`}</h1>
+            <h1>{`Consulta ${consultaSeleccionada ? consultaSeleccionada.id_appointment : ""
+              }`}</h1>
           </div>
         </div>
         <div className="pop-metodo-pago-body">
@@ -129,51 +136,70 @@ function Chequeo(props) {
           <h1 className="style-chequeo-title" style={{ width: "200%" }}>
             Chequeo
           </h1>
-          <Link to="/Reportes">
-            <button className="button-reporte">Reportes</button>
-          </Link>
-
-          <Link to="/Estadisticas">
-            <button className="button-estadistica">Estadísticas</button>
-          </Link>
+          {
+            havePrivilege(71) &&
+            <Link to="/Reportes">
+              <button className="button-reporte">Reportes</button>
+            </Link>
+          }
+          {
+            havePrivilege(71) &&
+            <Link to="/Estadisticas">
+              <button className="button-estadistica">Estadísticas</button>
+            </Link>
+          }
         </div>
-        <div className="table-container">
-          <table className="custom-table">
-            <thead>
-              <tr>
-                <th scope="col">ID Consulta</th>
-                <th scope="col">Doctor Responsable</th>
-                <th scope="col">Paciente</th>
-                <th scope="col">Monto</th>
-                <th scope="col">Método de Pago</th>
-              </tr>
-            </thead>
-            <tbody>
-              {consultations ? (
-                consultations.map((consulta) => (
-                  <tr key={consulta.id_appointment}>
-                    <td>{consulta.id_appointment}</td>
-                    <td>{consulta.doctor_name}</td>
-                    <td>{`${consulta.first_name} ${consulta.middle_name} ${consulta.last_name} ${consulta.second_surname}`}</td>
-                    <td>{consulta.payment_amount}</td>
-                    <td>
-                      <button
-                        onClick={() => handleShow(consulta)}
-                        className="button-metodo-pago"
-                      >
-                        Asignar Método de Pago
-                      </button>
-                    </td>
+        {
+          havePrivilege(71) ?
+            <div className="table-container">
+              <table className="custom-table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID Consulta</th>
+                    <th scope="col">Doctor Responsable</th>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Método de Pago</th>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5">No hay datos disponibles</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                </thead>
+                <tbody>
+                  {consultations ? (
+                    consultations.map((consulta) => (
+                      <tr key={consulta.id_appointment}>
+                        <td>{consulta.id_appointment}</td>
+                        <td>{consulta.doctor_name}</td>
+                        <td>{`${consulta.first_name} ${consulta.middle_name} ${consulta.last_name} ${consulta.second_surname}`}</td>
+                        <td>{consulta.payment_amount}</td>
+                        <td>
+                          {
+                            havePrivilege(76) ?
+                              <button
+                                onClick={() => handleShow(consulta)}
+                                className="button-metodo-pago"
+                              >
+                                Asignar Método de Pago
+                              </button>
+                              :
+                              <span style={{ color: 'red' }}>
+                                No puedes asignar un metodo de pago debido a que no tienes los permisos necesarios.
+                              </span>
+                          }
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5">No hay datos disponibles</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            :
+            <span className="pagination-text" style={{ color: 'red' }}>
+              No se muestran los registros de chequeos debido a que no tienes los permisos necesarios.
+            </span>
+        }
       </div>
       <Modal
         showModal={showModal}

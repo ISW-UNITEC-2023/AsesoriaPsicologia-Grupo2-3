@@ -196,7 +196,7 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoute cookies={userData} />}>
-          <Route path='/Documentos' element={<Documentos />} />
+          <Route path='/Documentos' element={<Documentos verifyRef={verifyRef} />} />
         </Route>
         <Route path='/SobreNosotros' element={<AboutUs {...aboutData} />} />
         <Route path='/Registro' element={<Registro {...aboutData} />} />
