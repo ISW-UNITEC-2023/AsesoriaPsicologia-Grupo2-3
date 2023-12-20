@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../Styles/CSS/Pacientes.css";
 import { Link } from "react-router-dom";
 import Services from "../Utilities/login-services";
@@ -17,8 +17,24 @@ import { Spinner } from "@material-tailwind/react";
 import PopUpAction from "../Components/MultifunctionalPopUps/PopUpAction";
 import PopUpActionConfirm from "../Components/MultifunctionalPopUps/PopUpActionConfirm";
 import patientsService from "../Utilities/patients-services";
+import { getVerify } from "../Utilities/user-services";
 
 function PacientesForm(props) {
+  console.log("Nuevas propiedades", props);
+
+  const aprobado = props.verifyRef;
+  console.log("Esto es lo que viene dentro", aprobado);
+
+  function havePrivilege(privilege) {
+    //console.log("Esto es lo que entra en la funcion", privilege);
+    console.log("Esto es lo que voy a comparar", props.verifyRef);
+    if (privilege) {
+      return props.verifyRef.current.privileges.includes(privilege);
+    } else {
+      return false;
+    }
+  }
+
   const host = process.env.REACT_APP_API_BASE_URL;
   const [nombres, setNombres] = useState([]);
   const [showCrearPopup, setShowCrearPopup] = useState(false);
@@ -170,118 +186,131 @@ function PacientesForm(props) {
     );
   }
 
-  const usersWithRoles = fetchedUsers.map((user) => {
-    const userRoles = fetchedRoles
-      .filter((role) => user.id_user === role.id_user)
-      .map((role) => [role.id_role, role.name_role]);
-    return { ...user, roles: userRoles };
-  });
-
   return (
     <PacientesLayout pagina='Pacientes'>
       <div className='navbar2'>
         <NavigationB />
-
         <div className='pacientes-container'>
           <div className='pacientes-header'>
             <h1 className='title-pacientes2'>Pacientes</h1>
             <div className='IniciarConsulta'>
-              <button
-                className='consultation-btn'
-                onClick={() => handleShowAgregarPacientePopUp(selectedPatient)}
-              >
-                Agregar Paciente
-              </button>
+              {havePrivilege(53) && (
+                <button
+                  className='consultation-btn'
+                  onClick={() =>
+                    handleShowAgregarPacientePopUp(selectedPatient)
+                  }
+                >
+                  Agregar Paciente
+                </button>
+              )}
             </div>
           </div>
-          <div className='card-container'>
-            {nombres.map((nombre) => (
-              <div key={nombre.id_account} className='card'>
-                <div className='card-body'>
-                  <FontAwesomeIcon
-                    icon={faUserCircle}
-                    className='icon-persona'
-                  />
-                  <h3 className='card-title'>{nombre.nombre}</h3>
-                  <div className='conteiner-card-text'>
-                    <h4 className='card-text'>
-                      {formatDate(nombre.creationDate)}
-                    </h4>
-                  </div>
-                  <div className='dropdown'>
-                    <button
-                      className='dropdown-botton'
-                      type='button'
-                      id={`dropdown-${nombre.id_account}`}
-                      data-toggle='dropdown'
-                      aria-haspopup='true'
-                      aria-expanded='false'
-                    >
-                      Acciones
-                    </button>
+          {havePrivilege(56) ? (
+            <div className='card-container'>
+              {nombres.map((nombre) => (
+                <div key={nombre.id_account} className='card'>
+                  <div className='card-body'>
+                    <FontAwesomeIcon
+                      icon={faUserCircle}
+                      className='icon-persona'
+                    />
+                    <h3 className='card-title'>{nombre.nombre}</h3>
+                    <div className='conteiner-card-text'>
+                      <h4 className='card-text'>
+                        {formatDate(nombre.creationDate)}
+                      </h4>
+                    </div>
+                    <div className='dropdown'>
+                      <button
+                        className='dropdown-botton'
+                        type='button'
+                        id={`dropdown-${nombre.id_account}`}
+                        data-toggle='dropdown'
+                        aria-haspopup='true'
+                        aria-expanded='false'
+                      >
+                        Acciones
+                      </button>
 
-                    <div
-                      className='dropdown-menu'
-                      aria-labelledby={`dropdown-${nombre.id_account}`}
-                    >
-                      <Link
-                        to='/citas'
-                        onClick={() =>
-                          handleClick(
-                            nombre.id_account,
-                            nombre.nombre,
-                            nombre.id_clinic
-                          )
-                        }
-                        className='dropdown-item'
+                      <div
+                        className='dropdown-menu'
+                        aria-labelledby={`dropdown-${nombre.id_account}`}
                       >
-                        Agendar Cita
-                      </Link>
-                      <Link
-                        to='/Expedientes'
-                        state={{
-                          id_file: nombre.id_account,
-                          userData: props.userData,
-                        }}
-                        onClick={() =>
-                          handleClick(
-                            nombre.id_account,
-                            nombre.nombre,
-                            nombre.id_clinic
-                          )
-                        }
-                        className='dropdown-item'
-                      >
-                        Ver Expediente
-                      </Link>
-                      <Link
-                        to='/Documentos'
-                        className='dropdown-item'
-                        state={{
-                          id_file: nombre.id_account,
-                          userData: props.userData,
-                        }}
-                      >
-                        Ver Documentos
-                      </Link>
-                      {/* <Link to="/Documento"
+                        {havePrivilege(61) && (
+                          <Link
+                            to='/citas'
+                            onClick={() =>
+                              handleClick(
+                                nombre.id_account,
+                                nombre.nombre,
+                                nombre.id_clinic
+                              )
+                            }
+                            className='dropdown-item'
+                          >
+                            Agendar Cita
+                          </Link>
+                        )}
+                        {havePrivilege(57) && (
+                          <Link
+                            to='/Expedientes'
+                            state={{
+                              id_file: nombre.id_account,
+                              userData: props.userData,
+                            }}
+                            onClick={() =>
+                              handleClick(
+                                nombre.id_account,
+                                nombre.nombre,
+                                nombre.id_clinic
+                              )
+                            }
+                            className='dropdown-item'
+                          >
+                            Ver Expediente
+                          </Link>
+                        )}
+                        {havePrivilege(66) && (
+                          <Link
+                            to='/Documentos'
+                            className='dropdown-item'
+                            state={{
+                              id_file: nombre.id_account,
+                              userData: props.userData,
+                            }}
+                          >
+                            Ver Documentos
+                          </Link>
+                        )}
+                        {/* <Link to="/Documento"
                                                   onClick={() => handleClick(nombre.id_account, nombre.nombre,
                                                       nombre.id_clinic)}
                                                   className="dropdown-item">Ver Documentos</Link> */}
 
-                      {/* =======
+                        {/* =======
                                         <div className="dropdown-menu" aria-labelledby={`dropdown-${nombre.id_account}`}>
                                             <Link to="/citas" className="dropdown-item">Manejar Cita</Link>
                                             <Link to="/Expedientes" className="dropdown-item">Ver Expediente</Link>
                                             <Link to="/Documentos" className="dropdown-item" state={{id_file:nombre.id_account, userData:props.userData}}>Ver Documentos</Link>
                                              */}
-                      {/* >>>>>>> Axel-KL-Documents */}
+                        {/* >>>>>>> Axel-KL-Documents */}
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <div className='flex justify-center items-center h-screen'>
+                <p>
+                  Ha ocurrido un error al cargar los usuarios, parece que no
+                  tienes los permisos necesarios.
+                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
 
           {showCrearPopup && (
             <CrearUser
