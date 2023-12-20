@@ -20,14 +20,13 @@ import patientsService from "../Utilities/patients-services";
 import { getVerify } from "../Utilities/user-services";
 
 function PacientesForm(props) {
-  console.log("Nuevas propiedades", props);
+  // console.log("Nuevas propiedades", props);
 
   const aprobado = props.verifyRef;
-  console.log("Esto es lo que viene dentro", aprobado);
+  // console.log("Esto es lo que viene dentro", aprobado);
 
   function havePrivilege(privilege) {
-    //console.log("Esto es lo que entra en la funcion", privilege);
-    console.log("Esto es lo que voy a comparar", props.verifyRef);
+    // console.log("Esto es lo que voy a comparar", props.verifyRef);
     if (privilege) {
       return props.verifyRef.current.privileges.includes(privilege);
     } else {
@@ -93,7 +92,7 @@ function PacientesForm(props) {
       );
 
       if (result.message) {
-        console.log(result);
+        // console.log(result);
         console.log("Error al crear el paciente:", result.message);
         setDisplayActionPopUp(false);
       } else {
